@@ -14,6 +14,10 @@
 \setlength{\emergencystretch}{3em}
 \linespread{1.06}
 \usepackage{xurl}
+\usepackage[skip=0.55\baselineskip plus 2pt]{parskip}
+\usepackage{tcolorbox}
+\newtcolorbox{codebox}{colback=black!3,colframe=black!15,boxrule=0.4pt,arc=2pt,left=7pt,right=7pt,top=2pt,bottom=2pt,
+  before skip=6pt,after skip=8pt}
 \providecommand{\tightlist}{\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
 \setlength{\LTcapwidth}{\textwidth}
 \renewcommand{\arraystretch}{1.1}
@@ -29,7 +33,7 @@ Blacktile Research\\[4pt]
 \begin{document}
 \maketitle
 \begin{abstract}
-GPU kernel microbenchmarks evict cached inputs before each timed call. In 14 of the 15 tools and benchmark paths we
+\noindent GPU kernel microbenchmarks evict cached inputs before each timed call. In 14 of the 15 tools and benchmark paths we
 audited, including \texttt{triton.testing.do\_bench}, the eviction writes a large buffer. The writes leave dirty L2 lines
 that the timed kernel must write back, so the flush changes the measurement. With pre-registered experiments on
 nine NVIDIA GPUs, a batch-1 fp16 decode GEMV measured 6.6-25.3 \% slower with the shipped write flush than with a
@@ -750,13 +754,15 @@ to back, 108 pairs) had a median of 0.30~\%, a 95th percentile of 0.95~\% and a 
   write-back is partly untimed.
 \end{itemize}
 
-\begin{verbatim}
+\begin{codebox}
+\begin{Verbatim}[fontsize=\small]
 import cleanbench as cb
-cold = cb.bench(lambda: f(x, y))                                   # read flush + busy-wait
-rot = [lambda i=i: f(xs[i], ys[i]) for i in range(n)]          # copies covering >= 4 x L2
+cold = cb.bench(lambda: f(x, y))                       # read flush + busy-wait
+rot = [lambda i=i: f(xs[i], ys[i]) for i in range(n)]  # copies covering >= 4 x L2
 steady = cb.bench(rotate=rot, mode="steady")
 print(cold.median_us, steady.median_us, cold.warnings)
-\end{verbatim}
+\end{Verbatim}
+\end{codebox}
 
 \textbf{Validation on the laptop GPU} (per cell, 15 \texttt{bench()} calls of 100 timed calls each over 3 runs; value = median
 over the calls of each call\textquotesingle s mean; the \texttt{do\_\allowbreak{}bench} column compares \texttt{do\_\allowbreak{}bench}\textquotesingle s median with that value):

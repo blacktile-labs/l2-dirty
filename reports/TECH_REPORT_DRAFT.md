@@ -463,8 +463,8 @@ to back, 108 pairs) had a median of 0.30 %, a 95th percentile of 0.95 % and a ma
 
 ```python
 import cleanbench as cb
-cold = cb.bench(lambda: f(x, y))                                   # read flush + busy-wait
-rot = [lambda i=i: f(xs[i], ys[i]) for i in range(n)]          # copies covering >= 4 x L2
+cold = cb.bench(lambda: f(x, y))                       # read flush + busy-wait
+rot = [lambda i=i: f(xs[i], ys[i]) for i in range(n)]  # copies covering >= 4 x L2
 steady = cb.bench(rotate=rot, mode="steady")
 print(cold.median_us, steady.median_us, cold.warnings)
 ```

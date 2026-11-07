@@ -28,6 +28,10 @@ PREAMBLE = r"""\documentclass[11pt]{article}
 \setlength{\emergencystretch}{3em}
 \linespread{1.06}
 \usepackage{xurl}
+\usepackage[skip=0.55\baselineskip plus 2pt]{parskip}
+\usepackage{tcolorbox}
+\newtcolorbox{codebox}{colback=black!3,colframe=black!15,boxrule=0.4pt,arc=2pt,left=7pt,right=7pt,top=2pt,bottom=2pt,
+  before skip=6pt,after skip=8pt}
 \providecommand{\tightlist}{\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
 \setlength{\LTcapwidth}{\textwidth}
 \renewcommand{\arraystretch}{1.1}
@@ -43,7 +47,7 @@ Blacktile Research\\[4pt]
 \begin{document}
 \maketitle
 \begin{abstract}
-%(abstract)s
+\noindent %(abstract)s
 \end{abstract}
 """
 
@@ -268,6 +272,8 @@ def main() -> int:
     body = space_arch_groups(body)
     body = body.replace(r"\_", r"\_\allowbreak{}")              # let long identifiers break after "_"
     body = add_citations(body)
+    body = body.replace(r"\begin{verbatim}", r"\begin{codebox}" + "\n" + r"\begin{Verbatim}[fontsize=\small]")
+    body = body.replace(r"\end{verbatim}", r"\end{Verbatim}" + "\n" + r"\end{codebox}")
     body = body.replace(r"\begin{longtable}", r"{\small" + "\n" + r"\begin{longtable}")
     body = body.replace(r"\end{longtable}", r"\end{longtable}" + "\n}")
     out = PREAMBLE % {"title": ascii_tex(pandoc(title).strip()),
