@@ -4,7 +4,7 @@
 \usepackage{amsmath}
 \usepackage{newpxtext,newpxmath}
 \renewcommand{\ttdefault}{lmtt}
-\usepackage[a4paper,left=2.5cm,right=2.5cm,top=2.3cm,bottom=2.6cm]{geometry}
+\usepackage[a4paper,margin=1in]{geometry}
 \usepackage{booktabs,longtable,array,calc}
 \usepackage{graphicx}
 \usepackage{flafter}
@@ -22,7 +22,7 @@
 \titlespacing*{\section}{0pt}{2.2ex plus .6ex minus .3ex}{1ex}
 \titlespacing*{\subsection}{0pt}{1.8ex plus .5ex minus .2ex}{0.8ex}
 \usepackage{etoolbox}
-\AtBeginEnvironment{longtable}{\fontsize{9.2}{11.2}\selectfont\setlength{\tabcolsep}{4.5pt}\hyphenpenalty=10000\exhyphenpenalty=10000}
+\AtBeginEnvironment{longtable}{\small\setlength{\tabcolsep}{4pt}\hyphenpenalty=10000\exhyphenpenalty=10000}
 \setlength{\emergencystretch}{3em}
 \linespread{1.05}
 \usepackage{xurl}
@@ -35,7 +35,7 @@
 \renewcommand{\arraystretch}{1.1}
 \begin{document}
 \thispagestyle{plain}
-\noindent\includegraphics{bt_header.pdf}\par\nointerlineskip
+\noindent\includegraphics[width=\textwidth]{bt_header.pdf}\par\nointerlineskip
 \vspace{4pt}\hrule height 0.4pt\relax
 \vspace{18pt}
 \begin{center}
@@ -183,7 +183,7 @@ once. Permalinks for all entries are in the artifact. Our measurements used Trit
 the same as on \texttt{main}.
 
 {\small
-\begin{longtable}[]{@{}>{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.398}}>{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.097}}>{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.320}}>{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.184}}@{}}
+\begin{longtable}[]{@{}>{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.413}}>{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.101}}>{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.304}}>{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.182}}@{}}
 \toprule\noalign{}
 Tool & Flush by default & Operation & Buffer \\
 \midrule\noalign{}
@@ -262,7 +262,7 @@ decode ("SDPA") with a 256~MiB KV cache; Liger RMSNorm on 64~MiB; Liger SwiGLU o
 CUDA device query.
 
 {\small
-\begin{longtable}[]{@{}>{\raggedright\arraybackslash}p{(\linewidth - 18\tabcolsep) * \real{0.196}}>{\raggedright\arraybackslash}p{(\linewidth - 18\tabcolsep) * \real{0.105}}>{\raggedleft\arraybackslash}p{(\linewidth - 18\tabcolsep) * \real{0.081}}>{\raggedleft\arraybackslash}p{(\linewidth - 18\tabcolsep) * \real{0.077}}>{\raggedleft\arraybackslash}p{(\linewidth - 18\tabcolsep) * \real{0.134}}>{\raggedleft\arraybackslash}p{(\linewidth - 18\tabcolsep) * \real{0.117}}>{\raggedleft\arraybackslash}p{(\linewidth - 18\tabcolsep) * \real{0.077}}>{\raggedleft\arraybackslash}p{(\linewidth - 18\tabcolsep) * \real{0.113}}>{\raggedleft\arraybackslash}p{(\linewidth - 18\tabcolsep) * \real{0.101}}@{}}
+\begin{longtable}[]{@{}>{\raggedright\arraybackslash}p{(\linewidth - 18\tabcolsep) * \real{0.196}}>{\raggedright\arraybackslash}p{(\linewidth - 18\tabcolsep) * \real{0.108}}>{\raggedleft\arraybackslash}p{(\linewidth - 18\tabcolsep) * \real{0.082}}>{\raggedleft\arraybackslash}p{(\linewidth - 18\tabcolsep) * \real{0.081}}>{\raggedleft\arraybackslash}p{(\linewidth - 18\tabcolsep) * \real{0.120}}>{\raggedleft\arraybackslash}p{(\linewidth - 18\tabcolsep) * \real{0.113}}>{\raggedleft\arraybackslash}p{(\linewidth - 18\tabcolsep) * \real{0.081}}>{\raggedleft\arraybackslash}p{(\linewidth - 18\tabcolsep) * \real{0.116}}>{\raggedleft\arraybackslash}p{(\linewidth - 18\tabcolsep) * \real{0.104}}@{}}
 \toprule\noalign{}
 GPU & Arch & L2 (MiB) & GEMV (\%) & range & L2-sized write (\%) & SDPA (\%) & RMSNorm (\%) & SwiGLU (\%) \\
 \midrule\noalign{}
@@ -312,7 +312,7 @@ D is the relative change of the int4-over-fp16 speedup under the shipped flush, 
 decode shapes 4096\ensuremath{^2}, 14336 \ensuremath{\times} 4096 and 4096 \ensuremath{\times} 14336; PyTorch tinygemm and bitsandbytes NF4).
 
 {\small
-\begin{longtable}[]{@{}>{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.272}}>{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.443}}>{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.285}}@{}}
+\begin{longtable}[]{@{}>{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.263}}>{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.448}}>{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.289}}@{}}
 \toprule\noalign{}
 GPU & Worst D & Direction \\
 \midrule\noalign{}
@@ -358,7 +358,7 @@ cuBLAS GEMV over 12~MiB of weights (4 \ensuremath{\times} L2), whose own output 
 write-back. Median of 15 calls; the read flush is the kernel from PR \#12556~\cite{tr12556}.
 
 {\small
-\begin{longtable}[]{@{}>{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.776}}>{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.224}}@{}}
+\begin{longtable}[]{@{}>{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.781}}>{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.219}}@{}}
 \toprule\noalign{}
 What runs before the timed call & Foreign write-back in the timed window (\ensuremath{\times} L2) \\
 \midrule\noalign{}
@@ -426,7 +426,7 @@ L2-sized flush takes 12-18~\ensuremath{\mu}s. To test this we inserted a GPU bus
 \textbf{Laptop GPU (host dispatch on WSL2: 72-139~\ensuremath{\mu}s).} Time relative to a 256~MiB read flush:
 
 {\small
-\begin{longtable}[]{@{}>{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.441}}>{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.185}}>{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.373}}@{}}
+\begin{longtable}[]{@{}>{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.447}}>{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.183}}>{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.370}}@{}}
 \toprule\noalign{}
 Kernel, flush & do\_\allowbreak{}bench-style loop & with the busy-wait \\
 \midrule\noalign{}
@@ -457,7 +457,7 @@ nine-GPU study), L2-sized \texttt{zero\_\allowbreak{}()} relative to 256~MiB \te
 L2 size over the DRAM rate of the 112~MiB GEMV.
 
 {\small
-\begin{longtable}[]{@{}>{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.264}}>{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.146}}>{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.157}}>{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.239}}>{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.194}}@{}}
+\begin{longtable}[]{@{}>{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.267}}>{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.151}}>{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.160}}>{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.239}}>{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.184}}@{}}
 \toprule\noalign{}
 GPU & host dispatch & L2-sized flush (est.) & RMSNorm, L2-sized \texttt{zero\_\allowbreak{}()}: loop / busy-wait & GEMV 16~MiB, no flush \ensuremath{\div} read flush: loop / busy-wait \\
 \midrule\noalign{}
@@ -501,7 +501,7 @@ write-back happens during the \emph{next} flush, outside any timed window. Count
 the kernel\textquotesingle s own output written to DRAM inside its timed window, median of 15 calls):
 
 {\small
-\begin{longtable}[]{@{}>{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.372}}>{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.213}}>{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.284}}>{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.131}}@{}}
+\begin{longtable}[]{@{}>{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.368}}>{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.206}}>{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.290}}>{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.136}}@{}}
 \toprule\noalign{}
 Kernel (elementwise add) & read flush 256~MiB ("cold") & rotated input/output copies ("steady") & no flush \\
 \midrule\noalign{}
@@ -553,7 +553,7 @@ captured in one CUDA graph and replayed back to back, as decode loops do; its me
 harness\textquotesingle s per-kernel times were summed over the step and compared with it (pre-registered; five GPUs).
 
 {\small
-\begin{longtable}[]{@{}>{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.207}}>{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.091}}>{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.224}}>{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.239}}>{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.239}}@{}}
+\begin{longtable}[]{@{}>{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.210}}>{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.093}}>{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.224}}>{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.237}}>{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.237}}@{}}
 \toprule\noalign{}
 GPU & L2 & fp16 step: shipped / cold & int4 step: shipped / cold & int4 speedup error: shipped / cold \\
 \midrule\noalign{}
@@ -594,7 +594,7 @@ is cold), replayed back to back, divided by the number of calls (pre-registered;
 B19 and B21, the H100 NVL host was new):
 
 {\small
-\begin{longtable}[]{@{}>{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.191}}>{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.220}}>{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.206}}>{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.220}}>{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.164}}@{}}
+\begin{longtable}[]{@{}>{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.192}}>{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.217}}>{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.205}}>{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.217}}>{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.169}}@{}}
 \toprule\noalign{}
 GPU & step error, fp16 / int4: graph-batched & cold & shipped & int4 speedup error: graph-batched \\
 \midrule\noalign{}
@@ -674,7 +674,7 @@ kernel\textquotesingle s time inside the decode step (pre-registered):
 \end{itemize}
 
 {\small
-\begin{longtable}[]{@{}>{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.552}}>{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.313}}>{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.135}}@{}}
+\begin{longtable}[]{@{}>{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.569}}>{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.295}}>{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.136}}@{}}
 \toprule\noalign{}
 RTX 3060 Laptop, SM clock locked at 1,000~MHz (observed 1,005) & Error vs the same kernel in the step (12 kernels) & Within 1~\% \\
 \midrule\noalign{}
@@ -785,7 +785,7 @@ print(cold.median_us, steady.median_us, cold.warnings)
 over the calls of each call\textquotesingle s mean; the \texttt{do\_\allowbreak{}bench} column compares \texttt{do\_\allowbreak{}bench}\textquotesingle s median with that value):
 
 {\small
-\begin{longtable}[]{@{}>{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.461}}>{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.194}}>{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.146}}>{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.199}}@{}}
+\begin{longtable}[]{@{}>{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.469}}>{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.186}}>{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.144}}>{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.202}}@{}}
 \toprule\noalign{}
 Kernel & cold, 2 \ensuremath{\times} L2 flush vs 256~MiB & steady vs cold & shipped \texttt{do\_\allowbreak{}bench} vs cold \\
 \midrule\noalign{}
@@ -883,7 +883,7 @@ AD103 (RTX 4080 SUPER, 64~MiB) & 5.8~\% & 4.9~\% & 3.2~\% \\
 overlap, and are not additive):
 
 {\small
-\begin{longtable}[]{@{}>{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.227}}>{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.188}}>{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.292}}>{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.292}}@{}}
+\begin{longtable}[]{@{}>{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.225}}>{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.189}}>{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.293}}>{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.293}}@{}}
 \toprule\noalign{}
 Hazard & What is distorted & Observed here (setting) & Remedy (status) \\
 \midrule\noalign{}
@@ -1038,7 +1038,7 @@ permalinks; \texttt{cleanbench}; and the scripts that build this report and its 
 authors\textquotesingle{} development history and are self-attested. Rented-host conditions (drivers, power limits) cannot be
 reproduced exactly. Code is under the Apache License 2.0; the report, figures and data under CC BY 4.0.
 
-\begin{thebibliography}{99}\footnotesize\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}
+\begin{thebibliography}{99}\small\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}
 \bibitem{tr12554} triton-lang/triton issue \#12554, write flush in \texttt{do\_bench}, \url{https://github.com/triton-lang/triton/issues/12554}.
 \bibitem{tr12556} triton-lang/triton PR \#12556, read the L2 flush buffer instead of writing it, \url{https://github.com/triton-lang/triton/pull/12556}.
 \bibitem{pt203681} pytorch/pytorch PR \#203681 (ROCm), \url{https://github.com/pytorch/pytorch/pull/203681}.

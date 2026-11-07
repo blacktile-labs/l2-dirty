@@ -19,7 +19,7 @@ PREAMBLE = r"""\documentclass[11pt,a4paper]{article}
 \usepackage{amsmath}
 \usepackage{newpxtext,newpxmath}
 \renewcommand{\ttdefault}{lmtt}
-\usepackage[a4paper,left=2.5cm,right=2.5cm,top=2.3cm,bottom=2.6cm]{geometry}
+\usepackage[a4paper,margin=1in]{geometry}
 \usepackage{booktabs,longtable,array,calc}
 \usepackage{graphicx}
 \usepackage{flafter}
@@ -37,7 +37,7 @@ PREAMBLE = r"""\documentclass[11pt,a4paper]{article}
 \titlespacing*{\section}{0pt}{2.2ex plus .6ex minus .3ex}{1ex}
 \titlespacing*{\subsection}{0pt}{1.8ex plus .5ex minus .2ex}{0.8ex}
 \usepackage{etoolbox}
-\AtBeginEnvironment{longtable}{\fontsize{9.2}{11.2}\selectfont\setlength{\tabcolsep}{4.5pt}\hyphenpenalty=10000\exhyphenpenalty=10000}
+\AtBeginEnvironment{longtable}{\small\setlength{\tabcolsep}{4pt}\hyphenpenalty=10000\exhyphenpenalty=10000}
 \setlength{\emergencystretch}{3em}
 \linespread{1.05}
 \usepackage{xurl}
@@ -50,7 +50,7 @@ PREAMBLE = r"""\documentclass[11pt,a4paper]{article}
 \renewcommand{\arraystretch}{1.1}
 \begin{document}
 \thispagestyle{plain}
-\noindent\includegraphics{bt_header.pdf}\par\nointerlineskip
+\noindent\includegraphics[width=\textwidth]{bt_header.pdf}\par\nointerlineskip
 \vspace{4pt}\hrule height 0.4pt\relax
 \vspace{18pt}
 \begin{center}
@@ -114,7 +114,7 @@ clock not locked (power-capped); the NF4 rows show a context effect of unknown c
 """
 
 BIB = r"""
-\begin{thebibliography}{99}\footnotesize\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}
+\begin{thebibliography}{99}\small\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}
 \bibitem{tr12554} triton-lang/triton issue \#12554, write flush in \texttt{do\_bench}, \url{https://github.com/triton-lang/triton/issues/12554}.
 \bibitem{tr12556} triton-lang/triton PR \#12556, read the L2 flush buffer instead of writing it, \url{https://github.com/triton-lang/triton/pull/12556}.
 \bibitem{pt203681} pytorch/pytorch PR \#203681 (ROCm), \url{https://github.com/pytorch/pytorch/pull/203681}.
@@ -166,9 +166,9 @@ def wrap_tables(body: str) -> str:
             for k, c in enumerate(r.split(" & ")[:n]):
                 c = re.sub(r"\\(?:hyperref|cite)\[[^\]]*\]|\\cite\{[^}]*\}", "", c)      # link targets take no width
                 txt = re.sub(r"\\[a-zA-Z]+|[{}]|\\noalign|toprule|midrule|bottomrule", "", c).strip()
-                # header row: longest word must fit (x1.18: Palatino is wider); data rows: whole cell, capped
-                wid = lambda t: sum(1.35 if ch.isupper() or ch.isdigit() else 1.0 for ch in t) + 1  # noqa: E731
-                w = max((wid(t) * 1.18 for t in txt.split()), default=0) if ri == 0 else min(wid(txt), 45)
+                # header row: longest word must fit (x1.15: header type needs room); data rows: whole cell, capped
+                wid = lambda t: sum(1.45 if ch.isupper() else 1.1 if ch.isdigit() else 1.0 for ch in t) + 1  # noqa: E731
+                w = max((wid(t) * 1.15 for t in txt.split()), default=0) if ri == 0 else min(wid(txt), 45)
                 lens[k] = max(lens[k], w)
         # a narrow table keeps pandoc's natural-width columns (centred) instead of being stretched to the text width
         natural = sum(max(wid(re.sub(r"\\[a-zA-Z]+|[{}]|toprule|midrule|bottomrule", "", c).strip())
