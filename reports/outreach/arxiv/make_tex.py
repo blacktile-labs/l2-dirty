@@ -32,7 +32,13 @@ PREAMBLE = r"""\documentclass[11pt]{article}
 \setlength{\LTcapwidth}{\textwidth}
 \renewcommand{\arraystretch}{1.1}
 \title{%(title)s}
-\author{Rungrod Thongjampa\thanks{Corresponding author: \texttt{rungrod.th@blacktile.dev}} \quad Chanchada Wathanathonnan\\ Blacktile Research\\ \texttt{\{rungrod.th, chanchada.wa\}@blacktile.dev}}
+\author{
+\begin{tabular}{@{}c@{\hspace{2.2em}}c@{}}
+Rungrod Thongjampa$^{*}$ & Chanchada Wathanathonnan \\[1pt]
+{\small\texttt{rungrod.th@blacktile.dev}} & {\small\texttt{chanchada.wa@blacktile.dev}}
+\end{tabular}\\[14pt]
+Blacktile Research\\[4pt]
+{\small $^{*}$Corresponding author}}
 \date{Technical report, November 2026}
 \begin{document}
 \maketitle
