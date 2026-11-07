@@ -1,0 +1,402 @@
+{
+ "benchmark": "torch_opchain",
+ "mode": "counters",
+ "smoke": false,
+ "device": "NVIDIA GeForce RTX 3060 Laptop GPU",
+ "l2_bytes": 3145728,
+ "torch": "2.7.1+cu126",
+ "triton": "3.3.1",
+ "cuda_runtime": "12.6",
+ "H": 4096,
+ "sizes_l2x": [
+  0.125,
+  0.1875,
+  0.25,
+  0.3125,
+  0.375,
+  0.5,
+  1.0,
+  2.0,
+  3.0
+ ],
+ "seed": 1234,
+ "flush_bytes": 16777216,
+ "steady_calls_counters": 3,
+ "correctness": {
+  "l2x=0.125;M=24": "ok",
+  "l2x=0.1875;M=36": "ok",
+  "l2x=0.25;M=48": "ok",
+  "l2x=0.3125;M=60": "ok",
+  "l2x=0.375;M=72": "ok",
+  "l2x=0.5;M=96": "ok",
+  "l2x=1;M=192": "ok",
+  "l2x=2;M=384": "ok",
+  "l2x=3;M=576": "ok"
+ },
+ "dynamo_recompile_limit": 64,
+ "correctness_failures": 0,
+ "profiler_ranges": true,
+ "sleep_cycles": 2000000,
+ "ranges": [
+  {
+   "kind": "control",
+   "l2x": 0.125
+  },
+  {
+   "kind": "segment",
+   "l2x": 0.125,
+   "variant": "eager",
+   "mode": "isolated",
+   "first_launch": 1,
+   "n_launches": 3,
+   "enqueue_us": 394.9
+  },
+  {
+   "kind": "segment",
+   "l2x": 0.125,
+   "variant": "compiled",
+   "mode": "isolated",
+   "first_launch": 5,
+   "n_launches": 1,
+   "enqueue_us": 574.4
+  },
+  {
+   "kind": "segment",
+   "l2x": 0.125,
+   "variant": "eager",
+   "mode": "steady",
+   "first_launch": 7,
+   "n_launches": 9,
+   "enqueue_us": 907.6
+  },
+  {
+   "kind": "segment",
+   "l2x": 0.125,
+   "variant": "compiled",
+   "mode": "steady",
+   "first_launch": 17,
+   "n_launches": 3,
+   "enqueue_us": 1062.2
+  },
+  {
+   "kind": "control",
+   "l2x": 0.1875
+  },
+  {
+   "kind": "segment",
+   "l2x": 0.1875,
+   "variant": "eager",
+   "mode": "isolated",
+   "first_launch": 21,
+   "n_launches": 3,
+   "enqueue_us": 447.1
+  },
+  {
+   "kind": "segment",
+   "l2x": 0.1875,
+   "variant": "compiled",
+   "mode": "isolated",
+   "first_launch": 25,
+   "n_launches": 1,
+   "enqueue_us": 586.0
+  },
+  {
+   "kind": "segment",
+   "l2x": 0.1875,
+   "variant": "eager",
+   "mode": "steady",
+   "first_launch": 27,
+   "n_launches": 9,
+   "enqueue_us": 879.4
+  },
+  {
+   "kind": "segment",
+   "l2x": 0.1875,
+   "variant": "compiled",
+   "mode": "steady",
+   "first_launch": 37,
+   "n_launches": 3,
+   "enqueue_us": 862.4
+  },
+  {
+   "kind": "control",
+   "l2x": 0.25
+  },
+  {
+   "kind": "segment",
+   "l2x": 0.25,
+   "variant": "eager",
+   "mode": "isolated",
+   "first_launch": 41,
+   "n_launches": 3,
+   "enqueue_us": 351.6
+  },
+  {
+   "kind": "segment",
+   "l2x": 0.25,
+   "variant": "compiled",
+   "mode": "isolated",
+   "first_launch": 45,
+   "n_launches": 1,
+   "enqueue_us": 571.7
+  },
+  {
+   "kind": "segment",
+   "l2x": 0.25,
+   "variant": "eager",
+   "mode": "steady",
+   "first_launch": 47,
+   "n_launches": 9,
+   "enqueue_us": 1510.9
+  },
+  {
+   "kind": "segment",
+   "l2x": 0.25,
+   "variant": "compiled",
+   "mode": "steady",
+   "first_launch": 57,
+   "n_launches": 3,
+   "enqueue_us": 1060.7
+  },
+  {
+   "kind": "control",
+   "l2x": 0.3125
+  },
+  {
+   "kind": "segment",
+   "l2x": 0.3125,
+   "variant": "eager",
+   "mode": "isolated",
+   "first_launch": 61,
+   "n_launches": 3,
+   "enqueue_us": 435.5
+  },
+  {
+   "kind": "segment",
+   "l2x": 0.3125,
+   "variant": "compiled",
+   "mode": "isolated",
+   "first_launch": 65,
+   "n_launches": 1,
+   "enqueue_us": 562.7
+  },
+  {
+   "kind": "segment",
+   "l2x": 0.3125,
+   "variant": "eager",
+   "mode": "steady",
+   "first_launch": 67,
+   "n_launches": 9,
+   "enqueue_us": 964.6
+  },
+  {
+   "kind": "segment",
+   "l2x": 0.3125,
+   "variant": "compiled",
+   "mode": "steady",
+   "first_launch": 77,
+   "n_launches": 3,
+   "enqueue_us": 1036.6
+  },
+  {
+   "kind": "control",
+   "l2x": 0.375
+  },
+  {
+   "kind": "segment",
+   "l2x": 0.375,
+   "variant": "eager",
+   "mode": "isolated",
+   "first_launch": 81,
+   "n_launches": 3,
+   "enqueue_us": 474.2
+  },
+  {
+   "kind": "segment",
+   "l2x": 0.375,
+   "variant": "compiled",
+   "mode": "isolated",
+   "first_launch": 85,
+   "n_launches": 1,
+   "enqueue_us": 519.7
+  },
+  {
+   "kind": "segment",
+   "l2x": 0.375,
+   "variant": "eager",
+   "mode": "steady",
+   "first_launch": 87,
+   "n_launches": 9,
+   "enqueue_us": 972.3
+  },
+  {
+   "kind": "segment",
+   "l2x": 0.375,
+   "variant": "compiled",
+   "mode": "steady",
+   "first_launch": 97,
+   "n_launches": 3,
+   "enqueue_us": 899.4
+  },
+  {
+   "kind": "control",
+   "l2x": 0.5
+  },
+  {
+   "kind": "segment",
+   "l2x": 0.5,
+   "variant": "eager",
+   "mode": "isolated",
+   "first_launch": 101,
+   "n_launches": 3,
+   "enqueue_us": 478.0
+  },
+  {
+   "kind": "segment",
+   "l2x": 0.5,
+   "variant": "compiled",
+   "mode": "isolated",
+   "first_launch": 105,
+   "n_launches": 1,
+   "enqueue_us": 510.8
+  },
+  {
+   "kind": "segment",
+   "l2x": 0.5,
+   "variant": "eager",
+   "mode": "steady",
+   "first_launch": 107,
+   "n_launches": 9,
+   "enqueue_us": 1012.1
+  },
+  {
+   "kind": "segment",
+   "l2x": 0.5,
+   "variant": "compiled",
+   "mode": "steady",
+   "first_launch": 117,
+   "n_launches": 3,
+   "enqueue_us": 1026.5
+  },
+  {
+   "kind": "control",
+   "l2x": 1.0
+  },
+  {
+   "kind": "segment",
+   "l2x": 1.0,
+   "variant": "eager",
+   "mode": "isolated",
+   "first_launch": 121,
+   "n_launches": 3,
+   "enqueue_us": 476.6
+  },
+  {
+   "kind": "segment",
+   "l2x": 1.0,
+   "variant": "compiled",
+   "mode": "isolated",
+   "first_launch": 125,
+   "n_launches": 1,
+   "enqueue_us": 629.0
+  },
+  {
+   "kind": "segment",
+   "l2x": 1.0,
+   "variant": "eager",
+   "mode": "steady",
+   "first_launch": 127,
+   "n_launches": 9,
+   "enqueue_us": 923.1
+  },
+  {
+   "kind": "segment",
+   "l2x": 1.0,
+   "variant": "compiled",
+   "mode": "steady",
+   "first_launch": 137,
+   "n_launches": 3,
+   "enqueue_us": 932.6
+  },
+  {
+   "kind": "control",
+   "l2x": 2.0
+  },
+  {
+   "kind": "segment",
+   "l2x": 2.0,
+   "variant": "eager",
+   "mode": "isolated",
+   "first_launch": 141,
+   "n_launches": 3,
+   "enqueue_us": 411.4
+  },
+  {
+   "kind": "segment",
+   "l2x": 2.0,
+   "variant": "compiled",
+   "mode": "isolated",
+   "first_launch": 145,
+   "n_launches": 1,
+   "enqueue_us": 567.2
+  },
+  {
+   "kind": "segment",
+   "l2x": 2.0,
+   "variant": "eager",
+   "mode": "steady",
+   "first_launch": 147,
+   "n_launches": 9,
+   "enqueue_us": 869.9
+  },
+  {
+   "kind": "segment",
+   "l2x": 2.0,
+   "variant": "compiled",
+   "mode": "steady",
+   "first_launch": 157,
+   "n_launches": 3,
+   "enqueue_us": 1154.0
+  },
+  {
+   "kind": "control",
+   "l2x": 3.0
+  },
+  {
+   "kind": "segment",
+   "l2x": 3.0,
+   "variant": "eager",
+   "mode": "isolated",
+   "first_launch": 161,
+   "n_launches": 3,
+   "enqueue_us": 399.0
+  },
+  {
+   "kind": "segment",
+   "l2x": 3.0,
+   "variant": "compiled",
+   "mode": "isolated",
+   "first_launch": 165,
+   "n_launches": 1,
+   "enqueue_us": 505.4
+  },
+  {
+   "kind": "segment",
+   "l2x": 3.0,
+   "variant": "eager",
+   "mode": "steady",
+   "first_launch": 167,
+   "n_launches": 9,
+   "enqueue_us": 938.2
+  },
+  {
+   "kind": "segment",
+   "l2x": 3.0,
+   "variant": "compiled",
+   "mode": "steady",
+   "first_launch": 177,
+   "n_launches": 3,
+   "enqueue_us": 1120.9
+  }
+ ]
+}

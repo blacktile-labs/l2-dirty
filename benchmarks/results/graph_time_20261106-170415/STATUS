@@ -1,0 +1,5 @@
+run_r1 rc=0
+run_r2 rc=0
+run_r3 rc=0
+score rc=0
+NVIDIA GeForce RTX 3060 Laptop GPU (L2 3 MiB): V-0 {'correctness': True, 'steps': True, 'stable': False} -> FAIL

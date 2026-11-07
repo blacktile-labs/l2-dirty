@@ -1,0 +1,10 @@
+========= COMPUTE-SANITIZER
+gather       T=1048576;M=262144;dist=seq              ok
+scatter_add  T=1048576;M=262144;dist=seq              ok
+gather       T=1048576;M=262144;dist=uniform          ok
+scatter_add  T=1048576;M=262144;dist=uniform          ok
+gather       T=1048576;M=262144;dist=zipf1.0          ok
+scatter_add  T=1048576;M=262144;dist=zipf1.0          ok
+correctness_failures=0
+========= LEAK SUMMARY: 0 bytes leaked in 0 allocations
+========= ERROR SUMMARY: 0 errors

@@ -1,0 +1,24 @@
+# copy_stride summary -- run `20261104-062624-smoke-followup`
+
+- Device: NVIDIA GeForce RTX 3060 (cc 8.6), driver 12020, runtime 12020
+- n_src = 16777216 uint32 (64 MiB), flush_l2 = True, reps = 10, warmup = 3
+- Correctness failures: 0 (per-variant mismatches: {'empty_kernel': 0, 'memcpy_d2d': 0, 'copy_contig_u32': 0, 'copy_contig_u32x4': 0, 'copy_strided_read_u32_s1': 0, 'copy_strided_read_u32_s2': 0, 'copy_strided_read_u32_s8': 0, 'copy_strided_read_u32_s16': 0, 'copy_strided_read_u32_s32': 0})
+- L2 fetch granularity reported by driver: 64 B
+- MEASURED reference BW (cudaMemcpy D2D, logical bytes / median): 333.5 GB/s
+- ESTIMATED theoretical DRAM BW (device attributes, x2 DDR assumed): 360.0 GB/s
+- MEASURED empty-kernel event floor (median): 2.45 us
+
+Columns `est_*` and `pred_*` are MODEL ESTIMATES (bench_common.py, assumptions A1-A5);
+`pred_us` = estimated bytes / measured memcpy BW. Everything else is measured or derived.
+
+| variant | stride | n_out | reps | median_us | p95_us | min_us | max_us | cv_pct | useful_GBps | est_MiB_g32 | pred_us_g32 | meas_over_pred_g32 | est_MiB_g64 | pred_us_g64 | meas_over_pred_g64 |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| empty_kernel | 1 | 0 | 10 | 2.448 | 3.072 | 2.048 | 3.072 | 17.334 | 0.000 |  |  |  |  |  |  |
+| memcpy_d2d | 1 | 16777216 | 10 | 402.432 | 403.082 | 402.432 | 403.456 | 0.079 | 333.517 |  |  |  |  |  |  |
+| copy_contig_u32 | 1 | 16777216 | 10 | 403.456 | 404.480 | 403.456 | 404.480 | 0.131 | 332.670 |  |  |  |  |  |  |
+| copy_contig_u32x4 | 1 | 16777216 | 10 | 401.936 | 402.538 | 401.408 | 402.624 | 0.136 | 333.928 |  |  |  |  |  |  |
+| copy_strided_read_u32_s1 | 1 | 16777216 | 10 | 404.480 | 404.480 | 403.456 | 404.480 | 0.109 | 331.828 | 128.000 | 402.432 | 1.005 | 128.000 | 402.432 | 1.005 |
+| copy_strided_read_u32_s2 | 2 | 8388608 | 10 | 299.008 | 299.146 | 298.720 | 299.232 | 0.047 | 224.438 | 96.000 | 301.824 | 0.991 | 96.000 | 301.824 | 0.991 |
+| copy_strided_read_u32_s8 | 8 | 2097152 | 10 | 225.280 | 225.386 | 225.184 | 225.472 | 0.031 | 74.473 | 72.000 | 226.368 | 0.995 | 72.000 | 226.368 | 0.995 |
+| copy_strided_read_u32_s16 | 16 | 1048576 | 10 | 114.560 | 114.688 | 113.664 | 114.688 | 0.449 | 73.225 | 36.000 | 113.184 | 1.012 | 68.000 | 213.792 | 0.536 |
+| copy_strided_read_u32_s32 | 32 | 524288 | 10 | 58.368 | 59.104 | 58.368 | 59.392 | 0.563 | 71.860 | 18.000 | 56.592 | 1.031 | 34.000 | 106.896 | 0.546 |

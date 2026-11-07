@@ -1,0 +1,251 @@
+{
+ "benchmark": "flush_bias_probe",
+ "device": "NVIDIA GeForce RTX 4060 Ti",
+ "l2_bytes": 33554432,
+ "cc": "8.9",
+ "sm_count": 34,
+ "versions": {
+  "torch": "2.7.1+cu126",
+  "cuda": "12.6",
+  "triton": "3.3.1",
+  "bitsandbytes": "0.50.2",
+  "liger-kernel": "0.6.2"
+ },
+ "pr_head": "ba27327b9a4667b58e89ae5e1f0d7efe453a2021",
+ "ptx_check": {
+  "ld_volatile_global": 2,
+  "ld_global": 0,
+  "st_global": 0,
+  "buffer_unchanged": true
+ },
+ "amendment": "B17a (l2w mode)",
+ "smoke": true,
+ "run_seed": 0,
+ "rows": [
+  {
+   "family": "gemv",
+   "case": "4096x4096",
+   "bytes": 33554432,
+   "cand": "tinygemm_k4",
+   "ms": {
+    "sum": 0.03654399886727333,
+    "l2w": 0.05180799961090088,
+    "zero": 0.051711998879909515,
+    "pr": 0.03673600032925606
+   },
+   "order": [
+    "sum",
+    "l2w",
+    "zero",
+    "pr"
+   ]
+  },
+  {
+   "family": "gemv",
+   "case": "4096x4096",
+   "bytes": 33554432,
+   "cand": "tinygemm_k2",
+   "ms": {
+    "sum": 0.03673600032925606,
+    "pr": 0.036896001547575,
+    "l2w": 0.052960000932216644,
+    "zero": 0.05299200117588043
+   },
+   "order": [
+    "sum",
+    "pr",
+    "l2w",
+    "zero"
+   ]
+  },
+  {
+   "family": "gemv",
+   "case": "4096x4096",
+   "bytes": 33554432,
+   "cand": "cublas_fp16",
+   "ms": {
+    "sum": 0.12703999876976013,
+    "zero": 0.164000004529953,
+    "none": 0.12665599584579468,
+    "pr": 0.12691199779510498,
+    "l2w": 0.1642879992723465
+   },
+   "order": [
+    "sum",
+    "zero",
+    "none",
+    "pr",
+    "l2w"
+   ]
+  },
+  {
+   "family": "gemv",
+   "case": "4096x4096",
+   "bytes": 33554432,
+   "cand": "bnb_nf4",
+   "ms": {
+    "sum": 0.04814400151371956,
+    "pr": 0.04825599864125252,
+    "l2w": 0.09481599926948547,
+    "zero": 0.07095999643206596
+   },
+   "order": [
+    "sum",
+    "pr",
+    "l2w",
+    "zero"
+   ]
+  },
+  {
+   "family": "gemv",
+   "case": "4096x4096",
+   "bytes": 33554432,
+   "cand": "tinygemm_k8",
+   "ms": {
+    "pr": 0.03641600161790848,
+    "l2w": 0.05206400156021118,
+    "sum": 0.036448001861572266,
+    "zero": 0.05238400027155876
+   },
+   "order": [
+    "pr",
+    "l2w",
+    "sum",
+    "zero"
+   ]
+  },
+  {
+   "family": "attn",
+   "case": "L4096",
+   "bytes": 16777216,
+   "cand": "sdpa_bf16",
+   "ms": {
+    "l2w": 0.09916800260543823,
+    "zero": 0.09916800260543823,
+    "pr": 0.07558400183916092,
+    "sum": 0.07545600086450577
+   },
+   "order": [
+    "l2w",
+    "zero",
+    "pr",
+    "sum"
+   ]
+  },
+  {
+   "family": "rmsnorm",
+   "case": "T2048",
+   "bytes": 16777216,
+   "cand": "liger_rmsnorm",
+   "ms": {
+    "sum": 0.06780800223350525,
+    "l2w": 0.14207999408245087,
+    "zero": 0.13993600010871887,
+    "pr": 0.06777600198984146
+   },
+   "order": [
+    "sum",
+    "l2w",
+    "zero",
+    "pr"
+   ]
+  },
+  {
+   "family": "rmsnorm",
+   "case": "T2048",
+   "bytes": 16777216,
+   "cand": "torch_rmsnorm",
+   "ms": {
+    "zero": 1.2390080094337463,
+    "l2w": 1.2404799461364746,
+    "pr": 1.1510559916496277,
+    "sum": 1.1500319838523865
+   },
+   "order": [
+    "zero",
+    "l2w",
+    "pr",
+    "sum"
+   ]
+  },
+  {
+   "family": "swiglu",
+   "case": "T512",
+   "bytes": 14680064,
+   "cand": "torch_swiglu",
+   "ms": {
+    "zero": 0.25569599866867065,
+    "l2w": 0.2565760016441345,
+    "pr": 0.17494399845600128,
+    "sum": 0.17561600357294083
+   },
+   "order": [
+    "zero",
+    "l2w",
+    "pr",
+    "sum"
+   ]
+  },
+  {
+   "family": "swiglu",
+   "case": "T512",
+   "bytes": 14680064,
+   "cand": "liger_swiglu",
+   "ms": {
+    "zero": 0.1842239946126938,
+    "sum": 0.11683200299739838,
+    "l2w": 0.18572799861431122,
+    "pr": 0.11689600348472595
+   },
+   "order": [
+    "zero",
+    "sum",
+    "l2w",
+    "pr"
+   ]
+  }
+ ],
+ "invalid": [],
+ "notes": {},
+ "kernels": {
+  "gemv 4096x4096 cublas_fp16": [
+   "std::enable_if<!(false), void>::type internal::gemvx::kernel<int, int, __half, __half, __half, float, false, true, true,"
+  ],
+  "gemv 4096x4096 tinygemm_k2": [
+   "void at::native::tinygemm_m16n8k16_chunk_kernel<at::native::ALayout_RM<(at::native::KReductionType)0>, at::native::BLayo"
+  ],
+  "gemv 4096x4096 tinygemm_k4": [
+   "void at::native::tinygemm_m16n8k16_chunk_kernel<at::native::ALayout_RM<(at::native::KReductionType)0>, at::native::BLayo"
+  ],
+  "gemv 4096x4096 tinygemm_k8": [
+   "void at::native::tinygemm_m16n8k16_chunk_kernel<at::native::ALayout_RM<(at::native::KReductionType)0>, at::native::BLayo"
+  ],
+  "gemv 4096x4096 bnb_nf4": [
+   "void gemm_4bit_simt<__half, 1>(__half const*, unsigned char const*, float const*, unsigned char const*, float const*, fl"
+  ],
+  "attn L4096 sdpa_bf16": [
+   "void pytorch_flash::flash_fwd_splitkv_combine_kernel<Flash_fwd_kernel_traits<128, 64, 128, 4, false, false, cutlass::bfl",
+   "void pytorch_flash::flash_fwd_splitkv_kernel<Flash_fwd_kernel_traits<128, 64, 128, 4, false, false, cutlass::bfloat16_t,"
+  ],
+  "rmsnorm T2048 torch_rmsnorm": [
+   "void at::native::elementwise_kernel<128, 2, at::native::gpu_kernel_impl_nocast<at::native::BinaryFunctor<float, float, f",
+   "void at::native::elementwise_kernel<128, 4, at::native::gpu_kernel_impl<at::native::BinaryFunctor<float, float, float, a",
+   "void at::native::reduce_kernel<512, 1, at::native::ReduceOp<float, at::native::MeanOps<float, float, float, float>, unsi",
+   "void at::native::unrolled_elementwise_kernel<at::native::direct_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda()#3}:",
+   "void at::native::vectorized_elementwise_kernel<4, at::native::(anonymous namespace)::pow_tensor_scalar_kernel_impl<float",
+   "void at::native::vectorized_elementwise_kernel<4, at::native::CUDAFunctorOnSelf_add<float>, std::array<char*, 2ul> >(int",
+   "void at::native::vectorized_elementwise_kernel<4, at::native::bfloat16_copy_kernel_cuda(at::TensorIteratorBase&)::{lambd",
+   "void at::native::vectorized_elementwise_kernel<4, at::native::rsqrt_kernel_cuda(at::TensorIteratorBase&)::{lambda()#2}::"
+  ],
+  "rmsnorm T2048 liger_rmsnorm": [
+   "_rms_norm_forward_kernel"
+  ],
+  "swiglu T512 torch_swiglu": [
+   "void at::native::vectorized_elementwise_kernel<4, at::native::(anonymous namespace)::silu_kernel(at::TensorIteratorBase&",
+   "void at::native::vectorized_elementwise_kernel<4, at::native::BinaryFunctor<c10::BFloat16, c10::BFloat16, c10::BFloat16,"
+  ],
+  "swiglu T512 liger_swiglu": [
+   "_swiglu_forward_kernel"
+  ]
+ }
+}

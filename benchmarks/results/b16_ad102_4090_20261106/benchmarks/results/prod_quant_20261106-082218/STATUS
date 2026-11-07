@@ -1,0 +1,10 @@
+run_r1 rc=0
+run_r2 rc=0
+run_r3 rc=0
+score rc=0
+NVIDIA GeForce RTX 4090 (L2 72 MiB): P-0 PASS
+  4096x4096: S_tinygemm {'zero': 2.947, 'read': 2.857, 'D': 0.0316}; S_bnb {'zero': 2.0, 'read': 2.222, 'D': -0.1}; bias {'tinygemm_k4': 0.4286, 'tinygemm_k8': 0.4286, 'bnb_nf4': 0.5556, 'cublas_fp16': 0.4, 'tinygemm_k2': 0.3571}; faster 4-bit {'zero': 'tinygemm', 'read': 'tinygemm'}; tinygemm pick {'zero': 'tinygemm_k2', 'read': 'tinygemm_k4', 'regret': 0.0}
+  4096x14336: S_tinygemm {'zero': 2.808, 'read': 3.378, 'D': -0.1689}; S_bnb {'zero': 2.116, 'read': 2.404, 'D': -0.1198}; bias {'tinygemm_k4': 0.4054, 'tinygemm_k8': 0.4324, 'bnb_nf4': 0.3269, 'cublas_fp16': 0.168, 'tinygemm_k2': 0.4054}; faster 4-bit {'zero': 'tinygemm', 'read': 'tinygemm'}; tinygemm pick {'zero': 'tinygemm_k4', 'read': 'tinygemm_k4', 'regret': 0.0}
+  14336x4096: S_tinygemm {'zero': 2.808, 'read': 3.378, 'D': -0.1689}; S_bnb {'zero': 2.433, 'read': 2.841, 'D': -0.1435}; bias {'cublas_fp16': 0.168, 'tinygemm_k4': 0.4054, 'tinygemm_k2': 0.4054, 'bnb_nf4': 0.3636, 'tinygemm_k8': 0.4054}; faster 4-bit {'zero': 'tinygemm', 'read': 'tinygemm'}; tinygemm pick {'zero': 'tinygemm_k4', 'read': 'tinygemm_k4', 'regret': 0.0}
+V-1 worst D -0.1689 -> distorted (mixed signs); V-2 -> no flip; V-3 max regret 0.0
+verdict: {"P-0": true, "V-1": "distorted", "V-1 worst D": -0.1689, "V-1 sign": "mixed signs", "V-2": "no flip", "V-3 max regret": 0.0}

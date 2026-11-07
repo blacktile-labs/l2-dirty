@@ -1,0 +1,7 @@
+# Lock written 2026-11-06 before any B18c timing value was read (D-084); smoke used for cell counts only
+6459a2fd76997776ec4a23054b60eb8fa9aeda2486f9dcc62dd86799f9529625  research/HYPOTHESES.md
+1790320875111ac762260afc57661f7182f478ffbccfa164cd8c35bd5ed96fa6  benchmarks/scripts/cleanbench.py
+9d1e66dc82f671da460619cd008e068304515e2a92fccd6c7399c1dbc26e755b  benchmarks/scripts/cleanbench_validate.py
+202ebfc93d2973422ba8f97d4e9956fe2c65828fabecb1011a91c22061321592  benchmarks/scripts/cleanbench_validate.sh
+f6834e06d1b9624ad3aaaa723358b0131e302eb6b496050460703d191738642c  benchmarks/scripts/cleanbench_score.py
+272ff27d638c4ea00b2460cf01eca8b541c27bc9e387420d2e31daca7b62fdb4  benchmarks/scripts/test_cleanbench_score.py

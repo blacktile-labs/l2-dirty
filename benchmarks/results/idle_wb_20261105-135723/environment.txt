@@ -1,0 +1,14 @@
+Thu Nov  5 13:57:23 UTC 2026
+name, driver_version, temperature.gpu, clocks.current.sm [MHz], clocks.current.memory [MHz], pstate
+NVIDIA GeForce RTX 3060 Laptop GPU, 591.74, 52, 1282 MHz, 6000 MHz, P0
+NVIDIA (R) Nsight Compute Command Line Profiler
+Copyright (c) 2018-2024 NVIDIA Corporation
+Version 2024.2.1.0 (build 34372528) (public-release)
+96997fad30312965621b5c43ea214b59c9458751
+?? benchmarks/results/idle_wb_20261105-135723/
+2.7.1+cu126 12.6 3.3.1
+21df26d68c7af17fb57377d2858f9dda13c5a7fe774354a7b22f1d0827984525  benchmarks/scripts/idle_wb_probe.sh
+2d695fc511e0e54c4d058151653cb3a71338829abdbfa98fcb24780337d3fafa  benchmarks/scripts/idle_wb_probe.py
+f89c221b6bf7faa255a5be5293fc70e2aa3d08c7f4a700e551fa0ae3d5be2fab  benchmarks/scripts/torch_opchain.py
+26fb10c66022810c5d29fd9516b98dffffc7c2a8d5729da387d997fa7552dd5f  benchmarks/scripts/idle_wb_score.py
+e7d21047cb71d492393bca1f04047e1ff175179eace83e68b190145c00d50d57  benchmarks/scripts/counter_prereg.py

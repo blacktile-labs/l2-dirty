@@ -1,0 +1,22 @@
+[03:49:04] 0 environment
+[03:49:04] user root, sudo=''
+[03:49:04] 1 toolchain
+[03:51:36] apt rc=0
+nvcc: NVIDIA (R) Cuda compiler driver
+Copyright (c) 2005-2024 NVIDIA Corporation
+Built on Thu_Jun__6_02:18:23_PDT_2024
+Cuda compilation tools, release 12.5, V12.5.82
+Build cuda_12.5.r12.5/compiler.34385749_0
+NVIDIA (R) Nsight Compute Command Line Profiler
+Copyright (c) 2018-2024 NVIDIA Corporation
+Version 2024.2.1.0 (build 34372528) (public-release)
+[03:51:36] 2 build
+[03:51:36] build rc=1
+sha256sum: benchmarks/build/wb_probe: No such file or directory
+[03:51:37] 3 counter permission check
+counter rows: 0
+[03:51:37] 4 B6b
+[03:51:37] B6b rc=2
+[03:51:37] 4 B8
+[03:51:41] B8 rc=0
+[03:51:41] 5 B9b (waiting for the torch venv)

@@ -1,0 +1,9 @@
+Fri Nov  6 06:35:35 UTC 2026
+name, driver_version, temperature.gpu, clocks.current.sm [MHz], clocks.current.memory [MHz], pstate
+NVIDIA GeForce RTX 2060 SUPER, 575.51.03, 44, 300 MHz, 405 MHz, P8
+benchmarks/scripts/dobench_flush_probe.sh: line 18: ncu: command not found
+2.7.1+cu126 12.6 3.3.1
+43177cecd9a9a694ae39f1275874a93580d92adf16afd911c8923b378b364f9e  benchmarks/scripts/dobench_flush_probe.sh
+182c43dabc3d54f8c4f91a4cb41e251dfbe12fd61d061826e10673d331c693e8  benchmarks/scripts/dobench_flush_probe.py
+8c132a4b776e593df594b8c3e4a2c068b464d5608e244c29aaaaee69611fecf5  benchmarks/scripts/dobench_flush_score.py
+e7d21047cb71d492393bca1f04047e1ff175179eace83e68b190145c00d50d57  benchmarks/scripts/counter_prereg.py

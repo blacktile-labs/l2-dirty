@@ -1,0 +1,2 @@
+counters: 180 measured launches over 9 sizes; plan -> benchmarks/results/b7r_opchain_20261105-130359/warm_plan.json
+correctness_failures=0

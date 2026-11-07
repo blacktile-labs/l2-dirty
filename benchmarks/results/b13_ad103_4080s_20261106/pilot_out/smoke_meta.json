@@ -1,0 +1,60 @@
+{
+ "benchmark": "autotune_bias_probe",
+ "device": "NVIDIA GeForce RTX 4080 SUPER",
+ "l2_bytes": 67108864,
+ "torch": "2.7.1+cu126",
+ "triton": "3.3.1",
+ "smoke": true,
+ "run_seed": 0,
+ "warmup_ms": 10,
+ "rep_ms": 50,
+ "rows": [
+  {
+   "shape": [
+    4096,
+    4096
+   ],
+   "cand": "bn16_bk128_w2",
+   "zero_ms": 0.07180799916386604,
+   "read_ms": 0.05119999870657921
+  },
+  {
+   "shape": [
+    4096,
+    4096
+   ],
+   "cand": "bn8_bk128_w2",
+   "zero_ms": 0.07168000191450119,
+   "read_ms": 0.05119999870657921
+  },
+  {
+   "shape": [
+    4096,
+    4096
+   ],
+   "cand": "cublas",
+   "zero_ms": 0.07419200241565704,
+   "read_ms": 0.053119998425245285
+  },
+  {
+   "shape": [
+    4096,
+    4096
+   ],
+   "cand": "bn64_bk128_w2",
+   "zero_ms": 0.0727040022611618,
+   "read_ms": 0.05135999992489815
+  },
+  {
+   "shape": [
+    4096,
+    4096
+   ],
+   "cand": "bn32_bk128_w2",
+   "zero_ms": 0.07168000191450119,
+   "read_ms": 0.05119999870657921
+  }
+ ],
+ "invalid": [],
+ "n_candidates": 5
+}

@@ -1,0 +1,9 @@
+run_r1 rc=0
+run_r2 rc=0
+run_r3 rc=0
+score rc=0
+NVIDIA A100-SXM4-40GB (L2 40 MiB): U-0 {'correctness': True, 'fp16 and int4 captured': True, 'stable steps': True} -> PASS
+T {'fp16': 1274.88, 'int4': 456.7, 'nf4': 716.8} · E {'fp16 write': 0.2627, 'fp16 cold': 0.0522, 'fp16 steady': 0.0602, 'fp16 l2w': 0.2627, 'int4 write': 0.4619, 'int4 cold': 0.1749, 'int4 steady': 0.1659, 'int4 l2w': 0.4709, 'nf4 write': 0.1714, 'nf4 cold': 0.1257, 'nf4 steady': 0.0971, 'nf4 l2w': 0.4571}
+D {'int4 write': -0.1363, 'int4 cold': -0.1044, 'int4 steady': -0.0906, 'int4 l2w': -0.1416, 'nf4 write': 0.0779, 'nf4 cold': -0.0653, 'nf4 steady': -0.0336, 'nf4 l2w': -0.1335}
+verdict: {"U-0": true, "U-1": "not", "U-2": "the shipped write flush over-predicts the step", "U-3": "not"}
+results: benchmarks/results/e2e_20261106-164549

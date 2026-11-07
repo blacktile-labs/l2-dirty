@@ -1,0 +1,400 @@
+{
+ "device": "NVIDIA GeForce RTX 3060 Laptop GPU",
+ "l2_bytes": 3145728,
+ "H-0": true,
+ "H-0 parts": {
+  "correctness": true,
+  "control writes": true,
+  "gemv4 after pr256 leaves no dirty data": true,
+  "gemv4 after pr256 reads its weight": true,
+  "e_large after pr256 reads its input": true
+ },
+ "X (residue / L2)": 0.4989,
+ "H-0e": true,
+ "H-1 ratio": 0.9463,
+ "H-1": "waiting does not remove the residue",
+ "H-2 d": 0.0056,
+ "H-2": "write-then-read removes the residue",
+ "H-3a r": 1.0052,
+ "H-3a": "sufficient",
+ "H-3b r": 1.0003,
+ "H-3b": "sufficient at footprint 0.25 L2",
+ "H-3c min r": 1.0003,
+ "H-3c": "a 2 x L2 read flush suffices",
+ "H-4a ow": 0.0,
+ "H-4a": "a read flush keeps a small kernel's own write-back out of its window",
+ "H-4b ow": 0.987,
+ "H-4b": "rotation charges about one output per call",
+ "H-4c ow": 0.7495,
+ "H-4c": "a kernel with output > L2/2 pays most of its own write-back",
+ "cells": {
+  "e_large none": {
+   "w (write/L2)": 1.9897,
+   "r (read/input)": 1.0007,
+   "ow (write/output)": 0.9948,
+   "n": 15
+  },
+  "e_large pr256": {
+   "w (write/L2)": 1.4991,
+   "r (read/input)": 1.0,
+   "ow (write/output)": 0.7495,
+   "n": 15
+  },
+  "e_large pr2L2": {
+   "w (write/L2)": 1.5618,
+   "r (read/input)": 1.0,
+   "ow (write/output)": 0.7809,
+   "n": 15
+  },
+  "e_large prL2": {
+   "w (write/L2)": 1.7624,
+   "r (read/input)": 1.0,
+   "ow (write/output)": 0.8812,
+   "n": 15
+  },
+  "e_large rotate": {
+   "w (write/L2)": 2.0092,
+   "r (read/input)": 1.0,
+   "ow (write/output)": 1.0046,
+   "n": 15
+  },
+  "e_large sum256": {
+   "w (write/L2)": 1.5017,
+   "r (read/input)": 1.0,
+   "ow (write/output)": 0.7509,
+   "n": 15
+  },
+  "e_large zero256": {
+   "w (write/L2)": 1.9931,
+   "r (read/input)": 1.0001,
+   "ow (write/output)": 0.9966,
+   "n": 15
+  },
+  "e_large zero256_read": {
+   "w (write/L2)": 1.5003,
+   "r (read/input)": 1.0,
+   "ow (write/output)": 0.7502,
+   "n": 15
+  },
+  "e_large zero256_wait": {
+   "w (write/L2)": 1.9654,
+   "r (read/input)": 1.0,
+   "ow (write/output)": 0.9827,
+   "n": 15
+  },
+  "e_large zeroL2": {
+   "w (write/L2)": 1.9893,
+   "r (read/input)": 1.0,
+   "ow (write/output)": 0.9947,
+   "n": 15
+  },
+  "e_small none": {
+   "w (write/L2)": 0.0,
+   "r (read/input)": 0.0208,
+   "ow (write/output)": 0.0,
+   "n": 15
+  },
+  "e_small pr256": {
+   "w (write/L2)": 0.0,
+   "r (read/input)": 1.0003,
+   "ow (write/output)": 0.0,
+   "n": 15
+  },
+  "e_small pr2L2": {
+   "w (write/L2)": 0.0001,
+   "r (read/input)": 1.0003,
+   "ow (write/output)": 0.0007,
+   "n": 15
+  },
+  "e_small prL2": {
+   "w (write/L2)": 0.0557,
+   "r (read/input)": 1.0003,
+   "ow (write/output)": 0.4456,
+   "n": 15
+  },
+  "e_small rotate": {
+   "w (write/L2)": 0.1234,
+   "r (read/input)": 1.0417,
+   "ow (write/output)": 0.987,
+   "n": 15
+  },
+  "e_small sum256": {
+   "w (write/L2)": 0.0,
+   "r (read/input)": 1.0003,
+   "ow (write/output)": 0.0,
+   "n": 15
+  },
+  "e_small zero256": {
+   "w (write/L2)": 0.1389,
+   "r (read/input)": 1.0003,
+   "ow (write/output)": 1.111,
+   "n": 15
+  },
+  "e_small zero256_read": {
+   "w (write/L2)": 0.0,
+   "r (read/input)": 1.0003,
+   "ow (write/output)": 0.0,
+   "n": 15
+  },
+  "e_small zero256_wait": {
+   "w (write/L2)": 0.1152,
+   "r (read/input)": 1.0007,
+   "ow (write/output)": 0.9212,
+   "n": 15
+  },
+  "e_small zeroL2": {
+   "w (write/L2)": 0.1938,
+   "r (read/input)": 1.0003,
+   "ow (write/output)": 1.5508,
+   "n": 15
+  },
+  "e_tiny none": {
+   "w (write/L2)": 0.0,
+   "r (read/input)": 0.0,
+   "ow (write/output)": 0.0,
+   "n": 15
+  },
+  "e_tiny pr256": {
+   "w (write/L2)": 0.0,
+   "r (read/input)": 1.0052,
+   "ow (write/output)": 0.0,
+   "n": 15
+  },
+  "e_tiny pr2L2": {
+   "w (write/L2)": 0.0019,
+   "r (read/input)": 1.0052,
+   "ow (write/output)": 0.2396,
+   "n": 15
+  },
+  "e_tiny prL2": {
+   "w (write/L2)": 0.0062,
+   "r (read/input)": 1.0052,
+   "ow (write/output)": 0.7917,
+   "n": 15
+  },
+  "e_tiny rotate": {
+   "w (write/L2)": 0.0055,
+   "r (read/input)": 1.0,
+   "ow (write/output)": 0.7083,
+   "n": 15
+  },
+  "e_tiny sum256": {
+   "w (write/L2)": 0.0,
+   "r (read/input)": 1.0156,
+   "ow (write/output)": 0.0,
+   "n": 15
+  },
+  "e_tiny zero256": {
+   "w (write/L2)": 0.0137,
+   "r (read/input)": 1.0052,
+   "ow (write/output)": 1.75,
+   "n": 15
+  },
+  "e_tiny zero256_read": {
+   "w (write/L2)": 0.0,
+   "r (read/input)": 1.0052,
+   "ow (write/output)": 0.0,
+   "n": 15
+  },
+  "e_tiny zero256_wait": {
+   "w (write/L2)": 0.0096,
+   "r (read/input)": 1.0052,
+   "ow (write/output)": 1.2292,
+   "n": 15
+  },
+  "e_tiny zeroL2": {
+   "w (write/L2)": 0.0156,
+   "r (read/input)": 0.8854,
+   "ow (write/output)": 2.0,
+   "n": 15
+  },
+  "gemv4 none": {
+   "w (write/L2)": 0.0057,
+   "r (read/input)": 1.0014,
+   "ow (write/output)": 5.7917,
+   "n": 15
+  },
+  "gemv4 pr256": {
+   "w (write/L2)": 0.0027,
+   "r (read/input)": 1.0013,
+   "ow (write/output)": 2.7917,
+   "n": 15
+  },
+  "gemv4 pr2L2": {
+   "w (write/L2)": 0.0019,
+   "r (read/input)": 1.0013,
+   "ow (write/output)": 1.9167,
+   "n": 15
+  },
+  "gemv4 prL2": {
+   "w (write/L2)": 0.0045,
+   "r (read/input)": 1.0013,
+   "ow (write/output)": 4.5833,
+   "n": 15
+  },
+  "gemv4 rotate": {
+   "w (write/L2)": 0.0122,
+   "r (read/input)": 1.0013,
+   "ow (write/output)": 12.4583,
+   "n": 15
+  },
+  "gemv4 sum256": {
+   "w (write/L2)": 0.0031,
+   "r (read/input)": 1.0013,
+   "ow (write/output)": 3.1667,
+   "n": 15
+  },
+  "gemv4 zero256": {
+   "w (write/L2)": 0.5016,
+   "r (read/input)": 1.0013,
+   "ow (write/output)": 513.6667,
+   "n": 15
+  },
+  "gemv4 zero256_read": {
+   "w (write/L2)": 0.0083,
+   "r (read/input)": 1.0013,
+   "ow (write/output)": 8.5417,
+   "n": 15
+  },
+  "gemv4 zero256_wait": {
+   "w (write/L2)": 0.4749,
+   "r (read/input)": 1.0013,
+   "ow (write/output)": 486.25,
+   "n": 15
+  },
+  "gemv4 zeroL2": {
+   "w (write/L2)": 0.5876,
+   "r (read/input)": 1.0013,
+   "ow (write/output)": 601.6667,
+   "n": 15
+  }
+ },
+ "zeroL2 residue / L2 (gemv4, descriptive)": 0.5848,
+ "sum256 - pr256 write / L2 (gemv4, descriptive)": 0.0004,
+ "timing (descriptive)": {
+  "e_large": {
+   "none": {
+    "median_us": 52.224,
+    "mean_us": 59.093,
+    "bias_vs_pr256_median": 0.1333,
+    "n": 180
+   },
+   "pr256": {
+    "median_us": 46.08,
+    "mean_us": 46.154,
+    "bias_vs_pr256_median": 0.0,
+    "n": 180
+   },
+   "pr2L2": {
+    "median_us": 52.224,
+    "mean_us": 60.853,
+    "bias_vs_pr256_median": 0.1333,
+    "n": 180
+   },
+   "prL2": {
+    "median_us": 67.072,
+    "mean_us": 69.1,
+    "bias_vs_pr256_median": 0.4556,
+    "n": 180
+   },
+   "rotate": {
+    "median_us": 52.224,
+    "mean_us": 56.388,
+    "bias_vs_pr256_median": 0.1333,
+    "n": 180
+   },
+   "sum256": {
+    "median_us": 46.08,
+    "mean_us": 45.915,
+    "bias_vs_pr256_median": 0.0,
+    "n": 180
+   },
+   "zero256": {
+    "median_us": 52.224,
+    "mean_us": 52.577,
+    "bias_vs_pr256_median": 0.1333,
+    "n": 180
+   },
+   "zero256_read": {
+    "median_us": 46.08,
+    "mean_us": 46.103,
+    "bias_vs_pr256_median": 0.0,
+    "n": 180
+   },
+   "zero256_wait": {
+    "median_us": 161.232,
+    "mean_us": 175.25,
+    "bias_vs_pr256_median": 2.499,
+    "n": 180
+   },
+   "zeroL2": {
+    "median_us": 52.224,
+    "mean_us": 58.873,
+    "bias_vs_pr256_median": 0.1333,
+    "n": 180
+   }
+  },
+  "gemv4": {
+   "none": {
+    "median_us": 78.848,
+    "mean_us": 90.03,
+    "bias_vs_pr256_median": 0.375,
+    "n": 180
+   },
+   "pr256": {
+    "median_us": 57.344,
+    "mean_us": 57.401,
+    "bias_vs_pr256_median": 0.0,
+    "n": 180
+   },
+   "pr2L2": {
+    "median_us": 96.256,
+    "mean_us": 96.527,
+    "bias_vs_pr256_median": 0.6786,
+    "n": 180
+   },
+   "prL2": {
+    "median_us": 97.28,
+    "mean_us": 100.397,
+    "bias_vs_pr256_median": 0.6964,
+    "n": 180
+   },
+   "rotate": {
+    "median_us": 78.848,
+    "mean_us": 88.468,
+    "bias_vs_pr256_median": 0.375,
+    "n": 180
+   },
+   "sum256": {
+    "median_us": 56.32,
+    "mean_us": 56.889,
+    "bias_vs_pr256_median": -0.0179,
+    "n": 180
+   },
+   "zero256": {
+    "median_us": 63.488,
+    "mean_us": 63.75,
+    "bias_vs_pr256_median": 0.1071,
+    "n": 180
+   },
+   "zero256_read": {
+    "median_us": 57.344,
+    "mean_us": 57.247,
+    "bias_vs_pr256_median": 0.0,
+    "n": 180
+   },
+   "zero256_wait": {
+    "median_us": 275.968,
+    "mean_us": 308.608,
+    "bias_vs_pr256_median": 3.8125,
+    "n": 180
+   },
+   "zeroL2": {
+    "median_us": 95.232,
+    "mean_us": 98.178,
+    "bias_vs_pr256_median": 0.6607,
+    "n": 180
+   }
+  }
+ }
+}

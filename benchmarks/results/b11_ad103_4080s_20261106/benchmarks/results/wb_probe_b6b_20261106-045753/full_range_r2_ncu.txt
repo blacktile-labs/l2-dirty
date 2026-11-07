@@ -1,0 +1,37 @@
+==WARNING== Please consult the documentation for current range-based replay mode limitations and requirements.
+==WARNING== Note: Running with uncontrolled GPU caches. Profiling results may be inconsistent.
+==WARNING== Note: Running with unmodified GPU clocks. If not controlled otherwise, profiling results may be inconsistent.
+==PROF== Connected to process 4273 (/root/dmkl/benchmarks/build/wb_probe)
+==PROF== Profiling "range" - 0: Application replay pass 1
+==PROF== Profiling "range" - 1: Application replay pass 1
+==PROF== Profiling "range" - 2: Application replay pass 1
+==PROF== Profiling "range" - 3: Application replay pass 1
+==PROF== Profiling "range" - 4: Application replay pass 1
+==PROF== Profiling "range" - 5: Application replay pass 1
+==PROF== Profiling "range" - 6: Application replay pass 1
+==PROF== Profiling "range" - 7: Application replay pass 1
+==PROF== Profiling "range" - 8: Application replay pass 1
+==PROF== Profiling "range" - 9: Application replay pass 1
+==PROF== Profiling "range" - 10: Application replay pass 1
+==PROF== Profiling "range" - 11: Application replay pass 1
+==PROF== Profiling "range" - 12: Application replay pass 1
+==PROF== Profiling "range" - 13: Application replay pass 1
+==PROF== Profiling "range" - 14: Application replay pass 1
+r=0       w=0.1875  nc=0        nd=3145728  ok
+r=0.5     w=0.1875  nc=8388608  nd=3145728  ok
+r=0.625   w=0.1875  nc=10485760 nd=3145728  ok
+r=0.6875  w=0.1875  nc=11534336 nd=3145728  ok
+r=0       w=0.3125  nc=0        nd=5242880  ok
+r=0.375   w=0.3125  nc=6291456  nd=5242880  ok
+r=0.5     w=0.3125  nc=8388608  nd=5242880  ok
+r=0.5625  w=0.3125  nc=9437184  nd=5242880  ok
+r=0       w=0.4375  nc=0        nd=7340032  ok
+r=0       w=0.5     nc=0        nd=8388608  ok
+r=0       w=0.5625  nc=0        nd=9437184  ok
+r=0       w=0.625   nc=0        nd=10485760 ok
+r=0       w=0.6875  nc=0        nd=11534336 ok
+r=2       w=0       nc=33554432 nd=0        ok
+r=0       w=2       nc=0        nd=33554432 ok
+correctness_failures=0
+==PROF== Disconnected from process 4273
+==PROF== Report: /root/dmkl/benchmarks/results/wb_probe_b6b_20261106-045753/full_range_r2.ncu-rep

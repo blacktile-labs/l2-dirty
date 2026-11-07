@@ -1,0 +1,17 @@
+==WARNING== Please consult the documentation for current range-based replay mode limitations and requirements.
+==WARNING== Note: Running with uncontrolled GPU caches. Profiling results may be inconsistent.
+==WARNING== Note: Running with unmodified GPU clocks. If not controlled otherwise, profiling results may be inconsistent.
+==PROF== Connected to process 4877 (/root/dmkl/benchmarks/build/wb_probe)
+==PROF== Profiling "range" - 0: Application replay pass 1
+==PROF== Profiling "range" - 1: Application replay pass 1
+==PROF== Profiling "range" - 2: Application replay pass 1
+==PROF== Profiling "range" - 3: Application replay pass 1
+==PROF== Profiling "range" - 4: Application replay pass 1
+r=0       w=0.375   nc=0        nd=6291456  ok
+r=0       w=0.625   nc=0        nd=10485760 ok
+r=0       w=0.75    nc=0        nd=12582912 ok
+r=0       w=0.875   nc=0        nd=14680064 ok
+r=0       w=2       nc=0        nd=33554432 ok
+correctness_failures=0
+==PROF== Disconnected from process 4877
+==PROF== Report: /root/dmkl/benchmarks/results/wb_probe_b6b_20261106-045753/sector_range_r1.ncu-rep

@@ -1,0 +1,4 @@
+WARNING:2026-11-06 09:16:42 2303:2303 init.cpp:107] function cbapi->getCuptiStatus() failed with error CUPTI_ERROR_INVALID_DEVICE (2)
+WARNING:2026-11-06 09:16:42 2303:2303 init.cpp:108] CUPTI initialization failed - CUDA profiler activities will be missing
+INFO:2026-11-06 09:16:42 2303:2303 init.cpp:110] If you see CUPTI_ERROR_INSUFFICIENT_PRIVILEGES, refer to https://developer.nvidia.com/nvidia-development-tools-solutions-err-nvgpuctrperm-cupti
+26 rows, 0 invalid, ptx {'ld_volatile_global': 2, 'ld_global': 0, 'st_global': 0, 'buffer_unchanged': True}, notes {}

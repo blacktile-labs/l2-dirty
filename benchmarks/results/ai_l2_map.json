@@ -1,0 +1,1408 @@
+{
+ "gpus": [
+  [
+   "RTX 3060 Laptop (GA106)",
+   3145728,
+   "measured"
+  ],
+  [
+   "RTX 2060S (TU106)",
+   4194304,
+   "measured"
+  ],
+  [
+   "RTX 3090 (GA102)",
+   6291456,
+   "measured"
+  ],
+  [
+   "RTX 4060 (AD107)",
+   25165824,
+   "measured"
+  ],
+  [
+   "A100 (GA100)",
+   41943040,
+   "spec"
+  ],
+  [
+   "H100 SXM (GH100)",
+   52428800,
+   "spec"
+  ],
+  [
+   "RTX 4080S (AD103)",
+   67108864,
+   "measured"
+  ]
+ ],
+ "configs": [
+  [
+   "d2048",
+   2048,
+   16,
+   16,
+   5632
+  ],
+  [
+   "d4096",
+   4096,
+   32,
+   8,
+   14336
+  ],
+  [
+   "d8192",
+   8192,
+   64,
+   8,
+   28672
+  ]
+ ],
+ "rows": [
+  {
+   "config": "d2048",
+   "phase": "decode",
+   "T": 1,
+   "tensor": "T x d (norm, attn-out, residual)",
+   "bytes": 4096,
+   "zones": {
+    "RTX 3060 Laptop (GA106)": "L2",
+    "RTX 2060S (TU106)": "L2",
+    "RTX 3090 (GA102)": "L2",
+    "RTX 4060 (AD107)": "L2",
+    "A100 (GA100)": "L2",
+    "H100 SXM (GH100)": "L2",
+    "RTX 4080S (AD103)": "L2"
+   }
+  },
+  {
+   "config": "d2048",
+   "phase": "decode",
+   "T": 1,
+   "tensor": "qkv",
+   "bytes": 12288,
+   "zones": {
+    "RTX 3060 Laptop (GA106)": "L2",
+    "RTX 2060S (TU106)": "L2",
+    "RTX 3090 (GA102)": "L2",
+    "RTX 4060 (AD107)": "L2",
+    "A100 (GA100)": "L2",
+    "H100 SXM (GH100)": "L2",
+    "RTX 4080S (AD103)": "L2"
+   }
+  },
+  {
+   "config": "d2048",
+   "phase": "decode",
+   "T": 1,
+   "tensor": "gate+up (T x 2 d_ff)",
+   "bytes": 22528,
+   "zones": {
+    "RTX 3060 Laptop (GA106)": "L2",
+    "RTX 2060S (TU106)": "L2",
+    "RTX 3090 (GA102)": "L2",
+    "RTX 4060 (AD107)": "L2",
+    "A100 (GA100)": "L2",
+    "H100 SXM (GH100)": "L2",
+    "RTX 4080S (AD103)": "L2"
+   }
+  },
+  {
+   "config": "d2048",
+   "phase": "decode",
+   "T": 1,
+   "tensor": "act (T x d_ff)",
+   "bytes": 11264,
+   "zones": {
+    "RTX 3060 Laptop (GA106)": "L2",
+    "RTX 2060S (TU106)": "L2",
+    "RTX 3090 (GA102)": "L2",
+    "RTX 4060 (AD107)": "L2",
+    "A100 (GA100)": "L2",
+    "H100 SXM (GH100)": "L2",
+    "RTX 4080S (AD103)": "L2"
+   }
+  },
+  {
+   "config": "d2048",
+   "phase": "decode",
+   "T": 8,
+   "tensor": "T x d (norm, attn-out, residual)",
+   "bytes": 32768,
+   "zones": {
+    "RTX 3060 Laptop (GA106)": "L2",
+    "RTX 2060S (TU106)": "L2",
+    "RTX 3090 (GA102)": "L2",
+    "RTX 4060 (AD107)": "L2",
+    "A100 (GA100)": "L2",
+    "H100 SXM (GH100)": "L2",
+    "RTX 4080S (AD103)": "L2"
+   }
+  },
+  {
+   "config": "d2048",
+   "phase": "decode",
+   "T": 8,
+   "tensor": "qkv",
+   "bytes": 98304,
+   "zones": {
+    "RTX 3060 Laptop (GA106)": "L2",
+    "RTX 2060S (TU106)": "L2",
+    "RTX 3090 (GA102)": "L2",
+    "RTX 4060 (AD107)": "L2",
+    "A100 (GA100)": "L2",
+    "H100 SXM (GH100)": "L2",
+    "RTX 4080S (AD103)": "L2"
+   }
+  },
+  {
+   "config": "d2048",
+   "phase": "decode",
+   "T": 8,
+   "tensor": "gate+up (T x 2 d_ff)",
+   "bytes": 180224,
+   "zones": {
+    "RTX 3060 Laptop (GA106)": "L2",
+    "RTX 2060S (TU106)": "L2",
+    "RTX 3090 (GA102)": "L2",
+    "RTX 4060 (AD107)": "L2",
+    "A100 (GA100)": "L2",
+    "H100 SXM (GH100)": "L2",
+    "RTX 4080S (AD103)": "L2"
+   }
+  },
+  {
+   "config": "d2048",
+   "phase": "decode",
+   "T": 8,
+   "tensor": "act (T x d_ff)",
+   "bytes": 90112,
+   "zones": {
+    "RTX 3060 Laptop (GA106)": "L2",
+    "RTX 2060S (TU106)": "L2",
+    "RTX 3090 (GA102)": "L2",
+    "RTX 4060 (AD107)": "L2",
+    "A100 (GA100)": "L2",
+    "H100 SXM (GH100)": "L2",
+    "RTX 4080S (AD103)": "L2"
+   }
+  },
+  {
+   "config": "d2048",
+   "phase": "decode",
+   "T": 32,
+   "tensor": "T x d (norm, attn-out, residual)",
+   "bytes": 131072,
+   "zones": {
+    "RTX 3060 Laptop (GA106)": "L2",
+    "RTX 2060S (TU106)": "L2",
+    "RTX 3090 (GA102)": "L2",
+    "RTX 4060 (AD107)": "L2",
+    "A100 (GA100)": "L2",
+    "H100 SXM (GH100)": "L2",
+    "RTX 4080S (AD103)": "L2"
+   }
+  },
+  {
+   "config": "d2048",
+   "phase": "decode",
+   "T": 32,
+   "tensor": "qkv",
+   "bytes": 393216,
+   "zones": {
+    "RTX 3060 Laptop (GA106)": "L2",
+    "RTX 2060S (TU106)": "L2",
+    "RTX 3090 (GA102)": "L2",
+    "RTX 4060 (AD107)": "L2",
+    "A100 (GA100)": "L2",
+    "H100 SXM (GH100)": "L2",
+    "RTX 4080S (AD103)": "L2"
+   }
+  },
+  {
+   "config": "d2048",
+   "phase": "decode",
+   "T": 32,
+   "tensor": "gate+up (T x 2 d_ff)",
+   "bytes": 720896,
+   "zones": {
+    "RTX 3060 Laptop (GA106)": "L2",
+    "RTX 2060S (TU106)": "L2",
+    "RTX 3090 (GA102)": "L2",
+    "RTX 4060 (AD107)": "L2",
+    "A100 (GA100)": "L2",
+    "H100 SXM (GH100)": "L2",
+    "RTX 4080S (AD103)": "L2"
+   }
+  },
+  {
+   "config": "d2048",
+   "phase": "decode",
+   "T": 32,
+   "tensor": "act (T x d_ff)",
+   "bytes": 360448,
+   "zones": {
+    "RTX 3060 Laptop (GA106)": "L2",
+    "RTX 2060S (TU106)": "L2",
+    "RTX 3090 (GA102)": "L2",
+    "RTX 4060 (AD107)": "L2",
+    "A100 (GA100)": "L2",
+    "H100 SXM (GH100)": "L2",
+    "RTX 4080S (AD103)": "L2"
+   }
+  },
+  {
+   "config": "d2048",
+   "phase": "decode",
+   "T": 128,
+   "tensor": "T x d (norm, attn-out, residual)",
+   "bytes": 524288,
+   "zones": {
+    "RTX 3060 Laptop (GA106)": "L2",
+    "RTX 2060S (TU106)": "L2",
+    "RTX 3090 (GA102)": "L2",
+    "RTX 4060 (AD107)": "L2",
+    "A100 (GA100)": "L2",
+    "H100 SXM (GH100)": "L2",
+    "RTX 4080S (AD103)": "L2"
+   }
+  },
+  {
+   "config": "d2048",
+   "phase": "decode",
+   "T": 128,
+   "tensor": "qkv",
+   "bytes": 1572864,
+   "zones": {
+    "RTX 3060 Laptop (GA106)": "L2",
+    "RTX 2060S (TU106)": "L2",
+    "RTX 3090 (GA102)": "L2",
+    "RTX 4060 (AD107)": "L2",
+    "A100 (GA100)": "L2",
+    "H100 SXM (GH100)": "L2",
+    "RTX 4080S (AD103)": "L2"
+   }
+  },
+  {
+   "config": "d2048",
+   "phase": "decode",
+   "T": 128,
+   "tensor": "gate+up (T x 2 d_ff)",
+   "bytes": 2883584,
+   "zones": {
+    "RTX 3060 Laptop (GA106)": "edge",
+    "RTX 2060S (TU106)": "edge",
+    "RTX 3090 (GA102)": "L2",
+    "RTX 4060 (AD107)": "L2",
+    "A100 (GA100)": "L2",
+    "H100 SXM (GH100)": "L2",
+    "RTX 4080S (AD103)": "L2"
+   }
+  },
+  {
+   "config": "d2048",
+   "phase": "decode",
+   "T": 128,
+   "tensor": "act (T x d_ff)",
+   "bytes": 1441792,
+   "zones": {
+    "RTX 3060 Laptop (GA106)": "L2",
+    "RTX 2060S (TU106)": "L2",
+    "RTX 3090 (GA102)": "L2",
+    "RTX 4060 (AD107)": "L2",
+    "A100 (GA100)": "L2",
+    "H100 SXM (GH100)": "L2",
+    "RTX 4080S (AD103)": "L2"
+   }
+  },
+  {
+   "config": "d2048",
+   "phase": "prefill",
+   "T": 512,
+   "tensor": "T x d (norm, attn-out, residual)",
+   "bytes": 2097152,
+   "zones": {
+    "RTX 3060 Laptop (GA106)": "edge",
+    "RTX 2060S (TU106)": "L2",
+    "RTX 3090 (GA102)": "L2",
+    "RTX 4060 (AD107)": "L2",
+    "A100 (GA100)": "L2",
+    "H100 SXM (GH100)": "L2",
+    "RTX 4080S (AD103)": "L2"
+   }
+  },
+  {
+   "config": "d2048",
+   "phase": "prefill",
+   "T": 512,
+   "tensor": "qkv",
+   "bytes": 6291456,
+   "zones": {
+    "RTX 3060 Laptop (GA106)": "DRAM",
+    "RTX 2060S (TU106)": "DRAM",
+    "RTX 3090 (GA102)": "edge",
+    "RTX 4060 (AD107)": "L2",
+    "A100 (GA100)": "L2",
+    "H100 SXM (GH100)": "L2",
+    "RTX 4080S (AD103)": "L2"
+   }
+  },
+  {
+   "config": "d2048",
+   "phase": "prefill",
+   "T": 512,
+   "tensor": "gate+up (T x 2 d_ff)",
+   "bytes": 11534336,
+   "zones": {
+    "RTX 3060 Laptop (GA106)": "DRAM",
+    "RTX 2060S (TU106)": "DRAM",
+    "RTX 3090 (GA102)": "DRAM",
+    "RTX 4060 (AD107)": "L2",
+    "A100 (GA100)": "L2",
+    "H100 SXM (GH100)": "L2",
+    "RTX 4080S (AD103)": "L2"
+   }
+  },
+  {
+   "config": "d2048",
+   "phase": "prefill",
+   "T": 512,
+   "tensor": "act (T x d_ff)",
+   "bytes": 5767168,
+   "zones": {
+    "RTX 3060 Laptop (GA106)": "DRAM",
+    "RTX 2060S (TU106)": "DRAM",
+    "RTX 3090 (GA102)": "edge",
+    "RTX 4060 (AD107)": "L2",
+    "A100 (GA100)": "L2",
+    "H100 SXM (GH100)": "L2",
+    "RTX 4080S (AD103)": "L2"
+   }
+  },
+  {
+   "config": "d2048",
+   "phase": "prefill",
+   "T": 2048,
+   "tensor": "T x d (norm, attn-out, residual)",
+   "bytes": 8388608,
+   "zones": {
+    "RTX 3060 Laptop (GA106)": "DRAM",
+    "RTX 2060S (TU106)": "DRAM",
+    "RTX 3090 (GA102)": "DRAM",
+    "RTX 4060 (AD107)": "L2",
+    "A100 (GA100)": "L2",
+    "H100 SXM (GH100)": "L2",
+    "RTX 4080S (AD103)": "L2"
+   }
+  },
+  {
+   "config": "d2048",
+   "phase": "prefill",
+   "T": 2048,
+   "tensor": "qkv",
+   "bytes": 25165824,
+   "zones": {
+    "RTX 3060 Laptop (GA106)": "DRAM",
+    "RTX 2060S (TU106)": "DRAM",
+    "RTX 3090 (GA102)": "DRAM",
+    "RTX 4060 (AD107)": "edge",
+    "A100 (GA100)": "edge",
+    "H100 SXM (GH100)": "L2",
+    "RTX 4080S (AD103)": "L2"
+   }
+  },
+  {
+   "config": "d2048",
+   "phase": "prefill",
+   "T": 2048,
+   "tensor": "gate+up (T x 2 d_ff)",
+   "bytes": 46137344,
+   "zones": {
+    "RTX 3060 Laptop (GA106)": "DRAM",
+    "RTX 2060S (TU106)": "DRAM",
+    "RTX 3090 (GA102)": "DRAM",
+    "RTX 4060 (AD107)": "DRAM",
+    "A100 (GA100)": "DRAM",
+    "H100 SXM (GH100)": "edge",
+    "RTX 4080S (AD103)": "edge"
+   }
+  },
+  {
+   "config": "d2048",
+   "phase": "prefill",
+   "T": 2048,
+   "tensor": "act (T x d_ff)",
+   "bytes": 23068672,
+   "zones": {
+    "RTX 3060 Laptop (GA106)": "DRAM",
+    "RTX 2060S (TU106)": "DRAM",
+    "RTX 3090 (GA102)": "DRAM",
+    "RTX 4060 (AD107)": "edge",
+    "A100 (GA100)": "edge",
+    "H100 SXM (GH100)": "L2",
+    "RTX 4080S (AD103)": "L2"
+   }
+  },
+  {
+   "config": "d2048",
+   "phase": "prefill",
+   "T": 8192,
+   "tensor": "T x d (norm, attn-out, residual)",
+   "bytes": 33554432,
+   "zones": {
+    "RTX 3060 Laptop (GA106)": "DRAM",
+    "RTX 2060S (TU106)": "DRAM",
+    "RTX 3090 (GA102)": "DRAM",
+    "RTX 4060 (AD107)": "DRAM",
+    "A100 (GA100)": "edge",
+    "H100 SXM (GH100)": "edge",
+    "RTX 4080S (AD103)": "L2"
+   }
+  },
+  {
+   "config": "d2048",
+   "phase": "prefill",
+   "T": 8192,
+   "tensor": "qkv",
+   "bytes": 100663296,
+   "zones": {
+    "RTX 3060 Laptop (GA106)": "DRAM",
+    "RTX 2060S (TU106)": "DRAM",
+    "RTX 3090 (GA102)": "DRAM",
+    "RTX 4060 (AD107)": "DRAM",
+    "A100 (GA100)": "DRAM",
+    "H100 SXM (GH100)": "DRAM",
+    "RTX 4080S (AD103)": "DRAM"
+   }
+  },
+  {
+   "config": "d2048",
+   "phase": "prefill",
+   "T": 8192,
+   "tensor": "gate+up (T x 2 d_ff)",
+   "bytes": 184549376,
+   "zones": {
+    "RTX 3060 Laptop (GA106)": "DRAM",
+    "RTX 2060S (TU106)": "DRAM",
+    "RTX 3090 (GA102)": "DRAM",
+    "RTX 4060 (AD107)": "DRAM",
+    "A100 (GA100)": "DRAM",
+    "H100 SXM (GH100)": "DRAM",
+    "RTX 4080S (AD103)": "DRAM"
+   }
+  },
+  {
+   "config": "d2048",
+   "phase": "prefill",
+   "T": 8192,
+   "tensor": "act (T x d_ff)",
+   "bytes": 92274688,
+   "zones": {
+    "RTX 3060 Laptop (GA106)": "DRAM",
+    "RTX 2060S (TU106)": "DRAM",
+    "RTX 3090 (GA102)": "DRAM",
+    "RTX 4060 (AD107)": "DRAM",
+    "A100 (GA100)": "DRAM",
+    "H100 SXM (GH100)": "DRAM",
+    "RTX 4080S (AD103)": "DRAM"
+   }
+  },
+  {
+   "config": "d4096",
+   "phase": "decode",
+   "T": 1,
+   "tensor": "T x d (norm, attn-out, residual)",
+   "bytes": 8192,
+   "zones": {
+    "RTX 3060 Laptop (GA106)": "L2",
+    "RTX 2060S (TU106)": "L2",
+    "RTX 3090 (GA102)": "L2",
+    "RTX 4060 (AD107)": "L2",
+    "A100 (GA100)": "L2",
+    "H100 SXM (GH100)": "L2",
+    "RTX 4080S (AD103)": "L2"
+   }
+  },
+  {
+   "config": "d4096",
+   "phase": "decode",
+   "T": 1,
+   "tensor": "qkv",
+   "bytes": 12288,
+   "zones": {
+    "RTX 3060 Laptop (GA106)": "L2",
+    "RTX 2060S (TU106)": "L2",
+    "RTX 3090 (GA102)": "L2",
+    "RTX 4060 (AD107)": "L2",
+    "A100 (GA100)": "L2",
+    "H100 SXM (GH100)": "L2",
+    "RTX 4080S (AD103)": "L2"
+   }
+  },
+  {
+   "config": "d4096",
+   "phase": "decode",
+   "T": 1,
+   "tensor": "gate+up (T x 2 d_ff)",
+   "bytes": 57344,
+   "zones": {
+    "RTX 3060 Laptop (GA106)": "L2",
+    "RTX 2060S (TU106)": "L2",
+    "RTX 3090 (GA102)": "L2",
+    "RTX 4060 (AD107)": "L2",
+    "A100 (GA100)": "L2",
+    "H100 SXM (GH100)": "L2",
+    "RTX 4080S (AD103)": "L2"
+   }
+  },
+  {
+   "config": "d4096",
+   "phase": "decode",
+   "T": 1,
+   "tensor": "act (T x d_ff)",
+   "bytes": 28672,
+   "zones": {
+    "RTX 3060 Laptop (GA106)": "L2",
+    "RTX 2060S (TU106)": "L2",
+    "RTX 3090 (GA102)": "L2",
+    "RTX 4060 (AD107)": "L2",
+    "A100 (GA100)": "L2",
+    "H100 SXM (GH100)": "L2",
+    "RTX 4080S (AD103)": "L2"
+   }
+  },
+  {
+   "config": "d4096",
+   "phase": "decode",
+   "T": 8,
+   "tensor": "T x d (norm, attn-out, residual)",
+   "bytes": 65536,
+   "zones": {
+    "RTX 3060 Laptop (GA106)": "L2",
+    "RTX 2060S (TU106)": "L2",
+    "RTX 3090 (GA102)": "L2",
+    "RTX 4060 (AD107)": "L2",
+    "A100 (GA100)": "L2",
+    "H100 SXM (GH100)": "L2",
+    "RTX 4080S (AD103)": "L2"
+   }
+  },
+  {
+   "config": "d4096",
+   "phase": "decode",
+   "T": 8,
+   "tensor": "qkv",
+   "bytes": 98304,
+   "zones": {
+    "RTX 3060 Laptop (GA106)": "L2",
+    "RTX 2060S (TU106)": "L2",
+    "RTX 3090 (GA102)": "L2",
+    "RTX 4060 (AD107)": "L2",
+    "A100 (GA100)": "L2",
+    "H100 SXM (GH100)": "L2",
+    "RTX 4080S (AD103)": "L2"
+   }
+  },
+  {
+   "config": "d4096",
+   "phase": "decode",
+   "T": 8,
+   "tensor": "gate+up (T x 2 d_ff)",
+   "bytes": 458752,
+   "zones": {
+    "RTX 3060 Laptop (GA106)": "L2",
+    "RTX 2060S (TU106)": "L2",
+    "RTX 3090 (GA102)": "L2",
+    "RTX 4060 (AD107)": "L2",
+    "A100 (GA100)": "L2",
+    "H100 SXM (GH100)": "L2",
+    "RTX 4080S (AD103)": "L2"
+   }
+  },
+  {
+   "config": "d4096",
+   "phase": "decode",
+   "T": 8,
+   "tensor": "act (T x d_ff)",
+   "bytes": 229376,
+   "zones": {
+    "RTX 3060 Laptop (GA106)": "L2",
+    "RTX 2060S (TU106)": "L2",
+    "RTX 3090 (GA102)": "L2",
+    "RTX 4060 (AD107)": "L2",
+    "A100 (GA100)": "L2",
+    "H100 SXM (GH100)": "L2",
+    "RTX 4080S (AD103)": "L2"
+   }
+  },
+  {
+   "config": "d4096",
+   "phase": "decode",
+   "T": 32,
+   "tensor": "T x d (norm, attn-out, residual)",
+   "bytes": 262144,
+   "zones": {
+    "RTX 3060 Laptop (GA106)": "L2",
+    "RTX 2060S (TU106)": "L2",
+    "RTX 3090 (GA102)": "L2",
+    "RTX 4060 (AD107)": "L2",
+    "A100 (GA100)": "L2",
+    "H100 SXM (GH100)": "L2",
+    "RTX 4080S (AD103)": "L2"
+   }
+  },
+  {
+   "config": "d4096",
+   "phase": "decode",
+   "T": 32,
+   "tensor": "qkv",
+   "bytes": 393216,
+   "zones": {
+    "RTX 3060 Laptop (GA106)": "L2",
+    "RTX 2060S (TU106)": "L2",
+    "RTX 3090 (GA102)": "L2",
+    "RTX 4060 (AD107)": "L2",
+    "A100 (GA100)": "L2",
+    "H100 SXM (GH100)": "L2",
+    "RTX 4080S (AD103)": "L2"
+   }
+  },
+  {
+   "config": "d4096",
+   "phase": "decode",
+   "T": 32,
+   "tensor": "gate+up (T x 2 d_ff)",
+   "bytes": 1835008,
+   "zones": {
+    "RTX 3060 Laptop (GA106)": "edge",
+    "RTX 2060S (TU106)": "L2",
+    "RTX 3090 (GA102)": "L2",
+    "RTX 4060 (AD107)": "L2",
+    "A100 (GA100)": "L2",
+    "H100 SXM (GH100)": "L2",
+    "RTX 4080S (AD103)": "L2"
+   }
+  },
+  {
+   "config": "d4096",
+   "phase": "decode",
+   "T": 32,
+   "tensor": "act (T x d_ff)",
+   "bytes": 917504,
+   "zones": {
+    "RTX 3060 Laptop (GA106)": "L2",
+    "RTX 2060S (TU106)": "L2",
+    "RTX 3090 (GA102)": "L2",
+    "RTX 4060 (AD107)": "L2",
+    "A100 (GA100)": "L2",
+    "H100 SXM (GH100)": "L2",
+    "RTX 4080S (AD103)": "L2"
+   }
+  },
+  {
+   "config": "d4096",
+   "phase": "decode",
+   "T": 128,
+   "tensor": "T x d (norm, attn-out, residual)",
+   "bytes": 1048576,
+   "zones": {
+    "RTX 3060 Laptop (GA106)": "L2",
+    "RTX 2060S (TU106)": "L2",
+    "RTX 3090 (GA102)": "L2",
+    "RTX 4060 (AD107)": "L2",
+    "A100 (GA100)": "L2",
+    "H100 SXM (GH100)": "L2",
+    "RTX 4080S (AD103)": "L2"
+   }
+  },
+  {
+   "config": "d4096",
+   "phase": "decode",
+   "T": 128,
+   "tensor": "qkv",
+   "bytes": 1572864,
+   "zones": {
+    "RTX 3060 Laptop (GA106)": "L2",
+    "RTX 2060S (TU106)": "L2",
+    "RTX 3090 (GA102)": "L2",
+    "RTX 4060 (AD107)": "L2",
+    "A100 (GA100)": "L2",
+    "H100 SXM (GH100)": "L2",
+    "RTX 4080S (AD103)": "L2"
+   }
+  },
+  {
+   "config": "d4096",
+   "phase": "decode",
+   "T": 128,
+   "tensor": "gate+up (T x 2 d_ff)",
+   "bytes": 7340032,
+   "zones": {
+    "RTX 3060 Laptop (GA106)": "DRAM",
+    "RTX 2060S (TU106)": "DRAM",
+    "RTX 3090 (GA102)": "DRAM",
+    "RTX 4060 (AD107)": "L2",
+    "A100 (GA100)": "L2",
+    "H100 SXM (GH100)": "L2",
+    "RTX 4080S (AD103)": "L2"
+   }
+  },
+  {
+   "config": "d4096",
+   "phase": "decode",
+   "T": 128,
+   "tensor": "act (T x d_ff)",
+   "bytes": 3670016,
+   "zones": {
+    "RTX 3060 Laptop (GA106)": "DRAM",
+    "RTX 2060S (TU106)": "edge",
+    "RTX 3090 (GA102)": "edge",
+    "RTX 4060 (AD107)": "L2",
+    "A100 (GA100)": "L2",
+    "H100 SXM (GH100)": "L2",
+    "RTX 4080S (AD103)": "L2"
+   }
+  },
+  {
+   "config": "d4096",
+   "phase": "prefill",
+   "T": 512,
+   "tensor": "T x d (norm, attn-out, residual)",
+   "bytes": 4194304,
+   "zones": {
+    "RTX 3060 Laptop (GA106)": "DRAM",
+    "RTX 2060S (TU106)": "edge",
+    "RTX 3090 (GA102)": "edge",
+    "RTX 4060 (AD107)": "L2",
+    "A100 (GA100)": "L2",
+    "H100 SXM (GH100)": "L2",
+    "RTX 4080S (AD103)": "L2"
+   }
+  },
+  {
+   "config": "d4096",
+   "phase": "prefill",
+   "T": 512,
+   "tensor": "qkv",
+   "bytes": 6291456,
+   "zones": {
+    "RTX 3060 Laptop (GA106)": "DRAM",
+    "RTX 2060S (TU106)": "DRAM",
+    "RTX 3090 (GA102)": "edge",
+    "RTX 4060 (AD107)": "L2",
+    "A100 (GA100)": "L2",
+    "H100 SXM (GH100)": "L2",
+    "RTX 4080S (AD103)": "L2"
+   }
+  },
+  {
+   "config": "d4096",
+   "phase": "prefill",
+   "T": 512,
+   "tensor": "gate+up (T x 2 d_ff)",
+   "bytes": 29360128,
+   "zones": {
+    "RTX 3060 Laptop (GA106)": "DRAM",
+    "RTX 2060S (TU106)": "DRAM",
+    "RTX 3090 (GA102)": "DRAM",
+    "RTX 4060 (AD107)": "DRAM",
+    "A100 (GA100)": "edge",
+    "H100 SXM (GH100)": "edge",
+    "RTX 4080S (AD103)": "L2"
+   }
+  },
+  {
+   "config": "d4096",
+   "phase": "prefill",
+   "T": 512,
+   "tensor": "act (T x d_ff)",
+   "bytes": 14680064,
+   "zones": {
+    "RTX 3060 Laptop (GA106)": "DRAM",
+    "RTX 2060S (TU106)": "DRAM",
+    "RTX 3090 (GA102)": "DRAM",
+    "RTX 4060 (AD107)": "edge",
+    "A100 (GA100)": "L2",
+    "H100 SXM (GH100)": "L2",
+    "RTX 4080S (AD103)": "L2"
+   }
+  },
+  {
+   "config": "d4096",
+   "phase": "prefill",
+   "T": 2048,
+   "tensor": "T x d (norm, attn-out, residual)",
+   "bytes": 16777216,
+   "zones": {
+    "RTX 3060 Laptop (GA106)": "DRAM",
+    "RTX 2060S (TU106)": "DRAM",
+    "RTX 3090 (GA102)": "DRAM",
+    "RTX 4060 (AD107)": "edge",
+    "A100 (GA100)": "L2",
+    "H100 SXM (GH100)": "L2",
+    "RTX 4080S (AD103)": "L2"
+   }
+  },
+  {
+   "config": "d4096",
+   "phase": "prefill",
+   "T": 2048,
+   "tensor": "qkv",
+   "bytes": 25165824,
+   "zones": {
+    "RTX 3060 Laptop (GA106)": "DRAM",
+    "RTX 2060S (TU106)": "DRAM",
+    "RTX 3090 (GA102)": "DRAM",
+    "RTX 4060 (AD107)": "edge",
+    "A100 (GA100)": "edge",
+    "H100 SXM (GH100)": "L2",
+    "RTX 4080S (AD103)": "L2"
+   }
+  },
+  {
+   "config": "d4096",
+   "phase": "prefill",
+   "T": 2048,
+   "tensor": "gate+up (T x 2 d_ff)",
+   "bytes": 117440512,
+   "zones": {
+    "RTX 3060 Laptop (GA106)": "DRAM",
+    "RTX 2060S (TU106)": "DRAM",
+    "RTX 3090 (GA102)": "DRAM",
+    "RTX 4060 (AD107)": "DRAM",
+    "A100 (GA100)": "DRAM",
+    "H100 SXM (GH100)": "DRAM",
+    "RTX 4080S (AD103)": "DRAM"
+   }
+  },
+  {
+   "config": "d4096",
+   "phase": "prefill",
+   "T": 2048,
+   "tensor": "act (T x d_ff)",
+   "bytes": 58720256,
+   "zones": {
+    "RTX 3060 Laptop (GA106)": "DRAM",
+    "RTX 2060S (TU106)": "DRAM",
+    "RTX 3090 (GA102)": "DRAM",
+    "RTX 4060 (AD107)": "DRAM",
+    "A100 (GA100)": "DRAM",
+    "H100 SXM (GH100)": "DRAM",
+    "RTX 4080S (AD103)": "edge"
+   }
+  },
+  {
+   "config": "d4096",
+   "phase": "prefill",
+   "T": 8192,
+   "tensor": "T x d (norm, attn-out, residual)",
+   "bytes": 67108864,
+   "zones": {
+    "RTX 3060 Laptop (GA106)": "DRAM",
+    "RTX 2060S (TU106)": "DRAM",
+    "RTX 3090 (GA102)": "DRAM",
+    "RTX 4060 (AD107)": "DRAM",
+    "A100 (GA100)": "DRAM",
+    "H100 SXM (GH100)": "DRAM",
+    "RTX 4080S (AD103)": "edge"
+   }
+  },
+  {
+   "config": "d4096",
+   "phase": "prefill",
+   "T": 8192,
+   "tensor": "qkv",
+   "bytes": 100663296,
+   "zones": {
+    "RTX 3060 Laptop (GA106)": "DRAM",
+    "RTX 2060S (TU106)": "DRAM",
+    "RTX 3090 (GA102)": "DRAM",
+    "RTX 4060 (AD107)": "DRAM",
+    "A100 (GA100)": "DRAM",
+    "H100 SXM (GH100)": "DRAM",
+    "RTX 4080S (AD103)": "DRAM"
+   }
+  },
+  {
+   "config": "d4096",
+   "phase": "prefill",
+   "T": 8192,
+   "tensor": "gate+up (T x 2 d_ff)",
+   "bytes": 469762048,
+   "zones": {
+    "RTX 3060 Laptop (GA106)": "DRAM",
+    "RTX 2060S (TU106)": "DRAM",
+    "RTX 3090 (GA102)": "DRAM",
+    "RTX 4060 (AD107)": "DRAM",
+    "A100 (GA100)": "DRAM",
+    "H100 SXM (GH100)": "DRAM",
+    "RTX 4080S (AD103)": "DRAM"
+   }
+  },
+  {
+   "config": "d4096",
+   "phase": "prefill",
+   "T": 8192,
+   "tensor": "act (T x d_ff)",
+   "bytes": 234881024,
+   "zones": {
+    "RTX 3060 Laptop (GA106)": "DRAM",
+    "RTX 2060S (TU106)": "DRAM",
+    "RTX 3090 (GA102)": "DRAM",
+    "RTX 4060 (AD107)": "DRAM",
+    "A100 (GA100)": "DRAM",
+    "H100 SXM (GH100)": "DRAM",
+    "RTX 4080S (AD103)": "DRAM"
+   }
+  },
+  {
+   "config": "d8192",
+   "phase": "decode",
+   "T": 1,
+   "tensor": "T x d (norm, attn-out, residual)",
+   "bytes": 16384,
+   "zones": {
+    "RTX 3060 Laptop (GA106)": "L2",
+    "RTX 2060S (TU106)": "L2",
+    "RTX 3090 (GA102)": "L2",
+    "RTX 4060 (AD107)": "L2",
+    "A100 (GA100)": "L2",
+    "H100 SXM (GH100)": "L2",
+    "RTX 4080S (AD103)": "L2"
+   }
+  },
+  {
+   "config": "d8192",
+   "phase": "decode",
+   "T": 1,
+   "tensor": "qkv",
+   "bytes": 20480,
+   "zones": {
+    "RTX 3060 Laptop (GA106)": "L2",
+    "RTX 2060S (TU106)": "L2",
+    "RTX 3090 (GA102)": "L2",
+    "RTX 4060 (AD107)": "L2",
+    "A100 (GA100)": "L2",
+    "H100 SXM (GH100)": "L2",
+    "RTX 4080S (AD103)": "L2"
+   }
+  },
+  {
+   "config": "d8192",
+   "phase": "decode",
+   "T": 1,
+   "tensor": "gate+up (T x 2 d_ff)",
+   "bytes": 114688,
+   "zones": {
+    "RTX 3060 Laptop (GA106)": "L2",
+    "RTX 2060S (TU106)": "L2",
+    "RTX 3090 (GA102)": "L2",
+    "RTX 4060 (AD107)": "L2",
+    "A100 (GA100)": "L2",
+    "H100 SXM (GH100)": "L2",
+    "RTX 4080S (AD103)": "L2"
+   }
+  },
+  {
+   "config": "d8192",
+   "phase": "decode",
+   "T": 1,
+   "tensor": "act (T x d_ff)",
+   "bytes": 57344,
+   "zones": {
+    "RTX 3060 Laptop (GA106)": "L2",
+    "RTX 2060S (TU106)": "L2",
+    "RTX 3090 (GA102)": "L2",
+    "RTX 4060 (AD107)": "L2",
+    "A100 (GA100)": "L2",
+    "H100 SXM (GH100)": "L2",
+    "RTX 4080S (AD103)": "L2"
+   }
+  },
+  {
+   "config": "d8192",
+   "phase": "decode",
+   "T": 8,
+   "tensor": "T x d (norm, attn-out, residual)",
+   "bytes": 131072,
+   "zones": {
+    "RTX 3060 Laptop (GA106)": "L2",
+    "RTX 2060S (TU106)": "L2",
+    "RTX 3090 (GA102)": "L2",
+    "RTX 4060 (AD107)": "L2",
+    "A100 (GA100)": "L2",
+    "H100 SXM (GH100)": "L2",
+    "RTX 4080S (AD103)": "L2"
+   }
+  },
+  {
+   "config": "d8192",
+   "phase": "decode",
+   "T": 8,
+   "tensor": "qkv",
+   "bytes": 163840,
+   "zones": {
+    "RTX 3060 Laptop (GA106)": "L2",
+    "RTX 2060S (TU106)": "L2",
+    "RTX 3090 (GA102)": "L2",
+    "RTX 4060 (AD107)": "L2",
+    "A100 (GA100)": "L2",
+    "H100 SXM (GH100)": "L2",
+    "RTX 4080S (AD103)": "L2"
+   }
+  },
+  {
+   "config": "d8192",
+   "phase": "decode",
+   "T": 8,
+   "tensor": "gate+up (T x 2 d_ff)",
+   "bytes": 917504,
+   "zones": {
+    "RTX 3060 Laptop (GA106)": "L2",
+    "RTX 2060S (TU106)": "L2",
+    "RTX 3090 (GA102)": "L2",
+    "RTX 4060 (AD107)": "L2",
+    "A100 (GA100)": "L2",
+    "H100 SXM (GH100)": "L2",
+    "RTX 4080S (AD103)": "L2"
+   }
+  },
+  {
+   "config": "d8192",
+   "phase": "decode",
+   "T": 8,
+   "tensor": "act (T x d_ff)",
+   "bytes": 458752,
+   "zones": {
+    "RTX 3060 Laptop (GA106)": "L2",
+    "RTX 2060S (TU106)": "L2",
+    "RTX 3090 (GA102)": "L2",
+    "RTX 4060 (AD107)": "L2",
+    "A100 (GA100)": "L2",
+    "H100 SXM (GH100)": "L2",
+    "RTX 4080S (AD103)": "L2"
+   }
+  },
+  {
+   "config": "d8192",
+   "phase": "decode",
+   "T": 32,
+   "tensor": "T x d (norm, attn-out, residual)",
+   "bytes": 524288,
+   "zones": {
+    "RTX 3060 Laptop (GA106)": "L2",
+    "RTX 2060S (TU106)": "L2",
+    "RTX 3090 (GA102)": "L2",
+    "RTX 4060 (AD107)": "L2",
+    "A100 (GA100)": "L2",
+    "H100 SXM (GH100)": "L2",
+    "RTX 4080S (AD103)": "L2"
+   }
+  },
+  {
+   "config": "d8192",
+   "phase": "decode",
+   "T": 32,
+   "tensor": "qkv",
+   "bytes": 655360,
+   "zones": {
+    "RTX 3060 Laptop (GA106)": "L2",
+    "RTX 2060S (TU106)": "L2",
+    "RTX 3090 (GA102)": "L2",
+    "RTX 4060 (AD107)": "L2",
+    "A100 (GA100)": "L2",
+    "H100 SXM (GH100)": "L2",
+    "RTX 4080S (AD103)": "L2"
+   }
+  },
+  {
+   "config": "d8192",
+   "phase": "decode",
+   "T": 32,
+   "tensor": "gate+up (T x 2 d_ff)",
+   "bytes": 3670016,
+   "zones": {
+    "RTX 3060 Laptop (GA106)": "DRAM",
+    "RTX 2060S (TU106)": "edge",
+    "RTX 3090 (GA102)": "edge",
+    "RTX 4060 (AD107)": "L2",
+    "A100 (GA100)": "L2",
+    "H100 SXM (GH100)": "L2",
+    "RTX 4080S (AD103)": "L2"
+   }
+  },
+  {
+   "config": "d8192",
+   "phase": "decode",
+   "T": 32,
+   "tensor": "act (T x d_ff)",
+   "bytes": 1835008,
+   "zones": {
+    "RTX 3060 Laptop (GA106)": "edge",
+    "RTX 2060S (TU106)": "L2",
+    "RTX 3090 (GA102)": "L2",
+    "RTX 4060 (AD107)": "L2",
+    "A100 (GA100)": "L2",
+    "H100 SXM (GH100)": "L2",
+    "RTX 4080S (AD103)": "L2"
+   }
+  },
+  {
+   "config": "d8192",
+   "phase": "decode",
+   "T": 128,
+   "tensor": "T x d (norm, attn-out, residual)",
+   "bytes": 2097152,
+   "zones": {
+    "RTX 3060 Laptop (GA106)": "edge",
+    "RTX 2060S (TU106)": "L2",
+    "RTX 3090 (GA102)": "L2",
+    "RTX 4060 (AD107)": "L2",
+    "A100 (GA100)": "L2",
+    "H100 SXM (GH100)": "L2",
+    "RTX 4080S (AD103)": "L2"
+   }
+  },
+  {
+   "config": "d8192",
+   "phase": "decode",
+   "T": 128,
+   "tensor": "qkv",
+   "bytes": 2621440,
+   "zones": {
+    "RTX 3060 Laptop (GA106)": "edge",
+    "RTX 2060S (TU106)": "edge",
+    "RTX 3090 (GA102)": "L2",
+    "RTX 4060 (AD107)": "L2",
+    "A100 (GA100)": "L2",
+    "H100 SXM (GH100)": "L2",
+    "RTX 4080S (AD103)": "L2"
+   }
+  },
+  {
+   "config": "d8192",
+   "phase": "decode",
+   "T": 128,
+   "tensor": "gate+up (T x 2 d_ff)",
+   "bytes": 14680064,
+   "zones": {
+    "RTX 3060 Laptop (GA106)": "DRAM",
+    "RTX 2060S (TU106)": "DRAM",
+    "RTX 3090 (GA102)": "DRAM",
+    "RTX 4060 (AD107)": "edge",
+    "A100 (GA100)": "L2",
+    "H100 SXM (GH100)": "L2",
+    "RTX 4080S (AD103)": "L2"
+   }
+  },
+  {
+   "config": "d8192",
+   "phase": "decode",
+   "T": 128,
+   "tensor": "act (T x d_ff)",
+   "bytes": 7340032,
+   "zones": {
+    "RTX 3060 Laptop (GA106)": "DRAM",
+    "RTX 2060S (TU106)": "DRAM",
+    "RTX 3090 (GA102)": "DRAM",
+    "RTX 4060 (AD107)": "L2",
+    "A100 (GA100)": "L2",
+    "H100 SXM (GH100)": "L2",
+    "RTX 4080S (AD103)": "L2"
+   }
+  },
+  {
+   "config": "d8192",
+   "phase": "prefill",
+   "T": 512,
+   "tensor": "T x d (norm, attn-out, residual)",
+   "bytes": 8388608,
+   "zones": {
+    "RTX 3060 Laptop (GA106)": "DRAM",
+    "RTX 2060S (TU106)": "DRAM",
+    "RTX 3090 (GA102)": "DRAM",
+    "RTX 4060 (AD107)": "L2",
+    "A100 (GA100)": "L2",
+    "H100 SXM (GH100)": "L2",
+    "RTX 4080S (AD103)": "L2"
+   }
+  },
+  {
+   "config": "d8192",
+   "phase": "prefill",
+   "T": 512,
+   "tensor": "qkv",
+   "bytes": 10485760,
+   "zones": {
+    "RTX 3060 Laptop (GA106)": "DRAM",
+    "RTX 2060S (TU106)": "DRAM",
+    "RTX 3090 (GA102)": "DRAM",
+    "RTX 4060 (AD107)": "L2",
+    "A100 (GA100)": "L2",
+    "H100 SXM (GH100)": "L2",
+    "RTX 4080S (AD103)": "L2"
+   }
+  },
+  {
+   "config": "d8192",
+   "phase": "prefill",
+   "T": 512,
+   "tensor": "gate+up (T x 2 d_ff)",
+   "bytes": 58720256,
+   "zones": {
+    "RTX 3060 Laptop (GA106)": "DRAM",
+    "RTX 2060S (TU106)": "DRAM",
+    "RTX 3090 (GA102)": "DRAM",
+    "RTX 4060 (AD107)": "DRAM",
+    "A100 (GA100)": "DRAM",
+    "H100 SXM (GH100)": "DRAM",
+    "RTX 4080S (AD103)": "edge"
+   }
+  },
+  {
+   "config": "d8192",
+   "phase": "prefill",
+   "T": 512,
+   "tensor": "act (T x d_ff)",
+   "bytes": 29360128,
+   "zones": {
+    "RTX 3060 Laptop (GA106)": "DRAM",
+    "RTX 2060S (TU106)": "DRAM",
+    "RTX 3090 (GA102)": "DRAM",
+    "RTX 4060 (AD107)": "DRAM",
+    "A100 (GA100)": "edge",
+    "H100 SXM (GH100)": "edge",
+    "RTX 4080S (AD103)": "L2"
+   }
+  },
+  {
+   "config": "d8192",
+   "phase": "prefill",
+   "T": 2048,
+   "tensor": "T x d (norm, attn-out, residual)",
+   "bytes": 33554432,
+   "zones": {
+    "RTX 3060 Laptop (GA106)": "DRAM",
+    "RTX 2060S (TU106)": "DRAM",
+    "RTX 3090 (GA102)": "DRAM",
+    "RTX 4060 (AD107)": "DRAM",
+    "A100 (GA100)": "edge",
+    "H100 SXM (GH100)": "edge",
+    "RTX 4080S (AD103)": "L2"
+   }
+  },
+  {
+   "config": "d8192",
+   "phase": "prefill",
+   "T": 2048,
+   "tensor": "qkv",
+   "bytes": 41943040,
+   "zones": {
+    "RTX 3060 Laptop (GA106)": "DRAM",
+    "RTX 2060S (TU106)": "DRAM",
+    "RTX 3090 (GA102)": "DRAM",
+    "RTX 4060 (AD107)": "DRAM",
+    "A100 (GA100)": "edge",
+    "H100 SXM (GH100)": "edge",
+    "RTX 4080S (AD103)": "edge"
+   }
+  },
+  {
+   "config": "d8192",
+   "phase": "prefill",
+   "T": 2048,
+   "tensor": "gate+up (T x 2 d_ff)",
+   "bytes": 234881024,
+   "zones": {
+    "RTX 3060 Laptop (GA106)": "DRAM",
+    "RTX 2060S (TU106)": "DRAM",
+    "RTX 3090 (GA102)": "DRAM",
+    "RTX 4060 (AD107)": "DRAM",
+    "A100 (GA100)": "DRAM",
+    "H100 SXM (GH100)": "DRAM",
+    "RTX 4080S (AD103)": "DRAM"
+   }
+  },
+  {
+   "config": "d8192",
+   "phase": "prefill",
+   "T": 2048,
+   "tensor": "act (T x d_ff)",
+   "bytes": 117440512,
+   "zones": {
+    "RTX 3060 Laptop (GA106)": "DRAM",
+    "RTX 2060S (TU106)": "DRAM",
+    "RTX 3090 (GA102)": "DRAM",
+    "RTX 4060 (AD107)": "DRAM",
+    "A100 (GA100)": "DRAM",
+    "H100 SXM (GH100)": "DRAM",
+    "RTX 4080S (AD103)": "DRAM"
+   }
+  },
+  {
+   "config": "d8192",
+   "phase": "prefill",
+   "T": 8192,
+   "tensor": "T x d (norm, attn-out, residual)",
+   "bytes": 134217728,
+   "zones": {
+    "RTX 3060 Laptop (GA106)": "DRAM",
+    "RTX 2060S (TU106)": "DRAM",
+    "RTX 3090 (GA102)": "DRAM",
+    "RTX 4060 (AD107)": "DRAM",
+    "A100 (GA100)": "DRAM",
+    "H100 SXM (GH100)": "DRAM",
+    "RTX 4080S (AD103)": "DRAM"
+   }
+  },
+  {
+   "config": "d8192",
+   "phase": "prefill",
+   "T": 8192,
+   "tensor": "qkv",
+   "bytes": 167772160,
+   "zones": {
+    "RTX 3060 Laptop (GA106)": "DRAM",
+    "RTX 2060S (TU106)": "DRAM",
+    "RTX 3090 (GA102)": "DRAM",
+    "RTX 4060 (AD107)": "DRAM",
+    "A100 (GA100)": "DRAM",
+    "H100 SXM (GH100)": "DRAM",
+    "RTX 4080S (AD103)": "DRAM"
+   }
+  },
+  {
+   "config": "d8192",
+   "phase": "prefill",
+   "T": 8192,
+   "tensor": "gate+up (T x 2 d_ff)",
+   "bytes": 939524096,
+   "zones": {
+    "RTX 3060 Laptop (GA106)": "DRAM",
+    "RTX 2060S (TU106)": "DRAM",
+    "RTX 3090 (GA102)": "DRAM",
+    "RTX 4060 (AD107)": "DRAM",
+    "A100 (GA100)": "DRAM",
+    "H100 SXM (GH100)": "DRAM",
+    "RTX 4080S (AD103)": "DRAM"
+   }
+  },
+  {
+   "config": "d8192",
+   "phase": "prefill",
+   "T": 8192,
+   "tensor": "act (T x d_ff)",
+   "bytes": 469762048,
+   "zones": {
+    "RTX 3060 Laptop (GA106)": "DRAM",
+    "RTX 2060S (TU106)": "DRAM",
+    "RTX 3090 (GA102)": "DRAM",
+    "RTX 4060 (AD107)": "DRAM",
+    "A100 (GA100)": "DRAM",
+    "H100 SXM (GH100)": "DRAM",
+    "RTX 4080S (AD103)": "DRAM"
+   }
+  }
+ ]
+}

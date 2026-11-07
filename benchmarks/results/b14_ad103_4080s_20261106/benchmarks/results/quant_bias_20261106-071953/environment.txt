@@ -1,0 +1,7 @@
+Fri Nov  6 07:19:53 UTC 2026
+name, driver_version, temperature.gpu, clocks.current.sm [MHz], clocks.current.memory [MHz], pstate
+NVIDIA GeForce RTX 4080 SUPER, 575.51.03, 42, 2655 MHz, 11501 MHz, P0
+2.7.1+cu126 12.6 3.3.1
+9ea709cc47ceb1b619fc533482655d7799baa048ee25c84da57172ded01a5587  benchmarks/scripts/quant_bias_probe.sh
+641077fdf7b4d3aab0ba2825df60ee765e488d367fe72fb4362d3a142ca486a1  benchmarks/scripts/quant_bias_probe.py
+43fbb9cca7cb1ef4efec368e3af7f5f592826ed07393ed2ec6d3596f772d7dd9  benchmarks/scripts/quant_bias_score.py

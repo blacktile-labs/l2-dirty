@@ -1,0 +1,14 @@
+========= COMPUTE-SANITIZER
+copy_2d      R=1000;C=777           ok
+naive        R=1000;C=777           ok
+tiled        R=1000;C=777           ok
+tiled_pad    R=1000;C=777           ok
+cublas_geam  R=1000;C=777           ok
+copy_2d      R=64;C=96              ok
+naive        R=64;C=96              ok
+tiled        R=64;C=96              ok
+tiled_pad    R=64;C=96              ok
+cublas_geam  R=64;C=96              ok
+correctness_failures=0
+========= LEAK SUMMARY: 0 bytes leaked in 0 allocations
+========= ERROR SUMMARY: 0 errors

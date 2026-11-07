@@ -1,0 +1,3 @@
+[b10_rtx3090 03:33:22] package sha256 64a5ab2d94b1dc22, remote script sha256 3d705d4995bb798a
+[b10_rtx3090 03:33:25] created instance 59360812 (offer 59353129, image docker.io/vastai/kvm:ubuntu_cli_22.04-2025-05-16, disk 28 GB)
+[b10_rtx3090 03:33:26] price dph_total = $0.2451851851851852/h

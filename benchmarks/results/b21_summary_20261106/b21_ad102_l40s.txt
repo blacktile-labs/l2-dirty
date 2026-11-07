@@ -1,0 +1,4 @@
+NVIDIA L40S (L2 96 MiB): U-0 {'correctness': True, 'fp16 and int4 captured': True, 'stable steps': True} -> PASS
+T {'fp16': 2216.96, 'int4': 604.16, 'nf4': 608.26} · E {'fp16 write': 0.2807, 'fp16 cold': 0.0196, 'fp16 steady': 0.0133, 'fp16 l2w': 0.284, 'int4 write': 0.5254, 'int4 cold': 0.0712, 'int4 steady': -0.1789, 'int4 l2w': 0.5326, 'nf4 write': 1.0539, 'nf4 cold': 0.3603, 'nf4 steady': 0.0505, 'nf4 l2w': 1.0606}
+D {'int4 write': -0.1605, 'int4 cold': -0.0482, 'int4 steady': 0.2341, 'int4 l2w': -0.1622, 'nf4 write': -0.3765, 'nf4 cold': -0.2504, 'nf4 steady': -0.0354, 'nf4 l2w': -0.3769}
+verdict: {"U-0": true, "U-1": "cold predicts the in-model step", "U-2": "the shipped write flush over-predicts the step", "U-3": "cold predicts the int4 speedup better than the write flush"}

@@ -1,0 +1,1 @@
+timing: 20 events, correctness_failures=0, pr_flush_check={'ld_volatile_global': 2, 'st_global': 0, 'buffer_unchanged': True}

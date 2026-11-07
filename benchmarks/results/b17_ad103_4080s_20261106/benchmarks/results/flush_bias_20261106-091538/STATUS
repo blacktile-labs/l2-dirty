@@ -1,0 +1,14 @@
+run_r1 rc=0
+run_r2 rc=0
+run_r3 rc=0
+run_r4 rc=0
+run_r5 rc=0
+score rc=0
+NVIDIA GeForce RTX 4080 SUPER (L2 64 MiB, cc 8.9): E-0 FAIL {'runs': 5, 'runs_ok': True, 'ptx_ok': True, 'evict_ratio': 1.023, 'evict_ok': False, 'pass': False}
+  F-1 B_ref 0.1595 -> affected
+  F-3 worst D -0.1696 -> distorted (under-estimated); per shape {'4096x4096': {'tinygemm': {'S_zero': 3.132, 'S_pr': 3.25, 'D': -0.0364, 'D_sum': -0.0364}, 'bnb_nf4': {'S_zero': 1.949, 'S_pr': 2.184, 'D': -0.1074, 'D_sum': -0.1015}}, '14336x4096': {'tinygemm': {'S_zero': 2.956, 'S_pr': 3.56, 'D': -0.1696, 'D_sum': -0.168}, 'bnb_nf4': {'S_zero': 2.487, 'S_pr': 2.988, 'D': -0.1675, 'D_sum': -0.166}}, '4096x14336': {'tinygemm': {'S_zero': 2.91, 'S_pr': 3.5, 'D': -0.1684, 'D_sum': -0.1684}, 'bnb_nf4': {'S_zero': 2.12, 'S_pr': 2.4, 'D': -0.1168, 'D_sum': -0.1168}}}
+  F-4 {fam: (B, verdict)}: {'attn': ({'sdpa_bf16': 0.1841}, 'affected'), 'rmsnorm': ({'liger_rmsnorm': 0.5463, 'torch_rmsnorm': 0.0369}, 'affected'), 'swiglu': ({'liger_swiglu': 0.3094, 'torch_swiglu': 0.1943}, 'affected')}
+  F-6 sum vs pr flush: {'median R': 0.0, 'max |R|': 0.0176, 'R': {'4096x4096 cublas_fp16': 0.0, '14336x4096 tinygemm_k4': 0.0, '14336x4096 tinygemm_k2': -0.0176, '14336x4096 bnb_nf4': 0.0, '14336x4096 tinygemm_k8': 0.0, '14336x4096 cublas_fp16': -0.0019, '4096x14336 tinygemm_k8': 0.0, '4096x14336 cublas_fp16': 0.0, '4096x14336 bnb_nf4': 0.0, '4096x14336 tinygemm_k2': -0.0026, '4096x14336 tinygemm_k4': 0.0}}
+  F-7 B_l2 0.1606 vs B_ref 0.1595 -> similar
+  F-5 inputs {'B_sum': 0.1617, 'D_sum': -0.168}; tick fraction 0.648; invalid []
+verdict: {"device": "NVIDIA GeForce RTX 4080 SUPER", "B_ref": 0.1595, "F-1": "affected", "F-3": "distorted", "F-3 worst D": -0.1696, "F-3 sign": "under-estimated", "B_l2": 0.1606, "F-7": "similar", "E-0": false}

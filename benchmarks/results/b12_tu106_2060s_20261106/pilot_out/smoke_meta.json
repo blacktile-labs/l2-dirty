@@ -1,0 +1,54 @@
+{
+ "benchmark": "dobench_flush_probe",
+ "mode": "range",
+ "device": "NVIDIA GeForce RTX 2060 SUPER",
+ "l2_bytes": 4194304,
+ "sm_count": 34,
+ "torch": "2.7.1+cu126",
+ "K": 4096,
+ "flush_bytes": 268435456,
+ "smoke": true,
+ "reps": 2,
+ "seed": 1234,
+ "events": [
+  {
+   "kind": "control"
+  },
+  {
+   "kind": "control"
+  },
+  {
+   "kind": "gemv",
+   "variant": "zero",
+   "w_read": 2,
+   "rep": 0,
+   "weight_bytes": 8388608,
+   "out_bytes": 2048
+  },
+  {
+   "kind": "gemv",
+   "variant": "read",
+   "w_read": 2,
+   "rep": 0,
+   "weight_bytes": 8388608,
+   "out_bytes": 2048
+  },
+  {
+   "kind": "gemv",
+   "variant": "zero",
+   "w_read": 2,
+   "rep": 1,
+   "weight_bytes": 8388608,
+   "out_bytes": 2048
+  },
+  {
+   "kind": "gemv",
+   "variant": "read",
+   "w_read": 2,
+   "rep": 1,
+   "weight_bytes": 8388608,
+   "out_bytes": 2048
+  }
+ ],
+ "correctness_failures": 0
+}

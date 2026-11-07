@@ -1,0 +1,26 @@
+[04:56:38] 0 environment
+[04:56:38] user root, sudo='', arch sm_75, CUDA 12.5, torch index cu126
+[04:56:38] 1 toolchain
+[04:57:57] apt rc=0
+nvcc: NVIDIA (R) Cuda compiler driver
+Copyright (c) 2005-2024 NVIDIA Corporation
+Built on Thu_Jun__6_02:18:23_PDT_2024
+Cuda compilation tools, release 12.5, V12.5.82
+Build cuda_12.5.r12.5/compiler.34385749_0
+NVIDIA (R) Nsight Compute Command Line Profiler
+Copyright (c) 2018-2024 NVIDIA Corporation
+Version 2024.2.1.0 (build 34372528) (public-release)
+[04:57:57] 2 build
+[04:58:02] build rc=0
+62d9abdabf94c35bef028409aae2f41d0dc0e4c268056bbf0d4ed7656cfb03ec  benchmarks/build/wb_probe
+[04:58:04] 3 counter permission check
+counter rows: 32
+[04:58:10] 4 B6b
+[05:00:07] B6b rc=0
+[05:00:07] 4 B8
+[05:01:57] B8 rc=0
+[05:01:57] 4 B10b first-cell
+[05:02:34] B10b rc=0
+[05:02:34] 5 B9b (waiting for the torch venv)
+[05:03:53] B9b rc=0
+[05:03:53] 6 pack

@@ -1,0 +1,21 @@
+== 06:26:07 B4 sweep rep 1
+fusion sweep r1 rc=0
+== 06:26:08 B4 sweep rep 2
+fusion sweep r2 rc=0
+== 06:26:09 B4 sweep rep 3
+fusion sweep r3 rc=0
+== 06:26:09 B3 probe default
+gather probe default rc=0
+== 06:26:12 B3 probe g32
+gather probe g32 rc=0
+== 06:26:14 B3 probe g64
+gather probe g64 rc=0
+== 06:26:17 B3 probe g128
+gather probe g128 rc=0
+== 06:26:19 B3 probe default2
+gather probe default2 rc=0
+== 06:26:22 B3 probe default3
+gather probe default3 rc=0
+== 06:26:24 B1 smoke (identity / drift)
+copy_stride rc=0
+== 06:26:25 done

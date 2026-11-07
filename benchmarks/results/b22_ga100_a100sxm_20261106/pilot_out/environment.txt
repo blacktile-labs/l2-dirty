@@ -1,0 +1,101 @@
+Fri Nov  6 16:59:23 UTC 2026
+uid=0(root) gid=0(root) groups=0(root)
+Linux df4b16838f25 5.15.0-94-generic #104-Ubuntu SMP Tue Jan 9 15:25:40 UTC 2024 x86_64 x86_64 x86_64 GNU/Linux
+PRETTY_NAME="Ubuntu 22.04.5 LTS"
+NAME="Ubuntu"
+VERSION_ID="22.04"
+VERSION="22.04.5 LTS (Jammy Jellyfish)"
+VERSION_CODENAME=jammy
+ID=ubuntu
+ID_LIKE=debian
+HOME_URL="https://www.ubuntu.com/"
+SUPPORT_URL="https://help.ubuntu.com/"
+BUG_REPORT_URL="https://bugs.launchpad.net/ubuntu/"
+PRIVACY_POLICY_URL="https://www.ubuntu.com/legal/terms-and-policies/privacy-policy"
+UBUNTU_CODENAME=jammy
+64
+               total        used        free      shared  buff/cache   available
+Mem:             503          35         249           0         219         464
+Swap:              7           0           7
+Fri Nov  6 16:59:23 2026       
++---------------------------------------------------------------------------------------+
+| NVIDIA-SMI 535.154.05             Driver Version: 535.154.05   CUDA Version: 12.8     |
+|-----------------------------------------+----------------------+----------------------+
+| GPU  Name                 Persistence-M | Bus-Id        Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp   Perf          Pwr:Usage/Cap |         Memory-Usage | GPU-Util  Compute M. |
+|                                         |                      |               MIG M. |
+|=========================================+======================+======================|
+|   0  NVIDIA A100-SXM4-40GB          On  | 00000000:44:00.0 Off |                    0 |
+| N/A   42C    P0              57W / 400W |      0MiB / 40960MiB |      0%      Default |
+|                                         |                      |             Disabled |
++-----------------------------------------+----------------------+----------------------+
+                                                                                         
++---------------------------------------------------------------------------------------+
+| Processes:                                                                            |
+|  GPU   GI   CI        PID   Type   Process name                            GPU Memory |
+|        ID   ID                                                             Usage      |
+|=======================================================================================|
+|  No running processes found                                                           |
++---------------------------------------------------------------------------------------+
+
+==============NVSMI LOG==============
+
+Timestamp                                 : Fri Nov  6 16:59:23 2026
+Driver Version                            : 535.154.05
+CUDA Version                              : 12.8
+
+Attached GPUs                             : 1
+GPU 00000000:44:00.0
+    Product Name                          : NVIDIA A100-SXM4-40GB
+    Product Brand                         : NVIDIA
+    Product Architecture                  : Ampere
+    Display Mode                          : Enabled
+    Display Active                        : Disabled
+    Persistence Mode                      : Enabled
+    Addressing Mode                       : None
+    MIG Mode
+        Current                           : Disabled
+        Pending                           : Disabled
+    Accounting Mode                       : Disabled
+    Accounting Mode Buffer Size           : 4000
+    Driver Model
+        Current                           : N/A
+        Pending                           : N/A
+    Serial Number                         : 1324220016934
+    GPU UUID                              : GPU-84e4165e-511b-de9c-ab2c-32bc538fbd9a
+    Minor Number                          : 3
+    VBIOS Version                         : <rented-host-ip>.10
+    MultiGPU Board                        : No
+    Board ID                              : 0x4400
+    Board Part Number                     : 692-2G506-0200-002
+    GPU Part Number                       : 20B0-884-A1
+    FRU Part Number                       : N/A
+    Module ID                             : 4
+    Inforom Version
+        Image Version                     : G506.0200.00.04
+        OEM Object                        : 2.0
+        ECC Object                        : 6.16
+        Power Management Object           : N/A
+    Inforom BBX Object Flush
+        Latest Timestamp                  : N/A
+        Latest Duration                   : N/A
+    GPU Operation Mode
+        Current                           : N/A
+        Pending                           : N/A
+    GSP Firmware Version                  : 535.154.05
+    GPU Virtualization Mode
+        Virtualization Mode               : None
+        Host VGPU Mode                    : N/A
+    GPU Reset Status
+        Reset Required                    : No
+        Drain and Reset Recommended       : No
+    IBMNPU
+        Relaxed Ordering Mode             : N/A
+    PCI
+        Bus                               : 0x44
+        Device                            : 0x00
+        Domain                            : 0x0000
+        Device Id                         : 0x20B010DE
+        Bus Id                            : 00000000:44:00.0
+== counter access (RmProfilingAdminOnly=0 means ncu could read counters on this host)
+RmProfilingAdminOnly: 1

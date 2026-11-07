@@ -1,0 +1,28 @@
+[05:18:53] 0 environment
+[05:18:53] NVIDIA PCI device but no usable GPU: installing nvidia-driver-575-open
+[05:23:04] after open-module swap: NVIDIA GeForce RTX 5060 Ti, 575.57.08
+[05:23:07] user root, sudo='', arch sm_120, CUDA 12.9, torch index cu128
+[05:23:07] 1 toolchain
+[05:24:15] apt rc=0
+nvcc: NVIDIA (R) Cuda compiler driver
+Copyright (c) 2005-2025 NVIDIA Corporation
+Built on Tue_May_27_02:21:03_PDT_2025
+Cuda compilation tools, release 12.9, V12.9.86
+Build cuda_12.9.r12.9/compiler.36037853_0
+NVIDIA (R) Nsight Compute Command Line Profiler
+Copyright (c) 2018-2025 NVIDIA Corporation
+Version 2025.2.1.0 (build 35987062) (public-release)
+[05:24:15] 2 build
+[05:24:20] build rc=0
+62de88cedb8f33b40ac5368827a650ecab08d7214526be33b937438e3c6added  benchmarks/build/wb_probe
+[05:24:20] 3 counter permission check
+counter rows: 32
+[05:24:25] 4 B6b
+[05:26:16] B6b rc=0
+[05:26:16] 4 B8
+[05:27:49] B8 rc=0
+[05:27:49] 4 B10b first-cell
+[05:28:58] B10b rc=0
+[05:28:58] 5 B9b (waiting for the torch venv)
+[05:29:51] B9b rc=0
+[05:29:51] 6 pack

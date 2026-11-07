@@ -1,0 +1,1298 @@
+{
+ "benchmark": "idle_wb_probe",
+ "device": "NVIDIA GeForce RTX 3060 Laptop GPU",
+ "l2_bytes": 3145728,
+ "torch": "2.7.1+cu126",
+ "triton": "3.3.1",
+ "smoke": false,
+ "reps": 5,
+ "spin_cycles": 15000000,
+ "control_ms": 10.0,
+ "flush_bytes": 16777216,
+ "ranges": [
+  {
+   "kind": "control",
+   "idle_ms": 10.0
+  },
+  {
+   "kind": "control",
+   "idle_ms": 10.0
+  },
+  {
+   "kind": "A",
+   "w": 0.125,
+   "idle": "host",
+   "T_ms": 0.0,
+   "rep": 0,
+   "bytes": 393216,
+   "held_ms": 0.002
+  },
+  {
+   "kind": "B",
+   "w": 0.125,
+   "idle": "host",
+   "T_ms": 0.0,
+   "rep": 0,
+   "bytes": 393216
+  },
+  {
+   "kind": "A",
+   "w": 0.125,
+   "idle": "host",
+   "T_ms": 0.0,
+   "rep": 1,
+   "bytes": 393216,
+   "held_ms": 0.003
+  },
+  {
+   "kind": "B",
+   "w": 0.125,
+   "idle": "host",
+   "T_ms": 0.0,
+   "rep": 1,
+   "bytes": 393216
+  },
+  {
+   "kind": "A",
+   "w": 0.125,
+   "idle": "host",
+   "T_ms": 0.0,
+   "rep": 2,
+   "bytes": 393216,
+   "held_ms": 0.002
+  },
+  {
+   "kind": "B",
+   "w": 0.125,
+   "idle": "host",
+   "T_ms": 0.0,
+   "rep": 2,
+   "bytes": 393216
+  },
+  {
+   "kind": "A",
+   "w": 0.125,
+   "idle": "host",
+   "T_ms": 0.0,
+   "rep": 3,
+   "bytes": 393216,
+   "held_ms": 0.002
+  },
+  {
+   "kind": "B",
+   "w": 0.125,
+   "idle": "host",
+   "T_ms": 0.0,
+   "rep": 3,
+   "bytes": 393216
+  },
+  {
+   "kind": "A",
+   "w": 0.125,
+   "idle": "host",
+   "T_ms": 0.0,
+   "rep": 4,
+   "bytes": 393216,
+   "held_ms": 0.002
+  },
+  {
+   "kind": "B",
+   "w": 0.125,
+   "idle": "host",
+   "T_ms": 0.0,
+   "rep": 4,
+   "bytes": 393216
+  },
+  {
+   "kind": "A",
+   "w": 0.125,
+   "idle": "host",
+   "T_ms": 0.1,
+   "rep": 0,
+   "bytes": 393216,
+   "held_ms": 0.179
+  },
+  {
+   "kind": "B",
+   "w": 0.125,
+   "idle": "host",
+   "T_ms": 0.1,
+   "rep": 0,
+   "bytes": 393216
+  },
+  {
+   "kind": "A",
+   "w": 0.125,
+   "idle": "host",
+   "T_ms": 0.1,
+   "rep": 1,
+   "bytes": 393216,
+   "held_ms": 0.178
+  },
+  {
+   "kind": "B",
+   "w": 0.125,
+   "idle": "host",
+   "T_ms": 0.1,
+   "rep": 1,
+   "bytes": 393216
+  },
+  {
+   "kind": "A",
+   "w": 0.125,
+   "idle": "host",
+   "T_ms": 0.1,
+   "rep": 2,
+   "bytes": 393216,
+   "held_ms": 0.186
+  },
+  {
+   "kind": "B",
+   "w": 0.125,
+   "idle": "host",
+   "T_ms": 0.1,
+   "rep": 2,
+   "bytes": 393216
+  },
+  {
+   "kind": "A",
+   "w": 0.125,
+   "idle": "host",
+   "T_ms": 0.1,
+   "rep": 3,
+   "bytes": 393216,
+   "held_ms": 0.185
+  },
+  {
+   "kind": "B",
+   "w": 0.125,
+   "idle": "host",
+   "T_ms": 0.1,
+   "rep": 3,
+   "bytes": 393216
+  },
+  {
+   "kind": "A",
+   "w": 0.125,
+   "idle": "host",
+   "T_ms": 0.1,
+   "rep": 4,
+   "bytes": 393216,
+   "held_ms": 0.179
+  },
+  {
+   "kind": "B",
+   "w": 0.125,
+   "idle": "host",
+   "T_ms": 0.1,
+   "rep": 4,
+   "bytes": 393216
+  },
+  {
+   "kind": "A",
+   "w": 0.125,
+   "idle": "host",
+   "T_ms": 1.0,
+   "rep": 0,
+   "bytes": 393216,
+   "held_ms": 1.094
+  },
+  {
+   "kind": "B",
+   "w": 0.125,
+   "idle": "host",
+   "T_ms": 1.0,
+   "rep": 0,
+   "bytes": 393216
+  },
+  {
+   "kind": "A",
+   "w": 0.125,
+   "idle": "host",
+   "T_ms": 1.0,
+   "rep": 1,
+   "bytes": 393216,
+   "held_ms": 1.087
+  },
+  {
+   "kind": "B",
+   "w": 0.125,
+   "idle": "host",
+   "T_ms": 1.0,
+   "rep": 1,
+   "bytes": 393216
+  },
+  {
+   "kind": "A",
+   "w": 0.125,
+   "idle": "host",
+   "T_ms": 1.0,
+   "rep": 2,
+   "bytes": 393216,
+   "held_ms": 1.086
+  },
+  {
+   "kind": "B",
+   "w": 0.125,
+   "idle": "host",
+   "T_ms": 1.0,
+   "rep": 2,
+   "bytes": 393216
+  },
+  {
+   "kind": "A",
+   "w": 0.125,
+   "idle": "host",
+   "T_ms": 1.0,
+   "rep": 3,
+   "bytes": 393216,
+   "held_ms": 1.096
+  },
+  {
+   "kind": "B",
+   "w": 0.125,
+   "idle": "host",
+   "T_ms": 1.0,
+   "rep": 3,
+   "bytes": 393216
+  },
+  {
+   "kind": "A",
+   "w": 0.125,
+   "idle": "host",
+   "T_ms": 1.0,
+   "rep": 4,
+   "bytes": 393216,
+   "held_ms": 1.079
+  },
+  {
+   "kind": "B",
+   "w": 0.125,
+   "idle": "host",
+   "T_ms": 1.0,
+   "rep": 4,
+   "bytes": 393216
+  },
+  {
+   "kind": "A",
+   "w": 0.125,
+   "idle": "host",
+   "T_ms": 10.0,
+   "rep": 0,
+   "bytes": 393216,
+   "held_ms": 10.088
+  },
+  {
+   "kind": "B",
+   "w": 0.125,
+   "idle": "host",
+   "T_ms": 10.0,
+   "rep": 0,
+   "bytes": 393216
+  },
+  {
+   "kind": "A",
+   "w": 0.125,
+   "idle": "host",
+   "T_ms": 10.0,
+   "rep": 1,
+   "bytes": 393216,
+   "held_ms": 10.097
+  },
+  {
+   "kind": "B",
+   "w": 0.125,
+   "idle": "host",
+   "T_ms": 10.0,
+   "rep": 1,
+   "bytes": 393216
+  },
+  {
+   "kind": "A",
+   "w": 0.125,
+   "idle": "host",
+   "T_ms": 10.0,
+   "rep": 2,
+   "bytes": 393216,
+   "held_ms": 10.096
+  },
+  {
+   "kind": "B",
+   "w": 0.125,
+   "idle": "host",
+   "T_ms": 10.0,
+   "rep": 2,
+   "bytes": 393216
+  },
+  {
+   "kind": "A",
+   "w": 0.125,
+   "idle": "host",
+   "T_ms": 10.0,
+   "rep": 3,
+   "bytes": 393216,
+   "held_ms": 10.097
+  },
+  {
+   "kind": "B",
+   "w": 0.125,
+   "idle": "host",
+   "T_ms": 10.0,
+   "rep": 3,
+   "bytes": 393216
+  },
+  {
+   "kind": "A",
+   "w": 0.125,
+   "idle": "host",
+   "T_ms": 10.0,
+   "rep": 4,
+   "bytes": 393216,
+   "held_ms": 10.087
+  },
+  {
+   "kind": "B",
+   "w": 0.125,
+   "idle": "host",
+   "T_ms": 10.0,
+   "rep": 4,
+   "bytes": 393216
+  },
+  {
+   "kind": "A",
+   "w": 0.25,
+   "idle": "host",
+   "T_ms": 0.0,
+   "rep": 0,
+   "bytes": 786432,
+   "held_ms": 0.002
+  },
+  {
+   "kind": "B",
+   "w": 0.25,
+   "idle": "host",
+   "T_ms": 0.0,
+   "rep": 0,
+   "bytes": 786432
+  },
+  {
+   "kind": "A",
+   "w": 0.25,
+   "idle": "host",
+   "T_ms": 0.0,
+   "rep": 1,
+   "bytes": 786432,
+   "held_ms": 0.002
+  },
+  {
+   "kind": "B",
+   "w": 0.25,
+   "idle": "host",
+   "T_ms": 0.0,
+   "rep": 1,
+   "bytes": 786432
+  },
+  {
+   "kind": "A",
+   "w": 0.25,
+   "idle": "host",
+   "T_ms": 0.0,
+   "rep": 2,
+   "bytes": 786432,
+   "held_ms": 0.002
+  },
+  {
+   "kind": "B",
+   "w": 0.25,
+   "idle": "host",
+   "T_ms": 0.0,
+   "rep": 2,
+   "bytes": 786432
+  },
+  {
+   "kind": "A",
+   "w": 0.25,
+   "idle": "host",
+   "T_ms": 0.0,
+   "rep": 3,
+   "bytes": 786432,
+   "held_ms": 0.002
+  },
+  {
+   "kind": "B",
+   "w": 0.25,
+   "idle": "host",
+   "T_ms": 0.0,
+   "rep": 3,
+   "bytes": 786432
+  },
+  {
+   "kind": "A",
+   "w": 0.25,
+   "idle": "host",
+   "T_ms": 0.0,
+   "rep": 4,
+   "bytes": 786432,
+   "held_ms": 0.003
+  },
+  {
+   "kind": "B",
+   "w": 0.25,
+   "idle": "host",
+   "T_ms": 0.0,
+   "rep": 4,
+   "bytes": 786432
+  },
+  {
+   "kind": "A",
+   "w": 0.25,
+   "idle": "host",
+   "T_ms": 0.1,
+   "rep": 0,
+   "bytes": 786432,
+   "held_ms": 0.18
+  },
+  {
+   "kind": "B",
+   "w": 0.25,
+   "idle": "host",
+   "T_ms": 0.1,
+   "rep": 0,
+   "bytes": 786432
+  },
+  {
+   "kind": "A",
+   "w": 0.25,
+   "idle": "host",
+   "T_ms": 0.1,
+   "rep": 1,
+   "bytes": 786432,
+   "held_ms": 0.19
+  },
+  {
+   "kind": "B",
+   "w": 0.25,
+   "idle": "host",
+   "T_ms": 0.1,
+   "rep": 1,
+   "bytes": 786432
+  },
+  {
+   "kind": "A",
+   "w": 0.25,
+   "idle": "host",
+   "T_ms": 0.1,
+   "rep": 2,
+   "bytes": 786432,
+   "held_ms": 0.189
+  },
+  {
+   "kind": "B",
+   "w": 0.25,
+   "idle": "host",
+   "T_ms": 0.1,
+   "rep": 2,
+   "bytes": 786432
+  },
+  {
+   "kind": "A",
+   "w": 0.25,
+   "idle": "host",
+   "T_ms": 0.1,
+   "rep": 3,
+   "bytes": 786432,
+   "held_ms": 0.188
+  },
+  {
+   "kind": "B",
+   "w": 0.25,
+   "idle": "host",
+   "T_ms": 0.1,
+   "rep": 3,
+   "bytes": 786432
+  },
+  {
+   "kind": "A",
+   "w": 0.25,
+   "idle": "host",
+   "T_ms": 0.1,
+   "rep": 4,
+   "bytes": 786432,
+   "held_ms": 0.179
+  },
+  {
+   "kind": "B",
+   "w": 0.25,
+   "idle": "host",
+   "T_ms": 0.1,
+   "rep": 4,
+   "bytes": 786432
+  },
+  {
+   "kind": "A",
+   "w": 0.25,
+   "idle": "host",
+   "T_ms": 1.0,
+   "rep": 0,
+   "bytes": 786432,
+   "held_ms": 1.105
+  },
+  {
+   "kind": "B",
+   "w": 0.25,
+   "idle": "host",
+   "T_ms": 1.0,
+   "rep": 0,
+   "bytes": 786432
+  },
+  {
+   "kind": "A",
+   "w": 0.25,
+   "idle": "host",
+   "T_ms": 1.0,
+   "rep": 1,
+   "bytes": 786432,
+   "held_ms": 1.087
+  },
+  {
+   "kind": "B",
+   "w": 0.25,
+   "idle": "host",
+   "T_ms": 1.0,
+   "rep": 1,
+   "bytes": 786432
+  },
+  {
+   "kind": "A",
+   "w": 0.25,
+   "idle": "host",
+   "T_ms": 1.0,
+   "rep": 2,
+   "bytes": 786432,
+   "held_ms": 1.082
+  },
+  {
+   "kind": "B",
+   "w": 0.25,
+   "idle": "host",
+   "T_ms": 1.0,
+   "rep": 2,
+   "bytes": 786432
+  },
+  {
+   "kind": "A",
+   "w": 0.25,
+   "idle": "host",
+   "T_ms": 1.0,
+   "rep": 3,
+   "bytes": 786432,
+   "held_ms": 1.078
+  },
+  {
+   "kind": "B",
+   "w": 0.25,
+   "idle": "host",
+   "T_ms": 1.0,
+   "rep": 3,
+   "bytes": 786432
+  },
+  {
+   "kind": "A",
+   "w": 0.25,
+   "idle": "host",
+   "T_ms": 1.0,
+   "rep": 4,
+   "bytes": 786432,
+   "held_ms": 1.079
+  },
+  {
+   "kind": "B",
+   "w": 0.25,
+   "idle": "host",
+   "T_ms": 1.0,
+   "rep": 4,
+   "bytes": 786432
+  },
+  {
+   "kind": "A",
+   "w": 0.25,
+   "idle": "host",
+   "T_ms": 10.0,
+   "rep": 0,
+   "bytes": 786432,
+   "held_ms": 10.111
+  },
+  {
+   "kind": "B",
+   "w": 0.25,
+   "idle": "host",
+   "T_ms": 10.0,
+   "rep": 0,
+   "bytes": 786432
+  },
+  {
+   "kind": "A",
+   "w": 0.25,
+   "idle": "host",
+   "T_ms": 10.0,
+   "rep": 1,
+   "bytes": 786432,
+   "held_ms": 10.113
+  },
+  {
+   "kind": "B",
+   "w": 0.25,
+   "idle": "host",
+   "T_ms": 10.0,
+   "rep": 1,
+   "bytes": 786432
+  },
+  {
+   "kind": "A",
+   "w": 0.25,
+   "idle": "host",
+   "T_ms": 10.0,
+   "rep": 2,
+   "bytes": 786432,
+   "held_ms": 10.105
+  },
+  {
+   "kind": "B",
+   "w": 0.25,
+   "idle": "host",
+   "T_ms": 10.0,
+   "rep": 2,
+   "bytes": 786432
+  },
+  {
+   "kind": "A",
+   "w": 0.25,
+   "idle": "host",
+   "T_ms": 10.0,
+   "rep": 3,
+   "bytes": 786432,
+   "held_ms": 10.094
+  },
+  {
+   "kind": "B",
+   "w": 0.25,
+   "idle": "host",
+   "T_ms": 10.0,
+   "rep": 3,
+   "bytes": 786432
+  },
+  {
+   "kind": "A",
+   "w": 0.25,
+   "idle": "host",
+   "T_ms": 10.0,
+   "rep": 4,
+   "bytes": 786432,
+   "held_ms": 10.111
+  },
+  {
+   "kind": "B",
+   "w": 0.25,
+   "idle": "host",
+   "T_ms": 10.0,
+   "rep": 4,
+   "bytes": 786432
+  },
+  {
+   "kind": "A",
+   "w": 0.375,
+   "idle": "host",
+   "T_ms": 0.0,
+   "rep": 0,
+   "bytes": 1179648,
+   "held_ms": 0.002
+  },
+  {
+   "kind": "B",
+   "w": 0.375,
+   "idle": "host",
+   "T_ms": 0.0,
+   "rep": 0,
+   "bytes": 1179648
+  },
+  {
+   "kind": "A",
+   "w": 0.375,
+   "idle": "host",
+   "T_ms": 0.0,
+   "rep": 1,
+   "bytes": 1179648,
+   "held_ms": 0.002
+  },
+  {
+   "kind": "B",
+   "w": 0.375,
+   "idle": "host",
+   "T_ms": 0.0,
+   "rep": 1,
+   "bytes": 1179648
+  },
+  {
+   "kind": "A",
+   "w": 0.375,
+   "idle": "host",
+   "T_ms": 0.0,
+   "rep": 2,
+   "bytes": 1179648,
+   "held_ms": 0.002
+  },
+  {
+   "kind": "B",
+   "w": 0.375,
+   "idle": "host",
+   "T_ms": 0.0,
+   "rep": 2,
+   "bytes": 1179648
+  },
+  {
+   "kind": "A",
+   "w": 0.375,
+   "idle": "host",
+   "T_ms": 0.0,
+   "rep": 3,
+   "bytes": 1179648,
+   "held_ms": 0.004
+  },
+  {
+   "kind": "B",
+   "w": 0.375,
+   "idle": "host",
+   "T_ms": 0.0,
+   "rep": 3,
+   "bytes": 1179648
+  },
+  {
+   "kind": "A",
+   "w": 0.375,
+   "idle": "host",
+   "T_ms": 0.0,
+   "rep": 4,
+   "bytes": 1179648,
+   "held_ms": 0.002
+  },
+  {
+   "kind": "B",
+   "w": 0.375,
+   "idle": "host",
+   "T_ms": 0.0,
+   "rep": 4,
+   "bytes": 1179648
+  },
+  {
+   "kind": "A",
+   "w": 0.375,
+   "idle": "host",
+   "T_ms": 0.1,
+   "rep": 0,
+   "bytes": 1179648,
+   "held_ms": 0.184
+  },
+  {
+   "kind": "B",
+   "w": 0.375,
+   "idle": "host",
+   "T_ms": 0.1,
+   "rep": 0,
+   "bytes": 1179648
+  },
+  {
+   "kind": "A",
+   "w": 0.375,
+   "idle": "host",
+   "T_ms": 0.1,
+   "rep": 1,
+   "bytes": 1179648,
+   "held_ms": 0.188
+  },
+  {
+   "kind": "B",
+   "w": 0.375,
+   "idle": "host",
+   "T_ms": 0.1,
+   "rep": 1,
+   "bytes": 1179648
+  },
+  {
+   "kind": "A",
+   "w": 0.375,
+   "idle": "host",
+   "T_ms": 0.1,
+   "rep": 2,
+   "bytes": 1179648,
+   "held_ms": 0.179
+  },
+  {
+   "kind": "B",
+   "w": 0.375,
+   "idle": "host",
+   "T_ms": 0.1,
+   "rep": 2,
+   "bytes": 1179648
+  },
+  {
+   "kind": "A",
+   "w": 0.375,
+   "idle": "host",
+   "T_ms": 0.1,
+   "rep": 3,
+   "bytes": 1179648,
+   "held_ms": 0.183
+  },
+  {
+   "kind": "B",
+   "w": 0.375,
+   "idle": "host",
+   "T_ms": 0.1,
+   "rep": 3,
+   "bytes": 1179648
+  },
+  {
+   "kind": "A",
+   "w": 0.375,
+   "idle": "host",
+   "T_ms": 0.1,
+   "rep": 4,
+   "bytes": 1179648,
+   "held_ms": 0.179
+  },
+  {
+   "kind": "B",
+   "w": 0.375,
+   "idle": "host",
+   "T_ms": 0.1,
+   "rep": 4,
+   "bytes": 1179648
+  },
+  {
+   "kind": "A",
+   "w": 0.375,
+   "idle": "host",
+   "T_ms": 1.0,
+   "rep": 0,
+   "bytes": 1179648,
+   "held_ms": 1.08
+  },
+  {
+   "kind": "B",
+   "w": 0.375,
+   "idle": "host",
+   "T_ms": 1.0,
+   "rep": 0,
+   "bytes": 1179648
+  },
+  {
+   "kind": "A",
+   "w": 0.375,
+   "idle": "host",
+   "T_ms": 1.0,
+   "rep": 1,
+   "bytes": 1179648,
+   "held_ms": 1.077
+  },
+  {
+   "kind": "B",
+   "w": 0.375,
+   "idle": "host",
+   "T_ms": 1.0,
+   "rep": 1,
+   "bytes": 1179648
+  },
+  {
+   "kind": "A",
+   "w": 0.375,
+   "idle": "host",
+   "T_ms": 1.0,
+   "rep": 2,
+   "bytes": 1179648,
+   "held_ms": 1.035
+  },
+  {
+   "kind": "B",
+   "w": 0.375,
+   "idle": "host",
+   "T_ms": 1.0,
+   "rep": 2,
+   "bytes": 1179648
+  },
+  {
+   "kind": "A",
+   "w": 0.375,
+   "idle": "host",
+   "T_ms": 1.0,
+   "rep": 3,
+   "bytes": 1179648,
+   "held_ms": 1.082
+  },
+  {
+   "kind": "B",
+   "w": 0.375,
+   "idle": "host",
+   "T_ms": 1.0,
+   "rep": 3,
+   "bytes": 1179648
+  },
+  {
+   "kind": "A",
+   "w": 0.375,
+   "idle": "host",
+   "T_ms": 1.0,
+   "rep": 4,
+   "bytes": 1179648,
+   "held_ms": 1.084
+  },
+  {
+   "kind": "B",
+   "w": 0.375,
+   "idle": "host",
+   "T_ms": 1.0,
+   "rep": 4,
+   "bytes": 1179648
+  },
+  {
+   "kind": "A",
+   "w": 0.375,
+   "idle": "host",
+   "T_ms": 10.0,
+   "rep": 0,
+   "bytes": 1179648,
+   "held_ms": 10.1
+  },
+  {
+   "kind": "B",
+   "w": 0.375,
+   "idle": "host",
+   "T_ms": 10.0,
+   "rep": 0,
+   "bytes": 1179648
+  },
+  {
+   "kind": "A",
+   "w": 0.375,
+   "idle": "host",
+   "T_ms": 10.0,
+   "rep": 1,
+   "bytes": 1179648,
+   "held_ms": 10.122
+  },
+  {
+   "kind": "B",
+   "w": 0.375,
+   "idle": "host",
+   "T_ms": 10.0,
+   "rep": 1,
+   "bytes": 1179648
+  },
+  {
+   "kind": "A",
+   "w": 0.375,
+   "idle": "host",
+   "T_ms": 10.0,
+   "rep": 2,
+   "bytes": 1179648,
+   "held_ms": 10.096
+  },
+  {
+   "kind": "B",
+   "w": 0.375,
+   "idle": "host",
+   "T_ms": 10.0,
+   "rep": 2,
+   "bytes": 1179648
+  },
+  {
+   "kind": "A",
+   "w": 0.375,
+   "idle": "host",
+   "T_ms": 10.0,
+   "rep": 3,
+   "bytes": 1179648,
+   "held_ms": 10.085
+  },
+  {
+   "kind": "B",
+   "w": 0.375,
+   "idle": "host",
+   "T_ms": 10.0,
+   "rep": 3,
+   "bytes": 1179648
+  },
+  {
+   "kind": "A",
+   "w": 0.375,
+   "idle": "host",
+   "T_ms": 10.0,
+   "rep": 4,
+   "bytes": 1179648,
+   "held_ms": 10.113
+  },
+  {
+   "kind": "B",
+   "w": 0.375,
+   "idle": "host",
+   "T_ms": 10.0,
+   "rep": 4,
+   "bytes": 1179648
+  },
+  {
+   "kind": "A",
+   "w": 0.125,
+   "idle": "spin",
+   "T_ms": 10.0,
+   "rep": 0,
+   "bytes": 393216,
+   "held_ms": 11.94
+  },
+  {
+   "kind": "B",
+   "w": 0.125,
+   "idle": "spin",
+   "T_ms": 10.0,
+   "rep": 0,
+   "bytes": 393216
+  },
+  {
+   "kind": "A",
+   "w": 0.125,
+   "idle": "spin",
+   "T_ms": 10.0,
+   "rep": 1,
+   "bytes": 393216,
+   "held_ms": 11.883
+  },
+  {
+   "kind": "B",
+   "w": 0.125,
+   "idle": "spin",
+   "T_ms": 10.0,
+   "rep": 1,
+   "bytes": 393216
+  },
+  {
+   "kind": "A",
+   "w": 0.125,
+   "idle": "spin",
+   "T_ms": 10.0,
+   "rep": 2,
+   "bytes": 393216,
+   "held_ms": 11.883
+  },
+  {
+   "kind": "B",
+   "w": 0.125,
+   "idle": "spin",
+   "T_ms": 10.0,
+   "rep": 2,
+   "bytes": 393216
+  },
+  {
+   "kind": "A",
+   "w": 0.125,
+   "idle": "spin",
+   "T_ms": 10.0,
+   "rep": 3,
+   "bytes": 393216,
+   "held_ms": 11.838
+  },
+  {
+   "kind": "B",
+   "w": 0.125,
+   "idle": "spin",
+   "T_ms": 10.0,
+   "rep": 3,
+   "bytes": 393216
+  },
+  {
+   "kind": "A",
+   "w": 0.125,
+   "idle": "spin",
+   "T_ms": 10.0,
+   "rep": 4,
+   "bytes": 393216,
+   "held_ms": 11.879
+  },
+  {
+   "kind": "B",
+   "w": 0.125,
+   "idle": "spin",
+   "T_ms": 10.0,
+   "rep": 4,
+   "bytes": 393216
+  },
+  {
+   "kind": "A",
+   "w": 0.25,
+   "idle": "spin",
+   "T_ms": 10.0,
+   "rep": 0,
+   "bytes": 786432,
+   "held_ms": 11.882
+  },
+  {
+   "kind": "B",
+   "w": 0.25,
+   "idle": "spin",
+   "T_ms": 10.0,
+   "rep": 0,
+   "bytes": 786432
+  },
+  {
+   "kind": "A",
+   "w": 0.25,
+   "idle": "spin",
+   "T_ms": 10.0,
+   "rep": 1,
+   "bytes": 786432,
+   "held_ms": 11.849
+  },
+  {
+   "kind": "B",
+   "w": 0.25,
+   "idle": "spin",
+   "T_ms": 10.0,
+   "rep": 1,
+   "bytes": 786432
+  },
+  {
+   "kind": "A",
+   "w": 0.25,
+   "idle": "spin",
+   "T_ms": 10.0,
+   "rep": 2,
+   "bytes": 786432,
+   "held_ms": 11.874
+  },
+  {
+   "kind": "B",
+   "w": 0.25,
+   "idle": "spin",
+   "T_ms": 10.0,
+   "rep": 2,
+   "bytes": 786432
+  },
+  {
+   "kind": "A",
+   "w": 0.25,
+   "idle": "spin",
+   "T_ms": 10.0,
+   "rep": 3,
+   "bytes": 786432,
+   "held_ms": 11.837
+  },
+  {
+   "kind": "B",
+   "w": 0.25,
+   "idle": "spin",
+   "T_ms": 10.0,
+   "rep": 3,
+   "bytes": 786432
+  },
+  {
+   "kind": "A",
+   "w": 0.25,
+   "idle": "spin",
+   "T_ms": 10.0,
+   "rep": 4,
+   "bytes": 786432,
+   "held_ms": 11.953
+  },
+  {
+   "kind": "B",
+   "w": 0.25,
+   "idle": "spin",
+   "T_ms": 10.0,
+   "rep": 4,
+   "bytes": 786432
+  },
+  {
+   "kind": "A",
+   "w": 0.375,
+   "idle": "spin",
+   "T_ms": 10.0,
+   "rep": 0,
+   "bytes": 1179648,
+   "held_ms": 11.919
+  },
+  {
+   "kind": "B",
+   "w": 0.375,
+   "idle": "spin",
+   "T_ms": 10.0,
+   "rep": 0,
+   "bytes": 1179648
+  },
+  {
+   "kind": "A",
+   "w": 0.375,
+   "idle": "spin",
+   "T_ms": 10.0,
+   "rep": 1,
+   "bytes": 1179648,
+   "held_ms": 11.952
+  },
+  {
+   "kind": "B",
+   "w": 0.375,
+   "idle": "spin",
+   "T_ms": 10.0,
+   "rep": 1,
+   "bytes": 1179648
+  },
+  {
+   "kind": "A",
+   "w": 0.375,
+   "idle": "spin",
+   "T_ms": 10.0,
+   "rep": 2,
+   "bytes": 1179648,
+   "held_ms": 10.21
+  },
+  {
+   "kind": "B",
+   "w": 0.375,
+   "idle": "spin",
+   "T_ms": 10.0,
+   "rep": 2,
+   "bytes": 1179648
+  },
+  {
+   "kind": "A",
+   "w": 0.375,
+   "idle": "spin",
+   "T_ms": 10.0,
+   "rep": 3,
+   "bytes": 1179648,
+   "held_ms": 9.365
+  },
+  {
+   "kind": "B",
+   "w": 0.375,
+   "idle": "spin",
+   "T_ms": 10.0,
+   "rep": 3,
+   "bytes": 1179648
+  },
+  {
+   "kind": "A",
+   "w": 0.375,
+   "idle": "spin",
+   "T_ms": 10.0,
+   "rep": 4,
+   "bytes": 1179648,
+   "held_ms": 9.235
+  },
+  {
+   "kind": "B",
+   "w": 0.375,
+   "idle": "spin",
+   "T_ms": 10.0,
+   "rep": 4,
+   "bytes": 1179648
+  }
+ ],
+ "correctness_failures": 0
+}

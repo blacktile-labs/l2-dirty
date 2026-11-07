@@ -1,0 +1,11 @@
+copy_2d      R=4096;C=4096          ok
+naive        R=4096;C=4096          ok
+tiled        R=4096;C=4096          ok
+tiled_pad    R=4096;C=4096          ok
+cublas_geam  R=4096;C=4096          ok
+copy_2d      R=1000;C=777           ok
+naive        R=1000;C=777           ok
+tiled        R=1000;C=777           ok
+tiled_pad    R=1000;C=777           ok
+cublas_geam  R=1000;C=777           ok
+correctness_failures=0

@@ -1,0 +1,10 @@
+Dirty L2, Drained Queues: Measurement Pitfalls in GPU Kernel Microbenchmarks
+Copyright 2026 Rungrod Thongjampa, Chanchada Wathanathonnan (Blacktile Research)
+
+Code is licensed under the Apache License, Version 2.0 (LICENSE).
+The report text, figures and measurement data are licensed under CC BY 4.0 (LICENSE-CC-BY-4.0.md).
+
+Third-party code:
+- The read-flush kernel in tools/cleanbench/cleanbench.py and benchmarks/scripts/cleanbench.py is copied from
+  triton-lang/triton pull request #12556 (python/triton/testing.py, head ba27327b), MIT licensed;
+  see third_party/TRITON_LICENSE.

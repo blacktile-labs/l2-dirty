@@ -1,0 +1,878 @@
+{
+ "benchmark": "absorb_probe",
+ "mode": "timing",
+ "device": "NVIDIA GeForce RTX 4080 SUPER",
+ "l2_bytes": 67108864,
+ "torch": "2.7.1+cu126",
+ "triton": "3.3.1",
+ "smoke": false,
+ "run_seed": 3,
+ "rows": [
+  {
+   "shape": [
+    4096,
+    14336
+   ],
+   "cand": "w8_bn8_bk256_w4",
+   "format": "w8",
+   "weight_bytes": 58720256,
+   "kind": "timing",
+   "zero_ms": 0.12492799758911133,
+   "read_ms": 0.09004800021648407
+  },
+  {
+   "shape": [
+    4096,
+    14336
+   ],
+   "cand": "fp16_bn32_bk256_w8",
+   "format": "fp16",
+   "weight_bytes": 117440512,
+   "kind": "timing",
+   "zero_ms": 0.2385919988155365,
+   "read_ms": 0.17203199863433838
+  },
+  {
+   "shape": [
+    4096,
+    14336
+   ],
+   "cand": "fp16_bn16_bk128_w8",
+   "format": "fp16",
+   "weight_bytes": 117440512,
+   "kind": "timing",
+   "zero_ms": 0.24371199309825897,
+   "read_ms": 0.17612800002098083
+  },
+  {
+   "shape": [
+    4096,
+    14336
+   ],
+   "cand": "w8_bn32_bk256_w4",
+   "format": "w8",
+   "weight_bytes": 58720256,
+   "kind": "timing",
+   "zero_ms": 0.12595200538635254,
+   "read_ms": 0.09011200070381165
+  },
+  {
+   "shape": [
+    4096,
+    14336
+   ],
+   "cand": "fp16_bn32_bk128_w8",
+   "format": "fp16",
+   "weight_bytes": 117440512,
+   "kind": "timing",
+   "zero_ms": 0.24473600089550018,
+   "read_ms": 0.17612800002098083
+  },
+  {
+   "shape": [
+    4096,
+    14336
+   ],
+   "cand": "w4_bn16_bk128_w8",
+   "format": "w4",
+   "weight_bytes": 29360128,
+   "kind": "timing",
+   "zero_ms": 0.12083200365304947,
+   "read_ms": 0.09216000139713287
+  },
+  {
+   "shape": [
+    4096,
+    14336
+   ],
+   "cand": "w8_bn8_bk128_w8",
+   "format": "w8",
+   "weight_bytes": 58720256,
+   "kind": "timing",
+   "zero_ms": 0.16383999586105347,
+   "read_ms": 0.12595200538635254
+  },
+  {
+   "shape": [
+    4096,
+    14336
+   ],
+   "cand": "w8_bn16_bk128_w4",
+   "format": "w8",
+   "weight_bytes": 58720256,
+   "kind": "timing",
+   "zero_ms": 0.14131200313568115,
+   "read_ms": 0.1013759970664978
+  },
+  {
+   "shape": [
+    4096,
+    14336
+   ],
+   "cand": "fp16_bn8_bk128_w8",
+   "format": "fp16",
+   "weight_bytes": 117440512,
+   "kind": "timing",
+   "zero_ms": 0.2662400007247925,
+   "read_ms": 0.19968000054359436
+  },
+  {
+   "shape": [
+    4096,
+    14336
+   ],
+   "cand": "w4_bn8_bk256_w4",
+   "format": "w4",
+   "weight_bytes": 29360128,
+   "kind": "timing",
+   "zero_ms": 0.07475200295448303,
+   "read_ms": 0.053247999399900436
+  },
+  {
+   "shape": [
+    4096,
+    14336
+   ],
+   "cand": "w8_bn32_bk128_w8",
+   "format": "w8",
+   "weight_bytes": 58720256,
+   "kind": "timing",
+   "zero_ms": 0.14131200313568115,
+   "read_ms": 0.10239999741315842
+  },
+  {
+   "shape": [
+    4096,
+    14336
+   ],
+   "cand": "w4_bn8_bk128_w4",
+   "format": "w4",
+   "weight_bytes": 29360128,
+   "kind": "timing",
+   "zero_ms": 0.12083200365304947,
+   "read_ms": 0.09318400174379349
+  },
+  {
+   "shape": [
+    4096,
+    14336
+   ],
+   "cand": "w4_bn16_bk128_w4",
+   "format": "w4",
+   "weight_bytes": 29360128,
+   "kind": "timing",
+   "zero_ms": 0.12492799758911133,
+   "read_ms": 0.09728000313043594
+  },
+  {
+   "shape": [
+    4096,
+    14336
+   ],
+   "cand": "fp16_bn32_bk256_w4",
+   "format": "fp16",
+   "weight_bytes": 117440512,
+   "kind": "timing",
+   "zero_ms": 0.2396160066127777,
+   "read_ms": 0.17209600657224655
+  },
+  {
+   "shape": [
+    4096,
+    14336
+   ],
+   "cand": "fp16_bn8_bk256_w8",
+   "format": "fp16",
+   "weight_bytes": 117440512,
+   "kind": "timing",
+   "zero_ms": 0.2467840015888214,
+   "read_ms": 0.18329599499702454
+  },
+  {
+   "shape": [
+    4096,
+    14336
+   ],
+   "cand": "fp16_bn16_bk128_w4",
+   "format": "fp16",
+   "weight_bytes": 117440512,
+   "kind": "timing",
+   "zero_ms": 0.2457599937915802,
+   "read_ms": 0.17817600071430206
+  },
+  {
+   "shape": [
+    4096,
+    14336
+   ],
+   "cand": "w8_bn8_bk128_w4",
+   "format": "w8",
+   "weight_bytes": 58720256,
+   "kind": "timing",
+   "zero_ms": 0.13926400244235992,
+   "read_ms": 0.10044799745082855
+  },
+  {
+   "shape": [
+    4096,
+    14336
+   ],
+   "cand": "w4_bn16_bk256_w8",
+   "format": "w4",
+   "weight_bytes": 29360128,
+   "kind": "timing",
+   "zero_ms": 0.07372800260782242,
+   "read_ms": 0.06656000018119812
+  },
+  {
+   "shape": [
+    4096,
+    14336
+   ],
+   "cand": "w4_bn8_bk256_w8",
+   "format": "w4",
+   "weight_bytes": 29360128,
+   "kind": "timing",
+   "zero_ms": 0.091024000197649,
+   "read_ms": 0.07065600156784058
+  },
+  {
+   "shape": [
+    4096,
+    14336
+   ],
+   "cand": "w4_bn32_bk128_w4",
+   "format": "w4",
+   "weight_bytes": 29360128,
+   "kind": "timing",
+   "zero_ms": 0.1690400019288063,
+   "read_ms": 0.14131200313568115
+  },
+  {
+   "shape": [
+    4096,
+    14336
+   ],
+   "cand": "w4_bn8_bk128_w8",
+   "format": "w4",
+   "weight_bytes": 29360128,
+   "kind": "timing",
+   "zero_ms": 0.14950400590896606,
+   "read_ms": 0.12185599654912949
+  },
+  {
+   "shape": [
+    4096,
+    14336
+   ],
+   "cand": "fp16_bn16_bk256_w4",
+   "format": "fp16",
+   "weight_bytes": 117440512,
+   "kind": "timing",
+   "zero_ms": 0.23756800591945648,
+   "read_ms": 0.17203199863433838
+  },
+  {
+   "shape": [
+    4096,
+    14336
+   ],
+   "cand": "fp16_bn16_bk256_w8",
+   "format": "fp16",
+   "weight_bytes": 117440512,
+   "kind": "timing",
+   "zero_ms": 0.23756800591945648,
+   "read_ms": 0.17203199863433838
+  },
+  {
+   "shape": [
+    4096,
+    14336
+   ],
+   "cand": "w8_bn16_bk128_w8",
+   "format": "w8",
+   "weight_bytes": 58720256,
+   "kind": "timing",
+   "zero_ms": 0.1390879973769188,
+   "read_ms": 0.10121600329875946
+  },
+  {
+   "shape": [
+    4096,
+    14336
+   ],
+   "cand": "w4_bn32_bk128_w8",
+   "format": "w4",
+   "weight_bytes": 29360128,
+   "kind": "timing",
+   "zero_ms": 0.12399999797344208,
+   "read_ms": 0.09728000313043594
+  },
+  {
+   "shape": [
+    4096,
+    14336
+   ],
+   "cand": "w4_bn32_bk256_w8",
+   "format": "w4",
+   "weight_bytes": 29360128,
+   "kind": "timing",
+   "zero_ms": 0.10547199845314026,
+   "read_ms": 0.07372800260782242
+  },
+  {
+   "shape": [
+    4096,
+    14336
+   ],
+   "cand": "fp16_bn8_bk128_w4",
+   "format": "fp16",
+   "weight_bytes": 117440512,
+   "kind": "timing",
+   "zero_ms": 0.24473600089550018,
+   "read_ms": 0.17801600694656372
+  },
+  {
+   "shape": [
+    4096,
+    14336
+   ],
+   "cand": "w8_bn16_bk256_w8",
+   "format": "w8",
+   "weight_bytes": 58720256,
+   "kind": "timing",
+   "zero_ms": 0.12492799758911133,
+   "read_ms": 0.09004800021648407
+  },
+  {
+   "shape": [
+    4096,
+    14336
+   ],
+   "cand": "fp16_bn8_bk256_w4",
+   "format": "fp16",
+   "weight_bytes": 117440512,
+   "kind": "timing",
+   "zero_ms": 0.23654399812221527,
+   "read_ms": 0.17203199863433838
+  },
+  {
+   "shape": [
+    4096,
+    14336
+   ],
+   "cand": "w8_bn16_bk256_w4",
+   "format": "w8",
+   "weight_bytes": 58720256,
+   "kind": "timing",
+   "zero_ms": 0.12492799758911133,
+   "read_ms": 0.09011200070381165
+  },
+  {
+   "shape": [
+    4096,
+    14336
+   ],
+   "cand": "w8_bn32_bk128_w4",
+   "format": "w8",
+   "weight_bytes": 58720256,
+   "kind": "timing",
+   "zero_ms": 0.14422400295734406,
+   "read_ms": 0.10342399775981903
+  },
+  {
+   "shape": [
+    4096,
+    14336
+   ],
+   "cand": "w4_bn16_bk256_w4",
+   "format": "w4",
+   "weight_bytes": 29360128,
+   "kind": "timing",
+   "zero_ms": 0.08499199897050858,
+   "read_ms": 0.060416001826524734
+  },
+  {
+   "shape": [
+    4096,
+    14336
+   ],
+   "cand": "w8_bn32_bk256_w8",
+   "format": "w8",
+   "weight_bytes": 58720256,
+   "kind": "timing",
+   "zero_ms": 0.12492799758911133,
+   "read_ms": 0.09011200070381165
+  },
+  {
+   "shape": [
+    4096,
+    14336
+   ],
+   "cand": "fp16_bn32_bk128_w4",
+   "format": "fp16",
+   "weight_bytes": 117440512,
+   "kind": "timing",
+   "zero_ms": 0.24476799368858337,
+   "read_ms": 0.17715199291706085
+  },
+  {
+   "shape": [
+    4096,
+    14336
+   ],
+   "cand": "w4_bn32_bk256_w4",
+   "format": "w4",
+   "weight_bytes": 29360128,
+   "kind": "timing",
+   "zero_ms": 0.08908800035715103,
+   "read_ms": 0.06656000018119812
+  },
+  {
+   "shape": [
+    4096,
+    14336
+   ],
+   "cand": "w8_bn8_bk256_w8",
+   "format": "w8",
+   "weight_bytes": 58720256,
+   "kind": "timing",
+   "zero_ms": 0.13806399703025818,
+   "read_ms": 0.10342399775981903
+  },
+  {
+   "shape": [
+    14336,
+    4096
+   ],
+   "cand": "w8_bn16_bk128_w8",
+   "format": "w8",
+   "weight_bytes": 58720256,
+   "kind": "timing",
+   "zero_ms": 0.12185599654912949,
+   "read_ms": 0.0870399996638298
+  },
+  {
+   "shape": [
+    14336,
+    4096
+   ],
+   "cand": "w8_bn8_bk256_w4",
+   "format": "w8",
+   "weight_bytes": 58720256,
+   "kind": "timing",
+   "zero_ms": 0.11982400342822075,
+   "read_ms": 0.0870399996638298
+  },
+  {
+   "shape": [
+    14336,
+    4096
+   ],
+   "cand": "fp16_bn32_bk256_w4",
+   "format": "fp16",
+   "weight_bytes": 117440512,
+   "kind": "timing",
+   "zero_ms": 0.23756800591945648,
+   "read_ms": 0.17315199971199036
+  },
+  {
+   "shape": [
+    14336,
+    4096
+   ],
+   "cand": "fp16_bn8_bk256_w4",
+   "format": "fp16",
+   "weight_bytes": 117440512,
+   "kind": "timing",
+   "zero_ms": 0.23449599742889404,
+   "read_ms": 0.17100800573825836
+  },
+  {
+   "shape": [
+    14336,
+    4096
+   ],
+   "cand": "w4_bn32_bk128_w4",
+   "format": "w4",
+   "weight_bytes": 29360128,
+   "kind": "timing",
+   "zero_ms": 0.08238399773836136,
+   "read_ms": 0.06348799914121628
+  },
+  {
+   "shape": [
+    14336,
+    4096
+   ],
+   "cand": "w8_bn32_bk256_w8",
+   "format": "w8",
+   "weight_bytes": 58720256,
+   "kind": "timing",
+   "zero_ms": 0.12075200304389,
+   "read_ms": 0.08806400001049042
+  },
+  {
+   "shape": [
+    14336,
+    4096
+   ],
+   "cand": "fp16_bn16_bk256_w8",
+   "format": "fp16",
+   "weight_bytes": 117440512,
+   "kind": "timing",
+   "zero_ms": 0.23449599742889404,
+   "read_ms": 0.17100800573825836
+  },
+  {
+   "shape": [
+    14336,
+    4096
+   ],
+   "cand": "w4_bn32_bk256_w4",
+   "format": "w4",
+   "weight_bytes": 29360128,
+   "kind": "timing",
+   "zero_ms": 0.06656000018119812,
+   "read_ms": 0.048128001391887665
+  },
+  {
+   "shape": [
+    14336,
+    4096
+   ],
+   "cand": "fp16_bn8_bk128_w4",
+   "format": "fp16",
+   "weight_bytes": 117440512,
+   "kind": "timing",
+   "zero_ms": 0.23552000522613525,
+   "read_ms": 0.17100800573825836
+  },
+  {
+   "shape": [
+    14336,
+    4096
+   ],
+   "cand": "fp16_bn16_bk128_w8",
+   "format": "fp16",
+   "weight_bytes": 117440512,
+   "kind": "timing",
+   "zero_ms": 0.23552000522613525,
+   "read_ms": 0.17100800573825836
+  },
+  {
+   "shape": [
+    14336,
+    4096
+   ],
+   "cand": "w4_bn8_bk256_w4",
+   "format": "w4",
+   "weight_bytes": 29360128,
+   "kind": "timing",
+   "zero_ms": 0.06451199948787689,
+   "read_ms": 0.04608000069856644
+  },
+  {
+   "shape": [
+    14336,
+    4096
+   ],
+   "cand": "w8_bn16_bk256_w4",
+   "format": "w8",
+   "weight_bytes": 58720256,
+   "kind": "timing",
+   "zero_ms": 0.12185599654912949,
+   "read_ms": 0.08883199840784073
+  },
+  {
+   "shape": [
+    14336,
+    4096
+   ],
+   "cand": "w8_bn32_bk256_w4",
+   "format": "w8",
+   "weight_bytes": 58720256,
+   "kind": "timing",
+   "zero_ms": 0.12086400017142296,
+   "read_ms": 0.08806400001049042
+  },
+  {
+   "shape": [
+    14336,
+    4096
+   ],
+   "cand": "w8_bn16_bk256_w8",
+   "format": "w8",
+   "weight_bytes": 58720256,
+   "kind": "timing",
+   "zero_ms": 0.12083200365304947,
+   "read_ms": 0.0870399996638298
+  },
+  {
+   "shape": [
+    14336,
+    4096
+   ],
+   "cand": "w8_bn32_bk128_w8",
+   "format": "w8",
+   "weight_bytes": 58720256,
+   "kind": "timing",
+   "zero_ms": 0.12185599654912949,
+   "read_ms": 0.08806400001049042
+  },
+  {
+   "shape": [
+    14336,
+    4096
+   ],
+   "cand": "w4_bn32_bk128_w8",
+   "format": "w4",
+   "weight_bytes": 29360128,
+   "kind": "timing",
+   "zero_ms": 0.0737760029733181,
+   "read_ms": 0.053247999399900436
+  },
+  {
+   "shape": [
+    14336,
+    4096
+   ],
+   "cand": "w8_bn8_bk128_w4",
+   "format": "w8",
+   "weight_bytes": 58720256,
+   "kind": "timing",
+   "zero_ms": 0.12179199978709221,
+   "read_ms": 0.0870399996638298
+  },
+  {
+   "shape": [
+    14336,
+    4096
+   ],
+   "cand": "w8_bn16_bk128_w4",
+   "format": "w8",
+   "weight_bytes": 58720256,
+   "kind": "timing",
+   "zero_ms": 0.1228799968957901,
+   "read_ms": 0.08908800035715103
+  },
+  {
+   "shape": [
+    14336,
+    4096
+   ],
+   "cand": "w8_bn32_bk128_w4",
+   "format": "w8",
+   "weight_bytes": 58720256,
+   "kind": "timing",
+   "zero_ms": 0.12185599654912949,
+   "read_ms": 0.08806400001049042
+  },
+  {
+   "shape": [
+    14336,
+    4096
+   ],
+   "cand": "fp16_bn32_bk128_w8",
+   "format": "fp16",
+   "weight_bytes": 117440512,
+   "kind": "timing",
+   "zero_ms": 0.23552000522613525,
+   "read_ms": 0.17100800573825836
+  },
+  {
+   "shape": [
+    14336,
+    4096
+   ],
+   "cand": "w8_bn8_bk128_w8",
+   "format": "w8",
+   "weight_bytes": 58720256,
+   "kind": "timing",
+   "zero_ms": 0.12697599828243256,
+   "read_ms": 0.08908800035715103
+  },
+  {
+   "shape": [
+    14336,
+    4096
+   ],
+   "cand": "fp16_bn32_bk128_w4",
+   "format": "fp16",
+   "weight_bytes": 117440512,
+   "kind": "timing",
+   "zero_ms": 0.23552000522613525,
+   "read_ms": 0.17100800573825836
+  },
+  {
+   "shape": [
+    14336,
+    4096
+   ],
+   "cand": "fp16_bn16_bk256_w4",
+   "format": "fp16",
+   "weight_bytes": 117440512,
+   "kind": "timing",
+   "zero_ms": 0.23449599742889404,
+   "read_ms": 0.17100800573825836
+  },
+  {
+   "shape": [
+    14336,
+    4096
+   ],
+   "cand": "w8_bn8_bk256_w8",
+   "format": "w8",
+   "weight_bytes": 58720256,
+   "kind": "timing",
+   "zero_ms": 0.12185599654912949,
+   "read_ms": 0.08710400015115738
+  },
+  {
+   "shape": [
+    14336,
+    4096
+   ],
+   "cand": "w4_bn16_bk256_w8",
+   "format": "w4",
+   "weight_bytes": 29360128,
+   "kind": "timing",
+   "zero_ms": 0.0655359998345375,
+   "read_ms": 0.05632000043988228
+  },
+  {
+   "shape": [
+    14336,
+    4096
+   ],
+   "cand": "fp16_bn8_bk128_w8",
+   "format": "fp16",
+   "weight_bytes": 117440512,
+   "kind": "timing",
+   "zero_ms": 0.23654399812221527,
+   "read_ms": 0.17100800573825836
+  },
+  {
+   "shape": [
+    14336,
+    4096
+   ],
+   "cand": "fp16_bn8_bk256_w8",
+   "format": "fp16",
+   "weight_bytes": 117440512,
+   "kind": "timing",
+   "zero_ms": 0.23552000522613525,
+   "read_ms": 0.17100800573825836
+  },
+  {
+   "shape": [
+    14336,
+    4096
+   ],
+   "cand": "fp16_bn32_bk256_w8",
+   "format": "fp16",
+   "weight_bytes": 117440512,
+   "kind": "timing",
+   "zero_ms": 0.23552000522613525,
+   "read_ms": 0.17100800573825836
+  },
+  {
+   "shape": [
+    14336,
+    4096
+   ],
+   "cand": "fp16_bn16_bk128_w4",
+   "format": "fp16",
+   "weight_bytes": 117440512,
+   "kind": "timing",
+   "zero_ms": 0.23552000522613525,
+   "read_ms": 0.17100800573825836
+  },
+  {
+   "shape": [
+    14336,
+    4096
+   ],
+   "cand": "w4_bn16_bk128_w8",
+   "format": "w4",
+   "weight_bytes": 29360128,
+   "kind": "timing",
+   "zero_ms": 0.0727040022611618,
+   "read_ms": 0.053247999399900436
+  },
+  {
+   "shape": [
+    14336,
+    4096
+   ],
+   "cand": "w4_bn32_bk256_w8",
+   "format": "w4",
+   "weight_bytes": 29360128,
+   "kind": "timing",
+   "zero_ms": 0.08806400001049042,
+   "read_ms": 0.0655359998345375
+  },
+  {
+   "shape": [
+    14336,
+    4096
+   ],
+   "cand": "w4_bn16_bk128_w4",
+   "format": "w4",
+   "weight_bytes": 29360128,
+   "kind": "timing",
+   "zero_ms": 0.07372800260782242,
+   "read_ms": 0.05222399905323982
+  },
+  {
+   "shape": [
+    14336,
+    4096
+   ],
+   "cand": "w4_bn8_bk128_w8",
+   "format": "w4",
+   "weight_bytes": 29360128,
+   "kind": "timing",
+   "zero_ms": 0.08806400001049042,
+   "read_ms": 0.0655359998345375
+  },
+  {
+   "shape": [
+    14336,
+    4096
+   ],
+   "cand": "w4_bn8_bk256_w8",
+   "format": "w4",
+   "weight_bytes": 29360128,
+   "kind": "timing",
+   "zero_ms": 0.06969600170850754,
+   "read_ms": 0.055296000093221664
+  },
+  {
+   "shape": [
+    14336,
+    4096
+   ],
+   "cand": "w4_bn8_bk128_w4",
+   "format": "w4",
+   "weight_bytes": 29360128,
+   "kind": "timing",
+   "zero_ms": 0.07372800260782242,
+   "read_ms": 0.053247999399900436
+  },
+  {
+   "shape": [
+    14336,
+    4096
+   ],
+   "cand": "w4_bn16_bk256_w4",
+   "format": "w4",
+   "weight_bytes": 29360128,
+   "kind": "timing",
+   "zero_ms": 0.06656000018119812,
+   "read_ms": 0.04915200173854828
+  }
+ ],
+ "invalid": [],
+ "n_candidates": 36
+}

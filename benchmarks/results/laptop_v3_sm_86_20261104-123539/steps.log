@@ -1,0 +1,23 @@
+== 12:35:39 environment
+== 12:35:41 tests
+unittest rc=0
+test_host_cpp rc=0
+== 12:35:49 build sm_86
+build copy_stride rc=0
+build fusion rc=0
+build stencil rc=0
+== 12:36:03 B1 smoke, 256 MiB
+B1 rc=0
+== 12:36:07 B5 stencil rep 1
+B5 r1 rc=0
+== 12:36:12 B5 stencil rep 2
+B5 r2 rc=0
+== 12:36:17 B5 stencil rep 3
+B5 r3 rc=0
+== 12:36:21 B4 fusion rep 1
+B4 r1 rc=0
+== 12:36:24 B4 fusion rep 2
+B4 r2 rc=0
+== 12:36:27 B4 fusion rep 3
+B4 r3 rc=0
+== 12:36:31 done

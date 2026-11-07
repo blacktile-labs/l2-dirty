@@ -1,0 +1,11 @@
+Fri Nov  6 14:32:12 UTC 2026
+name, driver_version, temperature.gpu, clocks.current.sm [MHz], clocks.current.memory [MHz], pstate
+NVIDIA GeForce RTX 3060 Laptop GPU, 591.74, 54, 1282 MHz, 6000 MHz, P0
+NVIDIA (R) Nsight Compute Command Line Profiler
+Copyright (c) 2018-2024 NVIDIA Corporation
+Version 2024.2.1.0 (build 34372528) (public-release)
+2.7.1+cu126 12.6 3.3.1
+5c4e9171e80e56d6d1d6cf21feeccec007cf168b8b1afb644232508aa00d5394  benchmarks/scripts/flush_fix_probe.sh
+13ca277375152db3c3acf56e9eca3772252ce2dc14c9e7454269c7b6e37f1603  benchmarks/scripts/flush_fix_probe.py
+212b1d5126133e46737d38e7fbf68e812b5bc098d35e362a45c1ff16107a1420  benchmarks/scripts/flush_fix_score.py
+e7d21047cb71d492393bca1f04047e1ff175179eace83e68b190145c00d50d57  benchmarks/scripts/counter_prereg.py

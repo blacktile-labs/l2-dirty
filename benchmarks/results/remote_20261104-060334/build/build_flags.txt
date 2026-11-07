@@ -1,0 +1,2 @@
+flags: -O3 -std=c++17 -lineinfo -arch=sm_86 -Xptxas -v
+transpose: built WITH_CUBLAS

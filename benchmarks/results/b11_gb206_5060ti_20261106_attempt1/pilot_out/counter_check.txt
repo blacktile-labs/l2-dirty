@@ -1,0 +1,4 @@
+==PROF== Connected to process 2996 (/root/dmkl/benchmarks/build/wb_probe)
+No usable CUDA device: invalid device ordinal
+==PROF== Disconnected from process 2996
+==ERROR== The application returned an error code (3).

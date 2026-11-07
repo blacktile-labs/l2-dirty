@@ -1,0 +1,19 @@
+Fri Nov  6 04:58:10 UTC 2026
+Linux ubuntu 6.8.0-59-generic #61~22.04.1-Ubuntu SMP PREEMPT_DYNAMIC Tue Apr 15 17:03:15 UTC 2 x86_64 x86_64 x86_64 GNU/Linux
+name, driver_version, temperature.gpu, clocks.current.sm [MHz], clocks.current.memory [MHz], pstate
+NVIDIA GeForce RTX 2060 SUPER, 575.51.03, 48, 1470 MHz, 7000 MHz, P0
+NVIDIA (R) Nsight Compute Command Line Profiler
+Copyright (c) 2018-2024 NVIDIA Corporation
+Version 2024.2.1.0 (build 34372528) (public-release)
+fatal: not a git repository (or any of the parent directories): .git
+fatal: not a git repository (or any of the parent directories): .git
+0dc645e864eedfb289c4916bcde8739a7abbd7126662eaaaafed1b972a9112d8  benchmarks/scripts/wb_probe_b6b.sh
+62d9abdabf94c35bef028409aae2f41d0dc0e4c268056bbf0d4ed7656cfb03ec  benchmarks/build/wb_probe
+7dbbd451e459d54b247f5567073131701085e40b50942a75a4335f644ebd77ee  benchmarks/src/wb_probe.cu
+7a5ea8b826772234d1e9a17990149dee6d5726dee203cf4fa2785e5c224a8c44  benchmarks/src/common.cuh
+5bcd6f86be78df111a5ba0ea398c8e0ba33e61ea7d4ebafc937aa8a6ed12c862  benchmarks/src/dmk_host.hpp
+8f7092ba238caf1396bb66219010d71b8fc10950b4fbf0b52e1fcd65b6b88482  benchmarks/scripts/wb_probe_b6b_score.py
+e7751d8771d93045e11338fa6401ae3af505c6c7a77c04fc4f00081a4479b884  benchmarks/scripts/wb_probe_score.py
+e7d21047cb71d492393bca1f04047e1ff175179eace83e68b190145c00d50d57  benchmarks/scripts/counter_prereg.py
+FULL=0:0.1875,0.5:0.1875,0.625:0.1875,0.6875:0.1875,0:0.3125,0.375:0.3125,0.5:0.3125,0.5625:0.3125,0:0.4375,0:0.5,0:0.5625,0:0.625,0:0.6875,2:0,0:2
+SECT=0:0.375,0:0.625,0:0.75,0:0.875,0:2

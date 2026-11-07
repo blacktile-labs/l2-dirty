@@ -1,0 +1,61 @@
+{
+ "benchmark": "prod_quant_probe",
+ "device": "NVIDIA GeForce RTX 4090",
+ "l2_bytes": 75497472,
+ "cc": "8.9",
+ "torch": "2.7.1+cu126",
+ "triton": "3.3.1",
+ "smoke": true,
+ "run_seed": 0,
+ "rows": [
+  {
+   "shape": [
+    4096,
+    4096
+   ],
+   "cand": "tinygemm_k4",
+   "zero_ms": 0.020479999482631683,
+   "read_ms": 0.014336000196635723
+  },
+  {
+   "shape": [
+    4096,
+    4096
+   ],
+   "cand": "tinygemm_k2",
+   "zero_ms": 0.020479999482631683,
+   "read_ms": 0.014336000196635723
+  },
+  {
+   "shape": [
+    4096,
+    4096
+   ],
+   "cand": "cublas_fp16",
+   "zero_ms": 0.058368001133203506,
+   "read_ms": 0.04095999896526337
+  },
+  {
+   "shape": [
+    4096,
+    4096
+   ],
+   "cand": "bnb_nf4",
+   "zero_ms": 0.028672000393271446,
+   "read_ms": 0.01945599913597107
+  },
+  {
+   "shape": [
+    4096,
+    4096
+   ],
+   "cand": "tinygemm_k8",
+   "zero_ms": 0.01945599913597107,
+   "read_ms": 0.014336000196635723
+  }
+ ],
+ "invalid": [],
+ "notes": {
+  "4096x4096 _bnb_version": "0.50.2"
+ }
+}

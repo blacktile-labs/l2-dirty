@@ -1,0 +1,1851 @@
+{
+ "benchmark": "flush_fix_probe",
+ "mode": "range",
+ "device": "NVIDIA GeForce RTX 3060 Laptop GPU",
+ "l2_bytes": 3145728,
+ "sm_count": 30,
+ "torch": "2.7.1+cu126",
+ "triton": "3.3.1",
+ "pr_head": "ba27327b9a4667b58e89ae5e1f0d7efe453a2021",
+ "pr_flush_check": {
+  "ld_volatile_global": 2,
+  "st_global": 0,
+  "buffer_unchanged": true
+ },
+ "flush_bytes": 268435456,
+ "wait_s": 0.01,
+ "kernels": {
+  "gemv4": {
+   "in_bytes": 12582912,
+   "out_bytes": 3072,
+   "copies": 2
+  },
+  "e_tiny": {
+   "in_bytes": 24576,
+   "out_bytes": 24576,
+   "copies": 256
+  },
+  "e_small": {
+   "in_bytes": 393216,
+   "out_bytes": 393216,
+   "copies": 16
+  },
+  "e_large": {
+   "in_bytes": 6291456,
+   "out_bytes": 6291456,
+   "copies": 2
+  }
+ },
+ "smoke": false,
+ "reps": 5,
+ "seed": 1818,
+ "events": [
+  {
+   "kind": "control"
+  },
+  {
+   "kind": "control"
+  },
+  {
+   "kind": "call",
+   "kernel": "gemv4",
+   "mode": "prL2",
+   "rep": 0,
+   "in_bytes": 12582912,
+   "out_bytes": 3072,
+   "copies": 2
+  },
+  {
+   "kind": "call",
+   "kernel": "gemv4",
+   "mode": "rotate",
+   "rep": 0,
+   "in_bytes": 12582912,
+   "out_bytes": 3072,
+   "copies": 2
+  },
+  {
+   "kind": "call",
+   "kernel": "gemv4",
+   "mode": "zeroL2",
+   "rep": 0,
+   "in_bytes": 12582912,
+   "out_bytes": 3072,
+   "copies": 2
+  },
+  {
+   "kind": "call",
+   "kernel": "gemv4",
+   "mode": "none",
+   "rep": 0,
+   "in_bytes": 12582912,
+   "out_bytes": 3072,
+   "copies": 2
+  },
+  {
+   "kind": "call",
+   "kernel": "gemv4",
+   "mode": "pr2L2",
+   "rep": 0,
+   "in_bytes": 12582912,
+   "out_bytes": 3072,
+   "copies": 2
+  },
+  {
+   "kind": "call",
+   "kernel": "gemv4",
+   "mode": "sum256",
+   "rep": 0,
+   "in_bytes": 12582912,
+   "out_bytes": 3072,
+   "copies": 2
+  },
+  {
+   "kind": "call",
+   "kernel": "gemv4",
+   "mode": "zero256",
+   "rep": 0,
+   "in_bytes": 12582912,
+   "out_bytes": 3072,
+   "copies": 2
+  },
+  {
+   "kind": "call",
+   "kernel": "gemv4",
+   "mode": "zero256_read",
+   "rep": 0,
+   "in_bytes": 12582912,
+   "out_bytes": 3072,
+   "copies": 2
+  },
+  {
+   "kind": "call",
+   "kernel": "gemv4",
+   "mode": "pr256",
+   "rep": 0,
+   "in_bytes": 12582912,
+   "out_bytes": 3072,
+   "copies": 2
+  },
+  {
+   "kind": "call",
+   "kernel": "gemv4",
+   "mode": "zero256_wait",
+   "rep": 0,
+   "in_bytes": 12582912,
+   "out_bytes": 3072,
+   "copies": 2
+  },
+  {
+   "kind": "call",
+   "kernel": "gemv4",
+   "mode": "zero256",
+   "rep": 1,
+   "in_bytes": 12582912,
+   "out_bytes": 3072,
+   "copies": 2
+  },
+  {
+   "kind": "call",
+   "kernel": "gemv4",
+   "mode": "pr2L2",
+   "rep": 1,
+   "in_bytes": 12582912,
+   "out_bytes": 3072,
+   "copies": 2
+  },
+  {
+   "kind": "call",
+   "kernel": "gemv4",
+   "mode": "rotate",
+   "rep": 1,
+   "in_bytes": 12582912,
+   "out_bytes": 3072,
+   "copies": 2
+  },
+  {
+   "kind": "call",
+   "kernel": "gemv4",
+   "mode": "zeroL2",
+   "rep": 1,
+   "in_bytes": 12582912,
+   "out_bytes": 3072,
+   "copies": 2
+  },
+  {
+   "kind": "call",
+   "kernel": "gemv4",
+   "mode": "none",
+   "rep": 1,
+   "in_bytes": 12582912,
+   "out_bytes": 3072,
+   "copies": 2
+  },
+  {
+   "kind": "call",
+   "kernel": "gemv4",
+   "mode": "zero256_wait",
+   "rep": 1,
+   "in_bytes": 12582912,
+   "out_bytes": 3072,
+   "copies": 2
+  },
+  {
+   "kind": "call",
+   "kernel": "gemv4",
+   "mode": "zero256_read",
+   "rep": 1,
+   "in_bytes": 12582912,
+   "out_bytes": 3072,
+   "copies": 2
+  },
+  {
+   "kind": "call",
+   "kernel": "gemv4",
+   "mode": "sum256",
+   "rep": 1,
+   "in_bytes": 12582912,
+   "out_bytes": 3072,
+   "copies": 2
+  },
+  {
+   "kind": "call",
+   "kernel": "gemv4",
+   "mode": "pr256",
+   "rep": 1,
+   "in_bytes": 12582912,
+   "out_bytes": 3072,
+   "copies": 2
+  },
+  {
+   "kind": "call",
+   "kernel": "gemv4",
+   "mode": "prL2",
+   "rep": 1,
+   "in_bytes": 12582912,
+   "out_bytes": 3072,
+   "copies": 2
+  },
+  {
+   "kind": "call",
+   "kernel": "gemv4",
+   "mode": "zero256_read",
+   "rep": 2,
+   "in_bytes": 12582912,
+   "out_bytes": 3072,
+   "copies": 2
+  },
+  {
+   "kind": "call",
+   "kernel": "gemv4",
+   "mode": "sum256",
+   "rep": 2,
+   "in_bytes": 12582912,
+   "out_bytes": 3072,
+   "copies": 2
+  },
+  {
+   "kind": "call",
+   "kernel": "gemv4",
+   "mode": "pr256",
+   "rep": 2,
+   "in_bytes": 12582912,
+   "out_bytes": 3072,
+   "copies": 2
+  },
+  {
+   "kind": "call",
+   "kernel": "gemv4",
+   "mode": "zeroL2",
+   "rep": 2,
+   "in_bytes": 12582912,
+   "out_bytes": 3072,
+   "copies": 2
+  },
+  {
+   "kind": "call",
+   "kernel": "gemv4",
+   "mode": "zero256_wait",
+   "rep": 2,
+   "in_bytes": 12582912,
+   "out_bytes": 3072,
+   "copies": 2
+  },
+  {
+   "kind": "call",
+   "kernel": "gemv4",
+   "mode": "prL2",
+   "rep": 2,
+   "in_bytes": 12582912,
+   "out_bytes": 3072,
+   "copies": 2
+  },
+  {
+   "kind": "call",
+   "kernel": "gemv4",
+   "mode": "none",
+   "rep": 2,
+   "in_bytes": 12582912,
+   "out_bytes": 3072,
+   "copies": 2
+  },
+  {
+   "kind": "call",
+   "kernel": "gemv4",
+   "mode": "rotate",
+   "rep": 2,
+   "in_bytes": 12582912,
+   "out_bytes": 3072,
+   "copies": 2
+  },
+  {
+   "kind": "call",
+   "kernel": "gemv4",
+   "mode": "pr2L2",
+   "rep": 2,
+   "in_bytes": 12582912,
+   "out_bytes": 3072,
+   "copies": 2
+  },
+  {
+   "kind": "call",
+   "kernel": "gemv4",
+   "mode": "zero256",
+   "rep": 2,
+   "in_bytes": 12582912,
+   "out_bytes": 3072,
+   "copies": 2
+  },
+  {
+   "kind": "call",
+   "kernel": "gemv4",
+   "mode": "zero256",
+   "rep": 3,
+   "in_bytes": 12582912,
+   "out_bytes": 3072,
+   "copies": 2
+  },
+  {
+   "kind": "call",
+   "kernel": "gemv4",
+   "mode": "zeroL2",
+   "rep": 3,
+   "in_bytes": 12582912,
+   "out_bytes": 3072,
+   "copies": 2
+  },
+  {
+   "kind": "call",
+   "kernel": "gemv4",
+   "mode": "zero256_read",
+   "rep": 3,
+   "in_bytes": 12582912,
+   "out_bytes": 3072,
+   "copies": 2
+  },
+  {
+   "kind": "call",
+   "kernel": "gemv4",
+   "mode": "sum256",
+   "rep": 3,
+   "in_bytes": 12582912,
+   "out_bytes": 3072,
+   "copies": 2
+  },
+  {
+   "kind": "call",
+   "kernel": "gemv4",
+   "mode": "rotate",
+   "rep": 3,
+   "in_bytes": 12582912,
+   "out_bytes": 3072,
+   "copies": 2
+  },
+  {
+   "kind": "call",
+   "kernel": "gemv4",
+   "mode": "prL2",
+   "rep": 3,
+   "in_bytes": 12582912,
+   "out_bytes": 3072,
+   "copies": 2
+  },
+  {
+   "kind": "call",
+   "kernel": "gemv4",
+   "mode": "pr256",
+   "rep": 3,
+   "in_bytes": 12582912,
+   "out_bytes": 3072,
+   "copies": 2
+  },
+  {
+   "kind": "call",
+   "kernel": "gemv4",
+   "mode": "pr2L2",
+   "rep": 3,
+   "in_bytes": 12582912,
+   "out_bytes": 3072,
+   "copies": 2
+  },
+  {
+   "kind": "call",
+   "kernel": "gemv4",
+   "mode": "zero256_wait",
+   "rep": 3,
+   "in_bytes": 12582912,
+   "out_bytes": 3072,
+   "copies": 2
+  },
+  {
+   "kind": "call",
+   "kernel": "gemv4",
+   "mode": "none",
+   "rep": 3,
+   "in_bytes": 12582912,
+   "out_bytes": 3072,
+   "copies": 2
+  },
+  {
+   "kind": "call",
+   "kernel": "gemv4",
+   "mode": "zeroL2",
+   "rep": 4,
+   "in_bytes": 12582912,
+   "out_bytes": 3072,
+   "copies": 2
+  },
+  {
+   "kind": "call",
+   "kernel": "gemv4",
+   "mode": "pr2L2",
+   "rep": 4,
+   "in_bytes": 12582912,
+   "out_bytes": 3072,
+   "copies": 2
+  },
+  {
+   "kind": "call",
+   "kernel": "gemv4",
+   "mode": "zero256_read",
+   "rep": 4,
+   "in_bytes": 12582912,
+   "out_bytes": 3072,
+   "copies": 2
+  },
+  {
+   "kind": "call",
+   "kernel": "gemv4",
+   "mode": "prL2",
+   "rep": 4,
+   "in_bytes": 12582912,
+   "out_bytes": 3072,
+   "copies": 2
+  },
+  {
+   "kind": "call",
+   "kernel": "gemv4",
+   "mode": "rotate",
+   "rep": 4,
+   "in_bytes": 12582912,
+   "out_bytes": 3072,
+   "copies": 2
+  },
+  {
+   "kind": "call",
+   "kernel": "gemv4",
+   "mode": "pr256",
+   "rep": 4,
+   "in_bytes": 12582912,
+   "out_bytes": 3072,
+   "copies": 2
+  },
+  {
+   "kind": "call",
+   "kernel": "gemv4",
+   "mode": "none",
+   "rep": 4,
+   "in_bytes": 12582912,
+   "out_bytes": 3072,
+   "copies": 2
+  },
+  {
+   "kind": "call",
+   "kernel": "gemv4",
+   "mode": "zero256",
+   "rep": 4,
+   "in_bytes": 12582912,
+   "out_bytes": 3072,
+   "copies": 2
+  },
+  {
+   "kind": "call",
+   "kernel": "gemv4",
+   "mode": "zero256_wait",
+   "rep": 4,
+   "in_bytes": 12582912,
+   "out_bytes": 3072,
+   "copies": 2
+  },
+  {
+   "kind": "call",
+   "kernel": "gemv4",
+   "mode": "sum256",
+   "rep": 4,
+   "in_bytes": 12582912,
+   "out_bytes": 3072,
+   "copies": 2
+  },
+  {
+   "kind": "call",
+   "kernel": "e_tiny",
+   "mode": "pr256",
+   "rep": 0,
+   "in_bytes": 24576,
+   "out_bytes": 24576,
+   "copies": 256
+  },
+  {
+   "kind": "call",
+   "kernel": "e_tiny",
+   "mode": "prL2",
+   "rep": 0,
+   "in_bytes": 24576,
+   "out_bytes": 24576,
+   "copies": 256
+  },
+  {
+   "kind": "call",
+   "kernel": "e_tiny",
+   "mode": "pr2L2",
+   "rep": 0,
+   "in_bytes": 24576,
+   "out_bytes": 24576,
+   "copies": 256
+  },
+  {
+   "kind": "call",
+   "kernel": "e_tiny",
+   "mode": "zero256_read",
+   "rep": 0,
+   "in_bytes": 24576,
+   "out_bytes": 24576,
+   "copies": 256
+  },
+  {
+   "kind": "call",
+   "kernel": "e_tiny",
+   "mode": "rotate",
+   "rep": 0,
+   "in_bytes": 24576,
+   "out_bytes": 24576,
+   "copies": 256
+  },
+  {
+   "kind": "call",
+   "kernel": "e_tiny",
+   "mode": "zero256_wait",
+   "rep": 0,
+   "in_bytes": 24576,
+   "out_bytes": 24576,
+   "copies": 256
+  },
+  {
+   "kind": "call",
+   "kernel": "e_tiny",
+   "mode": "sum256",
+   "rep": 0,
+   "in_bytes": 24576,
+   "out_bytes": 24576,
+   "copies": 256
+  },
+  {
+   "kind": "call",
+   "kernel": "e_tiny",
+   "mode": "none",
+   "rep": 0,
+   "in_bytes": 24576,
+   "out_bytes": 24576,
+   "copies": 256
+  },
+  {
+   "kind": "call",
+   "kernel": "e_tiny",
+   "mode": "zeroL2",
+   "rep": 0,
+   "in_bytes": 24576,
+   "out_bytes": 24576,
+   "copies": 256
+  },
+  {
+   "kind": "call",
+   "kernel": "e_tiny",
+   "mode": "zero256",
+   "rep": 0,
+   "in_bytes": 24576,
+   "out_bytes": 24576,
+   "copies": 256
+  },
+  {
+   "kind": "call",
+   "kernel": "e_tiny",
+   "mode": "none",
+   "rep": 1,
+   "in_bytes": 24576,
+   "out_bytes": 24576,
+   "copies": 256
+  },
+  {
+   "kind": "call",
+   "kernel": "e_tiny",
+   "mode": "prL2",
+   "rep": 1,
+   "in_bytes": 24576,
+   "out_bytes": 24576,
+   "copies": 256
+  },
+  {
+   "kind": "call",
+   "kernel": "e_tiny",
+   "mode": "rotate",
+   "rep": 1,
+   "in_bytes": 24576,
+   "out_bytes": 24576,
+   "copies": 256
+  },
+  {
+   "kind": "call",
+   "kernel": "e_tiny",
+   "mode": "sum256",
+   "rep": 1,
+   "in_bytes": 24576,
+   "out_bytes": 24576,
+   "copies": 256
+  },
+  {
+   "kind": "call",
+   "kernel": "e_tiny",
+   "mode": "pr2L2",
+   "rep": 1,
+   "in_bytes": 24576,
+   "out_bytes": 24576,
+   "copies": 256
+  },
+  {
+   "kind": "call",
+   "kernel": "e_tiny",
+   "mode": "zero256",
+   "rep": 1,
+   "in_bytes": 24576,
+   "out_bytes": 24576,
+   "copies": 256
+  },
+  {
+   "kind": "call",
+   "kernel": "e_tiny",
+   "mode": "zero256_read",
+   "rep": 1,
+   "in_bytes": 24576,
+   "out_bytes": 24576,
+   "copies": 256
+  },
+  {
+   "kind": "call",
+   "kernel": "e_tiny",
+   "mode": "pr256",
+   "rep": 1,
+   "in_bytes": 24576,
+   "out_bytes": 24576,
+   "copies": 256
+  },
+  {
+   "kind": "call",
+   "kernel": "e_tiny",
+   "mode": "zero256_wait",
+   "rep": 1,
+   "in_bytes": 24576,
+   "out_bytes": 24576,
+   "copies": 256
+  },
+  {
+   "kind": "call",
+   "kernel": "e_tiny",
+   "mode": "zeroL2",
+   "rep": 1,
+   "in_bytes": 24576,
+   "out_bytes": 24576,
+   "copies": 256
+  },
+  {
+   "kind": "call",
+   "kernel": "e_tiny",
+   "mode": "pr2L2",
+   "rep": 2,
+   "in_bytes": 24576,
+   "out_bytes": 24576,
+   "copies": 256
+  },
+  {
+   "kind": "call",
+   "kernel": "e_tiny",
+   "mode": "rotate",
+   "rep": 2,
+   "in_bytes": 24576,
+   "out_bytes": 24576,
+   "copies": 256
+  },
+  {
+   "kind": "call",
+   "kernel": "e_tiny",
+   "mode": "zero256_read",
+   "rep": 2,
+   "in_bytes": 24576,
+   "out_bytes": 24576,
+   "copies": 256
+  },
+  {
+   "kind": "call",
+   "kernel": "e_tiny",
+   "mode": "zeroL2",
+   "rep": 2,
+   "in_bytes": 24576,
+   "out_bytes": 24576,
+   "copies": 256
+  },
+  {
+   "kind": "call",
+   "kernel": "e_tiny",
+   "mode": "none",
+   "rep": 2,
+   "in_bytes": 24576,
+   "out_bytes": 24576,
+   "copies": 256
+  },
+  {
+   "kind": "call",
+   "kernel": "e_tiny",
+   "mode": "prL2",
+   "rep": 2,
+   "in_bytes": 24576,
+   "out_bytes": 24576,
+   "copies": 256
+  },
+  {
+   "kind": "call",
+   "kernel": "e_tiny",
+   "mode": "pr256",
+   "rep": 2,
+   "in_bytes": 24576,
+   "out_bytes": 24576,
+   "copies": 256
+  },
+  {
+   "kind": "call",
+   "kernel": "e_tiny",
+   "mode": "sum256",
+   "rep": 2,
+   "in_bytes": 24576,
+   "out_bytes": 24576,
+   "copies": 256
+  },
+  {
+   "kind": "call",
+   "kernel": "e_tiny",
+   "mode": "zero256_wait",
+   "rep": 2,
+   "in_bytes": 24576,
+   "out_bytes": 24576,
+   "copies": 256
+  },
+  {
+   "kind": "call",
+   "kernel": "e_tiny",
+   "mode": "zero256",
+   "rep": 2,
+   "in_bytes": 24576,
+   "out_bytes": 24576,
+   "copies": 256
+  },
+  {
+   "kind": "call",
+   "kernel": "e_tiny",
+   "mode": "pr2L2",
+   "rep": 3,
+   "in_bytes": 24576,
+   "out_bytes": 24576,
+   "copies": 256
+  },
+  {
+   "kind": "call",
+   "kernel": "e_tiny",
+   "mode": "zero256_read",
+   "rep": 3,
+   "in_bytes": 24576,
+   "out_bytes": 24576,
+   "copies": 256
+  },
+  {
+   "kind": "call",
+   "kernel": "e_tiny",
+   "mode": "zero256",
+   "rep": 3,
+   "in_bytes": 24576,
+   "out_bytes": 24576,
+   "copies": 256
+  },
+  {
+   "kind": "call",
+   "kernel": "e_tiny",
+   "mode": "sum256",
+   "rep": 3,
+   "in_bytes": 24576,
+   "out_bytes": 24576,
+   "copies": 256
+  },
+  {
+   "kind": "call",
+   "kernel": "e_tiny",
+   "mode": "none",
+   "rep": 3,
+   "in_bytes": 24576,
+   "out_bytes": 24576,
+   "copies": 256
+  },
+  {
+   "kind": "call",
+   "kernel": "e_tiny",
+   "mode": "zeroL2",
+   "rep": 3,
+   "in_bytes": 24576,
+   "out_bytes": 24576,
+   "copies": 256
+  },
+  {
+   "kind": "call",
+   "kernel": "e_tiny",
+   "mode": "prL2",
+   "rep": 3,
+   "in_bytes": 24576,
+   "out_bytes": 24576,
+   "copies": 256
+  },
+  {
+   "kind": "call",
+   "kernel": "e_tiny",
+   "mode": "zero256_wait",
+   "rep": 3,
+   "in_bytes": 24576,
+   "out_bytes": 24576,
+   "copies": 256
+  },
+  {
+   "kind": "call",
+   "kernel": "e_tiny",
+   "mode": "rotate",
+   "rep": 3,
+   "in_bytes": 24576,
+   "out_bytes": 24576,
+   "copies": 256
+  },
+  {
+   "kind": "call",
+   "kernel": "e_tiny",
+   "mode": "pr256",
+   "rep": 3,
+   "in_bytes": 24576,
+   "out_bytes": 24576,
+   "copies": 256
+  },
+  {
+   "kind": "call",
+   "kernel": "e_tiny",
+   "mode": "sum256",
+   "rep": 4,
+   "in_bytes": 24576,
+   "out_bytes": 24576,
+   "copies": 256
+  },
+  {
+   "kind": "call",
+   "kernel": "e_tiny",
+   "mode": "zero256",
+   "rep": 4,
+   "in_bytes": 24576,
+   "out_bytes": 24576,
+   "copies": 256
+  },
+  {
+   "kind": "call",
+   "kernel": "e_tiny",
+   "mode": "zeroL2",
+   "rep": 4,
+   "in_bytes": 24576,
+   "out_bytes": 24576,
+   "copies": 256
+  },
+  {
+   "kind": "call",
+   "kernel": "e_tiny",
+   "mode": "zero256_wait",
+   "rep": 4,
+   "in_bytes": 24576,
+   "out_bytes": 24576,
+   "copies": 256
+  },
+  {
+   "kind": "call",
+   "kernel": "e_tiny",
+   "mode": "prL2",
+   "rep": 4,
+   "in_bytes": 24576,
+   "out_bytes": 24576,
+   "copies": 256
+  },
+  {
+   "kind": "call",
+   "kernel": "e_tiny",
+   "mode": "rotate",
+   "rep": 4,
+   "in_bytes": 24576,
+   "out_bytes": 24576,
+   "copies": 256
+  },
+  {
+   "kind": "call",
+   "kernel": "e_tiny",
+   "mode": "pr2L2",
+   "rep": 4,
+   "in_bytes": 24576,
+   "out_bytes": 24576,
+   "copies": 256
+  },
+  {
+   "kind": "call",
+   "kernel": "e_tiny",
+   "mode": "pr256",
+   "rep": 4,
+   "in_bytes": 24576,
+   "out_bytes": 24576,
+   "copies": 256
+  },
+  {
+   "kind": "call",
+   "kernel": "e_tiny",
+   "mode": "zero256_read",
+   "rep": 4,
+   "in_bytes": 24576,
+   "out_bytes": 24576,
+   "copies": 256
+  },
+  {
+   "kind": "call",
+   "kernel": "e_tiny",
+   "mode": "none",
+   "rep": 4,
+   "in_bytes": 24576,
+   "out_bytes": 24576,
+   "copies": 256
+  },
+  {
+   "kind": "call",
+   "kernel": "e_small",
+   "mode": "pr2L2",
+   "rep": 0,
+   "in_bytes": 393216,
+   "out_bytes": 393216,
+   "copies": 16
+  },
+  {
+   "kind": "call",
+   "kernel": "e_small",
+   "mode": "none",
+   "rep": 0,
+   "in_bytes": 393216,
+   "out_bytes": 393216,
+   "copies": 16
+  },
+  {
+   "kind": "call",
+   "kernel": "e_small",
+   "mode": "zeroL2",
+   "rep": 0,
+   "in_bytes": 393216,
+   "out_bytes": 393216,
+   "copies": 16
+  },
+  {
+   "kind": "call",
+   "kernel": "e_small",
+   "mode": "zero256_wait",
+   "rep": 0,
+   "in_bytes": 393216,
+   "out_bytes": 393216,
+   "copies": 16
+  },
+  {
+   "kind": "call",
+   "kernel": "e_small",
+   "mode": "sum256",
+   "rep": 0,
+   "in_bytes": 393216,
+   "out_bytes": 393216,
+   "copies": 16
+  },
+  {
+   "kind": "call",
+   "kernel": "e_small",
+   "mode": "rotate",
+   "rep": 0,
+   "in_bytes": 393216,
+   "out_bytes": 393216,
+   "copies": 16
+  },
+  {
+   "kind": "call",
+   "kernel": "e_small",
+   "mode": "zero256_read",
+   "rep": 0,
+   "in_bytes": 393216,
+   "out_bytes": 393216,
+   "copies": 16
+  },
+  {
+   "kind": "call",
+   "kernel": "e_small",
+   "mode": "pr256",
+   "rep": 0,
+   "in_bytes": 393216,
+   "out_bytes": 393216,
+   "copies": 16
+  },
+  {
+   "kind": "call",
+   "kernel": "e_small",
+   "mode": "prL2",
+   "rep": 0,
+   "in_bytes": 393216,
+   "out_bytes": 393216,
+   "copies": 16
+  },
+  {
+   "kind": "call",
+   "kernel": "e_small",
+   "mode": "zero256",
+   "rep": 0,
+   "in_bytes": 393216,
+   "out_bytes": 393216,
+   "copies": 16
+  },
+  {
+   "kind": "call",
+   "kernel": "e_small",
+   "mode": "rotate",
+   "rep": 1,
+   "in_bytes": 393216,
+   "out_bytes": 393216,
+   "copies": 16
+  },
+  {
+   "kind": "call",
+   "kernel": "e_small",
+   "mode": "none",
+   "rep": 1,
+   "in_bytes": 393216,
+   "out_bytes": 393216,
+   "copies": 16
+  },
+  {
+   "kind": "call",
+   "kernel": "e_small",
+   "mode": "pr2L2",
+   "rep": 1,
+   "in_bytes": 393216,
+   "out_bytes": 393216,
+   "copies": 16
+  },
+  {
+   "kind": "call",
+   "kernel": "e_small",
+   "mode": "zeroL2",
+   "rep": 1,
+   "in_bytes": 393216,
+   "out_bytes": 393216,
+   "copies": 16
+  },
+  {
+   "kind": "call",
+   "kernel": "e_small",
+   "mode": "sum256",
+   "rep": 1,
+   "in_bytes": 393216,
+   "out_bytes": 393216,
+   "copies": 16
+  },
+  {
+   "kind": "call",
+   "kernel": "e_small",
+   "mode": "pr256",
+   "rep": 1,
+   "in_bytes": 393216,
+   "out_bytes": 393216,
+   "copies": 16
+  },
+  {
+   "kind": "call",
+   "kernel": "e_small",
+   "mode": "zero256_read",
+   "rep": 1,
+   "in_bytes": 393216,
+   "out_bytes": 393216,
+   "copies": 16
+  },
+  {
+   "kind": "call",
+   "kernel": "e_small",
+   "mode": "prL2",
+   "rep": 1,
+   "in_bytes": 393216,
+   "out_bytes": 393216,
+   "copies": 16
+  },
+  {
+   "kind": "call",
+   "kernel": "e_small",
+   "mode": "zero256",
+   "rep": 1,
+   "in_bytes": 393216,
+   "out_bytes": 393216,
+   "copies": 16
+  },
+  {
+   "kind": "call",
+   "kernel": "e_small",
+   "mode": "zero256_wait",
+   "rep": 1,
+   "in_bytes": 393216,
+   "out_bytes": 393216,
+   "copies": 16
+  },
+  {
+   "kind": "call",
+   "kernel": "e_small",
+   "mode": "pr2L2",
+   "rep": 2,
+   "in_bytes": 393216,
+   "out_bytes": 393216,
+   "copies": 16
+  },
+  {
+   "kind": "call",
+   "kernel": "e_small",
+   "mode": "pr256",
+   "rep": 2,
+   "in_bytes": 393216,
+   "out_bytes": 393216,
+   "copies": 16
+  },
+  {
+   "kind": "call",
+   "kernel": "e_small",
+   "mode": "zero256",
+   "rep": 2,
+   "in_bytes": 393216,
+   "out_bytes": 393216,
+   "copies": 16
+  },
+  {
+   "kind": "call",
+   "kernel": "e_small",
+   "mode": "rotate",
+   "rep": 2,
+   "in_bytes": 393216,
+   "out_bytes": 393216,
+   "copies": 16
+  },
+  {
+   "kind": "call",
+   "kernel": "e_small",
+   "mode": "none",
+   "rep": 2,
+   "in_bytes": 393216,
+   "out_bytes": 393216,
+   "copies": 16
+  },
+  {
+   "kind": "call",
+   "kernel": "e_small",
+   "mode": "sum256",
+   "rep": 2,
+   "in_bytes": 393216,
+   "out_bytes": 393216,
+   "copies": 16
+  },
+  {
+   "kind": "call",
+   "kernel": "e_small",
+   "mode": "prL2",
+   "rep": 2,
+   "in_bytes": 393216,
+   "out_bytes": 393216,
+   "copies": 16
+  },
+  {
+   "kind": "call",
+   "kernel": "e_small",
+   "mode": "zero256_wait",
+   "rep": 2,
+   "in_bytes": 393216,
+   "out_bytes": 393216,
+   "copies": 16
+  },
+  {
+   "kind": "call",
+   "kernel": "e_small",
+   "mode": "zeroL2",
+   "rep": 2,
+   "in_bytes": 393216,
+   "out_bytes": 393216,
+   "copies": 16
+  },
+  {
+   "kind": "call",
+   "kernel": "e_small",
+   "mode": "zero256_read",
+   "rep": 2,
+   "in_bytes": 393216,
+   "out_bytes": 393216,
+   "copies": 16
+  },
+  {
+   "kind": "call",
+   "kernel": "e_small",
+   "mode": "zeroL2",
+   "rep": 3,
+   "in_bytes": 393216,
+   "out_bytes": 393216,
+   "copies": 16
+  },
+  {
+   "kind": "call",
+   "kernel": "e_small",
+   "mode": "sum256",
+   "rep": 3,
+   "in_bytes": 393216,
+   "out_bytes": 393216,
+   "copies": 16
+  },
+  {
+   "kind": "call",
+   "kernel": "e_small",
+   "mode": "zero256",
+   "rep": 3,
+   "in_bytes": 393216,
+   "out_bytes": 393216,
+   "copies": 16
+  },
+  {
+   "kind": "call",
+   "kernel": "e_small",
+   "mode": "rotate",
+   "rep": 3,
+   "in_bytes": 393216,
+   "out_bytes": 393216,
+   "copies": 16
+  },
+  {
+   "kind": "call",
+   "kernel": "e_small",
+   "mode": "zero256_wait",
+   "rep": 3,
+   "in_bytes": 393216,
+   "out_bytes": 393216,
+   "copies": 16
+  },
+  {
+   "kind": "call",
+   "kernel": "e_small",
+   "mode": "pr256",
+   "rep": 3,
+   "in_bytes": 393216,
+   "out_bytes": 393216,
+   "copies": 16
+  },
+  {
+   "kind": "call",
+   "kernel": "e_small",
+   "mode": "zero256_read",
+   "rep": 3,
+   "in_bytes": 393216,
+   "out_bytes": 393216,
+   "copies": 16
+  },
+  {
+   "kind": "call",
+   "kernel": "e_small",
+   "mode": "pr2L2",
+   "rep": 3,
+   "in_bytes": 393216,
+   "out_bytes": 393216,
+   "copies": 16
+  },
+  {
+   "kind": "call",
+   "kernel": "e_small",
+   "mode": "none",
+   "rep": 3,
+   "in_bytes": 393216,
+   "out_bytes": 393216,
+   "copies": 16
+  },
+  {
+   "kind": "call",
+   "kernel": "e_small",
+   "mode": "prL2",
+   "rep": 3,
+   "in_bytes": 393216,
+   "out_bytes": 393216,
+   "copies": 16
+  },
+  {
+   "kind": "call",
+   "kernel": "e_small",
+   "mode": "pr2L2",
+   "rep": 4,
+   "in_bytes": 393216,
+   "out_bytes": 393216,
+   "copies": 16
+  },
+  {
+   "kind": "call",
+   "kernel": "e_small",
+   "mode": "none",
+   "rep": 4,
+   "in_bytes": 393216,
+   "out_bytes": 393216,
+   "copies": 16
+  },
+  {
+   "kind": "call",
+   "kernel": "e_small",
+   "mode": "zeroL2",
+   "rep": 4,
+   "in_bytes": 393216,
+   "out_bytes": 393216,
+   "copies": 16
+  },
+  {
+   "kind": "call",
+   "kernel": "e_small",
+   "mode": "zero256",
+   "rep": 4,
+   "in_bytes": 393216,
+   "out_bytes": 393216,
+   "copies": 16
+  },
+  {
+   "kind": "call",
+   "kernel": "e_small",
+   "mode": "pr256",
+   "rep": 4,
+   "in_bytes": 393216,
+   "out_bytes": 393216,
+   "copies": 16
+  },
+  {
+   "kind": "call",
+   "kernel": "e_small",
+   "mode": "sum256",
+   "rep": 4,
+   "in_bytes": 393216,
+   "out_bytes": 393216,
+   "copies": 16
+  },
+  {
+   "kind": "call",
+   "kernel": "e_small",
+   "mode": "zero256_read",
+   "rep": 4,
+   "in_bytes": 393216,
+   "out_bytes": 393216,
+   "copies": 16
+  },
+  {
+   "kind": "call",
+   "kernel": "e_small",
+   "mode": "rotate",
+   "rep": 4,
+   "in_bytes": 393216,
+   "out_bytes": 393216,
+   "copies": 16
+  },
+  {
+   "kind": "call",
+   "kernel": "e_small",
+   "mode": "zero256_wait",
+   "rep": 4,
+   "in_bytes": 393216,
+   "out_bytes": 393216,
+   "copies": 16
+  },
+  {
+   "kind": "call",
+   "kernel": "e_small",
+   "mode": "prL2",
+   "rep": 4,
+   "in_bytes": 393216,
+   "out_bytes": 393216,
+   "copies": 16
+  },
+  {
+   "kind": "call",
+   "kernel": "e_large",
+   "mode": "pr2L2",
+   "rep": 0,
+   "in_bytes": 6291456,
+   "out_bytes": 6291456,
+   "copies": 2
+  },
+  {
+   "kind": "call",
+   "kernel": "e_large",
+   "mode": "pr256",
+   "rep": 0,
+   "in_bytes": 6291456,
+   "out_bytes": 6291456,
+   "copies": 2
+  },
+  {
+   "kind": "call",
+   "kernel": "e_large",
+   "mode": "none",
+   "rep": 0,
+   "in_bytes": 6291456,
+   "out_bytes": 6291456,
+   "copies": 2
+  },
+  {
+   "kind": "call",
+   "kernel": "e_large",
+   "mode": "zero256_read",
+   "rep": 0,
+   "in_bytes": 6291456,
+   "out_bytes": 6291456,
+   "copies": 2
+  },
+  {
+   "kind": "call",
+   "kernel": "e_large",
+   "mode": "rotate",
+   "rep": 0,
+   "in_bytes": 6291456,
+   "out_bytes": 6291456,
+   "copies": 2
+  },
+  {
+   "kind": "call",
+   "kernel": "e_large",
+   "mode": "prL2",
+   "rep": 0,
+   "in_bytes": 6291456,
+   "out_bytes": 6291456,
+   "copies": 2
+  },
+  {
+   "kind": "call",
+   "kernel": "e_large",
+   "mode": "zeroL2",
+   "rep": 0,
+   "in_bytes": 6291456,
+   "out_bytes": 6291456,
+   "copies": 2
+  },
+  {
+   "kind": "call",
+   "kernel": "e_large",
+   "mode": "zero256",
+   "rep": 0,
+   "in_bytes": 6291456,
+   "out_bytes": 6291456,
+   "copies": 2
+  },
+  {
+   "kind": "call",
+   "kernel": "e_large",
+   "mode": "sum256",
+   "rep": 0,
+   "in_bytes": 6291456,
+   "out_bytes": 6291456,
+   "copies": 2
+  },
+  {
+   "kind": "call",
+   "kernel": "e_large",
+   "mode": "zero256_wait",
+   "rep": 0,
+   "in_bytes": 6291456,
+   "out_bytes": 6291456,
+   "copies": 2
+  },
+  {
+   "kind": "call",
+   "kernel": "e_large",
+   "mode": "none",
+   "rep": 1,
+   "in_bytes": 6291456,
+   "out_bytes": 6291456,
+   "copies": 2
+  },
+  {
+   "kind": "call",
+   "kernel": "e_large",
+   "mode": "zeroL2",
+   "rep": 1,
+   "in_bytes": 6291456,
+   "out_bytes": 6291456,
+   "copies": 2
+  },
+  {
+   "kind": "call",
+   "kernel": "e_large",
+   "mode": "pr2L2",
+   "rep": 1,
+   "in_bytes": 6291456,
+   "out_bytes": 6291456,
+   "copies": 2
+  },
+  {
+   "kind": "call",
+   "kernel": "e_large",
+   "mode": "zero256_read",
+   "rep": 1,
+   "in_bytes": 6291456,
+   "out_bytes": 6291456,
+   "copies": 2
+  },
+  {
+   "kind": "call",
+   "kernel": "e_large",
+   "mode": "pr256",
+   "rep": 1,
+   "in_bytes": 6291456,
+   "out_bytes": 6291456,
+   "copies": 2
+  },
+  {
+   "kind": "call",
+   "kernel": "e_large",
+   "mode": "sum256",
+   "rep": 1,
+   "in_bytes": 6291456,
+   "out_bytes": 6291456,
+   "copies": 2
+  },
+  {
+   "kind": "call",
+   "kernel": "e_large",
+   "mode": "prL2",
+   "rep": 1,
+   "in_bytes": 6291456,
+   "out_bytes": 6291456,
+   "copies": 2
+  },
+  {
+   "kind": "call",
+   "kernel": "e_large",
+   "mode": "rotate",
+   "rep": 1,
+   "in_bytes": 6291456,
+   "out_bytes": 6291456,
+   "copies": 2
+  },
+  {
+   "kind": "call",
+   "kernel": "e_large",
+   "mode": "zero256_wait",
+   "rep": 1,
+   "in_bytes": 6291456,
+   "out_bytes": 6291456,
+   "copies": 2
+  },
+  {
+   "kind": "call",
+   "kernel": "e_large",
+   "mode": "zero256",
+   "rep": 1,
+   "in_bytes": 6291456,
+   "out_bytes": 6291456,
+   "copies": 2
+  },
+  {
+   "kind": "call",
+   "kernel": "e_large",
+   "mode": "zero256",
+   "rep": 2,
+   "in_bytes": 6291456,
+   "out_bytes": 6291456,
+   "copies": 2
+  },
+  {
+   "kind": "call",
+   "kernel": "e_large",
+   "mode": "zero256_read",
+   "rep": 2,
+   "in_bytes": 6291456,
+   "out_bytes": 6291456,
+   "copies": 2
+  },
+  {
+   "kind": "call",
+   "kernel": "e_large",
+   "mode": "none",
+   "rep": 2,
+   "in_bytes": 6291456,
+   "out_bytes": 6291456,
+   "copies": 2
+  },
+  {
+   "kind": "call",
+   "kernel": "e_large",
+   "mode": "rotate",
+   "rep": 2,
+   "in_bytes": 6291456,
+   "out_bytes": 6291456,
+   "copies": 2
+  },
+  {
+   "kind": "call",
+   "kernel": "e_large",
+   "mode": "zeroL2",
+   "rep": 2,
+   "in_bytes": 6291456,
+   "out_bytes": 6291456,
+   "copies": 2
+  },
+  {
+   "kind": "call",
+   "kernel": "e_large",
+   "mode": "pr256",
+   "rep": 2,
+   "in_bytes": 6291456,
+   "out_bytes": 6291456,
+   "copies": 2
+  },
+  {
+   "kind": "call",
+   "kernel": "e_large",
+   "mode": "pr2L2",
+   "rep": 2,
+   "in_bytes": 6291456,
+   "out_bytes": 6291456,
+   "copies": 2
+  },
+  {
+   "kind": "call",
+   "kernel": "e_large",
+   "mode": "zero256_wait",
+   "rep": 2,
+   "in_bytes": 6291456,
+   "out_bytes": 6291456,
+   "copies": 2
+  },
+  {
+   "kind": "call",
+   "kernel": "e_large",
+   "mode": "prL2",
+   "rep": 2,
+   "in_bytes": 6291456,
+   "out_bytes": 6291456,
+   "copies": 2
+  },
+  {
+   "kind": "call",
+   "kernel": "e_large",
+   "mode": "sum256",
+   "rep": 2,
+   "in_bytes": 6291456,
+   "out_bytes": 6291456,
+   "copies": 2
+  },
+  {
+   "kind": "call",
+   "kernel": "e_large",
+   "mode": "zero256_wait",
+   "rep": 3,
+   "in_bytes": 6291456,
+   "out_bytes": 6291456,
+   "copies": 2
+  },
+  {
+   "kind": "call",
+   "kernel": "e_large",
+   "mode": "prL2",
+   "rep": 3,
+   "in_bytes": 6291456,
+   "out_bytes": 6291456,
+   "copies": 2
+  },
+  {
+   "kind": "call",
+   "kernel": "e_large",
+   "mode": "rotate",
+   "rep": 3,
+   "in_bytes": 6291456,
+   "out_bytes": 6291456,
+   "copies": 2
+  },
+  {
+   "kind": "call",
+   "kernel": "e_large",
+   "mode": "zero256_read",
+   "rep": 3,
+   "in_bytes": 6291456,
+   "out_bytes": 6291456,
+   "copies": 2
+  },
+  {
+   "kind": "call",
+   "kernel": "e_large",
+   "mode": "zeroL2",
+   "rep": 3,
+   "in_bytes": 6291456,
+   "out_bytes": 6291456,
+   "copies": 2
+  },
+  {
+   "kind": "call",
+   "kernel": "e_large",
+   "mode": "zero256",
+   "rep": 3,
+   "in_bytes": 6291456,
+   "out_bytes": 6291456,
+   "copies": 2
+  },
+  {
+   "kind": "call",
+   "kernel": "e_large",
+   "mode": "pr2L2",
+   "rep": 3,
+   "in_bytes": 6291456,
+   "out_bytes": 6291456,
+   "copies": 2
+  },
+  {
+   "kind": "call",
+   "kernel": "e_large",
+   "mode": "sum256",
+   "rep": 3,
+   "in_bytes": 6291456,
+   "out_bytes": 6291456,
+   "copies": 2
+  },
+  {
+   "kind": "call",
+   "kernel": "e_large",
+   "mode": "pr256",
+   "rep": 3,
+   "in_bytes": 6291456,
+   "out_bytes": 6291456,
+   "copies": 2
+  },
+  {
+   "kind": "call",
+   "kernel": "e_large",
+   "mode": "none",
+   "rep": 3,
+   "in_bytes": 6291456,
+   "out_bytes": 6291456,
+   "copies": 2
+  },
+  {
+   "kind": "call",
+   "kernel": "e_large",
+   "mode": "prL2",
+   "rep": 4,
+   "in_bytes": 6291456,
+   "out_bytes": 6291456,
+   "copies": 2
+  },
+  {
+   "kind": "call",
+   "kernel": "e_large",
+   "mode": "pr2L2",
+   "rep": 4,
+   "in_bytes": 6291456,
+   "out_bytes": 6291456,
+   "copies": 2
+  },
+  {
+   "kind": "call",
+   "kernel": "e_large",
+   "mode": "pr256",
+   "rep": 4,
+   "in_bytes": 6291456,
+   "out_bytes": 6291456,
+   "copies": 2
+  },
+  {
+   "kind": "call",
+   "kernel": "e_large",
+   "mode": "rotate",
+   "rep": 4,
+   "in_bytes": 6291456,
+   "out_bytes": 6291456,
+   "copies": 2
+  },
+  {
+   "kind": "call",
+   "kernel": "e_large",
+   "mode": "sum256",
+   "rep": 4,
+   "in_bytes": 6291456,
+   "out_bytes": 6291456,
+   "copies": 2
+  },
+  {
+   "kind": "call",
+   "kernel": "e_large",
+   "mode": "none",
+   "rep": 4,
+   "in_bytes": 6291456,
+   "out_bytes": 6291456,
+   "copies": 2
+  },
+  {
+   "kind": "call",
+   "kernel": "e_large",
+   "mode": "zero256_read",
+   "rep": 4,
+   "in_bytes": 6291456,
+   "out_bytes": 6291456,
+   "copies": 2
+  },
+  {
+   "kind": "call",
+   "kernel": "e_large",
+   "mode": "zero256_wait",
+   "rep": 4,
+   "in_bytes": 6291456,
+   "out_bytes": 6291456,
+   "copies": 2
+  },
+  {
+   "kind": "call",
+   "kernel": "e_large",
+   "mode": "zeroL2",
+   "rep": 4,
+   "in_bytes": 6291456,
+   "out_bytes": 6291456,
+   "copies": 2
+  },
+  {
+   "kind": "call",
+   "kernel": "e_large",
+   "mode": "zero256",
+   "rep": 4,
+   "in_bytes": 6291456,
+   "out_bytes": 6291456,
+   "copies": 2
+  }
+ ],
+ "correctness_failures": 0
+}

@@ -1,0 +1,327 @@
+==PROF== Connected to process 3212 (/root/dmkl/benchmarks/build/wb_probe)
+==PROF== Profiling "fill_u32_kernel" - 0: 0%....50%....100% - 1 pass
+==PROF== Profiling "fill_gen_kernel" - 1: 0%....50%....100% - 1 pass
+==PROF== Profiling "fill_u32_kernel" - 2: 0%....50%....100% - 1 pass
+==PROF== Profiling "rw_kernel" - 3: 0%....50%....100% - 1 pass
+==PROF== Profiling "readback_kernel" - 4: 0%....50%....100% - 1 pass
+==PROF== Profiling "fill_u32_kernel" - 5: 0%....50%....100% - 1 pass
+==PROF== Profiling "rw_kernel" - 6: 0%....50%....100% - 1 pass
+==PROF== Profiling "readback_kernel" - 7: 0%....50%....100% - 1 pass
+==PROF== Profiling "fill_u32_kernel" - 8: 0%....50%....100% - 1 pass
+==PROF== Profiling "rw_kernel" - 9: 0%....50%....100% - 1 pass
+==PROF== Profiling "readback_kernel" - 10: 0%....50%....100% - 1 pass
+==PROF== Profiling "fill_u32_kernel" - 11: 0%....50%....100% - 1 pass
+==PROF== Profiling "flush_l2_read_kernel" - 12: 0%....50%....100% - 1 pass
+==PROF== Profiling "rw_kernel" - 13: 0%....50%....100% - 1 pass
+==PROF== Profiling "rw_kernel" - 14: 0%....50%....100% - 1 pass
+==PROF== Profiling "rw_kernel" - 15: 0%....50%....100% - 1 pass
+==PROF== Profiling "rw_kernel" - 16: 0%....50%....100% - 1 pass
+==PROF== Profiling "readback_kernel" - 17: 0%....50%....100% - 1 pass
+==PROF== Profiling "fill_u32_kernel" - 18: 0%....50%....100% - 1 pass
+==PROF== Profiling "flush_l2_read_kernel" - 19: 0%....50%....100% - 1 pass
+==PROF== Profiling "rw_kernel" - 20: 0%....50%....100% - 1 pass
+==PROF== Profiling "rw_kernel" - 21: 0%....50%....100% - 1 pass
+==PROF== Profiling "rw_kernel" - 22: 0%....50%....100% - 1 pass
+==PROF== Profiling "rw_kernel" - 23: 0%....50%....100% - 1 pass
+==PROF== Profiling "readback_kernel" - 24: 0%....50%....100% - 1 pass
+==PROF== Profiling "fill_u32_kernel" - 25: 0%....50%....100% - 1 pass
+==PROF== Profiling "flush_l2_read_kernel" - 26: 0%....50%....100% - 1 pass
+==PROF== Profiling "rw_kernel" - 27: 0%....50%....100% - 1 pass
+==PROF== Profiling "rw_kernel" - 28: 0%....50%....100% - 1 pass
+==PROF== Profiling "rw_kernel" - 29: 0%....50%....100% - 1 pass
+==PROF== Profiling "rw_kernel" - 30: 0%....50%....100% - 1 pass
+==PROF== Profiling "readback_kernel" - 31: 0%....50%....100% - 1 pass
+r=0.0625  w=0.0625  nc=1048576  nd=1048576  ok
+r=1.5     w=0       nc=25165824 nd=0        ok
+r=0       w=1.5     nc=0        nd=25165824 ok
+correctness_failures=0
+==PROF== Disconnected from process 3212
+[3212] wb_probe@127.0.0.1
+  dmk::fill_u32_kernel(unsigned int *, unsigned long, unsigned int) (65535, 1, 1)x(256, 1, 1), Context 1, Stream 13, Device 0, CC 8.9
+    Section: Command line profiler metrics
+    --------------------- ----------- ------------
+    Metric Name           Metric Unit Metric Value
+    --------------------- ----------- ------------
+    dram__bytes_read.sum        Kbyte         5.12
+    dram__bytes_write.sum       Mbyte       222.50
+    --------------------- ----------- ------------
+
+  dmk::fill_gen_kernel(unsigned int *, unsigned long, unsigned int, int) (65535, 1, 1)x(256, 1, 1), Context 1, Stream 13, Device 0, CC 8.9
+    Section: Command line profiler metrics
+    --------------------- ----------- ------------
+    Metric Name           Metric Unit Metric Value
+    --------------------- ----------- ------------
+    dram__bytes_read.sum        Kbyte         4.99
+    dram__bytes_write.sum       Mbyte        51.55
+    --------------------- ----------- ------------
+
+  dmk::fill_u32_kernel(unsigned int *, unsigned long, unsigned int) (65535, 1, 1)x(256, 1, 1), Context 1, Stream 13, Device 0, CC 8.9
+    Section: Command line profiler metrics
+    --------------------- ----------- ------------
+    Metric Name           Metric Unit Metric Value
+    --------------------- ----------- ------------
+    dram__bytes_read.sum        Kbyte        16.26
+    dram__bytes_write.sum       Mbyte        51.86
+    --------------------- ----------- ------------
+
+  rw_kernel(const unsigned int *, unsigned long, unsigned int *, unsigned long, unsigned int, unsigned int *) (4096, 1, 1)x(256, 1, 1), Context 1, Stream 13, Device 0, CC 8.9
+    Section: Command line profiler metrics
+    --------------------- ----------- ------------
+    Metric Name           Metric Unit Metric Value
+    --------------------- ----------- ------------
+    dram__bytes_read.sum        Mbyte         4.20
+    dram__bytes_write.sum        byte            0
+    --------------------- ----------- ------------
+
+  readback_kernel(const unsigned int *, unsigned long, unsigned int *) (4096, 1, 1)x(256, 1, 1), Context 1, Stream 13, Device 0, CC 8.9
+    Section: Command line profiler metrics
+    --------------------- ----------- ------------
+    Metric Name           Metric Unit Metric Value
+    --------------------- ----------- ------------
+    dram__bytes_read.sum        Mbyte         4.20
+    dram__bytes_write.sum        byte            0
+    --------------------- ----------- ------------
+
+  dmk::fill_u32_kernel(unsigned int *, unsigned long, unsigned int) (65535, 1, 1)x(256, 1, 1), Context 1, Stream 13, Device 0, CC 8.9
+    Section: Command line profiler metrics
+    --------------------- ----------- ------------
+    Metric Name           Metric Unit Metric Value
+    --------------------- ----------- ------------
+    dram__bytes_read.sum        Kbyte         8.45
+    dram__bytes_write.sum       Mbyte        52.16
+    --------------------- ----------- ------------
+
+  rw_kernel(const unsigned int *, unsigned long, unsigned int *, unsigned long, unsigned int, unsigned int *) (98304, 1, 1)x(256, 1, 1), Context 1, Stream 13, Device 0, CC 8.9
+    Section: Command line profiler metrics
+    --------------------- ----------- ------------
+    Metric Name           Metric Unit Metric Value
+    --------------------- ----------- ------------
+    dram__bytes_read.sum        Mbyte       100.67
+    dram__bytes_write.sum       Kbyte        19.20
+    --------------------- ----------- ------------
+
+  readback_kernel(const unsigned int *, unsigned long, unsigned int *) (1, 1, 1)x(256, 1, 1), Context 1, Stream 13, Device 0, CC 8.9
+    Section: Command line profiler metrics
+    --------------------- ----------- ------------
+    Metric Name           Metric Unit Metric Value
+    --------------------- ----------- ------------
+    dram__bytes_read.sum        Kbyte         4.99
+    dram__bytes_write.sum        byte            0
+    --------------------- ----------- ------------
+
+  dmk::fill_u32_kernel(unsigned int *, unsigned long, unsigned int) (65535, 1, 1)x(256, 1, 1), Context 1, Stream 13, Device 0, CC 8.9
+    Section: Command line profiler metrics
+    --------------------- ----------- ------------
+    Metric Name           Metric Unit Metric Value
+    --------------------- ----------- ------------
+    dram__bytes_read.sum        Kbyte         8.32
+    dram__bytes_write.sum       Mbyte        51.71
+    --------------------- ----------- ------------
+
+  rw_kernel(const unsigned int *, unsigned long, unsigned int *, unsigned long, unsigned int, unsigned int *) (98304, 1, 1)x(256, 1, 1), Context 1, Stream 13, Device 0, CC 8.9
+    Section: Command line profiler metrics
+    --------------------- ----------- ------------
+    Metric Name           Metric Unit Metric Value
+    --------------------- ----------- ------------
+    dram__bytes_read.sum        Kbyte         9.98
+    dram__bytes_write.sum       Mbyte        67.14
+    --------------------- ----------- ------------
+
+  readback_kernel(const unsigned int *, unsigned long, unsigned int *) (98304, 1, 1)x(256, 1, 1), Context 1, Stream 13, Device 0, CC 8.9
+    Section: Command line profiler metrics
+    --------------------- ----------- ------------
+    Metric Name           Metric Unit Metric Value
+    --------------------- ----------- ------------
+    dram__bytes_read.sum        Mbyte       100.70
+    dram__bytes_write.sum       Kbyte        29.44
+    --------------------- ----------- ------------
+
+  dmk::fill_u32_kernel(unsigned int *, unsigned long, unsigned int) (65535, 1, 1)x(256, 1, 1), Context 1, Stream 13, Device 0, CC 8.9
+    Section: Command line profiler metrics
+    --------------------- ----------- ------------
+    Metric Name           Metric Unit Metric Value
+    --------------------- ----------- ------------
+    dram__bytes_read.sum        Kbyte         8.06
+    dram__bytes_write.sum       Mbyte        51.86
+    --------------------- ----------- ------------
+
+  dmk::flush_l2_read_kernel(const unsigned int *, unsigned long, unsigned int *) (65535, 1, 1)x(256, 1, 1), Context 1, Stream 13, Device 0, CC 8.9
+    Section: Command line profiler metrics
+    --------------------- ----------- ------------
+    Metric Name           Metric Unit Metric Value
+    --------------------- ----------- ------------
+    dram__bytes_read.sum        Mbyte       268.45
+    dram__bytes_write.sum       Kbyte        33.28
+    --------------------- ----------- ------------
+
+  rw_kernel(const unsigned int *, unsigned long, unsigned int *, unsigned long, unsigned int, unsigned int *) (4096, 1, 1)x(256, 1, 1), Context 1, Stream 13, Device 0, CC 8.9
+    Section: Command line profiler metrics
+    --------------------- ----------- ------------
+    Metric Name           Metric Unit Metric Value
+    --------------------- ----------- ------------
+    dram__bytes_read.sum        Mbyte         4.20
+    dram__bytes_write.sum        byte            0
+    --------------------- ----------- ------------
+
+  rw_kernel(const unsigned int *, unsigned long, unsigned int *, unsigned long, unsigned int, unsigned int *) (4096, 1, 1)x(256, 1, 1), Context 1, Stream 13, Device 0, CC 8.9
+    Section: Command line profiler metrics
+    --------------------- ----------- ------------
+    Metric Name           Metric Unit Metric Value
+    --------------------- ----------- ------------
+    dram__bytes_read.sum        Mbyte         4.20
+    dram__bytes_write.sum        byte            0
+    --------------------- ----------- ------------
+
+  rw_kernel(const unsigned int *, unsigned long, unsigned int *, unsigned long, unsigned int, unsigned int *) (4096, 1, 1)x(256, 1, 1), Context 1, Stream 13, Device 0, CC 8.9
+    Section: Command line profiler metrics
+    --------------------- ----------- ------------
+    Metric Name           Metric Unit Metric Value
+    --------------------- ----------- ------------
+    dram__bytes_read.sum        Mbyte         4.20
+    dram__bytes_write.sum        byte            0
+    --------------------- ----------- ------------
+
+  rw_kernel(const unsigned int *, unsigned long, unsigned int *, unsigned long, unsigned int, unsigned int *) (4096, 1, 1)x(256, 1, 1), Context 1, Stream 13, Device 0, CC 8.9
+    Section: Command line profiler metrics
+    --------------------- ----------- ------------
+    Metric Name           Metric Unit Metric Value
+    --------------------- ----------- ------------
+    dram__bytes_read.sum        Mbyte         4.20
+    dram__bytes_write.sum        byte            0
+    --------------------- ----------- ------------
+
+  readback_kernel(const unsigned int *, unsigned long, unsigned int *) (4096, 1, 1)x(256, 1, 1), Context 1, Stream 13, Device 0, CC 8.9
+    Section: Command line profiler metrics
+    --------------------- ----------- ------------
+    Metric Name           Metric Unit Metric Value
+    --------------------- ----------- ------------
+    dram__bytes_read.sum        Mbyte         4.20
+    dram__bytes_write.sum        byte            0
+    --------------------- ----------- ------------
+
+  dmk::fill_u32_kernel(unsigned int *, unsigned long, unsigned int) (65535, 1, 1)x(256, 1, 1), Context 1, Stream 13, Device 0, CC 8.9
+    Section: Command line profiler metrics
+    --------------------- ----------- ------------
+    Metric Name           Metric Unit Metric Value
+    --------------------- ----------- ------------
+    dram__bytes_read.sum        Kbyte         3.46
+    dram__bytes_write.sum       Mbyte        51.89
+    --------------------- ----------- ------------
+
+  dmk::flush_l2_read_kernel(const unsigned int *, unsigned long, unsigned int *) (65535, 1, 1)x(256, 1, 1), Context 1, Stream 13, Device 0, CC 8.9
+    Section: Command line profiler metrics
+    --------------------- ----------- ------------
+    Metric Name           Metric Unit Metric Value
+    --------------------- ----------- ------------
+    dram__bytes_read.sum        Mbyte       268.49
+    dram__bytes_write.sum       Kbyte        23.04
+    --------------------- ----------- ------------
+
+  rw_kernel(const unsigned int *, unsigned long, unsigned int *, unsigned long, unsigned int, unsigned int *) (98304, 1, 1)x(256, 1, 1), Context 1, Stream 13, Device 0, CC 8.9
+    Section: Command line profiler metrics
+    --------------------- ----------- ------------
+    Metric Name           Metric Unit Metric Value
+    --------------------- ----------- ------------
+    dram__bytes_read.sum        Mbyte       100.67
+    dram__bytes_write.sum       Kbyte        17.15
+    --------------------- ----------- ------------
+
+  rw_kernel(const unsigned int *, unsigned long, unsigned int *, unsigned long, unsigned int, unsigned int *) (98304, 1, 1)x(256, 1, 1), Context 1, Stream 13, Device 0, CC 8.9
+    Section: Command line profiler metrics
+    --------------------- ----------- ------------
+    Metric Name           Metric Unit Metric Value
+    --------------------- ----------- ------------
+    dram__bytes_read.sum        Mbyte       100.67
+    dram__bytes_write.sum       Kbyte        15.87
+    --------------------- ----------- ------------
+
+  rw_kernel(const unsigned int *, unsigned long, unsigned int *, unsigned long, unsigned int, unsigned int *) (98304, 1, 1)x(256, 1, 1), Context 1, Stream 13, Device 0, CC 8.9
+    Section: Command line profiler metrics
+    --------------------- ----------- ------------
+    Metric Name           Metric Unit Metric Value
+    --------------------- ----------- ------------
+    dram__bytes_read.sum        Mbyte       100.67
+    dram__bytes_write.sum       Kbyte        18.56
+    --------------------- ----------- ------------
+
+  rw_kernel(const unsigned int *, unsigned long, unsigned int *, unsigned long, unsigned int, unsigned int *) (98304, 1, 1)x(256, 1, 1), Context 1, Stream 13, Device 0, CC 8.9
+    Section: Command line profiler metrics
+    --------------------- ----------- ------------
+    Metric Name           Metric Unit Metric Value
+    --------------------- ----------- ------------
+    dram__bytes_read.sum        Mbyte       100.67
+    dram__bytes_write.sum       Kbyte        33.28
+    --------------------- ----------- ------------
+
+  readback_kernel(const unsigned int *, unsigned long, unsigned int *) (1, 1, 1)x(256, 1, 1), Context 1, Stream 13, Device 0, CC 8.9
+    Section: Command line profiler metrics
+    --------------------- ----------- ------------
+    Metric Name           Metric Unit Metric Value
+    --------------------- ----------- ------------
+    dram__bytes_read.sum        Kbyte         4.99
+    dram__bytes_write.sum        byte            0
+    --------------------- ----------- ------------
+
+  dmk::fill_u32_kernel(unsigned int *, unsigned long, unsigned int) (65535, 1, 1)x(256, 1, 1), Context 1, Stream 13, Device 0, CC 8.9
+    Section: Command line profiler metrics
+    --------------------- ----------- ------------
+    Metric Name           Metric Unit Metric Value
+    --------------------- ----------- ------------
+    dram__bytes_read.sum        Kbyte         3.58
+    dram__bytes_write.sum       Mbyte        52.24
+    --------------------- ----------- ------------
+
+  dmk::flush_l2_read_kernel(const unsigned int *, unsigned long, unsigned int *) (65535, 1, 1)x(256, 1, 1), Context 1, Stream 13, Device 0, CC 8.9
+    Section: Command line profiler metrics
+    --------------------- ----------- ------------
+    Metric Name           Metric Unit Metric Value
+    --------------------- ----------- ------------
+    dram__bytes_read.sum        Mbyte       268.44
+    dram__bytes_write.sum       Kbyte        23.17
+    --------------------- ----------- ------------
+
+  rw_kernel(const unsigned int *, unsigned long, unsigned int *, unsigned long, unsigned int, unsigned int *) (98304, 1, 1)x(256, 1, 1), Context 1, Stream 13, Device 0, CC 8.9
+    Section: Command line profiler metrics
+    --------------------- ----------- ------------
+    Metric Name           Metric Unit Metric Value
+    --------------------- ----------- ------------
+    dram__bytes_read.sum        Kbyte         9.60
+    dram__bytes_write.sum       Mbyte        67.14
+    --------------------- ----------- ------------
+
+  rw_kernel(const unsigned int *, unsigned long, unsigned int *, unsigned long, unsigned int, unsigned int *) (98304, 1, 1)x(256, 1, 1), Context 1, Stream 13, Device 0, CC 8.9
+    Section: Command line profiler metrics
+    --------------------- ----------- ------------
+    Metric Name           Metric Unit Metric Value
+    --------------------- ----------- ------------
+    dram__bytes_read.sum        Kbyte         9.86
+    dram__bytes_write.sum       Mbyte        67.14
+    --------------------- ----------- ------------
+
+  rw_kernel(const unsigned int *, unsigned long, unsigned int *, unsigned long, unsigned int, unsigned int *) (98304, 1, 1)x(256, 1, 1), Context 1, Stream 13, Device 0, CC 8.9
+    Section: Command line profiler metrics
+    --------------------- ----------- ------------
+    Metric Name           Metric Unit Metric Value
+    --------------------- ----------- ------------
+    dram__bytes_read.sum        Kbyte        10.11
+    dram__bytes_write.sum       Mbyte        67.14
+    --------------------- ----------- ------------
+
+  rw_kernel(const unsigned int *, unsigned long, unsigned int *, unsigned long, unsigned int, unsigned int *) (98304, 1, 1)x(256, 1, 1), Context 1, Stream 13, Device 0, CC 8.9
+    Section: Command line profiler metrics
+    --------------------- ----------- ------------
+    Metric Name           Metric Unit Metric Value
+    --------------------- ----------- ------------
+    dram__bytes_read.sum        Kbyte         9.73
+    dram__bytes_write.sum       Mbyte        67.16
+    --------------------- ----------- ------------
+
+  readback_kernel(const unsigned int *, unsigned long, unsigned int *) (98304, 1, 1)x(256, 1, 1), Context 1, Stream 13, Device 0, CC 8.9
+    Section: Command line profiler metrics
+    --------------------- ----------- ------------
+    Metric Name           Metric Unit Metric Value
+    --------------------- ----------- ------------
+    dram__bytes_read.sum        Mbyte       100.67
+    dram__bytes_write.sum       Kbyte        18.94
+    --------------------- ----------- ------------
+

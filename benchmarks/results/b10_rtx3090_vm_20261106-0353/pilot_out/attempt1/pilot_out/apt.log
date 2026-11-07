@@ -1,0 +1,152 @@
+(Reading database ... 130884 files and directories currently installed.)
+Preparing to unpack /tmp/cuda-keyring.deb ...
+Unpacking cuda-keyring (1.1-1) over (1.1-1) ...
+Setting up cuda-keyring (1.1-1) ...
+Get:1 https://nvidia.github.io/libnvidia-container/stable/deb/amd64  InRelease [1477 B]
+Get:2 https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64  InRelease [1578 B]
+Get:3 https://download.docker.com/linux/ubuntu jammy InRelease [48.5 kB]
+Get:4 https://pkgs.tailscale.com/stable/ubuntu jammy InRelease
+Get:5 https://nvidia.github.io/libnvidia-container/stable/deb/amd64  Packages [28.0 kB]
+Get:6 https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64  Packages [3202 kB]
+Hit:7 http://archive.ubuntu.com/ubuntu jammy InRelease
+Get:8 https://download.docker.com/linux/ubuntu jammy/stable amd64 Packages [92.7 kB]
+Get:9 http://security.ubuntu.com/ubuntu jammy-security InRelease [129 kB]
+Get:10 http://archive.ubuntu.com/ubuntu jammy-updates InRelease [128 kB]
+Get:11 https://ppa.launchpadcontent.net/graphics-drivers/ppa/ubuntu jammy InRelease [24.3 kB]
+Get:12 https://pkgs.tailscale.com/stable/ubuntu jammy/main amd64 Packages [16.8 kB]
+Get:13 https://ppa.launchpadcontent.net/graphics-drivers/ppa/ubuntu jammy/main amd64 Packages [28.6 kB]
+Get:14 http://archive.ubuntu.com/ubuntu jammy-backports InRelease [127 kB]
+Get:15 https://ppa.launchpadcontent.net/graphics-drivers/ppa/ubuntu jammy/main Translation-en [6076 B]
+Get:16 http://security.ubuntu.com/ubuntu jammy-security/main amd64 Packages [3675 kB]
+Get:17 http://archive.ubuntu.com/ubuntu jammy-updates/main amd64 Packages [3963 kB]
+Get:18 http://security.ubuntu.com/ubuntu jammy-security/main Translation-en [513 kB]
+Get:19 http://security.ubuntu.com/ubuntu jammy-security/main amd64 c-n-f Metadata [14.7 kB]
+Get:20 http://security.ubuntu.com/ubuntu jammy-security/restricted amd64 Packages [6545 kB]
+Get:21 http://archive.ubuntu.com/ubuntu jammy-updates/main Translation-en [582 kB]
+Get:22 http://archive.ubuntu.com/ubuntu jammy-updates/main amd64 c-n-f Metadata [20.1 kB]
+Get:23 http://archive.ubuntu.com/ubuntu jammy-updates/restricted amd64 Packages [6815 kB]
+Get:24 http://security.ubuntu.com/ubuntu jammy-security/restricted Translation-en [1257 kB]
+Get:25 http://security.ubuntu.com/ubuntu jammy-security/restricted amd64 c-n-f Metadata [600 B]
+Get:26 http://security.ubuntu.com/ubuntu jammy-security/universe amd64 Packages [1057 kB]
+Get:27 http://security.ubuntu.com/ubuntu jammy-security/universe Translation-en [238 kB]
+Get:28 http://security.ubuntu.com/ubuntu jammy-security/universe amd64 c-n-f Metadata [23.2 kB]
+Get:29 http://security.ubuntu.com/ubuntu jammy-security/multiverse amd64 Packages [79.6 kB]
+Get:30 http://security.ubuntu.com/ubuntu jammy-security/multiverse Translation-en [13.6 kB]
+Get:31 http://security.ubuntu.com/ubuntu jammy-security/multiverse amd64 c-n-f Metadata [544 B]
+Get:32 http://archive.ubuntu.com/ubuntu jammy-updates/restricted Translation-en [1310 kB]
+Get:33 http://archive.ubuntu.com/ubuntu jammy-updates/restricted amd64 c-n-f Metadata [584 B]
+Get:34 http://archive.ubuntu.com/ubuntu jammy-updates/universe amd64 Packages [1291 kB]
+Get:35 http://archive.ubuntu.com/ubuntu jammy-updates/universe Translation-en [327 kB]
+Get:36 http://archive.ubuntu.com/ubuntu jammy-updates/universe amd64 c-n-f Metadata [30.8 kB]
+Get:37 http://archive.ubuntu.com/ubuntu jammy-updates/multiverse amd64 Packages [86.1 kB]
+Get:38 http://archive.ubuntu.com/ubuntu jammy-updates/multiverse Translation-en [16.5 kB]
+Get:39 http://archive.ubuntu.com/ubuntu jammy-updates/multiverse amd64 c-n-f Metadata [756 B]
+Get:40 http://archive.ubuntu.com/ubuntu jammy-backports/main amd64 Packages [70.2 kB]
+Get:41 http://archive.ubuntu.com/ubuntu jammy-backports/main Translation-en [11.4 kB]
+Get:42 http://archive.ubuntu.com/ubuntu jammy-backports/main amd64 c-n-f Metadata [412 B]
+Get:43 http://archive.ubuntu.com/ubuntu jammy-backports/universe amd64 Packages [30.8 kB]
+Get:44 http://archive.ubuntu.com/ubuntu jammy-backports/universe Translation-en [16.9 kB]
+Get:45 http://archive.ubuntu.com/ubuntu jammy-backports/universe amd64 c-n-f Metadata [676 B]
+Fetched 31.8 MB in 7s (4376 kB/s)
+Reading package lists...
+Reading package lists...
+Building dependency tree...
+Reading state information...
+build-essential is already the newest version (12.9ubuntu3).
+build-essential set to manually installed.
+python3-venv is already the newest version (3.10.6-1~22.04.1).
+python3-venv set to manually installed.
+The following additional packages will be installed:
+  cuda-cccl-12-5 cuda-crt-12-5 cuda-cudart-12-5 cuda-driver-dev-12-5
+  cuda-nvdisasm-12-5 cuda-nvvm-12-5 cuda-toolkit-12-5-config-common
+  cuda-toolkit-12-config-common cuda-toolkit-config-common
+  nsight-compute-2024.2.1
+The following NEW packages will be installed:
+  cuda-cccl-12-5 cuda-crt-12-5 cuda-cudart-12-5 cuda-cudart-dev-12-5
+  cuda-cuobjdump-12-5 cuda-driver-dev-12-5 cuda-nsight-compute-12-5
+  cuda-nvcc-12-5 cuda-nvdisasm-12-5 cuda-nvvm-12-5
+  cuda-toolkit-12-5-config-common cuda-toolkit-12-config-common
+  cuda-toolkit-config-common nsight-compute-2024.2.1
+0 upgraded, 14 newly installed, 0 to remove and 338 not upgraded.
+Need to get 536 MB of archives.
+After this operation, 1529 MB of additional disk space will be used.
+Get:1 https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64  cuda-cccl-12-5 12.5.39-1 [1241 kB]
+Get:2 https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64  cuda-toolkit-config-common 13.5.37-1 [21.2 kB]
+Get:3 https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64  cuda-toolkit-12-config-common 12.9.79-1 [16.6 kB]
+Get:4 https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64  cuda-toolkit-12-5-config-common 12.5.82-1 [16.5 kB]
+Get:5 https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64  cuda-cudart-12-5 12.5.82-1 [166 kB]
+Get:6 https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64  cuda-driver-dev-12-5 12.5.82-1 [29.0 kB]
+Get:7 https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64  cuda-cudart-dev-12-5 12.5.82-1 [1008 kB]
+Get:8 https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64  cuda-crt-12-5 12.5.82-1 [77.1 kB]
+Get:9 https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64  cuda-nvdisasm-12-5 12.5.39-1 [49.9 MB]
+Get:10 https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64  cuda-cuobjdump-12-5 12.5.39-1 [220 kB]
+Get:11 https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64  nsight-compute-2024.2.1 2024.2.1.2-1 [431 MB]
+Get:12 https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64  cuda-nsight-compute-12-5 12.5.1-1 [4056 B]
+Get:13 https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64  cuda-nvvm-12-5 12.5.82-1 [19.6 MB]
+Get:14 https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64  cuda-nvcc-12-5 12.5.82-1 [32.6 MB]
+Fetched 536 MB in 1min 31s (5871 kB/s)
+Selecting previously unselected package cuda-cccl-12-5.
+(Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 130884 files and directories currently installed.)
+Preparing to unpack .../00-cuda-cccl-12-5_12.5.39-1_amd64.deb ...
+Unpacking cuda-cccl-12-5 (12.5.39-1) ...
+Selecting previously unselected package cuda-toolkit-config-common.
+Preparing to unpack .../01-cuda-toolkit-config-common_13.5.37-1_all.deb ...
+Unpacking cuda-toolkit-config-common (13.5.37-1) ...
+Selecting previously unselected package cuda-toolkit-12-config-common.
+Preparing to unpack .../02-cuda-toolkit-12-config-common_12.9.79-1_all.deb ...
+Unpacking cuda-toolkit-12-config-common (12.9.79-1) ...
+Selecting previously unselected package cuda-toolkit-12-5-config-common.
+Preparing to unpack .../03-cuda-toolkit-12-5-config-common_12.5.82-1_all.deb ...
+Unpacking cuda-toolkit-12-5-config-common (12.5.82-1) ...
+Selecting previously unselected package cuda-cudart-12-5.
+Preparing to unpack .../04-cuda-cudart-12-5_12.5.82-1_amd64.deb ...
+Unpacking cuda-cudart-12-5 (12.5.82-1) ...
+Selecting previously unselected package cuda-driver-dev-12-5.
+Preparing to unpack .../05-cuda-driver-dev-12-5_12.5.82-1_amd64.deb ...
+Unpacking cuda-driver-dev-12-5 (12.5.82-1) ...
+Selecting previously unselected package cuda-cudart-dev-12-5.
+Preparing to unpack .../06-cuda-cudart-dev-12-5_12.5.82-1_amd64.deb ...
+Unpacking cuda-cudart-dev-12-5 (12.5.82-1) ...
+Selecting previously unselected package cuda-crt-12-5.
+Preparing to unpack .../07-cuda-crt-12-5_12.5.82-1_amd64.deb ...
+Unpacking cuda-crt-12-5 (12.5.82-1) ...
+Selecting previously unselected package cuda-nvdisasm-12-5.
+Preparing to unpack .../08-cuda-nvdisasm-12-5_12.5.39-1_amd64.deb ...
+Unpacking cuda-nvdisasm-12-5 (12.5.39-1) ...
+Selecting previously unselected package cuda-cuobjdump-12-5.
+Preparing to unpack .../09-cuda-cuobjdump-12-5_12.5.39-1_amd64.deb ...
+Unpacking cuda-cuobjdump-12-5 (12.5.39-1) ...
+Selecting previously unselected package nsight-compute-2024.2.1.
+Preparing to unpack .../10-nsight-compute-2024.2.1_2024.2.1.2-1_amd64.deb ...
+Unpacking nsight-compute-2024.2.1 (2024.2.1.2-1) ...
+Selecting previously unselected package cuda-nsight-compute-12-5.
+Preparing to unpack .../11-cuda-nsight-compute-12-5_12.5.1-1_amd64.deb ...
+Unpacking cuda-nsight-compute-12-5 (12.5.1-1) ...
+Selecting previously unselected package cuda-nvvm-12-5.
+Preparing to unpack .../12-cuda-nvvm-12-5_12.5.82-1_amd64.deb ...
+Unpacking cuda-nvvm-12-5 (12.5.82-1) ...
+Selecting previously unselected package cuda-nvcc-12-5.
+Preparing to unpack .../13-cuda-nvcc-12-5_12.5.82-1_amd64.deb ...
+Unpacking cuda-nvcc-12-5 (12.5.82-1) ...
+Setting up cuda-toolkit-config-common (13.5.37-1) ...
+Setting up cuda-toolkit-12-5-config-common (12.5.82-1) ...
+Setting alternatives
+update-alternatives: using /usr/local/cuda-12.5 to provide /usr/local/cuda (cuda) in auto mode
+update-alternatives: using /usr/local/cuda-12.5 to provide /usr/local/cuda-12 (cuda-12) in auto mode
+Setting up cuda-cccl-12-5 (12.5.39-1) ...
+Setting up cuda-nvdisasm-12-5 (12.5.39-1) ...
+Setting up cuda-nvvm-12-5 (12.5.82-1) ...
+Setting up cuda-driver-dev-12-5 (12.5.82-1) ...
+Setting up nsight-compute-2024.2.1 (2024.2.1.2-1) ...
+Setting up cuda-cuobjdump-12-5 (12.5.39-1) ...
+Setting up cuda-toolkit-12-config-common (12.9.79-1) ...
+Setting up cuda-nsight-compute-12-5 (12.5.1-1) ...
+Setting up cuda-cudart-12-5 (12.5.82-1) ...
+Setting up cuda-cudart-dev-12-5 (12.5.82-1) ...
+Setting up cuda-crt-12-5 (12.5.82-1) ...
+Setting up cuda-nvcc-12-5 (12.5.82-1) ...
+Processing triggers for libc-bin (2.35-0ubuntu3.9) ...
+NEEDRESTART-VER: 3.5
+NEEDRESTART-KCUR: 6.8.0-59-generic
+NEEDRESTART-KEXP: 6.8.0-59-generic
+NEEDRESTART-KSTA: 1

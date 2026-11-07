@@ -1,0 +1,526 @@
+{
+ "benchmark": "flush_bias_probe",
+ "device": "NVIDIA GeForce RTX 5060 Ti",
+ "l2_bytes": 33554432,
+ "cc": "12.0",
+ "sm_count": 36,
+ "versions": {
+  "torch": "2.7.1+cu128",
+  "cuda": "12.8",
+  "triton": "3.3.1",
+  "bitsandbytes": "0.50.2",
+  "liger-kernel": "0.6.2"
+ },
+ "pr_head": "ba27327b9a4667b58e89ae5e1f0d7efe453a2021",
+ "ptx_check": {
+  "ld_volatile_global": 2,
+  "ld_global": 0,
+  "st_global": 0,
+  "buffer_unchanged": true
+ },
+ "amendment": "B17a (l2w mode)",
+ "smoke": false,
+ "run_seed": 1,
+ "rows": [
+  {
+   "family": "gemv",
+   "case": "4096x4096",
+   "bytes": 33554432,
+   "cand": "tinygemm_k4",
+   "ms": {
+    "sum": 0.02457600086927414,
+    "pr": 0.02587199956178665,
+    "l2w": 0.03009600006043911,
+    "zero": 0.030112000182271004
+   },
+   "order": [
+    "sum",
+    "pr",
+    "l2w",
+    "zero"
+   ]
+  },
+  {
+   "family": "gemv",
+   "case": "4096x4096",
+   "bytes": 33554432,
+   "cand": "tinygemm_k8",
+   "ms": {
+    "sum": 0.026623999699950218,
+    "pr": 0.025936000049114227,
+    "zero": 0.03014400042593479,
+    "l2w": 0.030112000182271004
+   },
+   "order": [
+    "sum",
+    "pr",
+    "zero",
+    "l2w"
+   ]
+  },
+  {
+   "family": "gemv",
+   "case": "4096x4096",
+   "bytes": 33554432,
+   "cand": "bnb_nf4",
+   "ms": {
+    "sum": 0.0342399999499321,
+    "pr": 0.03481600061058998,
+    "l2w": 0.04399999976158142,
+    "zero": 0.043007999658584595
+   },
+   "order": [
+    "sum",
+    "pr",
+    "l2w",
+    "zero"
+   ]
+  },
+  {
+   "family": "gemv",
+   "case": "4096x4096",
+   "bytes": 33554432,
+   "cand": "cublas_fp16",
+   "ms": {
+    "l2w": 0.1003199964761734,
+    "pr": 0.08601599931716919,
+    "zero": 0.09830400347709656,
+    "none": 0.084927998483181,
+    "sum": 0.08601599931716919
+   },
+   "order": [
+    "l2w",
+    "pr",
+    "zero",
+    "none",
+    "sum"
+   ]
+  },
+  {
+   "family": "gemv",
+   "case": "4096x4096",
+   "bytes": 33554432,
+   "cand": "tinygemm_k2",
+   "ms": {
+    "pr": 0.02723200060427189,
+    "zero": 0.029279999434947968,
+    "sum": 0.026623999699950218,
+    "l2w": 0.03129599988460541
+   },
+   "order": [
+    "pr",
+    "zero",
+    "sum",
+    "l2w"
+   ]
+  },
+  {
+   "family": "gemv",
+   "case": "14336x4096",
+   "bytes": 117440512,
+   "cand": "tinygemm_k4",
+   "ms": {
+    "sum": 0.07785599678754807,
+    "zero": 0.09071999788284302,
+    "l2w": 0.08950400352478027,
+    "pr": 0.07843200117349625
+   },
+   "order": [
+    "sum",
+    "zero",
+    "l2w",
+    "pr"
+   ]
+  },
+  {
+   "family": "gemv",
+   "case": "14336x4096",
+   "bytes": 117440512,
+   "cand": "tinygemm_k2",
+   "ms": {
+    "l2w": 0.091024000197649,
+    "zero": 0.09145600348711014,
+    "sum": 0.07840000092983246,
+    "pr": 0.07840000092983246
+   },
+   "order": [
+    "l2w",
+    "zero",
+    "sum",
+    "pr"
+   ]
+  },
+  {
+   "family": "gemv",
+   "case": "14336x4096",
+   "bytes": 117440512,
+   "cand": "bnb_nf4",
+   "ms": {
+    "zero": 0.1003199964761734,
+    "pr": 0.09011200070381165,
+    "sum": 0.09158399701118469,
+    "l2w": 0.10035199671983719
+   },
+   "order": [
+    "zero",
+    "pr",
+    "sum",
+    "l2w"
+   ]
+  },
+  {
+   "family": "gemv",
+   "case": "14336x4096",
+   "bytes": 117440512,
+   "cand": "tinygemm_k8",
+   "ms": {
+    "l2w": 0.09068799763917923,
+    "sum": 0.07782399654388428,
+    "zero": 0.09068799763917923,
+    "pr": 0.07840000092983246
+   },
+   "order": [
+    "l2w",
+    "sum",
+    "zero",
+    "pr"
+   ]
+  },
+  {
+   "family": "gemv",
+   "case": "14336x4096",
+   "bytes": 117440512,
+   "cand": "cublas_fp16",
+   "ms": {
+    "sum": 0.2829120010137558,
+    "pr": 0.2815999984741211,
+    "zero": 0.30108800530433655,
+    "l2w": 0.3030720055103302
+   },
+   "order": [
+    "sum",
+    "pr",
+    "zero",
+    "l2w"
+   ]
+  },
+  {
+   "family": "gemv",
+   "case": "4096x14336",
+   "bytes": 117440512,
+   "cand": "tinygemm_k8",
+   "ms": {
+    "pr": 0.07983999699354172,
+    "l2w": 0.09273599833250046,
+    "zero": 0.09087999910116196,
+    "sum": 0.08044800162315369
+   },
+   "order": [
+    "pr",
+    "l2w",
+    "zero",
+    "sum"
+   ]
+  },
+  {
+   "family": "gemv",
+   "case": "4096x14336",
+   "bytes": 117440512,
+   "cand": "cublas_fp16",
+   "ms": {
+    "zero": 0.30823999643325806,
+    "pr": 0.2887679934501648,
+    "sum": 0.2887679934501648,
+    "l2w": 0.3092480003833771
+   },
+   "order": [
+    "zero",
+    "pr",
+    "sum",
+    "l2w"
+   ]
+  },
+  {
+   "family": "gemv",
+   "case": "4096x14336",
+   "bytes": 117440512,
+   "cand": "bnb_nf4",
+   "ms": {
+    "zero": 0.11878400295972824,
+    "pr": 0.10649599879980087,
+    "sum": 0.10707200318574905,
+    "l2w": 0.11881600320339203
+   },
+   "order": [
+    "zero",
+    "pr",
+    "sum",
+    "l2w"
+   ]
+  },
+  {
+   "family": "gemv",
+   "case": "4096x14336",
+   "bytes": 117440512,
+   "cand": "tinygemm_k2",
+   "ms": {
+    "zero": 0.09273599833250046,
+    "pr": 0.07929600030183792,
+    "sum": 0.08060800284147263,
+    "l2w": 0.09161599725484848
+   },
+   "order": [
+    "zero",
+    "pr",
+    "sum",
+    "l2w"
+   ]
+  },
+  {
+   "family": "gemv",
+   "case": "4096x14336",
+   "bytes": 117440512,
+   "cand": "tinygemm_k4",
+   "ms": {
+    "l2w": 0.09158399701118469,
+    "pr": 0.07929600030183792,
+    "zero": 0.09011200070381165,
+    "sum": 0.08044800162315369
+   },
+   "order": [
+    "l2w",
+    "pr",
+    "zero",
+    "sum"
+   ]
+  },
+  {
+   "family": "attn",
+   "case": "L4096",
+   "bytes": 16777216,
+   "cand": "sdpa_bf16",
+   "ms": {
+    "sum": 0.0533440001308918,
+    "l2w": 0.059967998415231705,
+    "pr": 0.053247999399900436,
+    "zero": 0.05795200169086456
+   },
+   "order": [
+    "sum",
+    "l2w",
+    "pr",
+    "zero"
+   ]
+  },
+  {
+   "family": "attn",
+   "case": "L16384",
+   "bytes": 67108864,
+   "cand": "sdpa_bf16",
+   "ms": {
+    "zero": 0.17612800002098083,
+    "pr": 0.16793599724769592,
+    "sum": 0.16793599724769592,
+    "l2w": 0.1767359972000122
+   },
+   "order": [
+    "zero",
+    "pr",
+    "sum",
+    "l2w"
+   ]
+  },
+  {
+   "family": "attn",
+   "case": "L65536",
+   "bytes": 268435456,
+   "cand": "sdpa_bf16",
+   "ms": {
+    "sum": 0.6461599767208099,
+    "zero": 0.6696959733963013,
+    "pr": 0.6461759805679321,
+    "l2w": 0.6696959733963013
+   },
+   "order": [
+    "sum",
+    "zero",
+    "pr",
+    "l2w"
+   ]
+  },
+  {
+   "family": "rmsnorm",
+   "case": "T2048",
+   "bytes": 16777216,
+   "cand": "liger_rmsnorm",
+   "ms": {
+    "sum": 0.04652800038456917,
+    "zero": 0.08908800035715103,
+    "l2w": 0.0880960002541542,
+    "pr": 0.04710400104522705
+   },
+   "order": [
+    "sum",
+    "zero",
+    "l2w",
+    "pr"
+   ]
+  },
+  {
+   "family": "rmsnorm",
+   "case": "T2048",
+   "bytes": 16777216,
+   "cand": "torch_rmsnorm",
+   "ms": {
+    "l2w": 0.7864480018615723,
+    "sum": 0.7454720139503479,
+    "pr": 0.7464640140533447,
+    "zero": 0.7874559760093689
+   },
+   "order": [
+    "l2w",
+    "sum",
+    "pr",
+    "zero"
+   ]
+  },
+  {
+   "family": "rmsnorm",
+   "case": "T8192",
+   "bytes": 67108864,
+   "cand": "liger_rmsnorm",
+   "ms": {
+    "sum": 0.3148159980773926,
+    "l2w": 0.34832000732421875,
+    "zero": 0.34991998970508575,
+    "pr": 0.31536000967025757
+   },
+   "order": [
+    "sum",
+    "l2w",
+    "zero",
+    "pr"
+   ]
+  },
+  {
+   "family": "rmsnorm",
+   "case": "T8192",
+   "bytes": 67108864,
+   "cand": "torch_rmsnorm",
+   "ms": {
+    "pr": 3.3996798992156982,
+    "zero": 3.44268798828125,
+    "l2w": 3.446784019470215,
+    "sum": 3.3864160776138306
+   },
+   "order": [
+    "pr",
+    "zero",
+    "l2w",
+    "sum"
+   ]
+  },
+  {
+   "family": "swiglu",
+   "case": "T512",
+   "bytes": 14680064,
+   "cand": "torch_swiglu",
+   "ms": {
+    "sum": 0.12246400117874146,
+    "pr": 0.1228799968957901,
+    "l2w": 0.1658879965543747,
+    "zero": 0.1658879965543747
+   },
+   "order": [
+    "sum",
+    "pr",
+    "l2w",
+    "zero"
+   ]
+  },
+  {
+   "family": "swiglu",
+   "case": "T512",
+   "bytes": 14680064,
+   "cand": "liger_swiglu",
+   "ms": {
+    "sum": 0.07577600330114365,
+    "l2w": 0.11878400295972824,
+    "pr": 0.07638400048017502,
+    "zero": 0.11939200013875961
+   },
+   "order": [
+    "sum",
+    "l2w",
+    "pr",
+    "zero"
+   ]
+  },
+  {
+   "family": "swiglu",
+   "case": "T2048",
+   "bytes": 58720256,
+   "cand": "liger_swiglu",
+   "ms": {
+    "pr": 0.41471999883651733,
+    "l2w": 0.4552159905433655,
+    "sum": 0.4136959910392761,
+    "zero": 0.4546560049057007
+   },
+   "order": [
+    "pr",
+    "l2w",
+    "sum",
+    "zero"
+   ]
+  },
+  {
+   "family": "swiglu",
+   "case": "T2048",
+   "bytes": 58720256,
+   "cand": "torch_swiglu",
+   "ms": {
+    "pr": 0.7147520184516907,
+    "zero": 0.7520959973335266,
+    "l2w": 0.7526400089263916,
+    "sum": 0.7147520184516907
+   },
+   "order": [
+    "pr",
+    "zero",
+    "l2w",
+    "sum"
+   ]
+  }
+ ],
+ "invalid": [],
+ "notes": {},
+ "kernels": {
+  "gemv 4096x4096 cublas_fp16": [],
+  "gemv 4096x4096 tinygemm_k2": [],
+  "gemv 4096x4096 tinygemm_k4": [],
+  "gemv 4096x4096 tinygemm_k8": [],
+  "gemv 4096x4096 bnb_nf4": [],
+  "gemv 14336x4096 cublas_fp16": [],
+  "gemv 14336x4096 tinygemm_k2": [],
+  "gemv 14336x4096 tinygemm_k4": [],
+  "gemv 14336x4096 tinygemm_k8": [],
+  "gemv 14336x4096 bnb_nf4": [],
+  "gemv 4096x14336 cublas_fp16": [],
+  "gemv 4096x14336 tinygemm_k2": [],
+  "gemv 4096x14336 tinygemm_k4": [],
+  "gemv 4096x14336 tinygemm_k8": [],
+  "gemv 4096x14336 bnb_nf4": [],
+  "attn L4096 sdpa_bf16": [],
+  "attn L16384 sdpa_bf16": [],
+  "attn L65536 sdpa_bf16": [],
+  "rmsnorm T2048 torch_rmsnorm": [],
+  "rmsnorm T2048 liger_rmsnorm": [],
+  "rmsnorm T8192 torch_rmsnorm": [],
+  "rmsnorm T8192 liger_rmsnorm": [],
+  "swiglu T512 torch_swiglu": [],
+  "swiglu T512 liger_swiglu": [],
+  "swiglu T2048 torch_swiglu": [],
+  "swiglu T2048 liger_swiglu": []
+ }
+}

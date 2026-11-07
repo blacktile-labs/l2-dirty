@@ -1,0 +1,4 @@
+F-2 (E-0 locked): not enough Ada GPUs (2 < 4) (rho None; Ada [('NVIDIA GeForce RTX 4060 Ti', 32, 0.0861), ('NVIDIA GeForce RTX 4060', 24, 0.0666)])
+F-2 (E-0' amended): scales with L2 within Ada (rho 1.0; Ada [('NVIDIA GeForce RTX 4090', 72, 0.1744), ('NVIDIA L40S', 96, 0.2532), ('NVIDIA GeForce RTX 4080 SUPER', 64, 0.1595), ('NVIDIA GeForce RTX 4060 Ti', 32, 0.0861), ('NVIDIA GeForce RTX 4060', 24, 0.0666)])
+F-5: replicates {'B17': {'B_sum': 0.1617, 'D_sum': -0.168}, 'B16': {'B_sum': 0.1661, 'D_sum': -0.1696}}
+residue / L2: {'NVIDIA GeForce RTX 4090': 0.271, 'NVIDIA L40S': 0.295, 'NVIDIA GeForce RTX 4080 SUPER': 0.279, 'NVIDIA GeForce RTX 4060 Ti': 0.301, 'NVIDIA GeForce RTX 4060': 0.311, 'NVIDIA A100-PCIE-40GB': 0.448, 'NVIDIA GeForce RTX 5090': 0.126, 'NVIDIA GeForce RTX 5060 Ti': 0.229, 'NVIDIA H100 NVL': 0.431}

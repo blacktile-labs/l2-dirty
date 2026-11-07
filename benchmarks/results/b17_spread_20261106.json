@@ -1,0 +1,290 @@
+{
+ "b17_ad102_4090_20261106 (NVIDIA GeForce RTX 4090)": {
+  "gemv 14336x4096 cublas_fp16 zero": {
+   "median": 0.1747,
+   "min": 0.1694,
+   "max": 0.1774,
+   "n": 5
+  },
+  "gemv 14336x4096 cublas_fp16 l2w": {
+   "median": 0.1774,
+   "min": 0.1694,
+   "max": 0.1774,
+   "n": 5
+  },
+  "rmsnorm T8192 liger_rmsnorm zero": {
+   "median": 0.5745,
+   "min": 0.5699,
+   "max": 0.5978,
+   "n": 5
+  },
+  "rmsnorm T2048 liger_rmsnorm zero": {
+   "median": 0.8182,
+   "min": 0.8043,
+   "max": 0.8636,
+   "n": 5
+  },
+  "rmsnorm T2048 liger_rmsnorm l2w": {
+   "median": 1.6364,
+   "min": 1.5923,
+   "max": 2.3362,
+   "n": 5
+  }
+ },
+ "b17_ad102_l40s_20261106 (NVIDIA L40S)": {
+  "gemv 14336x4096 cublas_fp16 zero": {
+   "median": 0.2532,
+   "min": 0.2472,
+   "max": 0.2532,
+   "n": 5
+  },
+  "gemv 14336x4096 cublas_fp16 l2w": {
+   "median": 0.2532,
+   "min": 0.2503,
+   "max": 0.2595,
+   "n": 5
+  },
+  "rmsnorm T8192 liger_rmsnorm zero": {
+   "median": 0.8796,
+   "min": 0.8532,
+   "max": 0.9529,
+   "n": 5
+  },
+  "rmsnorm T2048 liger_rmsnorm zero": {
+   "median": 0.963,
+   "min": 0.8929,
+   "max": 1.037,
+   "n": 5
+  },
+  "rmsnorm T2048 liger_rmsnorm l2w": {
+   "median": 1.0,
+   "min": 0.8929,
+   "max": 1.037,
+   "n": 5
+  }
+ },
+ "b17_ad103_4080s_20261106 (NVIDIA GeForce RTX 4080 SUPER)": {
+  "gemv 14336x4096 cublas_fp16 zero": {
+   "median": 0.1617,
+   "min": 0.1548,
+   "max": 0.1667,
+   "n": 5
+  },
+  "gemv 14336x4096 cublas_fp16 l2w": {
+   "median": 0.1607,
+   "min": 0.1603,
+   "max": 0.1617,
+   "n": 5
+  },
+  "rmsnorm T8192 liger_rmsnorm zero": {
+   "median": 0.5452,
+   "min": 0.5328,
+   "max": 0.5704,
+   "n": 5
+  },
+  "rmsnorm T2048 liger_rmsnorm zero": {
+   "median": 1.0,
+   "min": 0.9699,
+   "max": 1.0069,
+   "n": 5
+  },
+  "rmsnorm T2048 liger_rmsnorm l2w": {
+   "median": 1.0,
+   "min": 0.9919,
+   "max": 1.0046,
+   "n": 5
+  }
+ },
+ "b17_ad106_4060ti_20261106 (NVIDIA GeForce RTX 4060 Ti)": {
+  "gemv 14336x4096 cublas_fp16 zero": {
+   "median": 0.0851,
+   "min": 0.0848,
+   "max": 0.0875,
+   "n": 5
+  },
+  "gemv 14336x4096 cublas_fp16 l2w": {
+   "median": 0.0867,
+   "min": 0.0851,
+   "max": 0.0877,
+   "n": 5
+  },
+  "rmsnorm T8192 liger_rmsnorm zero": {
+   "median": 0.2305,
+   "min": 0.2281,
+   "max": 0.235,
+   "n": 5
+  },
+  "rmsnorm T2048 liger_rmsnorm zero": {
+   "median": 1.0769,
+   "min": 1.0638,
+   "max": 1.1077,
+   "n": 5
+  },
+  "rmsnorm T2048 liger_rmsnorm l2w": {
+   "median": 1.1077,
+   "min": 1.0769,
+   "max": 1.3377,
+   "n": 5
+  }
+ },
+ "b17_ad107_4060_20261106 (NVIDIA GeForce RTX 4060)": {
+  "gemv 14336x4096 cublas_fp16 zero": {
+   "median": 0.0665,
+   "min": 0.0634,
+   "max": 0.0671,
+   "n": 5
+  },
+  "gemv 14336x4096 cublas_fp16 l2w": {
+   "median": 0.0644,
+   "min": 0.0625,
+   "max": 0.0653,
+   "n": 5
+  },
+  "rmsnorm T8192 liger_rmsnorm zero": {
+   "median": 0.156,
+   "min": 0.1492,
+   "max": 0.1578,
+   "n": 5
+  },
+  "rmsnorm T2048 liger_rmsnorm zero": {
+   "median": 0.7564,
+   "min": 0.7268,
+   "max": 0.7895,
+   "n": 5
+  },
+  "rmsnorm T2048 liger_rmsnorm l2w": {
+   "median": 0.7436,
+   "min": 0.7114,
+   "max": 0.7763,
+   "n": 5
+  }
+ },
+ "b17_ga100_a100_20261106 (NVIDIA A100-PCIE-40GB)": {
+  "gemv 14336x4096 cublas_fp16 zero": {
+   "median": 0.16,
+   "min": 0.1503,
+   "max": 0.16,
+   "n": 5
+  },
+  "gemv 14336x4096 cublas_fp16 l2w": {
+   "median": 0.16,
+   "min": 0.1496,
+   "max": 0.16,
+   "n": 5
+  },
+  "rmsnorm T8192 liger_rmsnorm zero": {
+   "median": 0.1556,
+   "min": 0.1444,
+   "max": 0.1685,
+   "n": 5
+  },
+  "rmsnorm T2048 liger_rmsnorm zero": {
+   "median": 0.4762,
+   "min": 0.4091,
+   "max": 0.4762,
+   "n": 5
+  },
+  "rmsnorm T2048 liger_rmsnorm l2w": {
+   "median": 3.4762,
+   "min": 3.3182,
+   "max": 4.1437,
+   "n": 5
+  }
+ },
+ "b17_gb202_5090_20261106 (NVIDIA GeForce RTX 5090)": {
+  "gemv 14336x4096 cublas_fp16 zero": {
+   "median": 0.1079,
+   "min": 0.0918,
+   "max": 0.1098,
+   "n": 5
+  },
+  "gemv 14336x4096 cublas_fp16 l2w": {
+   "median": 0.1014,
+   "min": 0.101,
+   "max": 0.1115,
+   "n": 5
+  },
+  "rmsnorm T8192 liger_rmsnorm zero": {
+   "median": 0.2812,
+   "min": 0.2351,
+   "max": 0.2867,
+   "n": 5
+  },
+  "rmsnorm T2048 liger_rmsnorm zero": {
+   "median": 0.4064,
+   "min": 0.375,
+   "max": 0.7089,
+   "n": 5
+  },
+  "rmsnorm T2048 liger_rmsnorm l2w": {
+   "median": 5.8158,
+   "min": 1.5027,
+   "max": 6.0515,
+   "n": 5
+  }
+ },
+ "b17_gb206_5060ti_20261106 (NVIDIA GeForce RTX 5060 Ti)": {
+  "gemv 14336x4096 cublas_fp16 zero": {
+   "median": 0.0689,
+   "min": 0.0652,
+   "max": 0.0692,
+   "n": 5
+  },
+  "gemv 14336x4096 cublas_fp16 l2w": {
+   "median": 0.0725,
+   "min": 0.0722,
+   "max": 0.0763,
+   "n": 5
+  },
+  "rmsnorm T8192 liger_rmsnorm zero": {
+   "median": 0.1102,
+   "min": 0.1071,
+   "max": 0.1107,
+   "n": 5
+  },
+  "rmsnorm T2048 liger_rmsnorm zero": {
+   "median": 0.8913,
+   "min": 0.8696,
+   "max": 0.909,
+   "n": 5
+  },
+  "rmsnorm T2048 liger_rmsnorm l2w": {
+   "median": 0.8702,
+   "min": 0.8604,
+   "max": 0.8862,
+   "n": 5
+  }
+ },
+ "b17_gh100_h100nvl_20261106 (NVIDIA H100 NVL)": {
+  "gemv 14336x4096 cublas_fp16 zero": {
+   "median": 0.2308,
+   "min": 0.2272,
+   "max": 0.2439,
+   "n": 5
+  },
+  "gemv 14336x4096 cublas_fp16 l2w": {
+   "median": 0.2315,
+   "min": 0.2264,
+   "max": 0.238,
+   "n": 5
+  },
+  "rmsnorm T8192 liger_rmsnorm zero": {
+   "median": 0.1371,
+   "min": 0.1285,
+   "max": 0.1469,
+   "n": 5
+  },
+  "rmsnorm T2048 liger_rmsnorm zero": {
+   "median": 0.1655,
+   "min": 0.1608,
+   "max": 0.1748,
+   "n": 5
+  },
+  "rmsnorm T2048 liger_rmsnorm l2w": {
+   "median": 2.4833,
+   "min": 2.4282,
+   "max": 2.9622,
+   "n": 5
+  }
+ }
+}

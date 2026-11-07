@@ -1,0 +1,57 @@
+Wed Nov  4 12:35:39 UTC 2026
+Linux LAPTOP-NAG5V2KI <rented-host-ip>-microsoft-standard-WSL2 #1 SMP PREEMPT_DYNAMIC Tue Oct  6 19:13:07 UTC 2026 x86_64 x86_64 x86_64 GNU/Linux
+PRETTY_NAME="Ubuntu 24.04.3 LTS"
+NAME="Ubuntu"
+VERSION_ID="24.04"
+VERSION="24.04.3 LTS (Noble Numbat)"
+8
+               total        used        free      shared  buff/cache   available
+Mem:           9.7Gi       3.0Gi       2.7Gi       4.8Mi       4.2Gi       6.7Gi
+Swap:          4.0Gi          0B       4.0Gi
+model name	: AMD Ryzen 7 5800H with Radeon Graphics
+Wed Nov  4 19:35:40 2026       
++-----------------------------------------------------------------------------------------+
+| NVIDIA-SMI 590.52.01              Driver Version: 591.74         CUDA Version: 13.1     |
++-----------------------------------------+------------------------+----------------------+
+| GPU  Name                 Persistence-M | Bus-Id          Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp   Perf          Pwr:Usage/Cap |           Memory-Usage | GPU-Util  Compute M. |
+|                                         |                        |               MIG M. |
+|=========================================+========================+======================|
+|   0  NVIDIA GeForce RTX 3060 ...    On  |   00000000:01:00.0 Off |                  N/A |
+| N/A   51C    P0             20W /   90W |       0MiB /   6144MiB |      0%      Default |
+|                                         |                        |                  N/A |
++-----------------------------------------+------------------------+----------------------+
+
++-----------------------------------------------------------------------------------------+
+| Processes:                                                                              |
+|  GPU   GI   CI              PID   Type   Process name                        GPU Memory |
+|        ID   ID                                                               Usage      |
+|=========================================================================================|
+|  No running processes found                                                             |
++-----------------------------------------------------------------------------------------+
+name, compute_cap, memory.total [MiB], memory.free [MiB], driver_version, clocks.max.sm [MHz], clocks.max.memory [MHz], temperature.gpu, power.limit [W], pstate
+NVIDIA GeForce RTX 3060 Laptop GPU, 8.6, 6144 MiB, 5997 MiB, 591.74, 2100 MHz, 6001 MHz, 51, [N/A], P0
+nvcc: NVIDIA (R) Cuda compiler driver
+Copyright (c) 2005-2024 NVIDIA Corporation
+Built on Thu_Jun__6_02:18:23_PDT_2024
+Cuda compilation tools, release 12.5, V12.5.82
+Build cuda_12.5.r12.5/compiler.34385749_0
+Python 3.12.3
+gcc (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0
+--- Windows host power source (BatteryStatus 2 = on AC), best effort
+
+
+BatteryStatus            : 2
+EstimatedChargeRemaining : 95
+
+
+
+--- sha256 of protocol inputs
+eec610d52bc180b6e341f19fb805c60117d2471f8f73fc49a9f8a441701955d2  benchmarks/scripts/local_v3_laptop.sh
+995f128de31ca9c4ee68e3e3bc549073f81b4317a184ab99b3c70ce7536db66b  benchmarks/scripts/model_v3.py
+ea8ad8ef2d928b1ec06009eb93d63427fe75a617aaa2d585fcae99bf0c8d4622  benchmarks/scripts/cache_sim.py
+1b3e47d5ee90a948c489694022908d8ec0b69dba051993eacff4067a24cd5f13  benchmarks/scripts/cache_sim_b5.py
+f4af4694320299e465b387216c8817510b32a2aee3c0bf9ecc9bc84697bc213a  benchmarks/src/fusion.cu
+fb1bfb150329003a2b4f7c86913aba6569ec77f1450d1bbd0c3b25bc0e995858  benchmarks/src/stencil.cu
+7a5ea8b826772234d1e9a17990149dee6d5726dee203cf4fa2785e5c224a8c44  benchmarks/src/common.cuh
+8e8a7d19138eec2054e6bb2d14b08da34d6b116dcad09614d020185e2d384cc2  benchmarks/src/stencil_host.hpp

@@ -1,0 +1,50 @@
+{
+ "device": "NVIDIA L40S",
+ "l2_bytes": 100663296,
+ "T step us": {
+  "fp16": 2216.96,
+  "int4": 604.16,
+  "nf4": 608.26
+ },
+ "step IQR/median": {
+  "fp16": 0.0005,
+  "int4": 0.0034,
+  "nf4": 0.0051
+ },
+ "E": {
+  "fp16 write": 0.2807,
+  "fp16 cold": 0.0196,
+  "fp16 steady": 0.0133,
+  "fp16 l2w": 0.284,
+  "int4 write": 0.5254,
+  "int4 cold": 0.0712,
+  "int4 steady": -0.1789,
+  "int4 l2w": 0.5326,
+  "nf4 write": 1.0539,
+  "nf4 cold": 0.3603,
+  "nf4 steady": 0.0505,
+  "nf4 l2w": 1.0606
+ },
+ "U-0": true,
+ "U-0 parts": {
+  "correctness": true,
+  "fp16 and int4 captured": true,
+  "stable steps": true
+ },
+ "S_e2e int4": 3.6695,
+ "S_e2e nf4": 3.6448,
+ "D": {
+  "int4 write": -0.1605,
+  "int4 cold": -0.0482,
+  "int4 steady": 0.2341,
+  "int4 l2w": -0.1622,
+  "nf4 write": -0.3765,
+  "nf4 cold": -0.2504,
+  "nf4 steady": -0.0354,
+  "nf4 l2w": -0.3769
+ },
+ "U-1": "cold predicts the in-model step",
+ "U-2 gap": 0.2611,
+ "U-2": "the shipped write flush over-predicts the step",
+ "U-3": "cold predicts the int4 speedup better than the write flush"
+}

@@ -1,0 +1,1503 @@
+# Hypotheses & Memory-Traffic Models
+
+**สถานะ:** เป็น *candidate* ทั้งหมด ยังไม่ได้เลือก primary hypothesis ตาม Gate D เพราะยังไม่มีผลวัด baseline (เครื่องนี้ไม่มี NVIDIA GPU)
+**กติกา:** ต้องเขียน hypothesis ก่อนลงมือ optimize ทุกครั้ง ตัวเลขในไฟล์นี้ทั้งหมดเป็น **ESTIMATE** จาก model ไม่ใช่ค่าวัด
+
+Template ที่ใช้ (จาก CLAUDE.md):
+`If we change X, then measured Y should improve on workload range Z, because data movement at tier T will change in way M; potential regressions are R.`
+
+---
+
+## Gate C — Traffic model ของ baseline B1 `copy_stride` (วัด smoke แล้ว 2026-11-04 ดู BASELINE_REPORT §10)
+
+**Kernel:** `dst[i] = src[i*s]` ใช้ `uint32` โดยให้ `i < n_out = N/s` และ footprint ของ `src` ตายตัวที่ N elements (smoke: N = 16,777,216 = 64 MiB)
+
+**สมมติฐานของ model** (ตรงกับ `benchmarks/scripts/bench_common.py`):
+- A1: `src`/`dst` align กับ g (`cudaMalloc` ให้ 256 B)
+- A2: flush L2 ก่อนทุก rep (ทำแบบ best effort ด้วยการอ่าน buffer ขนาด ≥ 4×L2)
+- A3: chunk ขนาด g ที่มี element ที่ต้องใช้อยู่ จะถูกย้ายครั้งเดียวพอดี ไม่มี thrashing และไม่มี prefetch เกิน g
+- A4: element ไม่คร่อม chunk
+- A5: การเขียนเป็นแบบ contiguous และเต็ม chunk จึงไม่มี read-for-ownership
+
+| ปริมาณ | สูตร | หมายเหตุ |
+|---|---|---|
+| Logical bytes | `8·N/s` | อ่าน 4 B + เขียน 4 B ต่อ element ที่ใช้ |
+| Estimated read bytes (chunk g) | `min(4N, g·N/s)` | ถ้า `4s < g` ทุก chunk ใน buffer ถูกแตะ แต่ถ้า `4s ≥ g` จะแตะหนึ่ง chunk ต่อ element |
+| Estimated write bytes | `4N/s` | contiguous |
+| Amplification | `(read + write) / logical` | g=32: 1.0 (s=1), 1.5 (s=2), 2.5 (s=4), 4.5 (s≥8) |
+| Arithmetic intensity | 0 FLOP/byte | คอขวดอื่นที่อาจแข่งกันคือ integer address math ซึ่ง SASS ใช้ 64-bit `IMAD.WIDE` และ `LEA` ประมาณ 10 คำสั่งต่อ element รวมถึง launch overhead และ memory-level parallelism |
+| L1→L2 load sectors (32 B) | `min(N/8, N/s)` ซึ่งเท่ากับ N/8 เมื่อ s ≤ 8 และเท่ากับ 1 sector ต่อ element เมื่อ s ≥ 8 | ใช้เทียบกับ `l1tex__t_sectors_pipe_lsu_mem_global_op_ld.sum` ได้ โดยไม่ขึ้นกับ g ของ DRAM |
+
+**ตารางทำนายสำหรับ smoke** (สร้างจาก `run_copy_stride.py --smoke --dry-run` เป็น ESTIMATE):
+
+| stride | n_out | logical MiB | est MiB (g=32) | est MiB (g=64) | est MiB (g=128) |
+|---:|---:|---:|---:|---:|---:|
+| 1 | 16,777,216 | 128 | 128 | 128 | 128 |
+| 2 | 8,388,608 | 64 | 96 | 96 | 96 |
+| 8 | 2,097,152 | 16 | 72 | 72 | 72 |
+| 16 | 1,048,576 | 8 | **36** | **68** | 68 |
+| 32 | 524,288 | 4 | 18 | 34 | 66 |
+
+**ทำไมแต่ละแบบอาจเร็วขึ้นหรือช้าลง (กลไกที่คาดไว้):**
+- `copy_contig_u32` เทียบกับ `copy_contig_u32x4`: ทั้งสองแบบย้าย byte เท่ากัน แต่ u32x4 มี load ต่อ warp ขนาด 512 B ส่วน scalar มีแค่ 128 B
+  ตาม Little's law (bytes in flight = bandwidth × latency) ถ้า bytes in flight ของ scalar ไม่พอจะปิด latency ของ DRAM แบบ scalar จะ**ช้ากว่า**แม้ byte เท่ากัน
+  นี่คือตัวอย่างที่คอขวดเป็น memory-level parallelism ไม่ใช่ปริมาณ traffic
+  ถ้าแบบ scalar วิ่งได้เท่ากับ `cudaMemcpy` แปลว่า occupancy อย่างเดียวก็ซ่อน latency ได้พอ
+- `copy_strided_read_u32_s1` เทียบกับ `copy_contig_u32`: ควรได้ผลเท่ากันภายในระดับ noise เพราะต่างกันแค่การคูณ index ข้อนี้ใช้เป็น **sanity check** ของ harness
+- stride ตั้งแต่ 2 ถึง g/4: ข้อมูลที่ใช้ลดลงแต่ DRAM ยังต้องอ่านทั้ง buffer เวลาจึงควร**แทบไม่ลด** (ลดลงเฉพาะส่วนที่เขียน)
+- stride > g/4: แต่ละ element ใช้ chunk ของตัวเอง bytes จึงลดลงแบบ 1/s
+  แต่ access ที่กระจายอาจทำให้ DRAM row-buffer locality แย่ลง เวลาจริงจึงอาจ**ช้ากว่า model** ทั้งที่ byte ตรงกับที่ทำนาย ต้องใช้ counter แยกสองกรณีนี้ออกจากกัน
+
+---
+
+---
+
+## Gate C — Traffic models และคำทำนายของ B2–B4 (เขียนไว้ **ก่อน** วัด: 2026-11-04)
+
+> **ผลวัดเทียบกับคำทำนาย (เพิ่มภายหลังวันเดียวกัน ไม่ได้แก้ข้อความคำทำนายด้านล่าง):** ดูรายละเอียดใน `reports/BASELINE_REPORT.md` §12
+> - **ถูก:** P-B2-1..4, P-B3-1, P-B3-2, P-B4-1, P-B4-2 (สนับสนุน `lru_cliff` และตัด `proportional` ออก), P-B4-3, P-B4-4, P-B4-6
+> - **ถูกบางส่วน:** P-B4-5 (ratio ลดเหลือ 1.42 แต่ไม่ถึง 1)
+> - **ผิด:** P-B3-3 ส่วนที่บอกว่าเวลาจะต่ำกว่า no_reuse ÷ memcpy BW เพราะ random access ได้ BW ต่ำกว่า streaming มาก และ P-B3-4 (zipf scatter_add **เร็วกว่า** uniform)
+> - **ไม่ได้ทำนายไว้:** dirty write-back ทำให้ consumer ช้าลง 21 % ที่ l2x = 1 และในโหมด steady ต้องเทียบ working set รวมกับ L2
+
+ทุกตัวเลขในส่วนนี้เป็น **ESTIMATE** ใช้ g = 32 B ตามพฤติกรรมที่เห็นใน B1 บน RTX 3060
+implement ไว้ใน `bench_common.py` (`model_transpose`, `model_gather_*`, `model_fusion_bytes`) และมี unit test ใน `test_models_b2_b4.py`
+ผลวัดที่ออกมาภายหลังห้ามย้อนกลับมาแก้คำทำนายในส่วนนี้ ถ้าคำทำนายผิดให้บันทึกว่าผิด
+
+### B2 transpose (`transpose.cu`): R×C `uint32`, N = R·C
+
+| ปริมาณ | copy_2d | naive | tiled | tiled_pad |
+|---|---|---|---|---|
+| Logical bytes | 8N | 8N | 8N | 8N |
+| Est. DRAM bytes (สมมติฐาน T2: L2 รวม partial sector ภายใน block ได้) | 8N | 8N | 8N | 8N |
+| Est. L1→L2 store sectors | N/8 | **N** (1 sector ต่อ element) | N/8 | N/8 |
+| Shared-memory bank conflicts | — | — | **32-way** ตอนอ่าน column | ไม่มี |
+
+- **P-B2-1:** `tiled_pad` จะได้ ≥ 90 % ของ `copy_2d` ที่ 4096² Harris 2013 รายงานไว้ ≈ 95 % บน Kepler/Fermi
+- **P-B2-2:** `naive` ช้ากว่า `copy_2d` อย่างชัดเจน **ทั้งที่ DRAM bytes เท่ากัน** กลไกที่คาดคือ L2 ต้องรับ store transaction มากขึ้น 8 เท่า ไม่ใช่ DRAM traffic เพิ่มขึ้น
+  ถ้ามี counter จะเห็น `lts__t_sectors_op_write` สูงขึ้นราว 8× แต่ `dram__bytes_write` ใกล้เดิม **ถ้าไม่มี counter จะยืนยันกลไกนี้ไม่ได้ ได้แค่ timing**
+- **P-B2-3:** `tiled` (ไม่มี pad) อยู่ระหว่าง `naive` กับ `tiled_pad` เพราะ bank conflict เพิ่มเวลาฝั่ง shared memory ไม่ใช่ DRAM
+- **P-B2-4:** `cublas_geam` (ถ้า build ได้) ≈ `tiled_pad` ±10 %
+- shape 1000×777 มีไว้ตรวจ boundary เป็นหลัก ขนาดเล็กมากจน launch overhead (≈ 3 µs) มีผลมาก
+
+### B3 gather / scatter_add (`gather.cu`): T = 16M elements (64 MiB), M = 4M lookups
+
+ไบนารีคำนวณสถิติจริงของ index stream ไว้ใน `meta.json`: distinct sectors, สัดส่วน lookup ที่ตกใน K = L2/32 sector ที่ร้อนที่สุด และจำนวนครั้งของ element ที่ร้อนที่สุด จากนั้น model ให้ค่า 3 ระดับ
+
+| ค่า | ความหมาย |
+|---|---|
+| `compulsory` = 32 B × distinct sectors | **lower bound** ทุก sector ที่ถูกแตะต้องถูกดึงอย่างน้อย 1 ครั้ง |
+| `hot_set` = 32 B × (M·(1 − share) + K) | point estimate โดยสมมติว่า L2 เก็บ K sector ที่ร้อนที่สุดไว้ได้พอดี (ideal LFU) |
+| `no_reuse` = 32 B × M | **upper bound** ไม่มี L2 hit เลย |
+
+- **P-B3-1:** `seq` gather ได้ useful GB/s ใกล้ memcpy (≥ 85 %)
+- **P-B3-2:** `uniform` gather มี DRAM traffic ใกล้ `no_reuse` เพราะ L2 คิดเป็นแค่ ≈ 3.5 % ของ table useful GB/s จะตกลงเหลือ **≤ 0.3 เท่า** ของ memcpy (12 B ที่ต้องใช้ต่อ lookup จาก 4+32+4 = 40 B ที่ย้ายจริง) และอาจต่ำกว่านี้ถ้า random access ทำให้ DRAM efficiency ลดลง
+- **P-B3-3:** `zipf1.0` gather เร็วกว่า `uniform` เพราะ hot set อยู่ใน L2 เวลาควรอยู่ระหว่าง time(`hot_set`) กับ time(`no_reuse`) เมื่อหารด้วย memcpy BW
+- **P-B3-4 (competing bottleneck):** `scatter_add` กับ `zipf1.0` **อาจช้ากว่า** `uniform` แม้ DRAM bytes น้อยกว่า เพราะ atomic ที่ลง address เดียวกันถูก serialize ที่ L2
+  `max_element_count` คือจำนวน atomic ที่ต้องเรียงคิวบน address ร้อนที่สุด ยังไม่รู้ throughput ต่อ address ของ hardware จึง**ไม่ทำนายตัวเลข** ทำนายเพียงทิศทาง
+- **Falsifier:** ถ้า `compulsory` bytes ÷ เวลาที่วัดได้ เกิน DRAM peak (summary จะมีคอลัมน์ `compulsory_exceeds_peak`) แปลว่าสมมติฐาน 32-B sector ใช้กับ gather ไม่ได้
+
+### B4 fusion (`fusion.cu`): B = 4n bytes ต่อ array, ขนาดเป็นเท่าของ L2 (l2x)
+
+| ขนาด (l2x) | L2-tier bytes fused / mat | DRAM bytes fused | DRAM bytes mat ตาม `lru_cliff` | DRAM bytes mat ตาม `proportional` |
+|---|---|---|---|---|
+| 0.25 | 2B / 4B | 2B | 2B (t อยู่ใน L2 ได้) | 2B |
+| 0.5 | 2B / 4B | 2B | 2B (2B = L2 พอดี จึงอยู่ที่ขอบ) | 2B |
+| 1 | 2B / 4B | 2B | **4B** | **3B** |
+| 4 / 16 | 2B / 4B | 2B | 4B | ≈ 3.9B |
+
+- **P-B4-1 (กลไกหลักของ H2):** `stage2_warm / stage2_cold` < 1 อย่างชัดเจนที่ l2x = 0.25 (t ยังอยู่ใน L2) และ ≈ 1 ที่ l2x ≥ 4 ส่วน l2x = 0.5 เป็นจุดขอบที่ทั้งสอง model ยังทำนายไม่ชัด
+  นี่คือ**หลักฐานเรื่อง tier ที่ได้จาก timing** โดยไม่ต้องใช้ counter
+- **P-B4-2 (ชี้ขาดระหว่างสอง model):** ที่ l2x = 1 ถ้า `mat/fused` ≈ 2.0 จะสนับสนุน `lru_cliff` ถ้า ≈ 1.5 จะสนับสนุน `proportional` ถ้าเป็นค่าอื่นแปลว่าทั้งสอง model ผิด
+- **P-B4-3:** ที่ l2x ≥ 4 และ K = 1 (DRAM-bound) `mat/fused` → 2.0 ± 0.15
+- **P-B4-4:** ที่ l2x ≤ 0.5 (t อยู่ใน L2) `mat/fused` จะ **> 1 อยู่ดี** เพราะ (a) launch 2 ครั้งเทียบกับ 1 ครั้ง ซึ่ง B1 วัด floor ได้ ≈ 3 µs และ kernel ที่ขนาดนี้ใช้เวลาเพียงไม่กี่ µs (b) traffic ที่ L2 tier เป็น 2 เท่า
+  เส้นโค้ง `mat/fused` เทียบกับขนาดจึง**อาจไม่ monotonic** คือสูงที่ขนาดเล็กเพราะ launch, ลดลงช่วงที่ทุกอย่างอยู่ใน L2 และขึ้นไปหา 2 ที่ขนาดใหญ่
+  ข้อนี้อาจอธิบายข้อสังเกตของ Dodović 2026 ที่ว่า speedup ลดลงเมื่อ array ใหญ่ขึ้น ถ้าช่วงขนาดที่เขาวัดเริ่มจากช่วงที่ launch overhead เด่น **นี่เป็นการตีความ ยังไม่ได้ตรวจ**
+- **P-B4-5:** ที่ K = 64 (AI_fused = 32 FLOP/B ขณะที่ ridge ที่ประเมินไว้ ≈ 38 FLOP/B) `mat/fused` จะลดลงเข้าหา 1 เพราะงานเริ่มติด compute bytes จึงไม่ใช่คอขวดอีกต่อไป
+  นี่คือกรณีที่ fusion **ไม่ช่วย** แม้จะลด bytes ได้
+- **P-B4-6:** ในโหมด `steady` ที่ขนาดเล็ก dirty lines ของ t และ y ถูกเขียนทับซ้ำใน L2 และ**อาจไม่ถูก write-back ลง DRAM เลย** ส่วนในโหมด `isolated` write-back ถูกเลื่อนไปอยู่นอกช่วงจับเวลา ทั้งสองโหมดจึงอาจให้ `mat/fused` ต่างกัน ความต่างนี้คือ "deferred write-back" ที่ H2 พูดถึง
+
+---
+
+---
+
+## Gate C — B4 model v2 และ B3 fetch-granularity probe (pre-registered 2026-11-04 06:16 UTC ก่อนวัด)
+
+> **ผล (เพิ่มภายหลัง ไม่ได้แก้คำทำนายด้านล่าง; ดู `reports/BASELINE_REPORT.md` §14):**
+> - **P-B4v2-1:** ✅ v2 ไม่ถูก falsify LRU ได้ MAPE 4.2 % ส่วน random 6.4 % LRU จึงชนะ
+> - **P-B4v2-2:** ✅ warm/cold สูงสุดที่ 0.625 แล้วลดลงตามรูปร่างของ LRU
+> - **P-B4v2-3:** ✅ steady ≈ 2.0 ตามที่ LRU ทำนาย
+> - **พลาด:** mat/fused iso ที่ 0.625 (LRU สูงไป 12 %) และช่วงต่ำกว่าหน้าผาตามข้อจำกัดที่ประกาศไว้
+> - **P-B3g-1:** ✅
+> - **P-B3g-2:** ❌ ผลไม่ตรงกับสามสถานการณ์ที่เขียนไว้ ค่าตั้งต้นทำงานเหมือน 32 แต่รายงานว่า 64 ส่วนค่าที่ตั้งเองถูกทำตาม
+
+### B4 model v2: cache simulator + time model
+
+**ทำไมต้องมี v2:** v1 (สูตรปิด `lru_cliff` / `proportional`) มองข้ามสองกลไกที่ smoke รอบที่ 2 แสดงให้เห็น ได้แก่ (1) ต้นทุน dirty write-back ไปตกที่ kernel ผู้บริโภค และ (2) ในโหมด steady ต้องเทียบ working set ทั้งหมดของแต่ละแบบกับ L2
+**ข้อควรระวัง:** v2 ถูกออกแบบ*หลัง*เห็นผล smoke ขนาด l2x ∈ {0.25, 0.5, 1, 4, 16} ขนาดเหล่านี้จึงเป็น **in-sample** การทดสอบที่ใช้ได้จริงคือขนาดที่ยังไม่เคยวัด (**out-of-sample**) เท่านั้น
+
+| ส่วน | รายละเอียด (`cache_sim.py`, `fusion_model_v2.py`) |
+|---|---|
+| Cache | fully-associative ขนาด = L2 attribute, line 128 B, write-allocate ที่ไม่ fetch, write-back ตอน evict |
+| Replacement | **สองสมมติฐานที่แข่งกัน: `lru` กับ `random`** |
+| ลำดับ access | stream ตาม index: สำหรับทุก line j ให้อ่าน src[j] แล้วเขียน dst[j] |
+| Isolated | เริ่มจาก cache ว่าง (ผลของ read-flush) และนับเฉพาะ miss กับ dirty eviction ที่เกิด*ในช่วงจับเวลา* |
+| Steady | รัน call sequence ซ้ำ แล้วรายงานรอบที่ 3 |
+| Time model | t = k·τ + DRAM bytes / BW; BW = 333.4 GB/s (memcpy ที่วัดได้); τ_iso = 3.53 µs, τ_steady = 2.63 µs **calibrate จากจุด l2x = 4 เท่านั้น** |
+| ข้อจำกัดที่รู้อยู่แล้ว | **ไม่มี term ของ L2 bandwidth** จึงทำนายต่ำกว่าจริงเมื่อ DRAM traffic น้อย (ขนาดเล็ก หรือ steady) ไม่คิด set conflict และ L2 slicing |
+
+**In-sample (เพื่อความโปร่งใส ไม่ใช่การทดสอบ):**
+- ที่ l2x ≥ 1, LRU คลาดเคลื่อน ≤ 5 % ทุก ratio (เช่น warm/cold ที่ l2x 1: วัดได้ 1.214 ทำนาย 1.250)
+- ที่ l2x ≤ 0.5 คลาดสูงถึง 69 % ตามข้อจำกัดเรื่อง L2 bandwidth
+
+**คำทำนาย (ESTIMATE จาก `research/preregistration/B4_v2_predictions.json`, sha256 ของ `cache_sim.py` ขึ้นต้นด้วย `ea8ad8ef`):**
+
+| l2x | ชนิด | LRU mat/fused iso | random mat/fused iso | LRU warm/cold | random warm/cold | LRU mat/fused steady | random mat/fused steady |
+|---:|---|---:|---:|---:|---:|---:|---:|
+| 0.375 | OUT (ต่ำกว่าเกณฑ์) | 1.57 | 1.68 | 0.57 | 0.68 | 4.02 | 2.89 |
+| **0.625** | **OUT** | **2.40** | **2.06** | **1.40** | **1.06** | 2.00 | 3.20 |
+| **0.75** | **OUT** | **2.33** | **2.10** | **1.33** | **1.10** | 2.00 | 2.67 |
+| **0.875** | **OUT** | **2.29** | **2.12** | **1.29** | **1.12** | 2.00 | 2.44 |
+| 1.25 | OUT | 2.20 | 2.14 | 1.20 | 1.14 | 2.00 | 2.15 |
+| 1.5 | OUT | 2.17 | 2.13 | 1.17 | 1.13 | 2.00 | 2.08 |
+| 2 | OUT | 2.13 | 2.11 | 1.13 | 1.11 | 2.00 | 2.03 |
+
+- **P-B4v2-1 (กฎตัดสินหลัก):** ใช้ MAPE ของ `mat/fused iso` และ `warm/cold` ที่ขนาด out-of-sample ที่ l2x ≥ 0.625 policy ที่ MAPE ต่ำกว่าถือว่าชนะ ถ้า**ทั้งสอง policy มี MAPE > 10 % ให้ถือว่า model v2 ถูก falsify** บน GPU นี้
+- **P-B4v2-2 (รูปร่าง):** ถ้า L2 ทำงานคล้าย LRU, warm/cold จะมี**ค่าสูงสุดอยู่ใกล้ l2x 0.625** (≈ 1.4) แล้วลดลงเรื่อย ๆ ถ้าคล้าย random จะขึ้นอย่างค่อยเป็นค่อยไปและแตะสูงสุดราว 1.14 ที่ l2x 1.25
+- **P-B4v2-3 (steady เป็นตัวรอง ไม่ใช้ตัดสิน):** LRU ทำนายว่า steady = 2.00 คงที่ตั้งแต่ l2x 0.625 ขึ้นไป ส่วน random ทำนายว่าจะลดจาก 3.2 ลงมา
+- **วิธี score:** `python3 benchmarks/scripts/fusion_model_v2.py --score <run> --prereg research/preregistration/B4_v2_predictions.json` สำหรับ sweep 3 รอบใน `remote_followup.sh`
+
+### B3 fetch-granularity probe
+
+`gather_pair64` อ่านทั้ง `table[j]` และ `table[j^8]` ซึ่งเป็น sector 32 B อีกตัวใน chunk 64 B เดียวกัน ส่วน `gather_pair128` อ่าน `table[j]` กับ `table[j^16]` ซึ่งเป็นครึ่ง 64 B อีกครึ่งใน line 128 B เดียวกัน
+
+| ถ้า DRAM ย้ายข้อมูลทีละ g ต่อ miss (ไม่มี reuse) | pair64 / gather | pair128 / gather |
+|---|---:|---:|
+| g = 32 B | 1.80 | 1.80 |
+| g = 64 B | 1.00 | 1.89 |
+| g = 128 B | 1.00 | 1.00 |
+
+- **P-B3g-1:** สำหรับ `uniform` ใช้เกณฑ์ตัดสิน ratio ของ pair64 ดังนี้
+  - ≤ 1.15 แปลว่า sector ข้างเคียง "ได้มาฟรี" (ย้ายข้อมูลจริง ≥ 64 B)
+  - ≥ 1.5 แปลว่าดึงแยกทีละ 32 B
+  - **ช่วง 1.15–1.5 ถือว่า ambiguous** เพราะการดึงทีละ 32 B ที่ได้ row-buffer hit ใน DRAM ก็ทำให้ ratio ต่ำกว่า 1.8 ได้
+  - pair128 ใช้แยก g = 64 ออกจาก 128 ด้วยเกณฑ์เดียวกัน
+- **P-B3g-2 (ablation ของ `cudaLimitMaxL2FetchGranularity` ซึ่งเป็นเพียง hint):** มีผลที่เป็นไปได้สามแบบ
+  - ถ้า driver ไม่สนใจค่านี้ เวลาของ `gather` แบบ uniform ที่ตั้ง 32/64/128 จะต่างกันไม่เกิน 3 %
+  - ถ้า driver ทำตาม และค่า default คือ 64 จริง การตั้ง 32 จะทำให้ `gather` แบบ uniform **เร็วขึ้น** (ถึงขั้นต่ำสุด (8+32)/(8+64) = 0.56×) และ pair64 ratio จะเปลี่ยนจาก ≈ 1.0 เป็น ≈ 1.8
+  - ถ้าค่าที่ตั้งไม่เปลี่ยนเวลาเลย แต่ pair64 ≈ 1.0 แปลว่า hardware ดึง 64 B เสมอไม่ว่าจะตั้ง hint อย่างไร
+- **ความสำคัญ:** ข้อนี้ตอบคำถามเปิดจาก smoke ว่า uniform gather ช้าเพราะ DRAM ดึงทีละ 32 B แต่ efficiency ต่ำ (135 GB/s) หรือเพราะดึงทีละ 64 B (244 GB/s)
+  และยังบอกด้วยว่าค่า g ที่ H1 วัดได้ (32 B สำหรับ stride) ใช้กับ random access ได้หรือไม่
+
+---
+
+---
+
+## RTX 4060 pre-registration (H2 generality test) — เขียน 2026-11-04 ก่อนแตะ RTX 4060 ใด ๆ
+
+> **ผล (เพิ่มภายหลัง ไม่ได้แก้ข้อความด้านล่าง; ดู `reports/BASELINE_REPORT.md` §15):**
+> - **F1 ✅ F2 ✅ F3 ✅ F4 ✅ D1 ✅ D2 ✅** ผ่านทั้งเมื่อใช้ median และในทุกรอบ
+> - หน้าผาย้ายจาก 1.4 MiB (3060) ไปเป็น **15 MiB (4060) ซึ่งตรงกับ l2x 0.625 เดิมพอดี**
+> - LRU MAPE 2.3 % ส่วน random 13.8 % ตกเกณฑ์
+> - H1 รอง: T(16)/T(8) = 0.5015 แปลว่าค่าตั้งต้นทำงานแบบ 32 B
+
+**คำถาม:** หน้าผาของ fusion payoff ที่เห็นบน RTX 3060 (L2 2.25 MiB) ผูกกับ**ขนาด L2** อย่างที่ H2 อ้างหรือไม่ หรือเป็นเพียงคุณสมบัติของ GPU ตัวนั้น RTX 4060 (Ada, cc 8.9) มี L2 ใหญ่กว่า ≈ 10.7 เท่า จึงเป็นการทดสอบที่ falsify H2 ได้ตรงที่สุดในงบที่มี
+
+**ข้อมูลของ RTX 4060 ที่ใช้เป็นสมมติฐาน (ใช้กับตัวเลขคร่าว ๆ เท่านั้น):**
+- spec สาธารณะ: L2 24 MB, GDDR6 128-bit ที่ 17 Gbps = 272 GB/s, 24 SMs (จาก review หลายแหล่ง เช่น Tom's Hardware และ TechSpot ยังไม่ได้ตรวจกับเครื่องจริง)
+- vast.ai แสดง memory BW ของ offer 4060 ที่ 240–247 GB/s, VRAM 8 GB, PCIe 3.0 x8
+- **ตอนให้คะแนนต้องใช้ค่าที่วัดได้เท่านั้น** ได้แก่ L2 จาก `cudaDevAttrL2CacheSize`, BW จาก memcpy ในรอบเดียวกัน และ τ จาก l2x = 4
+
+### Protocol ที่ผูกมัด (ห้ามเปลี่ยนหลังเห็นผล)
+
+script `benchmarks/scripts/remote_rtx4060.sh` (sha256 `bd858d58…`) และไฟล์ที่ล็อกไว้: `cache_sim.py` `ea8ad8ef…`, `fusion_model_v2.py` `e0b2df3f…`, `fusion.cu` `f4af4694…`, `common.cuh` `7a5ea8b8…`
+
+1. build ด้วย `-arch=sm_89`
+2. รัน B1 smoke ที่ footprint 256 MiB (≥ 10× L2) เพื่อเอา memcpy BW สำหรับ calibration
+3. รัน B4 sweep 3 รอบอิสระ, K = 1, 30 reps ที่ l2x ∈ {0.0625, 0.125, 0.25, 0.375, 0.5, 0.625, 0.75, 0.875, 1, 1.25, 1.5, 2, **4**} โดย 4 เป็นจุด calibrate
+4. calibrate τ จาก **รอบที่ 1 ที่ l2x = 4 เท่านั้น** แล้วสร้างคำทำนายใหม่แบบ deterministic:
+   `fusion_model_v2.py --calib-run <r1> --bw-run <B1> --calib-l2x 4 --in-sample-l2x 4 --sizes-l2x <ชุดเดียวกับ sweep> --prereg research/preregistration/B4_v2_rtx4060_calibrated.json`
+5. ให้คะแนนด้วย `fusion_model_v2.py --score <r1> <r2> <r3> --prereg …calibrated.json` ใช้ median ของ 3 รอบ
+6. B3 probe (default และ limit 64) เป็น **exploratory ไม่นำมาให้คะแนน**
+
+### ตัวชี้ขาด (falsifiers) ของ H2 บน RTX 4060
+
+| ID | คำทำนาย | H2 ถูก falsify ถ้า |
+|---|---|---|
+| **F1 หน้าผาเลื่อนตาม L2** | warm/cold (median 3 รอบ) **สูงสุดที่ l2x ∈ [0.5, 0.875] และมีค่า > 1.2** (3060: สูงสุด 1.35 ที่ 0.625) | ค่าสูงสุดอยู่ที่ l2x ≤ 0.125 (ขนาดเดียวกับหน้าผาของ 3060 ≈ 1.4–3 MiB) **หรือ**ไม่มีจุดไหนเกิน 1.1 |
+| **F2 control ขนาดเท่ากัน** | ที่ l2x 0.0625 และ 0.125 (≈ 1.5 และ 3 MiB ซึ่งเป็นขนาดที่ 3060 *เกิด*หน้าผา) warm/cold **< 1.0** | warm/cold ≥ 1.1 ที่สองจุดนี้ |
+| **F3 เชิงปริมาณ** | model v2 หลัง calibrate มี MAPE ของ ratio หลักที่ out-of-sample (l2x ≥ 0.625 ยกเว้น 4) **≤ 10 %** อย่างน้อยหนึ่ง policy | **ทั้งสอง policy > 10 %** แปลว่า v2 ใช้กับ Ada ไม่ได้ (H2 เชิงคุณภาพอาจยังรอด แต่ model ล้ม) |
+| **F4 DRAM-bound** | mat/fused iso ที่ l2x 2 อยู่ใน **[1.9, 2.3]** | อยู่นอกช่วงนี้ |
+
+**ไม่ได้ทำนายล่วงหน้าว่า policy ไหนจะชนะบน Ada** เพราะ L2 ของ Ada ใหญ่กว่าและอาจใช้ partition หรือ policy ต่างจาก Ampere ผลที่ได้ (LRU / random / ไม่ใช่ทั้งคู่) จะบันทึกตามจริง
+
+### ตัวเลขคร่าว ๆ (INDICATIVE ไม่ใช่ตัวที่ใช้ให้คะแนน: `research/preregistration/B4_v2_rtx4060_indicative.json`, sha256 `5d876c3a…`)
+
+สมมติ L2 = 24 MiB, BW = 245 GB/s, τ เท่ากับของ 3060 (3.53 / 2.63 µs) kernel บน 4060 ใหญ่กว่า 3060 ราว 10 เท่าที่ l2x เดียวกัน ผลของ τ จึงเจือจางลง และ ratio ใกล้ค่า byte ratio ล้วนมากขึ้น
+
+| l2x | ≈ MiB/array | LRU mat/fused iso | random | **LRU warm/cold** | random | LRU steady | random steady |
+|---:|---:|---:|---:|---:|---:|---:|---:|
+| 0.625 | 15 | 2.64 | 2.09 | **1.64** | 1.09 | 2.00 | 4.07 |
+| 0.75 | 18 | 2.48 | 2.14 | 1.48 | 1.14 | 2.00 | 2.94 |
+| 0.875 | 21 | 2.39 | 2.16 | 1.39 | 1.16 | 2.00 | 2.55 |
+| 1 | 24 | 2.33 | 2.17 | 1.33 | 1.17 | 2.00 | 2.35 |
+| 1.25 | 30 | 2.25 | 2.17 | 1.25 | 1.17 | 2.00 | 2.17 |
+| 1.5 | 36 | 2.20 | 2.15 | 1.20 | 1.15 | 2.00 | 2.09 |
+| 2 | 48 | 2.14 | 2.13 | 1.14 | 1.13 | 2.00 | 2.03 |
+
+- **คำทำนายเชิงทิศทาง (D1):** ถ้า L2 ของ 4060 ทำงานคล้าย LRU ค่าสูงสุดของ warm/cold จะ**สูงกว่า 3060** (≈ 1.6 เทียบกับ 1.35) เพราะ τ เจือจางน้อยลง ถ้าคล้าย random ค่าสูงสุดจะอยู่ราว 1.1–1.2
+- **ช่วงต่ำกว่าหน้าผา (l2x ≤ 0.5): ไม่ทำนายเป็นตัวเลข** model v2 ไม่มี term ของ L2 bandwidth ตัวเลขดิบที่ได้ (warm/cold 0.06–0.36, steady สูงถึง 60) จึงใช้ไม่ได้
+  ทำนายเพียงทิศทาง (D2) ว่า warm/cold < 0.9 ที่ l2x 0.125–0.375
+  จุดเหล่านี้ใช้**วัด L2 bandwidth ของ Ada** แทน ได้แก่ fused steady ที่ l2x ≤ 0.375 ซึ่ง working set อยู่ใน L2 ทั้งหมด
+- **H1 รอง (B1, 256 MiB):** ถ้าค่าตั้งต้นของ Ada ทำงานแบบ 32 B เหมือน 3060 T(16)/T(8) จะได้ ≈ 0.50 ถ้าแบบ 64 B จะได้ ≈ 0.94 **ไม่มี prior ว่าแบบไหน**
+
+---
+
+---
+
+## B5 pre-registration: workload ตระกูลที่สอง (multi-sweep 2D stencil) — เขียน 2026-11-04 ก่อนวัด
+
+> **ผล (เพิ่มภายหลัง ไม่ได้แก้ข้อความด้านล่าง; ดู `reports/BASELINE_REPORT.md` §17):**
+> - **RTX 3060:** G1 ✅ G3 ❌ G4 ✅ G5 ❌ D-B5-1 ✅
+> - **RTX 4060:** G1 ✅ G2 ✅ G3 ✅ (9.7 % เฉียดเกณฑ์) G4 ✅ G5 ✅ (เฉียดเกณฑ์) D-B5-1 ✅
+> - **ข้อสรุป:** กลไก L2 residency และ write-back (warm/cold) **ใช้ข้ามตระกูล workload ได้** บนทั้งสอง GPU (error ≤ 7.5 % และ G4 ผ่าน)
+> - **ส่วนที่ล้มคือ fusion payoff ของ B5 บน 3060** เพราะ kernel 13 จุดไม่ได้ติด DRAM time model (τ คงที่ + BW ของ memcpy) จึงใช้ไม่ได้เมื่อ kernel ที่ fuse แล้วติดคอขวดอื่น
+
+**คำถาม (RQ5):** model ที่อธิบาย fusion payoff ของ pointwise pipeline (B4) ใช้ได้โดย**ไม่ต้องแก้**กับ workload อีกตระกูลหรือไม่
+
+**B5 (`stencil.cu`):**
+- กริด H × 1024 `uint32` แบบ torus, stencil 5 จุดที่ใช้ coefficient ไม่สมมาตร (3, 5, 7, 11, 13), รัน S = 4 sweep
+- **mat4** = 4 kernel แบบ ping-pong X→P→Q→P→Q
+- **fused2** = 2 kernel ของ stencil 13 จุด (คือ self-convolution ของ stencil 5 จุด)
+- ผลตรงกันทุก bit เพราะเป็นเลขจำนวนเต็ม mod 2³² บนกริด periodic ตรวจด้วย host reference และ `test_host.cpp` ยืนยันแล้วบน CPU รวมถึงกริดขนาด 1×4 และ 3×3
+- `sweep_warm` / `sweep_cold` คือ sweep เดียว (P→Q) ที่รันหลัง X→P ที่ไม่ได้จับเวลา เทียบกับรันหลัง flush
+
+**ต่างจาก B4 อย่างไร:**
+- stencil 2D มีการ reuse ระหว่างแถว (ใช้ 3 และ 5 แถว)
+- kernel 13 จุดมีงานคำนวณมากกว่า (38 registers, 13 load ต่อ output)
+- ping-pong **นำ buffer กลับมาใช้ซ้ำ** ทำให้ working set หลัง sweep แรกเหลือ 2B
+- มีมากกว่า 2 stage
+
+**เหมือน B4 อย่างไร:** ที่ระดับ line ขนาด 128 B แต่ละ sweep ยังเป็น streaming ตามสมมติฐาน T5 ใน `cache_sim_b5.py` ดังนั้น **model ไม่ได้ถูกแก้เลย** ใช้ `cache_sim.py` ตัวที่ล็อกไว้ (sha256 `ea8ad8ef…`) และเพิ่มเพียง schedule ของ B5
+
+**ข้อจำกัดของการทดสอบนี้ (ซื่อตรงไว้ก่อน):**
+- B5 กับ B4 มีรูปแบบการเข้าถึงที่ระดับ line คล้ายกัน การ "ข้ามตระกูล" ครั้งนี้จึงเป็น**ระดับกลาง** ไม่ใช่การทดสอบที่ access pattern ต่างกันมาก เช่น gather
+- warm/cold ของ B5 ถูกทำนายให้**เท่ากับ B4 ทุกค่า** (ตรวจไว้ใน `test_b5.py`) ส่วนที่ทดสอบความสามารถใหม่จริงคือ mat4/fused2 ซึ่งมี ping-pong และ kernel คนละแบบ
+
+### Protocol ที่ผูกมัด
+
+script `remote_b5.sh` (sha256 `0b10a97d…`; ตั้ง `CUDA_ARCH=sm_86` สำหรับ RTX 3060 หรือ `sm_89` สำหรับ RTX 4060)
+ไฟล์ที่ล็อกไว้: `stencil.cu` `1b991f15…`, `stencil_host.hpp` `8e8a7d19…`, `common.cuh` `7a5ea8b8…`, `cache_sim_b5.py` `1b3e47d5…`, `b5_model.py` `b8f4cd4f…`
+
+1. รัน test และ build
+2. รัน B1 smoke ที่ 256 MiB เพื่อเอา memcpy BW
+3. รัน B5 sweep 3 รอบ ที่ l2x ∈ {0.0625 … 2, **4**} เหมือนชุดของ RTX 4060 (4 = จุด calibrate)
+4. รัน B4 sweep 1 รอบบน instance เดียวกัน ใช้สำหรับ G4
+5. calibrate: `b5_model.py --calib-run <r1> --bw-run <B1> --prereg research/preregistration/B5_<gpu>_calibrated.json`
+   τ แยกตาม (ชนิด kernel 5pt/13pt, โหมด) และใช้ค่าจาก r1 ที่ l2x 4 เท่านั้น
+6. ให้คะแนน: `b5_model.py --score <r1> <r2> <r3> --prereg …calibrated.json` ใช้ median ของ 3 รอบ
+7. G4: `b5_model.py --score <r1> <r2> <r3> --compare-b4 <B4 run>`
+
+### ตัวชี้ขาด (ใช้กับทั้ง RTX 3060 และ RTX 4060 ยกเว้นที่ระบุ)
+
+| ID | คำทำนาย | ถูก falsify ถ้า |
+|---|---|---|
+| **G1 รูปร่าง** | warm/cold ของ sweep (median) สูงสุดที่ l2x ∈ [0.5, 0.875] และมีค่า > 1.2 | จุดสูงสุดอยู่นอกช่วงนี้ หรือมีค่า ≤ 1.2 |
+| **G2 control ขนาดเท่ากัน (4060 เท่านั้น)** | warm/cold < 1.0 ที่ l2x 0.0625 และ 0.125 (1.5 และ 3 MiB) | ≥ 1.0 ที่จุดใดจุดหนึ่ง |
+| **G3 เชิงปริมาณ** | MAPE ของ ratio หลัก (`mat4/fused2_iso`, `warm/cold`) ที่ l2x ≥ 0.625 ยกเว้น 4 **≤ 10 %** อย่างน้อยหนึ่ง policy | ทั้งสอง policy > 10 % แปลว่า model ไม่ transfer มาที่ B5 บน GPU นั้น |
+| **G4 ข้ามตระกูลแบบไม่ใช้ model** | warm/cold ของ B5 ต่างจาก warm/cold ของ B4 (instance เดียวกัน) ไม่เกิน ±10 % ทุกขนาดที่ l2x ≥ 0.625 | ต่างเกิน 10 % ที่จุดใดจุดหนึ่ง |
+| **G5 bytes เป็นตัวกำหนด** | mat4/fused2 iso ที่ l2x 2 และ 4 อยู่ใน [1.8, 2.3] | อยู่นอกช่วง แปลว่า kernel 13 จุดไม่ได้ติด DRAM (เช่นติด compute หรือ L1) |
+| **D-B5-1 (ทิศทาง จาก B4)** | LRU ได้ MAPE ต่ำกว่า random **บนทั้งสอง GPU** | random ชนะบน GPU ใดตัวหนึ่ง |
+
+### ตัวเลขคร่าว ๆ (INDICATIVE: `B5_rtx3060_indicative.json` `90d42ff2…`, `B5_rtx4060_indicative.json` `7e37200e…`)
+
+สมมติ τ ของ B4 สำหรับทั้งสองชนิด kernel ตอนให้คะแนนจริงจะ calibrate τ แยกตามชนิด kernel
+
+| l2x | 3060 LRU m4/f2 iso | random | **3060 LRU warm/cold** | random | 4060 LRU m4/f2 iso | random | **4060 LRU warm/cold** | random |
+|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| 0.625 | 2.17 | 1.98 | **1.40** | 1.06 | 2.22 | 1.97 | **1.55** | 1.08 |
+| 0.75 | 2.14 | 2.02 | 1.33 | 1.10 | 2.18 | 2.02 | 1.43 | 1.12 |
+| 0.875 | 2.13 | 2.04 | 1.29 | 1.12 | 2.15 | 2.05 | 1.36 | 1.15 |
+| 1 | 2.11 | 2.06 | 1.25 | 1.13 | 2.13 | 2.07 | 1.30 | 1.16 |
+| 1.5 | 2.08 | 2.06 | 1.17 | 1.13 | 2.09 | 2.07 | 1.19 | 1.15 |
+| 2 | 2.06 | 2.05 | 1.13 | 1.11 | 2.06 | 2.06 | 1.14 | 1.12 |
+
+- ใน B5 ค่า mat4/fused2 ของ LRU กับ random ต่างกันน้อยกว่าใน B4 (2.17 เทียบกับ 1.98 ที่ 0.625) เพราะ ping-pong ทำให้ working set ลดลง ตัวที่ใช้แยกสอง policy ได้ชัดจึงยังเป็น **warm/cold**
+- **ช่วงต่ำกว่าหน้าผาไม่ทำนายเป็นตัวเลข** ด้วยเหตุผลเดียวกับ B4 คือไม่มี term ของ L2 bandwidth ต่างจาก B4 ตรงที่ mat4 มี 4 launch เทียบกับ 2 ของ fused2 ช่วงนี้ ratio จึงน่าจะ ≈ 2 จาก launch และ L2-tier แม้ DRAM bytes จะเท่ากัน
+
+---
+
+---
+
+## Model v3 + B5b pre-registration — เขียน 2026-11-04 ก่อนวัดขนาดใหม่
+
+> **ผล (เพิ่มภายหลัง ไม่ได้แก้ข้อความด้านล่าง; ดู `reports/BASELINE_REPORT.md` §19):**
+> - V3-1 ✅ (4/4 ชุด), V3-2 ✅ (LRU ชนะ 3/4), V3-3 ✅
+> - P-B5b-1 ✅ (3060: 1.26 → 1.61×), P-B5b-2 ✅ ตามนิยาม BW ที่ fit ได้ (ถ้าวัดตรงจะต่าง 8–13 %), P-B5b-3 ✅
+> - error สูงสุดอยู่ที่ขอบหน้าผา (0.5625) ซึ่ง L2 จริงเก็บข้อมูลได้มากกว่า LRU แท้
+> - มีการแก้ crash หลังวัด 2 จุด ซึ่งไม่เปลี่ยนคำทำนายตัวใด (D-024)
+
+**ที่มา:** B5 บน 3060 แสดงว่า time model ของ v2 (τ คงที่ต่อ kernel และใช้ BW ของ memcpy กับทุก kernel) ใช้ไม่ได้เมื่อ kernel ที่ fuse แล้วไม่ได้ติด DRAM (§17)
+v3 และ B5b ออกแบบ**หลัง**เห็นผลนั้น ข้อมูลเดิมทั้งหมดจึงเป็น in-sample **การทดสอบจริงคือขนาดใหม่ที่ยังไม่เคยวัด**
+
+### Model v3 (`model_v3.py`, sha256 `33c38569…`)
+
+- ใช้ DRAM bytes จาก simulator เดิม**ที่ไม่ได้แก้** (`cache_sim.py` `ea8ad8ef…`, `cache_sim_b5.py` `1b3e47d5…`)
+- time model: **t = k·τ[kt, mode] + bytes / BW[kt, mode]** โดย kt คือชนิด kernel (`pw_fused`, `pw_stage`, `5pt`, `13pt`, `13pt_c`)
+- **calibrate:** least squares ที่ l2x = 2 และ 4 (ทั้งสองขนาดติด DRAM และ LRU กับ random ต่างกัน ≤ 1 %) โดยบังคับ **τ ≥ 0** ถ้า fit ได้ค่าติดลบให้ตั้ง τ = 0 แล้ว fit BW ใหม่
+  เงื่อนไขนี้เพิ่ม**ก่อน**ล็อก เพราะการ fit B4 บน 4060 ได้ τ ติดลบ
+- **post-hoc check (ไม่ใช่หลักฐาน):** ใช้ B5 เดิมบน 3060 calibrate จาก r1 ที่ l2x 2, 4 แล้วดูขนาดอื่น ได้ MAPE ของ LRU = 4.8 % (v2: 35.7 %) แต่ random ก็ได้ 4.8 % เท่ากัน **ข้อเสียคือ v3 ที่ fit แบบนี้แยก LRU กับ random ได้น้อยลง**
+
+### B5b ablation: เปลี่ยนตัวแปรเดียว (`stencil.cu` sha256 `fb1bfb15…`)
+
+- `fused2c` = `fused2` แต่ wrap ขอบแบบ conditional (`x<0 ? x+m : x>=m ? x-m : x`) แทน `%` ผลยังต้องตรงกันทุก bit
+- **หลักฐาน static (SASS, ได้ค่าเดียวกันทั้ง sm_86 และ sm_89):** instruction ต่อ element ได้แก่ 5 จุด = 72, 13 จุดแบบ `%` = **216** (มีลำดับคำสั่งหาร I2F/RCP/F2I 9 คำสั่ง), 13 จุดแบบ conditional = **152** ทุกแบบมี LDG 13 ครั้ง
+- **กลไกที่ทำนาย:** ถ้า kernel 13 จุดช้าเพราะติดที่ instruction issue เวลาจะลดลงตามจำนวน instruction (× 152/216) แต่ต้องไม่ต่ำกว่าเวลาที่ติด DRAM (BW ของ kernel 5 จุด)
+  ข้อนี้ถูกเข้ารหัสไว้ในตัวเลข indicative เป็น `β_13c = max(β_5pt, β_13pt × 0.7037)`
+
+| ID | คำทำนาย | ถูก falsify ถ้า |
+|---|---|---|
+| **P-B5b-1 (3060)** | BW ของ fused2c ที่ fit ได้ (r1, l2x 2 และ 4) อยู่ใน **[250, 320] GB/s** (indicative 288; fused2 เดิมได้ 203) และ mat4/fused2c iso ที่ l2x ≥ 1.75 อยู่ใน **[1.55, 1.95]** (indicative 1.71–1.74) | BW ≤ 1.1 × ของ fused2 **หรือ** mat4/fused2c ≤ 1.45 ซึ่งแปลว่า modulo **ไม่ใช่**ต้นเหตุ |
+| **P-B5b-2 (4060)** | fused2c ติด DRAM: BW ต่างจาก 5 จุดไม่เกิน 5 % และ mat4/fused2c iso ที่ l2x ≥ 1.75 อยู่ใน **[1.85, 2.05]** (indicative 1.94–1.97) | อยู่นอกช่วงนี้ |
+| **P-B5b-3** | fused2c ตรงกับ fused2 และ host reference ทุก bit | correctness gate ไม่ผ่าน |
+
+### การทดสอบ v3 บนขนาดใหม่ (protocol `remote_v3.sh` sha256 `435b7de0…`)
+
+1. ใช้ instance เดียวกันต่อ GPU: รัน B5 (mat4, fused2, fused2c, warm/cold) 3 รอบ และ B4 (K = 1) 3 รอบ
+2. ขนาด l2x ∈ {0.125, **0.5625, 0.6875, 0.8125, 0.9375, 1.125, 1.375, 1.75, 2.5, 3**} ซึ่งเป็น**ขนาดใหม่ทั้งหมด** บวกกับ 2 และ 4 สำหรับ calibrate
+3. ทำนาย: `model_v3.py predict --bench <stencil|fusion> --calib-run <r1 ของรอบใหม่> --sizes-l2x <ชุดเดียวกัน> --prereg research/preregistration/v3_<bench>_<gpu>_calibrated.json` โดย**ไม่ใช้** `--assume` ในขั้นนี้ เพราะ fused2c มีข้อมูลจริงแล้ว
+4. ให้คะแนน: `model_v3.py score --bench … --runs <r1> <r2> <r3> --prereg …calibrated.json`
+   ratio หลักคือ B5: `mat4/fused2_iso`, `mat4/fused2c_iso`, `sweep_warm/sweep_cold_iso` และ B4: `materialized/fused_iso`, `stage2_warm/stage2_cold_iso` ที่ l2x ≥ 0.5625 ยกเว้น 2 และ 4 ใช้ median ของ 3 รอบ
+
+| ID | คำทำนาย | ถูก falsify ถ้า |
+|---|---|---|
+| **V3-1** | ในแต่ละชุด (2 GPU × 2 benchmark = 4 ชุด) มี policy อย่างน้อยหนึ่งตัวที่ MAPE ≤ 10 % | ชุดใดชุดหนึ่งทั้งสอง policy เกิน 10 % ให้ถือว่า v3 ล้มในชุดนั้น |
+| **V3-2 (ทิศทาง)** | LRU ได้ MAPE ต่ำกว่า random อย่างน้อย 3 ใน 4 ชุด | random ชนะ ≥ 2 ชุด |
+| **V3-3 (รูปร่าง ไม่ใช้ model)** | warm/cold ของทั้ง B4 และ B5 สูงสุดในช่วง l2x ∈ [0.5625, 0.8125] บนทั้งสอง GPU | สูงสุดที่ l2x ≥ 0.9375 |
+
+**ตัวเลขคร่าว ๆ (INDICATIVE, calibrate จากข้อมูลเดิม; ไฟล์ `v3_{stencil,fusion}_{rtx3060,rtx4060}_indicative.json`; sha256 `5088f084…`, `fcc17220…`, `b7dbad4d…`, `0f7b38b1…`):**
+
+| l2x | 3060 B5 m4/f2c (LRU/rnd) | 3060 B5 w/c | 3060 B4 mat/fused | 4060 B5 m4/f2c | 4060 B5 w/c | 4060 B4 mat/fused |
+|---:|---|---|---|---|---|---|
+| 0.5625 | 1.57 / 1.31 | 1.51 / 1.03 | 2.34 / 1.93 | 1.83 / 1.44 | 1.76 / 1.04 | 2.81 / 2.05 |
+| 0.6875 | 1.60 / 1.44 | 1.41 / 1.09 | 2.28 / 2.00 | 1.86 / 1.63 | 1.55 / 1.11 | 2.58 / 2.13 |
+| 0.9375 | 1.65 / 1.57 | 1.29 / 1.14 | 2.20 / 2.06 | 1.90 / 1.81 | 1.35 / 1.16 | 2.38 / 2.18 |
+| 1.375 | 1.69 / 1.67 | 1.19 / 1.14 | 2.13 / 2.08 | 1.93 / 1.91 | 1.22 / 1.16 | 2.23 / 2.17 |
+| 3 | 1.74 / 1.74 | 1.09 / 1.09 | 2.05 / 2.05 | 1.97 / 1.97 | 1.09 / 1.09 | 2.10 / 2.10 |
+
+**ความเสี่ยงที่รู้อยู่แล้ว:**
+- ขนาด 0.5625 อยู่ติดหน้าผาที่สุด ความแปรปรวนระหว่างรอบสูง (§14, §17)
+- ที่ 0.5625 บน 4060, LRU ทำนาย B4 mat/fused = 2.81 ซึ่งสูงกว่าที่เคยวัดได้ทุกจุด ถ้าผิดจะเห็นชัดในจุดนี้
+
+---
+
+## RTX 3060 Laptop pre-registration: ขนาด L2 เปลี่ยน แต่ architecture เดิม (L-1..L-3) — เขียน 2026-11-04 12:34 UTC ก่อนรัน B4/B5 บน GPU นี้
+
+> **ผล (เพิ่มภายหลัง ไม่ได้แก้คำทำนายด้านล่าง; ดู `reports/BASELINE_REPORT.md` §20):**
+> - **L-1 ✅** B5 LRU 6.2 % / random 7.0 %, B4 LRU 4.1 % / random 6.0 %
+> - **L-2:** B5 ✅ แต่ **B4 ❌ ตามกฎ** คือสูงสุดที่ 0.9375 (1.300) ส่วนที่ 0.6875 ได้ 1.294 ต่างกันไม่ถึง 1 tick ของ timer บน WSL2 ที่ละเอียด 1.024 µs กฎนี้ไม่ได้กำหนด tie tolerance ไว้ จึงต้องนับว่าล้ม
+> - **L-3 ✅** ที่ 1.41 MiB ได้ B4 0.875 และ B5 0.923 ขณะที่ 3060 desktop ที่ขนาด byte เดียวกันได้ 1.13–1.38
+> - D-L1 ✅, D-L2 ✅
+
+**คำถาม:** หน้าผาของ fusion payoff ผูกกับ**ขนาด L2** จริงหรือไม่ เมื่อ**ไม่เปลี่ยน architecture**
+การทดสอบข้าม GPU รอบก่อน (3060 desktop → 4060) เปลี่ยนสองอย่างพร้อมกัน คือ architecture (Ampere GA106 → Ada AD107) และ L2 (2.25 → 24 MiB) จึงแยกสองปัจจัยนี้ออกจากกันไม่ได้
+GPU ในเครื่องนี้เป็น GA106 (cc 8.6) ตัวเดียวกับ 3060 desktop แต่ L2 = **3 MiB** (`cudaDevAttrL2CacheSize` = 3,145,728) ต่างกันเพียง **1.33 เท่า** การทดสอบนี้จึงละเอียดกว่าครั้งก่อนที่ต่างกัน 10.7 เท่ามาก
+
+| | 3060 desktop (เช่า, machine 19544) | 3060 Laptop (เครื่องนี้) |
+|---|---|---|
+| L2 (attribute) | 2,359,296 B (2.25 MiB) | 3,145,728 B (3 MiB) |
+| SMs | 28 | 30 |
+| memcpy D2D (วัดจริง) | 333 GB/s | 270.9 GB/s (B1 smoke วันนี้, run `20261104-192459-smoke-laptop-b1-smoke`) |
+| bus / mem clock (attribute) | 192-bit / 7501 MHz | 192-bit / 6001 MHz |
+
+**สิ่งที่เห็นแล้วก่อนเขียนข้อนี้ (เปิดเผยตามจริง):** บน GPU นี้มีแค่ B1 smoke คือ T(16)/T(8) = 0.502, memcpy 270.9 GB/s และ empty-kernel floor 5.12 µs **ยังไม่ได้รัน B4/B5 เลย**
+เกณฑ์ด้านล่างอ้างอิงค่าที่วัดไว้แล้วบน 3060 desktop ได้แก่ B4 warm/cold ≈ 0.76–0.89 ที่ l2x 0.375–0.5, 0.91–0.96 ที่ 0.5625, 1.13–1.38 ที่ 0.625 และ 1.37–1.42 ที่ 0.6875
+
+**Protocol ที่ผูกมัด:** `benchmarks/scripts/local_v3_laptop.sh` (sha256 `eec610d5…`) เหมือน `remote_v3.sh` ทุกขั้น ต่างกันแค่ (1) เพิ่มขนาด **l2x 0.46875** (2) ไม่มีขั้น apt (3) บันทึก `nvidia-smi` ทุก 1 วินาทีตลอดการรัน
+ไฟล์ที่ล็อก: `model_v3.py` `995f128d…`, `cache_sim.py` `ea8ad8ef…`, `cache_sim_b5.py` `1b3e47d5…`, `fusion.cu` `f4af4694…`, `stencil.cu` `fb1bfb15…`, `common.cuh` `7a5ea8b8…`, `stencil_host.hpp` `8e8a7d19…`
+คำทำนายเชิงตัวเลขสร้างแบบ deterministic จาก r1 ที่ l2x 2 และ 4 ด้วย `model_v3.py predict` (`v3_{fusion,stencil}_rtx3060laptop_calibrated.json`) แล้วให้คะแนนด้วย `model_v3.py score` ใช้ median 3 รอบ เป็นวิธีเดียวกับ §19 ทุกอย่าง
+
+| ID | คำทำนาย | ถูก falsify ถ้า |
+|---|---|---|
+| **L-1 (= V3-1)** | B4 และ B5 แต่ละชุดมี policy อย่างน้อยหนึ่งตัวที่ PRIMARY MAPE ≤ 10 % (l2x ≥ 0.5625 ยกเว้น 2 และ 4) | ชุดใดชุดหนึ่งเกิน 10 % ทั้งสอง policy |
+| **L-2 (= V3-3, รูปร่าง)** | warm/cold (B4 `stage2`, B5 `sweep`) สูงสุดที่ l2x ∈ [0.5625, 0.8125] และมีค่า > 1.2 | จุดสูงสุดอยู่ที่ l2x ≥ 0.9375 หรือ ≤ 0.46875 หรือสูงสุดไม่เกิน 1.2 |
+| **L-3 (control ขนาด byte เท่ากัน, architecture เดิม)** | ที่ **l2x 0.46875 = 1.40625 MiB ต่อ array** (เป็นขนาด byte ที่ 3060 desktop อยู่บนหน้าผา คือ l2x 0.625 ได้ warm/cold 1.13–1.38) warm/cold ของทั้ง B4 และ B5 **< 1.0** | ≥ 1.1 ใน benchmark ใดก็ได้ ถ้าอยู่ในช่วง [1.0, 1.1) ให้รายงานว่า ambiguous |
+| D-L1 (ทิศทาง) | LRU มี MAPE ต่ำกว่า random ทั้ง B4 และ B5 | random ชนะชุดใดชุดหนึ่ง |
+| D-L2 (ทิศทาง, สมดุล compute/BW) | kernel 13 จุดแบบใช้ `%` ไม่ติด DRAM บน laptop เช่นกัน ดูจาก mat4/fused2 iso ที่ l2x ≥ 1.75 < 1.8 และ mat4/fused2c > mat4/fused2 | mat4/fused2 ≥ 1.8 หรือ fused2c ไม่เร็วกว่า fused2 |
+
+**ข้อควรระวังที่รู้อยู่แล้ว:**
+- clock ของ laptop ไม่คงที่ ระหว่าง B1 เห็น SM 1282–1552 MHz (max 2100) และควบคุมไม่ได้เพราะไม่มีสิทธิ์ admin บน Windows host จึงต้องดู `gpu_monitor.csv` ประกอบ
+- ratio ที่ l2x เดียวกันต่างจาก desktop ได้ด้วยเหตุผลที่ไม่เกี่ยวกับ L2 เช่น τ ถูกเจือจางต่างกัน (array ใหญ่ขึ้น 1.33 เท่า BW ต่ำลง) ดังนั้น L-3 ทดสอบ**ทิศทาง** (ต่ำกว่า 1 หรือมากกว่า 1) ไม่ใช่การเทียบค่าตรง ๆ
+
+---
+
+## Counter pre-registration (S-0, C-1..C-4) — เขียน 2026-11-04 ขณะที่ counter ยังถูกบล็อกบนเครื่องนี้
+
+**คำถาม (PAPER_GAP_ANALYSIS §4 และความเสี่ยงข้อ 1):** DRAM bytes ที่ simulator ให้ ซึ่ง v2/v3 ใช้ทำนายเวลาได้คลาด 2–5 % ตรงกับ bytes ที่ GPU ย้ายจริงหรือไม่ หรือ timing ตรงเพราะ fit พารามิเตอร์ได้พอดีโดยบังเอิญ
+**สถานะตอนเขียน:** `ncu` 2024.2.1 รันได้ แต่ได้ `ERR_NVGPUCTRPERM` เพราะ key `RmProfilingAdminOnly` ของ adapter NVIDIA ฝั่ง Windows ยังเป็น 1 (key `NVTweak` เป็น 0 แล้ว) **จึงยังไม่มี counter ใดถูกอ่าน** ตรวจได้จาก run `benchmarks/results/counters_20261104-123344/STATUS`
+
+**Model:** `counter_prereg.py` (sha256 `64e1ad2d…`) ใช้ `cache_sim.Cache` ตัวที่ล็อกไว้ (`ea8ad8ef…`) โดย**ไม่แก้** จำลองทุก launch ของช่วงจับเวลาตามลำดับจริงที่ binary ส่ง (`--reps 1 --warmup 0 --steady-iters 3`) ผ่าน cache ตัวเดียว รวมถึง flush kernel ด้วย แล้วทำนาย read = read miss × 128 B และ write = dirty eviction × 128 B **ต่อ launch**
+- **ต่างจาก v2/v3 (ประกาศไว้ก่อนวัด):**
+  - หลัง flush, cache เต็มไปด้วย flush lines ที่ clean ไม่ได้ว่าง ถ้าเป็น LRU ผลจะเท่ากับ S5 ทุก window (มี unit test `test_counter_prereg.py` ยืนยัน) แต่ถ้าเป็น random line ใหม่ต้องแย่งที่กับ flush lines ทำให้ random เก็บข้อมูลได้น้อยกว่า "random" ของ v2/v3
+  - write ของ flush ตัวแรกในแต่ละขนาดไม่นำมาให้คะแนน เพราะมาจากช่วงตรวจความถูกต้องที่ไม่ได้จำลอง
+- **ไฟล์คำทำนาย:** `research/preregistration/counters_rtx3060laptop.json` (sha256 `e3196540…`) ที่ L2 = 3,145,728 B และ l2x ∈ {0.25, 0.46875, 0.5625, 0.75, 1, 2, 4}
+- **Protocol:** `benchmarks/scripts/local_counters.sh` (sha256 `af024ea0…`) ใช้ `ncu --replay-mode application --cache-control none --clock-control none` กับ metric `dram__bytes_read.sum` และ `dram__bytes_write.sum` (ใช้ให้คะแนน) และ `lts__t_sectors_srcunit_tex_op_{read,write,read_lookup_miss}.sum` กับ `gpu__time_duration.sum` (บันทึกไว้ ไม่ใช้ให้คะแนน)
+- **หน่วยของ error:** e = |วัดได้ − ทำนาย| / B โดย B = bytes ของ array หนึ่งตัว (4n) ใช้หน่วยนี้แทน % เพราะหลาย cell มีค่าทำนายเป็น 0 เช่น write ของ window ที่อยู่ใน L2 ทั้งหมด
+
+| ID | คำทำนาย | ถูก falsify ถ้า |
+|---|---|---|
+| **S-0 (เงื่อนไขก่อนให้คะแนน)** | DRAM read ของ flush kernel ทุกตัวต่างจาก 16 MiB (ขนาด flush buffer) ไม่เกิน 5 % | ไม่ผ่าน ให้**หยุด**และไม่ตัดสิน C-* เพราะ counter ไม่ได้วัดสิ่งที่เราคิด |
+| **C-1 (การนับ bytes, B4, ช่วงติด DRAM l2x 2 และ 4)** | อย่างน้อยหนึ่ง policy มี cell ที่ e ≤ 0.10 B ไม่ต่ำกว่า 90 % (cell = read ของทุก launch และ write ของทุก launch ยกเว้น flush ตัวแรก) | ทั้งสอง policy ต่ำกว่า 90 % แปลว่าความแม่นของ timing ใน C2 **อธิบายด้วยการนับ bytes ที่ถูกต้องไม่ได้** |
+| **C-2 (deferred write-back, B4 ที่ l2x 0.25)** | DRAM write ของ window `fused` isolated < 0.5 B **และ** flush ที่ตามหลัง `stage2_cold` เขียน > 0.5 B (LRU ทำนาย 0.00 B และ 1.00 B) | ไม่เป็นตามนี้ แปลว่ากลไก "write-back ไปตกที่ kernel ถัดไป" ผิดที่ระดับ counter |
+| C-3 (ทิศทาง, l2x 0.25–1) | LRU มี mean e ต่ำกว่า random ทั้ง B4 และ B5 cell ที่ชี้ขาดคือ read ของ `stage2_warm`/`sweep_warm` ที่ l2x 0.5625–1 ซึ่ง LRU ทำนาย 1.00 B ส่วน random ทำนาย 0.65–0.86 B | random ชนะ |
+| **C-4 (= C-1 สำหรับ B5)** | เหมือน C-1 แต่ใช้กับ stencil | เหมือน C-1 |
+
+**ข้อจำกัด / ภัยคุกคามต่อความถูกต้อง (ประกาศไว้ก่อน):**
+- ncu รัน kernel ทีละตัวโดยมีช่วงว่างระหว่าง launch ถ้า L2 เขียน dirty line กลับตอน GPU ว่าง ผลจะต่างจากการรันจับเวลาจริง ข้อนี้คือสิ่งที่ C-2 ทดสอบด้วย
+- application replay สร้าง process ใหม่ทุก pass ทำให้ physical address และ set mapping ของ L2 อาจเปลี่ยนระหว่าง pass
+- การทดสอบนี้ใช้ GA106 (Ampere) เท่านั้น ผลจึง**ไม่ครอบคลุม Ada** (4060)
+- counter บน WSL2 อาจมีพฤติกรรมต่างจาก Linux native ข้อนี้ยังไม่ได้ตรวจ
+
+---
+
+## B6 write-back probe pre-registration (W-0..W-5) — เขียน 2026-11-05 ก่อนวัด cell ใดใน grid
+
+**คำถาม:** counter รอบ D-032 พบ DRAM write ใน window ของ B4 ที่ working set ทั้งหมดอยู่ใน L2 ได้ ซึ่ง model (cache_sim S3: write-back เฉพาะตอน evict) ทำนายว่าเป็น 0 ตัวอย่าง (หน่วย B = array หนึ่งตัว):
+- fused ที่ l2x 0.46875 อ่าน DRAM เกือบ 0 (x ยังอยู่ใน L2) แต่เขียน 0.23–0.69 B ต่อ launch
+- materialized steady ที่ l2x 0.25 เขียนรวม ≈ 0.7 B ต่อรอบ
+- fused ที่ l2x 0.25 เขียน 0.000
+
+ใน B4 footprint ส่วน clean (x) กับส่วน dirty (t, y) ขยับไปพร้อมกันเสมอ ข้อมูลชุดนี้จึงแยกไม่ได้ว่าตัวไหนเป็นตัวกำหนด
+
+**Prior art (D-033):** Finn (Doubleword blog, 2026, RTX 4090) เสนอ model ว่า "เมื่อ store เข้า set ที่มี dirty ≥ 8 จาก 16 way ให้ clean dirty line ที่ถูก store นานที่สุด โดยเขียนกลับ DRAM แต่ยังเก็บไว้ใน cache" แต่ post ได้มาจากการ fit survival curve **ไม่ได้แยกทดลอง threshold และไม่ได้วัดด้วย DRAM counter** ฝั่ง CPU มี eager writeback (Lee/Tyson/Farrens MICRO 2000) ที่เขียน dirty line ใกล้ตำแหน่ง LRU กลับไปเมื่อ bus ว่าง
+
+**Benchmark:** `benchmarks/src/wb_probe.cu` (B6, sha256 `05102e53…`, binary `e0c82a53…`)
+- แต่ละ launch ของ `rw_kernel` อ่าน C (r·L2 B, `ld.global.cg`) และเขียน D (w·L2 B, ค่าใหม่ทุก launch) ใน pass เดียวกัน
+- ลำดับต่อ cell: flush 16 MiB → warm → steady × 5 → readback (อ่าน D ทั้งหมด)
+- grid: r, w ∈ {0, 1/8, …, 7/8} โดย 0 < r+w ≤ 7/8 (35 cell, write-back LRU เก็บได้ทั้งหมด) และ anchor 2:0, 0:2
+- **Protocol:** `benchmarks/scripts/wb_probe.sh` (`da84291f…`)
+  - 3 รอบ `ncu --replay-mode application` (counter ต่อ launch)
+  - 3 รอบ `--replay-mode app-range` (steady 2..5 รันติดกัน ไม่มีช่วงว่างที่ ncu แทรกระหว่าง kernel)
+- **Scorer:** `wb_probe_score.py` (`b165fd69…`, loader จาก `counter_prereg.py` `e7d21047…`) มี unit test ด้วยข้อมูลสังเคราะห์ (`test_wb_probe_score.py`)
+
+**ปริมาณที่ใช้ (median ของ 3 รอบ × steady launch 2..5):**
+
+| ชื่อ | ความหมาย |
+|---|---|
+| WB | DRAM write / B_w |
+| RD | DRAM read / B_r |
+| RB | read ของ readback / B_w |
+| WARM | read ของ warm / B_r |
+| WBR | เหมือน WB แต่มาจาก range |
+
+active = WB ≥ 0.10, inactive = WB < 0.05
+
+**สมมติฐานที่แข่งกัน:**
+
+| ID | กลไก | ทำนาย |
+|---|---|---|
+| H-LRU | write-back ตอน evict เท่านั้น (model v2/v3) | ทุก cell ใน grid มี WB, RD < 0.05 |
+| H-D | จำกัด dirty ต่อ set (แบบ Finn) | WB ขึ้นกับ **w อย่างเดียว** การเพิ่ม r ไม่เปลี่ยน WB |
+| H-E | eager write-back ตาม occupancy | WB ขึ้นกับ **r+w** ถ้า w คงที่ การเพิ่ม r ทำให้ WB เพิ่ม |
+| H-b | evict จริง (เช่น set conflict) | readback ต้อง miss: RB/WB ≥ 0.5 |
+| H-G | write-back ตอน GPU ว่าง (ช่วงว่างจาก ncu) | WBR/WB ≤ 0.5 |
+
+**กฎตัดสิน (ล็อกไว้ใน scorer):**
+
+| ID | เกณฑ์ | ผล |
+|---|---|---|
+| **W-0 (ต้องผ่านก่อน)** | anchor 2:0 มี RD ∈ [0.9, 1.1], anchor 0:2 มี WB ∈ [0.9, 1.1] และ WARM ∈ [0.9, 1.1] ทุก cell ที่ r > 0 | ถ้าไม่ผ่าน ให้**หยุด** ไม่ตีความ W-1..W-5 |
+| **W-1** | มี cell ใน grid อย่างน้อยหนึ่ง cell ที่ WB ≥ 0.10 หรือ RD ≥ 0.10 | H-LRU ถูก reject |
+| **W-2 (ตัวชี้ขาดหลัก)** | Δ = WB(r, 1/8) − WB(0, 1/8) ที่ r = 0.625 และ 0.75 | ทั้งคู่ ≥ +0.10 → H-E ชนะ H-D · ทั้งคู่ \|Δ\| < 0.05 → H-D ชนะ H-E · นอกนั้น inconclusive |
+| W-3 (รอง) | spread ของ WB ในแถว w = 1/8, 1/4, 3/8, 1/2 | ทุกแถว ≤ 0.15 → flat (H-D) · rise ≥ 0.20 อย่างน้อย 2 แถว → H-E |
+| **W-4** | median RB/WB ของ cell ที่ active | < 0.25 → clean แต่ยังอยู่ใน cache (H-D/H-E) · ≥ 0.5 → evict (H-b) |
+| **W-5** | median WBR/WB ของ cell ที่ active | ≥ 0.75 → ไม่ได้เกิดจากช่วงว่าง · ≤ 0.5 → เกิดจากช่วงว่าง (H-G) |
+
+ใช้ W-2 แทนการดู WB(0.625, 1/8) เพียงค่าเดียว เพราะ cap ของ H-D บน GA106 ยังไม่รู้ค่า ถ้า cap ต่ำ WB ที่ w = 1/8 อาจไม่เป็น 0 ได้แม้ไม่มีผลจาก r การเทียบกับ r = 0 ในแถวเดียวกันจึงทนต่อค่า cap ที่ไม่รู้
+
+**ส่วน exploratory (ไม่ให้คะแนน):**
+- คอลัมน์ w = 0: RD บอก capacity สำหรับข้อมูลที่ clean
+- คอลัมน์ r = 0: รูปร่างของ WB(w) เทียบกับ H-D แบบ mapping สม่ำเสมอ ซึ่งควรเป็นขั้นบันไดที่ w = 0.5
+- counter `lts__*` และ gpu time
+
+**ข้อจำกัด (ประกาศไว้ก่อน):**
+- GPU ตัวเดียว (GA106 laptop บน WSL2) และไม่ได้ล็อก clock
+- application replay สร้าง process ใหม่ทุก pass ทำให้ physical address และ set mapping อาจเปลี่ยน
+- range mode ต้องใช้ 2 pass ต่อ range (rerun ทั้ง application)
+- cell เป็น streaming ตามลำดับ index เท่านั้น ยังไม่ทดสอบลำดับอื่น
+- โหมด smoke (cell 0.0625:0.0625, 1.5:0, 0:1.5) รันก่อนเขียนเอกสารนี้ เพื่อตรวจ format ของไฟล์ export ทั้งสาม cell ไม่อยู่ใน grid ที่ให้คะแนน
+
+---
+
+> **ผล (MEASURED 2026-11-05 04:24–04:26 UTC, `benchmarks/results/wb_probe_20261105-042441/`, D-034):**
+>
+> | กฎ | ผล |
+> |---|---|
+> | W-0 | ✅ PASS (anchor RD 1.000, WB 0.992, WARM 1.000–1.001; correctness 0 failure ทั้ง 6 รอบ) |
+> | W-1 | ✅ **H-LRU ถูก reject** มี 11/35 cell ใน grid ที่ active และไม่มี cell ไหนมี RD ≥ 0.10 |
+> | W-2 (ตัวหลัก) | ⚠️ **inconclusive** Δ = +0.001 ที่ r = 0.625 และ **+0.108** ที่ r = 0.75 ตัวหลังเกิน 0.10 ไป 0.008 |
+> | W-3 | flat rows (เอียงไปทาง H-D) spread 0.045–0.108 |
+> | W-4 | ✅ **clean แต่ยังอยู่ใน cache** RB = 0.000 ทุก cell ที่ active |
+> | W-5 | ✅ **ไม่ได้เกิดจากช่วงว่าง** WBR/WB = 1.017 |
+>
+> **Exploratory (ไม่ได้ pre-register ไว้):**
+> - **ผลหลักเป็นขั้นบันไดตาม w:** w ≤ 0.375 ได้ WB ≤ 0.004 · w = 0.5 ได้ 0.19–0.28 · w ≥ 0.625 ได้ 0.97–0.99 ทุกค่า r รูปร่างนี้ตรงกับ rule "dirty ≥ ครึ่งหนึ่งของ way ต่อ set" ถ้า set mapping กระจายเกือบสม่ำเสมอ เพราะพอ dirty ต่อ set เกิน cap ทุก store จะสั่ง clean หนึ่ง line ทำให้ WB → 1 แต่ยังไม่ได้วัด associativity ของ GA106
+> - **r มีผลรองตรงขอบ w = 0.5:** ใน range mode WBR เพิ่มจาก 0.19 เป็น 0.27 เมื่อ r เพิ่มจาก 0 เป็น 0.375
+> - **ผลรองที่ r+w = 0.875 เกิดเฉพาะตอนมีช่วงว่าง:** cell (0.75, 1/8), (0.625, 1/4), (0.5, 3/8) มี WB ต่อ launch กระโดดอยู่ระหว่าง 0–0.57 แต่ WBR = 0.00–0.05 cell (0.75, 1/8) ที่ทำให้ W-2 กลายเป็น inconclusive เป็นของผลรองนี้
+>   - ถ้าคิด W-2 จาก WBR จะได้ Δ = 0.000 และ +0.041 ซึ่งเข้าเกณฑ์ H-D **แต่นี่เป็นการวิเคราะห์หลังเห็นผล จึงยืนยันอะไรไม่ได้**
+> - **ไม่เห็นผลต่อเวลา:** steady kernel ใช้ ≈ 8 µs/MiB ทุก cell ที่ r = 0 ไม่มีขั้นบันไดตรง w = 0.625 ที่ขนาดนี้ (≤ 2.6 MiB ต่อ launch, 10–20 µs) จึงยังไม่ติด bandwidth ของ DRAM write
+>
+> **ความหมายต่อ H2 / model:**
+> - assumption S3 ของ `cache_sim.py` ผิดในระดับ counter เมื่อ dirty footprint ≥ ≈ 0.5 L2 ข้อมูลที่ถูกเขียนยังอยู่ใน L2 (read ยังได้ประโยชน์) แต่ bytes ที่เขียนไปถึง DRAM ภายใน kernel ที่ผลิตมันเอง
+> - C-2 ("write-back ไปตกที่ kernel ถัดไป") จึงใช้ได้เฉพาะเมื่อ dirty < ≈ 0.5 L2
+> - ผลเรื่อง timing ของ model v3 ยังไม่ขัดกับเรื่องนี้ เพราะที่ขนาดนี้ไม่เห็นผลต่อเวลา
+
+## B6b pre-registration (V-0..V-5) — เขียน 2026-11-05 ก่อนวัด cell ใดของ B6b
+
+**คำถาม:** B6 (D-034) ยืนยันแล้วว่า L2 เขียน dirty line กลับโดยยังเก็บไว้ใน cache และผลนี้ไม่ได้เกิดจาก profiler แต่ตัวชี้ขาดหลัก W-2 (ขึ้นกับ w อย่างเดียว หรือขึ้นกับ r+w) ออกมา inconclusive รอบนี้มี 3 เป้าหมาย:
+1. ยืนยัน W-2 ด้วย **cell ใหม่** และใช้ **WBR** (launch ติดกันแบบที่ pipeline จริงรัน) เป็นตัวหลัก เหตุผลคือ B6 พบว่าการรันทีละ kernel ทำให้เกิด write-back เพิ่มที่ r+w = 0.875
+2. วัดว่าขั้นบันไดที่ w ≈ 0.5 คมแค่ไหน
+3. cap นับเป็น **line** หรือเป็น **bytes**
+
+**สิ่งที่เปลี่ยนจาก B6 (ทีละตัวแปร):**
+- เพิ่ม `rw1s_kernel` / `readback1s_kernel` (flag `--one-sector`) ที่เขียนแค่ sector แรก (32 B) ของทุก line ขนาด 128 B จำนวน line ที่ครอบครองเท่าเดิม แต่ dirty bytes เหลือ ¼
+- `rw_kernel`, `readback_kernel` และ flush ไม่ได้เปลี่ยน SASS ตรงกับ binary ของ B6 (`e0c82a53…`, เก็บไว้ที่ `benchmarks/results/wb_probe_20261105-042441/wb_probe.binary`) ทุก instruction
+- scorer ของ B6 รองรับ one-sector ด้วย default เดิม ให้คะแนน B6 ซ้ำได้ `score.txt` และ `score.json` ตรงกันทุก byte
+
+**ไฟล์ (sha256):**
+- `wb_probe.cu` `7dbbd451…`, binary `0921da36…`
+- protocol `wb_probe_b6b.sh` `0dc645e8…`
+- scorer `wb_probe_b6b_score.py` `8f7092ba…`, `wb_probe_score.py` `e7751d87…`, `counter_prereg.py` `e7d21047…`
+- test `test_wb_probe_b6b_score.py`
+
+**Cell (ไม่เคยวัดมาก่อน ยกเว้น 0:0.5 และ 0:0.625 ที่ใช้ตรวจ replication):**
+- **full:** แถว w = 3/16 กับ r ∈ {0, 0.5, 0.625, 0.6875}, แถว w = 5/16 กับ r ∈ {0, 0.375, 0.5, 0.5625}, คอลัมน์ r = 0 กับ w ∈ {0.4375, 0.5, 0.5625, 0.625, 0.6875} และ anchor 2:0, 0:2
+- **sector:** r = 0 กับ w ∈ {0.375, 0.625, 0.75, 0.875} และ anchor 0:2 (ค่าทั้งหมดของ sector ทำให้เป็นสัดส่วนของ bytes ที่เขียนจริง)
+- รันอย่างละ 3 รอบทั้งวัดทีละ kernel และวัดแบบรันติดกัน
+
+**กฎตัดสิน (ล็อกไว้ใน scorer):**
+
+| ID | เกณฑ์ | ผล |
+|---|---|---|
+| **V-0 (ต้องผ่านก่อน)** | full 2:0 มี RD และ RDR ∈ [0.9, 1.1]; full 0:2 และ sector 0:2 มี WB และ WBR ∈ [0.9, 1.1]; WARM ∈ [0.9, 1.1] | ถ้าไม่ผ่าน ให้หยุด |
+| V-1 replication | \|WBR − ค่าของ B6\| ≤ 0.10 ที่ 0:0.5 (B6 = 0.190) และ 0:0.625 (B6 = 0.992) | ถ้าไม่ผ่าน แปลว่าผลขึ้นกับรอบหรือ process (เช่น physical address) |
+| **V-2 (ตัวหลัก)** | Δ = WBR(r, w) − WBR(0, w) ใน 6 cell ของสองแถว | ทุก \|Δ\| < 0.05 → **H-D ได้รับการยืนยัน** · Δ ≥ 0.10 ทั้งสอง cell ที่ r+w = 0.875 → H-E · นอกนั้น inconclusive |
+| V-3 | WBR(0, 0.4375) และ WBR(0, 0.5625) | < 0.05 และ ≥ 0.80 → ขั้นบันไดคม · ≥ 0.10 หรือ < 0.50 → ไม่คม · นอกนั้น partial |
+| V-4 | sector: control WBR(0, 0.375) ต้อง < 0.05 แล้วดู median WBR ที่ w ∈ {0.625, 0.75, 0.875} | ≥ 0.80 → **นับเป็น line** · ≤ 0.05 → นับเป็น bytes/sector · นอกนั้น mixed |
+| V-5 | median RB/WB ของ cell ที่ active (ทั้งสองชุด, วัดทีละ kernel) | < 0.25 → ยังอยู่ใน cache · ≥ 0.5 → ถูก evict |
+
+**คำทำนายของผู้วิจัย (ตั้งไว้ก่อนวัด):** V-0 ผ่าน, V-1 ผ่าน, V-2 = H-D, V-3 = คม, V-4 = นับเป็น line, V-5 = ยังอยู่ใน cache
+- ถ้า V-2 ออกมาเป็น H-D และ V-4 เป็น "นับเป็น line" จะสอดคล้องกับ rule "dirty line ≥ ครึ่งหนึ่งของ way ต่อ set" (Finn 2026) ที่วัดบน GA106 ด้วย DRAM counter
+- ถ้า V-4 ออกมาเป็น "นับเป็น bytes" แปลว่า cap คิดจาก dirty bytes ไม่ใช่จาก line ข้อนี้จะขัดกับ rule ของ Finn ในรูปแบบที่ใช้ line
+
+**ข้อจำกัด:**
+- GPU ตัวเดียว ไม่ได้ล็อก clock
+- ยังไม่รู้ associativity ของ GA106 จึงยังแยกไม่ได้ระหว่าง "ครึ่งหนึ่งของ way" กับ "ครึ่งหนึ่งของ capacity"
+- V-2 ยังเป็นการทดสอบภายใต้ pattern เดียว (stream ตามลำดับ index)
+- smoke (cell 0.0625:0.0625, 1.5:0, 0:1.5 ทั้งสองโหมด) รันก่อนเขียนเอกสารนี้เพื่อตรวจ format ทั้งสาม cell ไม่อยู่ใน grid ของ B6b
+
+---
+
+> **ผล (MEASURED 2026-11-05 06:38–06:41 UTC, `benchmarks/results/wb_probe_b6b_20261105-063839/`, D-036): ตรงกับคำทำนายทุกข้อ**
+>
+> | กฎ | ผล |
+> |---|---|
+> | V-0 | ✅ PASS |
+> | V-1 | ✅ replicate ได้ WBR 0.194 (B6 0.190) และ 0.991 (B6 0.992) ต่างรอบและต่าง process |
+> | **V-2** | ✅ **H-D ได้รับการยืนยัน** Δ ทั้ง 6 cell อยู่ระหว่าง 0.000 ถึง +0.003 (WB ที่วัดทีละ kernel ซึ่งไม่ใช้ตัดสินได้ ≤ +0.032) |
+> | **V-3** | ✅ **ขั้นบันไดคม** WBR ที่ w = 0.4375 / 0.5 / 0.5625 / 0.625 / 0.6875 ได้ 0.014 / 0.194 / 0.886 / 0.991 / 1.000 |
+> | **V-4** | ✅ **นับเป็น line** sector-mode median WBR = 0.994 (0.825, 0.994, 0.997) และเขียนกลับเฉพาะ sector ที่ dirty |
+> | V-5 | ✅ ยังอยู่ใน cache RB/WB = 0.000 |
+>
+> **ข้อสังเกต (exploratory):**
+> - control ของ V-4 ผ่านแบบเฉียด: WBR 0.042 (3 รอบได้ 0.041/0.058/0.042) ขณะที่ WB ที่วัดทีละ kernel ได้ 0.001 คำอธิบายที่น่าจะเป็น (หลังเห็นผล) คือ range mode มี DRAM traffic คงที่ราวสิบกว่า KB ต่อ range ซึ่งดูใหญ่เมื่อหารด้วย bytes ที่เขียนจริงในโหมด sector (smoke ก็มี RDR floor 0.02–0.09)
+> - sector-mode ที่ w = 0.625 ได้ 0.825 ต่ำกว่า full line (0.991) ยังไม่ได้อธิบาย
+>
+> **ข้อสรุป (B6 + B6b):** บน RTX 3060 Laptop (GA106) เมื่อ **จำนวน line ที่ dirty** ใน L2 เกิน ≈ 0.5 ของ L2 ฮาร์ดแวร์จะเขียน sector ที่ dirty กลับ DRAM โดยยังเก็บ line ไว้ใน cache
+> - ขนาดข้อมูล clean (สูงสุด 0.69 L2) ไม่มีผล
+> - ไม่ได้เกิดจาก profiler และ replicate ได้
+> - ตรงกับ rule ต่อ set ที่ Finn (2026) เสนอไว้บน RTX 4090 ตอนนี้วัดด้วย DRAM counter บน Ampere แล้ว
+> - **ยังแยกไม่ได้**ระหว่าง "ครึ่งหนึ่งของ way ต่อ set" กับ "ครึ่งหนึ่งของ capacity ทั้งหมด" เพราะยังไม่ได้วัด associativity
+
+## Model v4 counter pre-registration (K-0..K-3) — เขียน 2026-11-05 ก่อนอ่าน counter ที่ขนาดเหล่านี้
+
+**คำถาม:** ถ้าเพิ่มกลไกที่ B6/B6b วัดได้ลงใน simulator จะทำนาย DRAM bytes ต่อ launch ของ workload จริงสองตระกูล (B4 fusion และ B5 stencil) ได้ดีกว่า v3 หรือไม่ ในช่วงที่สอง model ทำนายต่างกัน
+
+**Model v4** (`cache_sim_v4.py` `6c68abc0…`) = LRU write-back ของ v3 บวก **D1:** ถ้ามี dirty line เกิน ½ ของ L2 ให้ clean dirty line ที่ถูก store นานที่สุด (เขียน 128 B กลับ DRAM แต่ line ยังอยู่ใน cache)
+- **พารามิเตอร์ ½ มาจาก B6/B6b เท่านั้น** ไม่ได้ fit กับ counter ของ B4/B5 ผู้ช่วยวิจัย**ยังไม่ได้รัน v4 กับข้อมูล D-032** และจะรันหลังรอบนี้เท่านั้น โดยติดป้ายว่า explanatory
+- unit test (`test_cache_sim_v4.py`) ยืนยันสองข้อ:
+  - ถ้าปิด D1 (cap = capacity) ผลตรงกับ `cache_sim.Cache("lru")` ที่ล็อกไว้ทุกครั้ง
+  - ถ้าเปิด D1 จะได้รูปแบบเดียวกับ B6 คือขั้นบันไดตาม w ไม่ขึ้นกับ r และ line ยังอยู่ใน cache
+
+**การเลือกขนาด (ใช้ simulation อย่างเดียว ก่อนเห็นข้อมูล):** v3 กับ v4 ทำนายต่างกัน **เฉพาะที่ l2x ∈ (0.25, 0.5]** เลือก l2x **0.3125, 0.375, 0.4375, 0.5** (จุดที่ทำนายต่างกัน) บวก 0.1875 (ทำนายเหมือนกัน, อยู่ใน L2) และ 2, 3 (ทำนายเหมือนกัน, ติด DRAM) **ทุกขนาดยังไม่เคยวัดด้วย counter**
+- cell ที่ใช้แยก v3/v4 (\|v4 − v3\| ≥ 0.25 B): fusion 36 cell, stencil 132 cell
+- ส่วนใหญ่เป็น DRAM write ของ window materialized/mat4/fused2 ตัวอย่างที่ l2x 0.375: steady k1 W v3 0.33 vs v4 1.00, isolated k2 W 0.00 vs 0.67
+
+**ไฟล์ (sha256):**
+- คำทำนาย `research/preregistration/counters_v4_rtx3060laptop.json` `0481efef…`
+- `counter_v4.py` `63d77de5…`, `local_counters_v4.sh` `fa38be87…`, `counter_prereg.py` `e7d21047…`, `cache_sim.py` `ea8ad8ef…` (ล็อกเดิม ไม่แก้)
+- binary `fusion` `84f19ebd…` และ `stencil` `3dc27d89…` เป็นตัวเดียวกับที่ใช้ใน D-032 source ตรงกับ `LOCK_20261104_laptop.sha256`
+- test `test_counter_v4.py`
+
+**Protocol:** เหมือน D-026 (application replay, `--cache-control none --clock-control none`, `--reps 1 --warmup 0 --steady-iters 3`) แต่รัน **3 รอบ** ต่อ benchmark ค่าวัดของแต่ละ cell คือ median ของ 3 รอบ e = \|วัด − ทำนาย\| / B
+
+| ID | เกณฑ์ (ใช้กับ fusion และ stencil แยกกัน) | ผล |
+|---|---|---|
+| **K-0 (ต้องผ่านก่อน)** | S-0: DRAM read ของ flush ต่างจาก 16 MiB ไม่เกิน 5 % | ถ้าไม่ผ่าน ให้หยุด |
+| **K-1 (ตัวหลัก)** | สัดส่วนของ cell แยก model ที่ v4 ใกล้ค่าวัดมากกว่า v3 | ≥ 75 % → **v4 ดีกว่า** · ≤ 25 % → v3 ดีกว่า · นอกนั้น mixed |
+| **K-2 (ความแม่น)** | mean e ของ v4 บน cell แยก model ≤ 0.20 B | ไม่ผ่าน แปลว่า v4 ดีขึ้นแต่ยังไม่แม่นพอจะใช้ |
+| **K-3 (ไม่ถอยหลัง)** | mean e ของ v4 บนทุก cell ≤ mean e ของ v3 + 0.01 **และ** ที่ l2x 2, 3 มี cell ที่ e ≤ 0.10 B ไม่ต่ำกว่า 90 % | ไม่ผ่าน แปลว่า D1 ทำให้ที่อื่นแย่ลง |
+
+**คำทำนายของผู้วิจัย:** K-0 ผ่าน, K-1 = v4 ดีกว่า, K-2 ผ่าน, K-3 ผ่าน ทั้งสอง benchmark
+
+**ข้อจำกัด (ประกาศไว้ก่อน):**
+1. ncu แบบ application replay รัน kernel ทีละตัว B6 พบว่าการรันแบบนี้เพิ่ม write-back เมื่อ footprint รวมใกล้เต็ม L2 (≥ 0.875) ซึ่งทั้ง v3 และ v4 ไม่มี error ของทั้งสอง model ใน window แบบนั้นจะสูงขึ้น
+2. D1 เป็น cap ระดับทั้ง cache ขั้นบันไดจึงคมเกินจริง (B6b ที่ dirty 0.5 วัดได้ 0.19 แต่ v4 ทำนาย 0) window ที่ dirty อยู่ใกล้ 0.5 จะมี error ราว 0.2 B
+3. แรงจูงใจทั้งหมดมาจากข้อมูล D-032 (l2x 0.25 และ 0.46875) ที่เห็นไปแล้ว รอบนี้จึงใช้เฉพาะขนาดใหม่
+4. stencil ถูกจำลองเป็น stream src → dst เหมือน v3 (ไม่มี halo)
+5. GPU ตัวเดียว
+
+---
+
+> **ผล (MEASURED 2026-11-05 06:58–07:01 UTC, `benchmarks/results/counters_v4_20261105-065851/`, D-038):**
+>
+> | เกณฑ์ | fusion (B4) | stencil (B5) |
+> |---|---|---|
+> | K-0 (S-0) | ✅ (err 0.1 %) | ✅ (err 0.4 %) |
+> | **K-1** | ✅ **v4 ดีกว่า** 100 % ของ 36 cell | ✅ **v4 ดีกว่า** 78 % ของ 132 cell (เกณฑ์ 75 %) |
+> | **K-2** | ✅ mean e v4 **0.102** (v3 0.691) | ❌ **FAIL** mean e v4 **0.237** > 0.20 (v3 0.617) |
+> | K-3 | ✅ ทุก cell 0.040 vs 0.132; far 100 % | ✅ 0.075 vs 0.171; far 100 % |
+>
+> **v4 พลาดตรงไหน (exploratory):**
+> - **fusion:** แม่น (e ≤ 0.11) ที่ l2x 0.375–0.5 ส่วนที่ l2x 0.3125 window materialized steady วัดได้ 0.72 แต่ v4 ทำนาย 1.00 ซึ่งอยู่ใกล้ขอบของขั้นบันไดตามข้อจำกัดข้อ 2
+> - **stencil:** fused2/fused2c/sweep_cold แม่น (e 0.05–0.28) แต่ **mat4 (ping-pong 4 kernel) และ sweep_warm ที่ l2x 0.4375–0.5** วัดได้ 0.40–0.64 ขณะที่ v4 ทำนาย 0.86–1.00 (e 0.36–0.54) ทั้งหมดอยู่ในช่วงที่ footprint รวมเกิน L2
+>   - **คำอธิบายที่เป็นไปได้ (หลังเห็นผล):** L2 จริงอาจเลือก evict line ที่ clean ก่อน dirty (Finn 2026 เสนอไว้) ทำให้ write-back น้อยกว่า LRU ล้วน หรืออาจเป็นข้อจำกัดข้อ 4 (ไม่ได้จำลอง halo) **ยังไม่ได้ทดสอบ**
+> - **v4 กับข้อมูล D-032 (explanatory, รันหลังล็อกและวัดรอบนี้แล้ว):** fusion mean e ทุก cell 0.066 → 0.042, stencil 0.084 → 0.043 cell ที่แยก model ได้ (6 และ 24 cell, ที่ l2x 0.46875) v4 ใกล้กว่า v3 ทุก cell
+
+## B6c pre-registration (X-0..X-4) — เขียน 2026-11-05 ก่อนวัด cell ใดของ B6c
+
+**คำถาม:** เมื่อ working set เกิน L2 แล้ว L2 เลือก evict line ที่ clean ก่อน (ทำให้ dirty line อยู่ได้นานกว่า) หรือใช้ LRU ล้วนตามที่ v4 สมมติ
+- **ที่มา (post hoc):** v4 ทำนาย write ของ B5 mat4/sweep_warm สูงเกินไป 0.4–0.5 B เมื่อ footprint เกิน L2 (D-038)
+- **prior art:** Finn (2026, 4090) บรรยาย replacement ที่เลื่อน dirty victim ออกไปแล้วหา clean victim แทน
+
+**Model ที่แข่งกัน (ทั้งคู่มี D1 = dirty cap ½):**
+- **v4:** `cache_sim_v4.DirtyCapLRU` (`6c68abc0…`, ล็อกแล้วใน D-037) ใช้ victim ตาม LRU
+- **cf:** `cache_sim_cf.CleanFirstDirtyCap` (`e6503819…`) ใช้ victim เป็น clean line ที่ LRU ที่สุดก่อน (D2)
+  - unit test ยืนยันว่าเมื่อมีแต่ read หรือมีแต่ write (ไม่มีให้เลือก) cf ให้ผลเท่ากับ LRU ที่ล็อกไว้ทุกครั้ง
+
+**Cell** (binary `wb_probe` `0921da36…` ตัวเดียวกับ B6b, full line):
+- **mixed 12 cell:** w ∈ {1/8, 1/4, 3/8} (ต่ำกว่า dirty cap จึงไม่มี cleaning) ที่ footprint รวม r+w ∈ {1.125, 1.25, 1.5, 2}
+- **control:** 0.5:0.25 (อยู่ใน cache), 2:0, 0:2
+- **exploratory:** 0.625:0.5, 0.5:0.75
+- **คำทำนาย** (`research/preregistration/b6c_predictions.json` `2e61093f…`) ใน mixed ทุก cell:
+  - **v4:** WB = 1.00, RB 0.33–1.00, RD = 1
+  - **cf:** WB = 0.00, RB = 0.00, RD = 1
+- **Protocol:** `wb_probe_b6c.sh` (`66f55286…`) 3 รอบวัดทีละ kernel + 3 รอบวัดแบบรันติดกัน (เหมือน B6b) scorer `wb_probe_b6c_score.py` (`31fd60f5…`)
+
+| ID | เกณฑ์ | ผล |
+|---|---|---|
+| **X-0 (ต้องผ่านก่อน)** | 2:0 มี RD และ RDR ∈ [0.9, 1.1]; 0:2 มี WB และ WBR ∈ [0.9, 1.1]; 0.5:0.25 มี WBR และ RDR < 0.05; WARM ∈ [0.9, 1.1] | ถ้าไม่ผ่าน ให้หยุด |
+| **X-1 (ตัวหลัก)** | สัดส่วนของ 12 mixed cell ที่ WBR ใกล้ cf มากกว่าใกล้ v4 | ≥ 75 % → **clean-first ได้รับการสนับสนุน** · ≤ 25 % → LRU (v4) · นอกนั้น mixed |
+| X-2 (ขนาดผล) | median WBR ของ mixed | ≤ 0.10 → ปกป้อง dirty เต็มที่ · ≥ 0.90 → ไม่ปกป้อง · นอกนั้นปกป้องบางส่วน |
+| X-3 | median RB (readback miss ของ D, วัดทีละ kernel) | ≤ 0.25 → D ยังอยู่ใน cache · ≥ 0.75 → ถูก evict · นอกนั้น partial |
+| X-4 (ตรวจทั้งสอง model) | mixed cell ที่ RDR ≥ 0.9 ไม่ต่ำกว่า 75 % | ถ้าไม่ผ่าน แปลว่า**ทั้งสอง model**ผิดเรื่อง clean miss |
+
+**คำทำนายของผู้วิจัย:**
+- X-0 ผ่าน
+- **X-1 เอียงไปทาง clean-first แต่ไม่มั่นใจ** เพราะ stencil พลาดเพียง 0.4–0.5 B ไม่ใช่ 1 B ผู้วิจัยจึงคาดว่า X-2 จะออกมาเป็น "ปกป้องบางส่วน"
+- X-4 ผ่าน
+
+ถ้า X-1 ออกมาเป็น LRU ข้อผิดพลาดของ v4 ใน stencil ต้องมีสาเหตุอื่น (เช่น halo ของ stencil) และกลไก D2 จะตกไป
+
+**ข้อจำกัด:**
+- pattern เดียว (stream ตามลำดับ index, C กับ D สลับกันทุก element)
+- GPU ตัวเดียว
+- cf เป็น clean-first แบบสุดขั้ว (ปกป้อง dirty ได้ไม่จำกัด ภายใต้ D1) ส่วน hardware จริงอาจมี buffer จำกัด (Finn: write-back FIFO ต่อ set)
+
+---
+
+> **ผล (MEASURED 2026-11-05 07:12–07:15 UTC, `benchmarks/results/wb_probe_b6c_20261105-071251/`, D-040): NEGATIVE สำหรับ clean-first**
+>
+> | กฎ | ผล |
+> |---|---|
+> | X-0 | ✅ PASS |
+> | **X-1** | **LRU victim (v4) ได้รับการสนับสนุน** WBR ใกล้ cf **0 %** ของ 12 cell |
+> | X-2 | ไม่ปกป้อง dirty: median WBR **1.001** (ทุก cell 0.83–1.02) |
+> | X-3 | ถูก evict: median RB 0.940 |
+> | X-4 | ✅ RDR ≈ 1.000 ทุก cell |
+>
+> **ข้อสังเกต (exploratory):** ที่ footprint รวม 1.125–1.25 ค่า RB ต่ำกว่าที่ LRU ทำนายมาก ตัวอย่าง (1, 1/8): RB 0.085 แต่ LRU ทำนาย 1.00; (0.75, 3/8): 0.032 แต่ LRU ทำนาย 0.33 ทั้งที่ WBR ≈ 1
+> - แปลว่าใต้แรงบีบ L2 **เขียน dirty line กลับทั้งที่ line ยังอยู่ใน cache** คล้าย eager write-back ฝั่ง CPU
+> - และ replacement ตรงขอบ capacity ไม่ใช่ LRU ล้วน (line บางส่วนรอด cyclic thrash)
+> - **ไม่กระทบ bytes ที่ write** ซึ่ง v4 ทำนายถูก แต่กระทบ residency
+>
+> **ความหมาย:**
+> - D2 (clean-first) **ตกไป** ไม่ใช้ใน model
+> - ความคลาดของ v4 ใน B5 mat4/sweep_warm (D-038) **ยังไม่มีคำอธิบาย** ผู้ต้องสงสัยที่เหลือคือ access pattern ของ stencil (halo/ลำดับแบบ 2D) ที่ simulator ทำให้ง่ายลงเป็น stream และ replacement ที่ไม่ใช่ LRU ล้วนตรงขอบ capacity ตามที่เห็นใน RB ข้างบน
+
+## B7 pre-registration (R-0..R-3, T-1) — เขียน 2026-11-05 ก่อนวัดที่ขนาดเหล่านี้
+
+**คำถาม:** model ที่สร้างและตรวจกับ kernel สังเคราะห์ของเรา (v3, v4) ทำนาย DRAM bytes ต่อ launch ของ **kernel จริงของ PyTorch** ได้หรือไม่ ทั้ง eager elementwise ของ ATen และ Triton kernel ที่ TorchInductor สร้าง และอัตราเร่งจาก fusion ในช่วงที่ติด DRAM ตรงกับอัตราส่วน bytes ที่ model ทำนายหรือไม่
+
+**Workload:** `y = gelu(x + b) + r` fp32, x, r, y: [M, 4096], b: [4096] (epilogue ของ MLP ใน transformer)
+- **eager:** 3 kernel (add แบบ broadcast, GELU แบบ erf, add) ที่ caching allocator ของ PyTorch จัด address ให้ (t1 ถูกคืนก่อน y ถูกจองตามพฤติกรรมของ `gelu(x + b) + r`)
+- **compiled:** `torch.compile` ได้ Triton kernel เดียว (`triton_poi_fused_add_gelu_0`)
+- `torch==2.7.1` (cu126), `triton==3.3.1` ใน venv แยก (`benchmarks/requirements-torch.txt` `9eb6c66c…`)
+- correctness: compiled เทียบ eager (rtol/atol 1e-5) และ eager เทียบ float64 บน CPU
+
+**Model (ไม่มีพารามิเตอร์ที่ fit):** v3 = `cache_sim.Cache("lru")` (`ea8ad8ef…`), v4 = `cache_sim_v4.DirtyCapLRU` (`6c68abc0…`) replay address จริงทุก launch (รวม flush) ตามลำดับ
+- คำทำนายต่อ launch ล็อกใน `research/preregistration/b7_predictions.json` (`4505b589…`) สร้างจาก plan ของ run ที่ไม่มี ncu
+- address ต่างกันระหว่าง process แต่ smoke แสดงว่า pattern การ reuse เหมือนกัน และคำทำนายตรงกันทุกค่า scorer จะตรวจซ้ำทุก run (`plan_consistent`)
+
+**ขนาด (เลือกจาก simulation อย่างเดียว, ยังไม่เคยวัด):** l2x (bytes ของ tensor หนึ่งตัว / L2) = 0.125, 0.1875, 0.25, 0.3125, 0.375, 0.5, 1, 2, 3
+- v3/v4 ทำนายต่างกันที่ 0.1875–0.5 (32 cell)
+- smoke ใช้ 0.0625 และ 1.5 ซึ่งดูเฉพาะการจับคู่ launch และความสม่ำเสมอของ plan **ไม่ได้ดูคะแนน**
+
+**Protocol:** `b7_opchain.sh` (`5ed8ea4b…`), harness `torch_opchain.py` (`630aea7f…`; แก้ bug recompile limit แล้วเป็น `a79a3487…` ตาม D-044 คำทำนายไม่เปลี่ยน), scorer `counter_b7.py` (`d3f5e6d5…`)
+- ncu `--replay-mode application --target-processes application-only --cache-control none --clock-control none` 3 รอบ
+- ใช้ median ของ 3 รอบ ลำดับต่อขนาด: flush → eager | flush → compiled | flush → eager × 3 | flush → compiled × 3
+- **เวลา:** 3 รอบที่ไม่มี profiler ใช้ CUDA graph ที่บรรจุ 50 chain (steady) หรือ 20 × (flush + chain) ลบเวลาของ flush (isolated) เพื่อเฉลี่ยต้นทุน replay บน WSL (~50 µs ต่อครั้ง) ออก และวัด e2e (Python loop) แยก
+
+| ID | เกณฑ์ | ผล |
+|---|---|---|
+| **R-0 (ต้องผ่านก่อน)** | DRAM read ของ flush ทุกตัวต่างจาก 16 MiB ไม่เกิน 5 % | ถ้าไม่ผ่าน ให้หยุด |
+| **R-1 (ตัวหลัก)** | cell ทั้งหมด (read ทุก launch ที่ไม่ใช่ flush, write ทุก launch ยกเว้น flush ตัวแรก) ที่ e ≤ 0.10 B ไม่ต่ำกว่า **80 %** สำหรับ v4 | ไม่ผ่าน แปลว่า model ที่ตรวจกับ kernel สังเคราะห์**ใช้กับ kernel จริงไม่ได้**ในระดับนี้ |
+| R-2 | cell ที่ \|v4 − v3\| ≥ 0.25 B: v4 ใกล้กว่าใน ≥ 75 % → v4 ดีกว่า · ≤ 25 % → v3 ดีกว่า · นอกนั้น mixed | |
+| R-3 | l2x ≥ 2: v4 ภายใน 0.10 B ≥ 90 % | |
+| **T-1 (เวลา)** | graph_steady speedup (eager/compiled) ที่ l2x 2 และ 3 อยู่ใน **[1.9, 2.8]** (อัตราส่วน DRAM bytes ที่ v4 ทำนาย = 7.00/3.00 = 2.33 ± ≈ 20 %) | ไม่ผ่าน แปลว่าเวลาไม่ได้ตาม bytes ที่ขนาดนี้ (เช่น kernel ของ ATen กับของ Triton ได้ bandwidth ต่างกันมาก) |
+
+**ส่วนที่รายงานแบบ descriptive (ไม่ตัดสิน):**
+- speedup ที่ขนาดเล็ก ซึ่งยังไม่มี time model สำหรับ kernel เหล่านี้ และ launch overhead มีผลมาก
+- เวลา e2e
+
+**คำทำนายของผู้วิจัย:** R-0 ✅, R-1 ✅, R-2 = v4 ดีกว่า, R-3 ✅, T-1 ✅
+
+**ข้อจำกัด:**
+- op chain เดียว, fp32, H = 4096, GPU ตัวเดียว (WSL2)
+- เวลาเป็น GPU-side ภายใน CUDA graph ส่วน e2e รวม overhead ของ Python/guard ซึ่งขึ้นกับเครื่อง
+- ATen kernel แบบ broadcast (`x + b`) ไม่ได้ vectorize อาจมี pattern ของ sector ต่างจาก stream ล้วน
+- ไม่ได้ทดสอบ bf16 และ op chain ที่มี reduction (เช่น LayerNorm)
+
+---
+
+> **ผล (MEASURED 2026-11-05 09:01–09:07 UTC, `benchmarks/results/b7_opchain_20261105-090133/`, D-045; run แรกใช้ไม่ได้ตาม D-044):**
+>
+> | กฎ | ผล |
+> |---|---|
+> | R-0 | ✅ (flush err 0.18 %) |
+> | **R-1 (ตัวหลัก)** | ❌ **FAIL**: v4 อยู่ภายใน 0.1 B **73.1 %** ของ 323 cell (เกณฑ์ ≥ 80 %); v3 ได้ 72.1 % |
+> | R-2 | ✅ v4 ดีกว่า: 81 % ของ 32 cell ที่แยก model ได้ (mean e 0.24 vs 0.64) |
+> | R-3 | ✅ 100 % ของ 72 cell ที่ l2x ≥ 2 |
+> | **T-1** | ✅ graph_steady speedup **2.36× (l2x 2), 2.34× (l2x 3)** ขณะที่ v4 ทำนายอัตราส่วน bytes ไว้ 2.33 |
+>
+> - plan ของทั้ง 3 รอบให้คำทำนายตรงกับไฟล์ที่ล็อกไว้ และ correctness 0 failure ทุก run
+>
+> **ความคลาดอยู่ตรงไหน (exploratory):**
+> - 87 cell ที่ e > 0.1 อยู่ที่ l2x 0.1875–1 ทั้งหมด (ช่วงขอบ capacity) ส่วนใหญ่เป็น write ของ eager_add2, flush และ gelu
+> - **พลาดสองทิศ:**
+>   - (ก) L2 จริงเก็บ t2 ที่เพิ่งเขียนไว้ได้ ทำให้ eager_add2 อ่าน DRAM 1.00 B ขณะที่ model ทำนาย 1.33–2.00
+>   - (ข) ตอนใกล้เต็ม fused ที่ 0.3125 (footprint 0.94 L2) อ่าน DRAM 1.53 B ขณะที่ model ทำนาย 0
+> - flush เขียนกลับมากกว่าที่ทำนาย 0.3–0.45 B ที่ขนาดเล็ก สาเหตุยังไม่รู้
+> - รวมกับ D-038 (stencil) และ B6c (RB) แล้ว **replacement ตรงขอบ capacity ที่ไม่ใช่ LRU** เป็นแหล่ง error หลักที่เหลือของทั้ง v3 และ v4
+>
+> **เวลา (descriptive, median ของ 3 รอบ):**
+> - **graph_steady:** speedup 2.3–2.6× ที่ l2x ≤ 0.25 สูงสุด **3.66×** ที่ 0.3125 (intermediate ของ eager ล้น L2 แต่ fused ยังพอดี) ลดเหลือ 1.8–1.9× ที่ 0.375–0.5 (fused เริ่มล้น) แล้วกลับเป็น 2.3× ที่ ≥ 1 **ขนาดที่ fusion คุ้มที่สุดจึงอยู่ตรงช่วงที่ footprint ของสองแบบอยู่คนละฝั่งของ L2**
+> - **e2e (Python loop ไม่ใช้ CUDA graph):** compiled **ช้ากว่า** eager ที่ l2x ≤ 0.5 (0.44–0.72×) เพราะ wrapper ของ torch.compile ใช้ ~70 µs ต่อ call บน WSL ขณะที่ eager 3 op ใช้ ~43 µs fusion เริ่มคุ้มแบบ e2e ที่ l2x 1 (1.32×) และ ≥ 2 (2.0–2.3×) ตัวเลข overhead นี้ขึ้นกับเครื่องและ WSL
+
+## B8 pre-registration (Z-0..Z-3) — เขียน 2026-11-05 ก่อนวัด cell ใดของ B8
+
+**คำถาม:** ตรงขอบ capacity L2 ของ GA106 จัดการ dirty victim และ capacity ที่ใช้ได้จริงอย่างไร ทั้ง v3 และ v4 พลาดในช่วงนี้ทั้งกับ stencil (D-038) และกับ kernel จริงของ PyTorch (D-045)
+
+**ที่มาของสมมติฐาน (post hoc, D-046):**
+- B6c เห็นว่าใต้แรงบีบ D ถูกเขียนกลับทุก launch (WB ≈ 1) แต่ส่วนใหญ่**ยังอยู่ใน cache** (RB 0.03–0.31 ที่ footprint 1.125) ขณะที่ C ถูกไล่ออกหมด
+- ตรงกับคำบรรยายของ Finn (2026): dirty victim ถูกเขียนกลับและ "stays readable" แล้ว scan ต่อไปหา clean victim
+- ผู้ช่วยวิจัย fit ค่า "อายุใน write-back FIFO" กับข้อมูล B6c (เห็นแล้ว) ได้ life = **0.125 × capacity** (MAE 0.026 เทียบกับ LRU 0.068) **ค่านี้ fit จากข้อมูลที่เห็นแล้ว** การทดสอบรอบนี้จึงใช้เฉพาะ cell ใหม่
+
+**Model:** `cache_sim_v5cand.CandidateL2` (`b7306c78…`):
+- **v4:** policy "lru" (unit test ยืนยันว่าเท่ากับ `cache_sim_v4.DirtyCapLRU` ทุกครั้ง)
+- **dvsc:** policy "dvsc_life" ที่ life 0.125 (unit test ยืนยันว่าเท่ากับ LRU เมื่อไม่มีการเขียน)
+- คำทำนายอยู่ใน `research/preregistration/b8_predictions.json` (`8aafe4da…`)
+
+**Cell** (binary `wb_probe` `0921da36…` ตัวเดิม, correctness 21/21 ผ่าน):
+- **M (mixed 8):** r+w ∈ {1.0625, 1.1875, 1.3125, 1.4375}, w ∈ {3/16, 5/16}
+- **W (write-only 3):** w ∈ {1.0625, 1.125, 1.25}
+- **R (read-only 6):** r ∈ {0.90625, 0.9375, 0.96875, 1.0, 1.03125, 1.0625}
+- **control:** 0.5:0.25, 2:0, 0:2 และ cell replication 1:0.125 ของ B6c
+- **Protocol:** `wb_probe_b8.sh` (`96049e73…`) 3 รอบวัดทีละ kernel + 3 รอบวัดแบบรันติดกัน scorer `wb_probe_b8_score.py` (`dcb32d92…`) พร้อม unit test
+
+| ID | เกณฑ์ | ผล |
+|---|---|---|
+| **Z-0 (ต้องผ่านก่อน)** | anchor/control เหมือน X-0; replication: \|RB(1, 1/8) − 0.085\| ≤ 0.10 | ถ้า sanity ไม่ผ่าน ให้หยุด |
+| **Z-1 (ตัวหลัก)** | ใน cell ของ M+W ที่ \|RB_v4 − RB_dvsc\| ≥ 0.15 (7 cell) RB ที่วัดได้ใกล้ dvsc มากกว่าใน ≥ 75 % **และ** MAE ของ RB ของ dvsc บน M+W ≤ 0.15 | dvsc ได้รับการสนับสนุน · ใกล้ v4 ≥ 75 % → LRU · นอกนั้น mixed |
+| **Z-2** | RDR ที่ r = 0.9375 (read-only) ทั้งสอง model ทำนาย 0 | ≥ 0.10 → **capacity ที่ใช้ได้จริง < 0.94 L2** (อาจอธิบาย fused ที่ 0.94 ใน B7 ได้) |
+| Z-2b | RDR ที่ r = 1.03125 ทั้งสอง model ทำนาย 1 | ≤ 0.90 → read ถูกเก็บไว้บางส่วนแม้เกิน capacity (ไม่ใช่ LRU cliff ที่คม) |
+| Z-3 | median WBR ของ M+W (ทั้งสอง model ทำนาย 1) | รายงานผลเท่านั้น |
+
+**คำทำนายของผู้วิจัย:**
+- Z-0 ผ่าน
+- **Z-1 = dvsc ได้รับการสนับสนุน** (ไม่มั่นใจมากนัก เพราะ model แบบ fully associative ให้รอยต่อที่คมกว่าของจริง)
+- Z-2: ผู้วิจัยเดาว่า capacity ที่ใช้ได้จริง < 0.94 (จาก B7) แต่ B6 พบว่า read-only ถึง 0.875 ไม่มี miss จึงไม่มั่นใจ
+- Z-2b: ไม่มีคำทำนาย
+
+**ข้อจำกัด:**
+- life เป็นค่าที่ fit มาหนึ่งค่า และ model เป็น fully associative (ของจริงเป็น set-associative แบบ hash)
+- RB วัดได้เฉพาะในโหมดทีละ kernel
+- GPU ตัวเดียว
+
+---
+
+> **ผล (MEASURED 2026-11-05 09:32–09:35 UTC, `benchmarks/results/wb_probe_b8_20261105-093216/`, D-047):**
+>
+> | กฎ | ผล |
+> |---|---|
+> | Z-0 | ✅ sanity; replication RB(1, 1/8) = 0.138 (B6c 0.085) ✅ |
+> | **Z-1** | ✅ **dvsc ได้รับการสนับสนุน**: ใกล้ dvsc 100 % ของ 7 cell; MAE RB 0.103 vs v4 0.266 |
+> | Z-2 | capacity ที่ใช้ได้จริง ≥ 0.94 L2: RDR(0.9375) = 0.005 (**ผู้วิจัยเดาผิด**) |
+> | Z-2b | read cliff ไม่คมแบบ LRU: RDR ที่ r = 0.906 / 0.938 / 0.969 / 1.0 / 1.031 / 1.063 ได้ 0.002 / 0.005 / 0.009 / 0.073 / **0.539** / 0.998 (cliff กว้าง ≈ 0.06 L2 รอบ 1.03) |
+> | Z-3 | median WBR ของ M+W = 0.993 (แต่ที่ F = 1.0625 ได้ 0.73–0.80) |
+>
+> **v5 candidate (v4 + dvsc_life 0.125) กับข้อมูล kernel จริงที่เห็นแล้ว (explanatory):**
+> - B7: ภายใน 0.1 B **74.3 %** (v4 73.1 %); mean e 0.086 (v4 0.093); edge 0.115 (v4 0.126)
+> - B4/B5 (D-038): **ไม่เปลี่ยน** (0.040 / 0.075)
+>
+> **กลไกนี้มีจริงแต่ไม่ใช่แหล่งหลักของ error ที่เหลือในงานจริง**
+
+## B7r pre-registration (Y-0..Y-3) — เขียน 2026-11-05 ก่อนวัด B7 แบบ range ที่ขนาดเหล่านี้
+
+**คำถาม:** error ของ model v4 กับ kernel จริงตรงขอบ capacity (B7 R-1 ภายใน 0.1 B ได้ 73.1 %) เกิดจาก**วิธีวัด** (ncu วัดทีละ kernel และมีช่วงว่างระหว่าง kernel) หรือจาก **model** เอง (ข้อ ก ใน D-047)
+
+**สิ่งที่เห็นแล้วก่อนเขียนกฎนี้ (exploratory, ข้อมูล B7 แบบทีละ kernel):**
+- เมื่อรวม byte ทั้ง segment (การเรียก chain หลัง flush หนึ่งครั้ง) error ยังอยู่ ขนาดใกล้เดิม (เช่น ที่ 0.3125 รวม 0.131 เทียบกับรายตัว 0.142 B/launch) แปลว่า model ผิดที่**ยอดรวม** ไม่ใช่แค่ระบุผิดว่า byte เกิดใน launch ไหน
+- error ที่ใหญ่สุดคือ **read**: ที่ 0.5 eager model ทำนายว่าอ่าน 3.0 B/chain แต่วัดได้ 2.0 (t1 และ t2 hit ใน L2 ทั้งหมด) ส่วน write วัดได้**น้อยกว่า** model ในช่วง 0.3125–0.5
+- smoke (ขนาด 0.0625 และ 1.5 เท่านั้น ไม่ใช่ขนาดที่ใช้ตัดสิน):
+  - ช่วง range ที่ว่างเปล่ามี DRAM read จากเบื้องหลังราว 12 KB/ms แบบเป็นช่วง ๆ (60 ช่วง) และ**ไม่มี write เลย**
+  - เวลาส่งคำสั่งของ segment ที่ยาวที่สุด 954 µs น้อยกว่า spin kernel ที่ 1.95 ms
+
+**Design (เปลี่ยนตัวแปรเดียว: replay mode):**
+- ใช้ harness `torch_opchain.py` (`9cca5b05…`) ขนาดและ launch เดียวกับ B7: 0.125, 0.1875, 0.25, 0.3125, 0.375, 0.5, 1, 2, 3
+- **kernel mode:** `--replay-mode application` ได้ byte ราย launch
+- **range mode:** `--replay-mode app-range` ร่วมกับ `--profiler-ranges` ใช้ 1 range ต่อ segment:
+  - ใน range ขึ้นต้นด้วย spin kernel 2 M cycle (`torch.cuda._sleep` ไม่แตะหน่วยความจำ) เพื่อให้ CPU ส่งคำสั่งทุก launch ของ segment ไปรอไว้ก่อน GPU จึงรัน kernel ติดกันจริง
+  - control range (มีแต่ spin) หนึ่งช่วงต่อขนาด ใช้วัด traffic เบื้องหลัง
+- วัดอย่างละ 5 รอบ สลับกัน (K1 G1 K2 G2 …) protocol `b7r_opchain.sh` (`86a4c726…`) scorer `counter_b7r.py` (`b290db3a…`) unit test `test_counter_b7r.py` (`12828dbf…`)
+- **คำทำนาย:** ใช้ของ B7 เดิมทุกค่า `b7_predictions.json` (`4505b589…`, model v4) ไม่สร้างใหม่ และ scorer ตรวจว่า plan ของทุกรอบให้คำทำนายเท่ากับที่ล็อกไว้
+
+**นิยาม** (segment s มี n launch, B = byte ของ tensor [M, 4096] หนึ่งตัว):
+- P = ผลรวมคำทำนาย v4
+- K = median ของผลรวมราย launch ในโหมดทีละ kernel
+- G = median ของ (byte ของ range − median ของ control range ในรอบเดียวกัน)
+- k = (K − P)/(B n), g = (G − P)/(B n), d = (G − K)/(B n)
+- **ขอบ (edge):** l2x ∈ {0.25, 0.3125, 0.375, 0.5, 1} มี 20 segment · **ไกล (far):** l2x ∈ {2, 3}
+
+| ID | เกณฑ์ | ผล |
+|---|---|---|
+| **Y-0 (ต้องผ่านก่อน)** | (a) plan ทุกรอบให้คำทำนายเท่ากับที่ล็อก + correctness 0 failure (b) median read ของ control ≤ 16 KB และ write สูงสุด ≤ 4 KB (c) เวลาส่งคำสั่งสูงสุด < 0.8 × เวลา spin (d) ที่ far ทุก segment \|d\| ≤ 0.05 ทั้ง read และ write | ไม่ผ่าน → หยุด หาสาเหตุ ไม่ตีความต่อ |
+| Y-1 | สัดส่วน segment ที่ edge ที่ \|d_read\| ≤ 0.05 | ≥ 80 % → read ไม่ขึ้นกับ replay mode |
+| Y-2 | ρ_w = mean\|g_write\| / mean\|k_write\| ที่ edge | ≤ 0.5 → error ของ write ส่วนใหญ่มาจากวิธีวัด · ≥ 0.8 → ไม่ได้มาจากวิธีวัด · นอกนั้น บางส่วน |
+| **Y-3 (ตัวตัดสิน)** | ρ = mean\|g\| / mean\|k\| ที่ edge รวม read และ write (40 ค่า) | ≤ 0.5 → **MEASUREMENT** · ≥ 0.8 → **MODEL** · นอกนั้น **PARTIAL** |
+| (descriptive) | สัดส่วน segment-dir ที่ \|g\| ≤ 0.1 เทียบกับ \|k\| ≤ 0.1 | รายงานผลเท่านั้น |
+
+**คำทำนายของผู้วิจัย:**
+- Y-0 ผ่าน
+- **Y-1: read ไม่ขึ้นกับ replay mode** เพราะช่วงว่างทำให้ line ที่ถูกไล่ออกไปแล้วกลับมา hit ไม่ได้
+- **Y-2: ไม่ได้มาจากวิธีวัด** (ρ_w ราว 0.8–1.2) อาจมี write เพิ่มเล็กน้อยใน range mode ถ้า L2 ทยอยเขียนกลับตอน GPU ว่าง
+- **Y-3: MODEL**
+
+**ผลที่ตามมา:**
+- MEASUREMENT → v4 ใช้ได้ ใช้ range mode เป็นวิธีวัดหลักต่อไป รวมถึงบนเครื่องเช่า
+- MODEL → ต้องทำข้อ 2 (set-associativity และลำดับ access จริง) ก่อนจะสรุปว่า model ใช้กับ kernel จริงตรงขอบ capacity ได้
+- PARTIAL → รายงานทั้งสองส่วน
+
+**ข้อจำกัด:**
+- read ใน range mode มี traffic เบื้องหลังที่ลบออกได้เพียงประมาณ ส่วน write ไม่มี
+- ncu ยังหยุดคั่นที่ขอบ range
+- spin kernel ทำให้ไม่มีช่วงว่างจาก CPU เลย ซึ่งต่างจาก loop eager จริงที่มีช่วงว่างจากการส่งคำสั่ง ข้อนี้ตั้งใจ เพราะต้องการทดสอบวิธีวัด
+- GPU ตัวเดียว
+
+---
+
+> **ผล (MEASURED 2026-11-05 13:04–13:16 UTC, `benchmarks/results/b7r_opchain_20261105-130359/`, D-049):**
+>
+> - **Y-0 ❌ ไม่ผ่าน (c back-to-back)**
+>   - เวลาส่งคำสั่งของ segment ใน run เต็มยาวกว่าใน smoke มาก (median 1.1 ms, สูงสุด 4.2 ms) และมี 6 จาก 180 range ที่ส่งคำสั่งนานกว่า 0.8 × spin (5 ใน 6 เป็น compiled steady)
+>   - ช่วงเหล่านั้นจึงอาจมีช่วงว่าง
+>   - ข้อ a, b, d ผ่าน: plan ตรง 10/10, background median 10.4 KB, write ของ control = 0, far \|d\| สูงสุด 0.026
+> - **ตามกฎจึงหยุดและไม่ตีความ Y-1..Y-3** ตัวเลขที่ scorer คำนวณไว้ (ไม่นับเป็นผล) คือ Y-1 90 %, ρ_w 0.56, ρ 0.76 ซึ่งผู้วิจัยได้เห็นแล้ว
+> - **สาเหตุ:** spin มีความยาวคงที่ ขณะที่เวลาส่งคำสั่งของ CPU บน WSL2 ภายใต้ ncu แกว่งมาก
+> - **แก้:** เปลี่ยนเป็น gate แบบ flag (B7r2)
+
+---
+
+## B7r2 pre-registration (Y-0..Y-3) — เขียน 2026-11-05 หลัง B7r ไม่ผ่าน Y-0 ก่อนรัน B7r2
+
+**เหมือน B7r ทุกอย่าง** (ขนาด, launch, คำทำนาย `b7_predictions.json` `4505b589…`, นิยาม K/G/P, edge/far, เกณฑ์และค่าคงที่ของ Y-0a, Y-0b, Y-0d, Y-1, Y-2, Y-3) **ยกเว้น:**
+- **วิธีกั้น:** ใช้ `--range-gate flag` แทน spin
+  - range ขึ้นต้นด้วย gate kernel ที่วนอ่าน flag word จนกว่า CPU จะส่งคำสั่งครบทั้ง segment แล้วปล่อย (fill 1 ค่าบน side stream)
+  - kernel จึงรันติดกันจริงไม่ว่า CPU จะช้าแค่ไหน
+  - flag word เป็น view ใน flush buffer จึงไม่มีการจองหน่วยความจำใหม่ และ address/plan ไม่เปลี่ยน (scorer ตรวจ)
+- **control range:** ถือ gate ไว้ 1.5 ms (≈ median เวลาส่งคำสั่งของ B7r) แล้วปล่อย
+- **Y-0c ใหม่:** ไม่มี range ใดที่ gate หมดเวลา (gate_iters < 2,000,000 ≈ 0.3 s)
+- **ไฟล์:**
+  - harness `torch_opchain.py` (`f89c221b…`)
+  - protocol `b7r2_opchain.sh` (`eed125e0…`)
+  - scorer `counter_b7r.py` (`e44a01d7…`) เพิ่มเฉพาะทางของ flag gate และยืนยันแล้วว่าให้ผลของ B7r เหมือนเดิมทุกบรรทัด
+  - unit test `test_counter_b7r.py` (`a25169f3…`)
+- smoke (ขนาด 0.0625/1.5) ด้วย gate: ไม่มี timeout (iters สูงสุด ≈ 20k) และ write ของ control = 0
+
+**คำทำนายของผู้วิจัย (ได้เห็นตัวเลขของ B7r ที่ไม่ผ่าน Y-0 แล้ว รอบนี้จึงเป็นการวัดซ้ำด้วยวิธีที่แก้แล้ว ไม่ใช่การทดสอบแบบไม่รู้ผลมาก่อน):**
+- Y-0 ผ่าน
+- Y-1 read ไม่ขึ้นกับ replay mode
+- Y-2 บางส่วน (ρ_w ราว 0.5–0.6)
+- Y-3 PARTIAL (ρ ราว 0.75)
+
+---
+
+> **ผล (MEASURED 2026-11-05 13:27–13:41 UTC, `benchmarks/results/b7r2_opchain_20261105-132701/`, D-050):**
+>
+> - **Y-0 ❌ ไม่ผ่านอีกครั้ง แต่คนละข้อกับ B7r: ข้อ b background** median read ของ control = 17,152 B เกินเกณฑ์ 16,000 B
+>   - ข้อ c ผ่านแล้ว: gate ไม่ timeout เลย (iters สูงสุด 39k จาก 2M) แม้ส่งคำสั่งนานถึง 6.7 ms
+>   - ข้อ a, d ผ่าน, write ของ control = 0
+> - **ตามกฎจึงไม่ตีความ Y-1..Y-3 เป็นผลทางการ**
+> - **Scorer bug (แก้หลังรัน ไม่กระทบเกณฑ์):** การตรวจ layout ไม่ได้ตัด `gate_iters` ซึ่งต่างกันทุกรอบ จึง crash ก่อนให้คะแนน (`score_crashed_layout_check.txt`) แก้บรรทัดเดียว (`e44a01d7` → `333ed46b`) และ B7r ให้ผลเหมือนเดิม
+>
+> **ตัวเลขที่ scorer คำนวณ (exploratory ไม่ใช่ผลทางการ) สอดคล้องกับ B7r ที่ไม่ผ่านด้วยสาเหตุอื่น:**
+>
+> | | B7r (ไม่ผ่าน c) | B7r2 (ไม่ผ่าน b) |
+> |---|---|---|
+> | Y-1 read ที่ \|G − K\| ≤ 0.05 | 90 % | 100 % |
+> | ρ_w (write) | 0.56 | 0.53 |
+> | ρ (รวม) | 0.76 | 0.76 |
+> | eager write ที่ edge mean \|k\| → \|g\| | — | 0.190 → 0.059 |
+> | compiled write ที่ edge mean \|k\| → \|g\| | — | 0.086 → 0.087 |
+>
+> - **อ่านแบบ exploratory:**
+>   - error ของ **read** ตรงขอบไม่ได้มาจากวิธีวัด เช่น ที่ 0.5 eager model ทำนาย 3.0 B/chain แต่วัดได้ 2.0 ทั้งสองโหมด จึงเป็น error ของ model
+>   - error ของ **write ของ eager** ส่วนใหญ่หายไปเมื่อ kernel รันติดกัน (ที่ 0.375 steady: K 4.20, G 7.43, P 7.46) ncu แบบทีละ kernel จึงนับ write-back ของ chain eager ได้ไม่ครบในช่วงนี้
+>   - write ของ compiled ไม่เปลี่ยน
+> - ข้อนี้ยังเป็นสมมติฐานที่ต้องทดสอบแบบ pre-register ใหม่ (เช่น probe วัด write-back ตอน GPU ว่างโดยตรง)
+
+---
+
+## B9 pre-registration (I-0..I-3) — เขียน 2026-11-05 ก่อนวัด cell ใดของ B9
+
+**คำถาม:** L2 ของ GA106 เขียน dirty line กลับลง DRAM ระหว่างที่ GPU ว่าง (ไม่มี kernel รัน) หรือไม่ ถ้าใช่ จะอธิบายได้ว่าทำไม ncu แบบทีละ kernel นับ write ของ chain eager ได้น้อยกว่าแบบรันติดกัน (exploratory จาก B7r/B7r2, D-050) เพราะ write-back ที่เกิดในช่วงว่างระหว่าง kernel ไม่ถูกนับให้ kernel ใด
+
+**Design** (`idle_wb_probe.py` `2d695fc5…`, Triton + PyTorch venv):
+- cell = (w, idle, T) โดย w ∈ {0.125, 0.25, 0.375} × L2 ซึ่งต่ำกว่า dirty cap ½ ทั้งหมด
+  - idle "host": CPU sleep และไม่มี kernel รัน เหมือนช่วงว่างของ ncu ใช้ T ∈ {0, 0.1, 1, 10} ms
+  - idle "spin": spin kernel ราว 10 ms ที่ไม่แตะหน่วยความจำ
+- ทุก repetition: flush (อยู่นอก range) แล้ว **range A** = write kernel (full line) → sync → idle T จากนั้น **range B** = flush ซึ่งไล่ทุก line ออก line ที่ยัง dirty จึงถูกเขียนกลับในช่วงนี้
+- ตรวจ D ทุก repetition (นอก range) control range = sleep 10 ms หลัง flush (2 ช่วงต่อรอบ)
+- 5 repetition × 3 รอบ ncu app-range protocol `idle_wb_probe.sh` (`21df26d6…`) scorer `idle_wb_score.py` (`26fb10c6…`) unit test `test_idle_wb_score.py` (`eaeb53b8…`)
+- **วัดเฉพาะ write** เพราะ traffic เบื้องหลังเป็น read ล้วน (D-048)
+
+**ตัววัดหลัก:** IWB(w, idle, T) = (B(w, host, 0) − B(w, idle, T)) / byte ที่เขียน คือสัดส่วนที่ถูกเขียนกลับก่อน flush
+- ใช้ B แทน A เพราะทนต่อสองเรื่อง:
+  - smoke (w = 0.1875, T = 0 เท่านั้น) เห็น flush range นับ write เกินราว 5 % แบบคงที่
+  - อาจไม่แน่ใจว่า range นับ traffic ช่วงที่ไม่มี kernel ได้ครบ (control ในช่วง sleep เห็น read เบื้องหลัง 8–41 KB จึงน่าจะนับได้)
+- smoke: correctness ผ่าน, A(T = 0) = 0, A+B = 1.05, write ของ control = 0
+
+| ID | เกณฑ์ | ผล |
+|---|---|---|
+| **I-0 (ต้องผ่านก่อน)** | (a) correctness 0 failure (b) write ของ control สูงสุด ≤ 4 KB (c) ที่ T = 0 ทุก w: 0.95 ≤ A+B ≤ 1.15 | ไม่ผ่าน → หยุด |
+| I-1 | A(w, host, 0) ≤ 0.05 ทุก w | ไม่มี write-back ระหว่างเขียนใต้ cap (ทำซ้ำ B6) |
+| **I-2 (ตัวหลัก)** | IWB(w, host, 10 ms) | ≥ 0.5 ทุก w → **มี idle write-back** · ≤ 0.1 ทุก w → **ไม่มี** · นอกนั้น บางส่วน/ขึ้นกับขนาด |
+| I-3 | เส้น IWB ตาม T, spin เทียบ host, A เทียบ IWB | รายงานผลเท่านั้น |
+
+**คำทำนายของผู้วิจัย:**
+- I-0 ผ่าน
+- I-1 ผ่าน
+- **I-2 = มี idle write-back** ความมั่นใจปานกลาง จากรูปแบบใน B7r/B7r2 และผลที่ขึ้นกับช่วงว่างใน B6 W-5
+- ไม่มีคำทำนายเรื่องค่าคงที่เวลา หรือเรื่อง spin เทียบ host
+
+**ถ้า I-2 = ไม่มี:** สมมติฐานว่า ncu นับ write ไม่ครบเพราะช่วงว่างจะตกไป ความต่างระหว่าง K และ G ใน B7r/B7r2 ต้องมีสาเหตุอื่น เช่น ncu ทำบางอย่างกับ cache ระหว่าง kernel
+
+**ข้อจำกัด:**
+- GPU ตัวเดียว (laptop WSL2)
+- "ว่าง" ของ host sleep อาจต่างจากช่วงว่างจริงของ ncu เช่น clock อาจลดลง
+
+---
+
+> **ผล (MEASURED 2026-11-05 13:57–14:00 UTC, `benchmarks/results/idle_wb_20261105-135723/`, D-052):**
+>
+> | กฎ | ผล |
+> |---|---|
+> | I-0 | ✅ correctness 0 failure, write ของ control = 0, A+B ที่ T = 0 = 1.020 / 1.033 / 1.009 |
+> | I-1 | ✅ A(T = 0) = 0.000 ทุก w: ไม่มี write-back ระหว่างเขียนใต้ cap (ทำซ้ำ B6) |
+> | **I-2** | ❌ **ไม่มี idle write-back** IWB(10 ms) = −0.129 / −0.026 / −0.034 (**ผู้วิจัยทำนายผิด**) |
+>
+> **I-3 (descriptive):**
+> - dirty line อยู่ใน L2 ครบหลังว่าง 0.1, 1 และ 10 ms ทั้งแบบ host idle และแบบ spin (A ≈ 0, B ≈ 1)
+> - IWB ติดลบเล็กน้อยและโตตาม T: flush ที่ตามหลังช่วงว่างนานเขียนเพิ่ม 20–85 KB (แบบ spin มากกว่า)
+>   - ข้อสันนิษฐาน (ยังไม่ทดสอบ): client อื่นบน GPU (ฝั่ง Windows) เขียนข้อมูลค้างไว้ใน L2 ระหว่างที่เราว่าง แล้ว flush ของเราไล่ออก
+>
+> **ผลต่อคำอธิบายของ B7r/B7r2:**
+> - การที่ ncu แบบทีละ kernel นับ write ของ eager น้อยกว่าแบบรันติดกัน (exploratory) **ไม่ได้เกิดจากการเขียน dirty line ที่ค้างอยู่ตอนว่าง**
+> - คำอธิบายที่เหลือ (ยังไม่ทดสอบ): write-back ที่**ค้างคิวอยู่ตอน kernel จบ** (เช่น dirty victim ใน write-back buffer ตาม dvsc ของ B8) ถูกเขียนหลัง kernel จบ จึงไม่ถูกนับให้ kernel ใดในโหมดทีละ kernel
+> - B9 ทดสอบเฉพาะ dirty line ที่อยู่นิ่งใต้ cap ไม่ได้ทดสอบคิวที่เกิดจากแรงบีบ
+
+---
+
+## B9b pre-registration (Q-0..Q-3) — เขียน 2026-11-05 ก่อนวัด cell ใดของ B9b
+
+**คำถาม:** ncu แบบทีละ kernel ทำให้ write-back บางส่วน "หาย" (ไม่ถูกนับให้ kernel ใด) เมื่อข้อมูลเกิน dirty cap หรือไม่ ข้อนี้เป็นคำอธิบายที่เหลือของรูปแบบใน B7r/B7r2 หลังจาก B9 ตัดเรื่อง idle write-back ทิ้งไปแล้ว
+
+**Design** (`queued_wb_probe.py` `b130d1c0…`):
+- ใช้ write kernel และ flush ตัวเดียวกับ B9 ที่ w ∈ {0.375 (control ใต้ cap), 0.75, 1.0, 1.5} × L2
+- ทุก repetition ทำคู่ (write, flush) หลัง flush สองครั้ง
+  - **range mode:** split = range A [write] + range B [flush], joint = range C [write; flush] รันติดกันในช่วงเดียว ใช้เป็นค่าอ้างอิง
+  - **kernel mode:** ทั้งสองคู่วัดทีละ kernel ได้ W (write kernel) และ F (flush ถัดไป)
+- 5 repetition × 3 รอบต่อโหมด สลับกัน protocol `queued_wb_probe.sh` (`aaab7fe3…`) scorer `queued_wb_score.py` (`69fd4749…`) unit test `test_queued_wb_score.py` (`ac07a21a…`)
+- **คำทำนายของ v4** (`cache_sim_v4`, ไม่มีพารามิเตอร์ใหม่): A_v4 = 0 / 0.333 / 0.5 / 0.667 ที่ w = 0.375 / 0.75 / 1 / 1.5
+- smoke ที่ w = 0.5625 (ไม่ใช่ cell ที่ให้คะแนน):
+  - A = 0.11–0.13 และ W = 0.12 (v4 0.111)
+  - S_c 1.00–1.02, S_r 0.97–0.98, S_k 0.94–1.01 ต่อคู่ (F แกว่ง ±0.04)
+
+**นิยาม** (normalize ด้วย byte ที่เขียน ใช้ median ของทุก repetition ทุกรอบ): S_k = W + F, S_r = A + B, S_c = C
+
+| ID | เกณฑ์ | ผล |
+|---|---|---|
+| **Q-0 (ต้องผ่านก่อน)** | correctness 0 failure, write ของ control ≤ 4 KB, ที่ w = 0.375: S_k, S_r, S_c ∈ [0.95, 1.15] | ไม่ผ่าน → หยุด |
+| **Q-1 (ตัวหลัก)** | L = S_c − S_k ที่ w ∈ {0.75, 1, 1.5} | ≥ 0.05 ทุก w → **โหมดทีละ kernel ทำ write-back หาย** · ≤ 0.02 ทุก w → ไม่หาย · นอกนั้น mixed |
+| Q-2 | A − W ที่ w เหนือ cap | ≥ 0.05 ทุก w → หน้าต่างของ kernel นับ write-back ของตัวเองไม่ครบ · ≤ 0.02 → นับครบ · นอกนั้น mixed |
+| Q-3 | \|A − A_v4\| ≤ 0.10 ทุก w เหนือ cap | v4 ทำนาย write-back ของ write kernel หนึ่งตัวได้ |
+
+**คำทำนายของผู้วิจัย:**
+- Q-0 ผ่าน
+- **Q-1 = หาย** ความมั่นใจต่ำ: smoke ที่ 0.5625 ไม่เห็นชัด แต่ B7r/B7r2 เห็นที่ footprint ใหญ่กว่า
+- Q-2 = นับครบ ตาม smoke
+- Q-3 ผ่าน
+
+**ถ้า Q-1 = ไม่หาย:** ความต่างของ write ระหว่างสองโหมดใน B7r/B7r2 ไม่ได้มาจาก write kernel เดี่ยว แต่ต้องมาจากปฏิสัมพันธ์ระหว่าง kernel ใน chain เช่น การ read ของ kernel ถัดไปไปทำให้ dirty line ถูกไล่ออกต่างกัน ซึ่งจะเป็นงานของ model ไม่ใช่ของวิธีวัด
+
+---
+
+> **ผล (MEASURED 2026-11-05 14:06–14:10 UTC, `benchmarks/results/queued_wb_20261105-140557/`, D-054):**
+>
+> |  w | W (ทีละ kernel) | A (range) | v4 | F | B | S_k | S_r | S_c |
+> |---|---|---|---|---|---|---|---|---|
+> | 0.375 | 0.000 | 0.000 | 0.000 | 1.020 | 1.011 | 1.020 | 1.011 | 1.003 |
+> | 0.75 | **0.248** | **0.328** | 0.333 | 0.670 | 0.664 | **0.916** | 0.999 | 1.005 |
+> | 1.0 | **0.367** | **0.420** | 0.500 | 0.575 | 0.577 | **0.936** | 1.000 | 1.003 |
+> | 1.5 | 0.686 | 0.685 | 0.667 | 0.313 | 0.313 | 0.999 | 1.000 | 1.001 |
+>
+> | กฎ | ผล |
+> |---|---|
+> | Q-0 | ✅ |
+> | **Q-1** | **mixed:** S_c − S_k = +0.089 / +0.067 / +0.001 ที่ w = 0.75 / 1 / 1.5 คือหายที่ 0.75 และ 1 แต่ไม่หายที่ 1.5 (ผู้วิจัยทำนายว่าหายทุก w จึงถูกบางส่วน) |
+> | **Q-2** | **mixed:** A − W = +0.080 / +0.053 / −0.001 ส่วนที่หายอยู่ในหน้าต่างของ write kernel เอง (ผู้วิจัยทำนายว่านับครบ จึงผิด) |
+> | Q-3 | ✅ \|A − A_v4\| ≤ 0.1 (0.328 vs 0.333, 0.420 vs 0.500, 0.685 vs 0.667) |
+>
+> **สิ่งที่สรุปได้ (GA106):**
+> - เมื่อ kernel หนึ่งตัวดัน dirty footprint ข้าม cap ไป write-back ส่วนหนึ่ง (5–9 % ของ byte ที่เขียน ที่ w = 0.75–1) **เสร็จหลัง kernel จบ**
+> - ncu แบบทีละ kernel จึงไม่นับ byte เหล่านี้ให้ kernel ใดเลย
+>   - F ของ flush ถัดไปเท่ากับ B ของ range mode พอดี แปลว่า byte เหล่านี้ไม่ได้ไปโผล่ใน kernel ถัดไป
+>   - แบบ range นับครบ (S_r ≈ S_c ≈ 1.00)
+> - ที่ w = 1.5 ไม่มีส่วนที่หาย
+> - **ข้อควรระวังเชิงวิธีวัด:** ผลรวม `dram__bytes_write.sum` ราย kernel ของ ncu ต่ำกว่าจริงสำหรับ kernel ที่ข้าม dirty cap ซึ่งเข้ากับรูปแบบ exploratory ของ eager chain ใน B7r/B7r2
+> - model v4 ทำนาย byte ของ write kernel เดี่ยวได้ภายใน 0.1 (ที่ w = 1 ต่างที่สุด 0.08 เข้ากับ cap จริงที่ราว 0.5–0.56 จาก B6)
+
+---
+
+## B10 pre-registration (P-0, P-1, T-6b, T-8, T-9b) — เขียน 2026-11-06 ก่อนเช่าเครื่องและก่อนวัด cell ใดบน GA102
+
+**คำถาม:**
+1. กลไกที่วัดได้บน GA106 ถ่ายทอดไปยัง GA102 (RTX 3090, L2 6 MiB, bus 384-bit) หรือไม่ ได้แก่
+   - dirty cap ที่ ½ L2 ซึ่งนับเป็น line
+   - dvsc (dirty victim ที่ถูกเขียนกลับยังอ่านได้)
+   - read cliff ที่ไม่คม
+   - write-back ที่หลุดจากหน้าต่าง ncu แบบทีละ kernel
+2. VM บน vast.ai อ่าน hardware counter ได้หรือไม่ (container บน vast.ai ได้ `ERR_NVGPUCTRPERM` ทุกครั้ง)
+
+**ทำไมต้องเป็น GA102:**
+- ใช้ architecture เดิม (Ampere, sm_86) และคาดว่ามี L2 ต่อ memory controller เท่ากัน (512 KiB × 12 เทียบกับ × 6 บน GA106)
+- ถ้าผลต่างจาก GA106 แปลว่ากลไกผูกกับชิปตัวนั้น ไม่ใช่ของ Ampere ทั้งรุ่น
+- เป็นเครื่อง VM ราคาถูกที่สุดที่เช่าได้ (มี offer แค่ 2 รายการ, D-056)
+
+**สิ่งที่เหมือน GA106 ทุกประการ** (sha256 ตรงกับที่บันทึกไว้ใน `environment.txt` ของรอบ GA106):
+
+| ส่วน | ไฟล์ (sha256) |
+|---|---|
+| source | `wb_probe.cu` `7dbbd451…`, `common.cuh` `7a5ea8b8…`, `dmk_host.hpp` `5bcd6f86…` |
+| protocol | `wb_probe_b6b.sh` `0dc645e8…`, `wb_probe_b8.sh` `96049e73…`, `queued_wb_probe.sh` `aaab7fe3…`, `queued_wb_probe.py` `b130d1c0…` |
+| scorer | `wb_probe_b6b_score.py` `8f7092ba…`, `wb_probe_b8_score.py` `dcb32d92…`, `queued_wb_score.py` `69fd4749…` |
+| คำทำนายของ model | `b8_predictions.json` `8aafe4da…` |
+
+- cell ทุกตัวเป็นสัดส่วนของ L2 และ probe อ่านขนาด L2 จาก device เอง (`cudaDeviceProp` / `torch`)
+- toolchain เป็น nvcc 12.5 ที่ใช้ flag เดิม และ ncu ของ CUDA 12.5 (laptop ใช้ V12.5.82 และ ncu 2024.2.1)
+- ต้อง build บน VM เพราะ binary ของ laptop ต้องใช้ GLIBC 2.38 (D-055)
+
+**คำทำนายของ B8 ใช้กับ L2 6 MiB ได้โดยไม่ต้องคำนวณใหม่:**
+- ทำ check แบบ exploratory ในเครื่องก่อนเขียนเอกสารนี้: simulate v4 และ dvsc ใหม่ด้วย `L2_BYTES = 6291456`
+- ได้ max |Δ| เทียบกับไฟล์ที่ล็อกไว้ = **0.0002** ใน 21 cell
+- scorer ของ B8 จึงใช้ไฟล์เดิม ส่วน B9b อ่าน `l2_bytes` จาก meta อยู่แล้ว
+
+**สิ่งที่เปลี่ยนพร้อมกัน (ไม่ใช่ ablation ตัวแปรเดียว):**
+- die (GA102 / GA106)
+- ขนาด L2 (6 / 3 MiB)
+- memory (GDDR6X 936 GB/s / GDDR6 laptop)
+- OS (Linux ใน VM / WSL2)
+- driver (610.57 ของ host / 591.74)
+- **ถ้า verdict ต่าง จะระบุสาเหตุเป็นตัวแปรเดียวไม่ได้**
+
+**ตัว wrapper:**
+- wrapper `remote_vm_pilot.sh` แก้ก่อนล็อกเพื่อให้รันได้แม้ไม่ใช่ root (เรียก ncu ผ่าน sudo), ประหยัด disk และ dump SASS ของ binary B6 จาก laptop
+- ไม่ได้แตะ protocol, scorer หรือ source
+
+| ID | เกณฑ์ | คำทำนายของผู้วิจัย |
+|---|---|---|
+| **P-0 (ต้องผ่านก่อน, เชิงปฏิบัติการ)** | ncu บน VM ไม่ได้ `ERR_NVGPUCTRPERM` และ `correctness_failures` = 0 ทุกรอบของ B6b/B8 | **ผ่าน**: ใน VM ระบบ guest คุม driver เองและรัน ncu เป็น root ได้ ถ้าไม่ผ่าน: บันทึกว่า "VM ไม่ช่วยเรื่อง counter" แล้วหยุด และไม่ลอง host อื่นในงบนี้โดยไม่ขอ PI |
+| P-1 (ตัวตนของโค้ด) | SASS ของ `rw_kernel`, `readback_kernel`, `flush_l2_read_kernel` ใน build ของ VM ตรงกับ binary B6 ของ laptop (`e0c82a53…`) ทุก instruction (ไม่นับ address) | **ตรง** (nvcc 12.5 และ flag เดิม) ถ้าไม่ตรง: รายงานผลว่า "source เดียวกัน แต่ SASS ต่าง" |
+| **T-6b** | ให้คะแนนด้วย scorer ของ B6b โดยไม่แก้อะไร | V-0 ผ่าน · **V-2 = H-D · V-3 = คม · V-4 = นับเป็น line · V-5 = ยังอยู่ใน cache** (ความมั่นใจปานกลางถึงสูง เพราะ Finn 2026 รายงาน rule ครึ่งหนึ่งของ way บน AD102 ซึ่งเป็นอีกรุ่น) · V-1 (ค่าสัมบูรณ์ของ B6 บน GA106): **ความมั่นใจต่ำ** เพราะ w = 0.5 อยู่บนขั้นบันไดพอดี (GA106 = 0.194) ถ้าตำแหน่ง cap ของ GA102 ต่างไปราว 0.03 L2 ก็ไม่ผ่านได้ |
+| **T-8** | ให้คะแนนด้วย scorer ของ B8 และ `b8_predictions.json` เดิม | Z-0 ผ่าน · **Z-1 = dvsc ได้รับการสนับสนุน** (ความมั่นใจต่ำถึงปานกลาง: life 0.125 fit มาจาก GA106 ถ้าคิว write-back มีขนาดต่อ slice เท่าเดิม สัดส่วนจะเท่าเดิม) · **Z-2 = capacity ≥ 0.94 L2** · **Z-2b = cliff ไม่คม** (RDR(1.031) ≤ 0.90) |
+| **T-9b** | ให้คะแนนด้วย scorer ของ B9b | Q-0 ผ่าน · **Q-1 = mixed รูปแบบเดิม** (L ≥ 0.05 ที่ w = 0.75 และ 1, ≤ 0.02 ที่ 1.5) · Q-2 = mixed · **Q-3 ผ่าน** ความมั่นใจต่ำ เพราะขนาดของส่วนที่หายขึ้นกับความลึกของคิวเทียบกับความเร็วที่ DRAM ระบายออก ซึ่งต่างกันบน GA102 |
+
+**Verdict รวมของ B10 (ล็อก):** นับ verdict ของ 9 กฎหลัก {V-2, V-3, V-4, V-5, Z-1, Z-2, Z-2b, Q-1, Q-3} ที่ตรงกับ GA106 (V-1 รายงานแยกเป็นการ replicate ค่าสัมบูรณ์)
+- **ตรงทั้ง 9** → กลไกถ่ายทอดไปยัง GA102
+- **V-2, V-3 หรือ V-4 ข้อใดข้อหนึ่งไม่ตรง** → rule ของ dirty cap ผูกกับ GA106 (negative ที่สำคัญ ต้องแก้ claim C5)
+- นอกนั้น → ถ่ายทอดได้บางส่วน รายงานรายกฎ
+- **คำทำนายของผู้วิจัย:** ตรงทั้ง 9 แต่ไม่มั่นใจที่ Z-1 และ Q-1
+
+**เครื่องและงบ (D-051, D-056):**
+- offer 59353127 (RTX 3090 VM, Japan, $0.241/ชม., disk 28 GB, ไม่คิดค่า bandwidth)
+- `HARD_CAP_S` = 5400 s จึงจ่ายไม่เกินราว $0.37
+- destroy ทันทีหลังดาวน์โหลดผลแล้วยืนยันว่า destroy จริง
+- รายงานค่าใช้จ่ายจากผลต่างของเครดิต
+- image ระบุเอง (`docker.io/vastai/kvm:ubuntu_cli_22.04-2025-05-16`) ไม่ใช้ template
+
+**ข้อจำกัด:**
+- การ์ดเดียว host เดียว ไม่ได้ล็อก clock
+- virtualization อาจกระทบเวลา แต่ไม่ควรกระทบจำนวน byte
+- ไม่รู้ associativity และ hash ของ slice บน GA102
+- Linux native จะไม่มี DRAM read เบื้องหลังจาก Windows คาดว่า floor ของ range mode จะต่ำกว่า laptop (เป็นข้อสังเกต ไม่ใช่กฎ)
+- ยังไม่ได้รัน smoke บน GA102 ก่อนล็อก เพราะยังไม่มีเครื่อง
+
+---
+
+> **ผล (MEASURED 2026-11-06 03:53–03:58 UTC, RTX 3090 VM บน vast.ai, `benchmarks/results/b10_rtx3090_vm_20261106-0353/`, D-057):**
+>
+> **เครื่อง:**
+> - GA102, 82 SM, L2 6,291,456 B, 384-bit
+> - guest driver 575.51.03, Ubuntu 22.04.5
+> - nvcc V12.5.82, ncu 2024.2.1
+>
+> **ความน่าเชื่อถือของการให้คะแนน:** ให้คะแนนบน VM แล้วให้คะแนนซ้ำในเครื่องด้วย scorer เดิม ได้ผลตรงกันทุกบรรทัด
+>
+> | กฎ | GA106 (อ้างอิง) | GA102 (B10) | ตรงกัน? |
+> |---|---|---|---|
+> | **P-0** | – | ✅ ncu อ่าน counter ได้ในฐานะ root แม้ `RmProfilingAdminOnly: 1` และ correctness 0 failure ทุกรอบ | ทำนายถูก |
+> | **P-1** | – | ✅ SASS ของ `rw_kernel` / `readback_kernel` / `flush_l2_read_kernel` (216 / 176 / 48 instruction) ตรงกับ binary B6 ของ laptop ทั้งข้อความและ encoding | ทำนายถูก |
+> | V-0 | ✅ | ✅ | ✓ |
+> | V-1 | ✅ 0.194 / 0.991 | ✅ 0.149 / 0.974 | ✓ |
+> | **V-2** | H-D | **H-D** (Δ −0.031 ถึง +0.036) | ✓ |
+> | **V-3** | คม (0.014 / 0.886) | **partial** (0.009 / **0.725**) | **✗** |
+> | **V-4** | นับเป็น line (0.994) | **ไม่ตีความ: control ไม่ผ่าน** WBR(0:0.375) = 0.143 | **✗** |
+> | **V-5** | ยังอยู่ใน cache | ยังอยู่ใน cache (RB/WB 0.001) | ✓ |
+> | Z-0 | sanity ✅ และ replication 0.138 ✅ | sanity ✅ แต่ replication ❌ RB(1, 1/8) = **0.452** | sanity ✓ |
+> | **Z-1** | dvsc | **dvsc** (ใกล้ dvsc 86 % ของ cell, MAE 0.126 เทียบกับ v4 0.257) | ✓ |
+> | **Z-2** | ≥ 0.94 | ≥ 0.94 (RDR 0.009) | ✓ |
+> | **Z-2b** | ไม่คม (0.539) | ไม่คม (0.542) | ✓ |
+> | Z-3 | 0.993 | 0.963 | (รายงานผลเท่านั้น) |
+> | Q-0 | ✅ | ✅ | ✓ |
+> | **Q-1** | mixed (+0.089 / +0.067 / +0.001) | **mixed** (+0.144 / +0.092 / **+0.035**) | verdict ✓ แต่รูปแบบที่ทำนายไว้ (≤ 0.02 ที่ w = 1.5) ผิด |
+> | Q-2 | mixed | mixed (+0.061 / +0.007 / +0.000) | ✓ |
+> | **Q-3** | ✅ | ✅ (A 0.323 / 0.441 / 0.680 เทียบกับ v4 0.333 / 0.500 / 0.667) | ✓ |
+>
+> **Verdict รวมตามกฎที่ล็อก: ตรง 7 จาก 9 ข้อหลัก**
+> - V-3 และ V-4 ไม่ตรง จึงเข้ากรณี **"rule ของ dirty cap ผูกกับ GA106"** และต้องแก้ claim C5
+> - ผู้วิจัยทำนายว่าตรงทั้ง 9 ข้อจึงผิด และผิดในข้อที่มั่นใจ (V-3, V-4) ส่วนข้อที่ไม่มั่นใจ (Z-1, Q-1) กลับตรง
+>
+> **ถ่ายทอดไปยัง GA102 ได้:**
+> - write-back ขึ้นกับ dirty footprint อย่างเดียว (V-2)
+> - line ที่ถูกเขียนกลับยังอยู่ใน cache (V-5)
+> - dvsc (Z-1)
+> - read cliff รอบ 1.03 L2: RDR ที่ r = 0.906…1.063 ได้ 0.005 / 0.009 / 0.025 / 0.053 / 0.542 / 0.995 (GA106 0.002 / 0.005 / 0.009 / 0.073 / 0.539 / 0.998)
+> - v4 ทำนาย write-back ของ write kernel เดี่ยวได้ (Q-3)
+> - ncu แบบทีละ kernel นับ write-back ไม่ครบ (Q-1, Q-2)
+>
+> **ไม่ถ่ายทอดตามเกณฑ์:**
+> - ความคมของขั้นบันได: WBR ที่ w = 0.4375 / 0.5 / 0.5625 / 0.625 / 0.6875 ได้ 0.009 / 0.149 / 0.725 / 0.974 / 0.979 (GA106 0.014 / 0.194 / 0.886 / 0.991 / 1.000)
+> - ขั้นยังอยู่ในช่วง 0.44–0.63 L2 แต่ที่ 0.5625 ต่ำกว่าเกณฑ์ 0.80
+>
+> **ทดสอบไม่ได้:**
+> - คำถามว่า cap นับเป็น line หรือเป็น byte ทดสอบไม่ได้ เพราะ control ของ sector ไม่ผ่าน
+> - median ของ cell ที่ active ได้ 0.954 แต่ไม่ตีความตามกฎ
+>
+> **ข้อสังเกต (exploratory หลังเห็นผล ไม่เปลี่ยน verdict):**
+> 1. **cell inactive ที่ WBR สูงผิดปกติเป็น cell แรกของ process ทั้งคู่:**
+>    - full 0:0.1875 ได้ 0.031 และ sector 0:0.375 ได้ 0.143 (≈ 82 KiB ต่อ range) ขณะที่ WB แบบทีละ kernel ≈ 0 (0.000, 0.005)
+>    - cell inactive อื่นได้ ≤ 0.004
+>    - control ของ V-4 บน GA106 ที่ผ่านแบบเฉียด (0.042) ก็เป็น cell แรกเช่นกัน
+>    - **สมมติฐาน:** write-back จากช่วงเตรียม buffer ค้างคิวแล้วไปเสร็จใน range แรก ทดสอบได้ด้วยการใส่ cell หลอกไว้หน้าสุด
+> 2. **B9b บน GA102 range แยกก็นับไม่ครบ:**
+>    - S_c − S_r = +0.082 / +0.088 / +0.039 ที่ w = 0.75 / 1 / 1.5 (GA106 ≈ 0)
+>    - write-back ส่วนหนึ่งเสร็จในช่วงว่างระหว่างสอง range
+>    - ข้อแนะนำ "ใช้ app-range" จึงต้องเข้มขึ้นเป็น "range ต้องครอบ kernel ถัดไปด้วย"
+> 3. **RB(1, 0.125) = 0.452** (GA106 0.138, B6c 0.085) แปลว่า dvsc ที่ cell นี้อ่อนกว่าบน GA106
+> 4. **VM:** เครดิตลดลงเท่ากับช่วงที่ VM อยู่ในสถานะ running (≈ 10 นาที) จึงดูเหมือนว่าช่วง loading ≈ 15 นาทีไม่ถูกคิดเงิน (อนุมานจากเครดิต)
+
+---
+
+## B11 pre-registration: ข้าม architecture (Turing, Ada, Blackwell) + B10b first-cell — เขียน 2026-11-06 ก่อนเช่าเครื่องใด
+
+**คำถาม (PI, D-059):** การวัดที่ไม่ข้าม architecture จะเป็นงานวิจัยได้จริงไหม? ผลที่วัดด้วย counter ทั้งหมดตอนนี้มาจาก Ampere (GA106, GA102) รอบนี้ถามว่า
+1. dirty cap ที่ ≈ ½ L2 (C5 ฉบับแคบ) เกิดบน architecture อื่นไหม
+2. ncu ราย kernel นับ write-back ขาด (C6) เกิดบน architecture อื่นไหม
+3. control ของ V-4 ที่ไม่ผ่านบน GA102 เป็นเพราะ "cell แรกของ process" หรือไม่ (B10b)
+
+**GPU** (VM บน vast.ai PI อนุมัติ GPU และงบ $1 แล้ว):
+
+| Architecture | GPU | die (คาด) | L2 (คาด, probe อ่านค่าจริงเอง) |
+|---|---|---|---|
+| Turing (sm_75) | RTX 2060S | TU106 | 4 MiB |
+| Ada (sm_89) | RTX 4060 Ti หรือ RTX 4080S (ตัวที่ถูกกว่าตอนเช่า) | AD106 / AD103 | 32 / 64 MiB |
+| Blackwell (sm_120) | RTX 5060 Ti | GB206 | 32 MiB |
+
+**สิ่งที่เหมือน B10 ทุกประการ:**
+- source, protocol, scorer และ `b8_predictions.json` ใช้ hash เดียวกับใน `LOCK_20261106_b10.sha256` และ cell ทุกตัวเป็นสัดส่วนของ L2
+- เช็ค scale ซ้ำ: simulate คำทำนาย B8 ที่ L2 = 4 / 32 / 64 MiB ได้ max |Δ| เทียบกับไฟล์ที่ล็อก = 0.0001 / 0.0003 / 0.0003 จึงใช้ไฟล์เดิม
+
+**สิ่งที่เปลี่ยน (นอกจาก architecture):**
+- **ขนาด L2 และชนิด memory:** เปลี่ยนตาม GPU
+- **Blackwell ต้องใช้ toolchain ใหม่:** CUDA 12.9 (nvcc ของ 12.9 และ ncu 2025.2.x จากแพ็กเกจ `cuda-nsight-compute-12-9`) และ torch 2.7.1+cu128 เพราะ CUDA 12.5 build sm_120 ไม่ได้
+- GPU อื่นใช้ CUDA 12.5, ncu 2024.2.1 และ torch 2.7.1+cu126 เหมือน B10
+- ถ้า Blackwell ให้ผลต่าง จะแยกผลของ architecture ออกจากผลของ ncu ไม่ได้
+- **B10b เพิ่มเข้ามา:** `wb_probe_firstcell.sh` คือ sector set ของ B6b ที่ใส่ cell หลอก 0:0.25 ไว้หน้าสุด เปลี่ยนตัวแปรเดียว ใช้ binary และ flag เดิม
+  - scorer: `wb_probe_firstcell_score.py` (กฎ F-0..F-2, V-4')
+- **wrapper:** `remote_vm_pilot.sh` เลือก toolchain ตาม `CUDA_ARCH` และรัน B10b หลัง B8
+
+**กฎตัดสิน** (ต่อ GPU ล็อกไว้ใน `b11_summary.py`, `wb_probe_firstcell_score.py` และ scorer เดิม):
+
+| ID | เกณฑ์ |
+|---|---|
+| **P-0 (ต้องผ่านก่อน)** | อ่าน counter ได้ (B6b และ B8 ให้ score) และ `correctness_failures` = 0 ทุกรอบ ถ้าไม่ผ่าน GPU นั้นไม่นับใน verdict ข้ามรุ่น |
+| match | จำนวน verdict หลัก 9 ข้อ (V-2, V-3, V-4, V-5, Z-1, Z-2, Z-2b, Q-1, Q-3) ที่ตรงกับ GA106 (รายงานผล) |
+| **C5n** | B6b full set (range): WBR(0:0.4375) ≤ 0.10 **และ** WBR(0:0.625) ≥ 0.80 → "มี cap (เปลี่ยนในช่วง 0.44–0.63 L2)" · WBR(0:0.6875) < 0.50 → "ไม่มี cap ถึง 0.69 L2" · นอกนั้น other |
+| **C6** | B9b: L = S_c − S_k ที่ w = 0.75 ≥ 0.05 → มี · ≤ 0.02 → ไม่มี · นอกนั้น inconclusive |
+| F-0 | B10b: correctness 0 และ sector 0:2 WB และ WBR ∈ [0.9, 1.1] |
+| F-1 | WBR(0:0.375) เมื่อเป็น cell ที่สอง: < 0.05 → สนับสนุน artifact · ≥ 0.10 → control active เอง · นอกนั้น inconclusive |
+| F-2 | WBR ของ cell หลอก (ซึ่งเป็น cell แรก) ≥ 0.05 → มี inflation ที่ cell แรก (ใช้สนับสนุน ไม่ใช้ตัดสิน) |
+| **FC** | รวมค่า c1 (control เป็น cell แรก, จาก B6b) กับ c2 (เป็น cell ที่สอง, จาก F-1): c1 < 0.05 → ไม่มีอะไรให้ทดสอบ · c1 ≥ 0.05 และ c2 < 0.05 → **artifact ยืนยัน** · c2 ≥ 0.10 → ไม่ใช่ artifact · นอกนั้น inconclusive |
+| V-4' | กฎ V-4 ของ B6b ใช้กับข้อมูล B10b |
+
+**Verdict ข้ามรุ่น (ล็อก):** นับเฉพาะ GPU ใหม่ที่ผ่าน P-0 ส่วน GA106 และ GA102 ไม่นับ
+- **C5n-X:** มี cap บน ≥ 2 GPU → **generalizes** (ข้าม ≥ 3 architecture รวม Ampere)
+- C5n-X: มีบน 0 GPU (จากที่ valid ≥ 2) → **Ampere-specific**
+- C5n-X: นอกนั้น mixed และถ้า valid น้อยกว่า 2 → insufficient
+- **C6-X:** ใช้เกณฑ์เดียวกันกับ C6
+
+**ที่มาของเกณฑ์:** C5n คือ claim C5 ฉบับแคบตาม D-057 เกณฑ์ตั้งหลังเห็นข้อมูล GA106/GA102 (0.014 / 0.991 และ 0.009 / 0.974) แต่ตั้งก่อนเห็นข้อมูลของ GPU ใหม่ใด ๆ
+
+**คำทำนายของผู้วิจัย:**
+
+| กฎ | Turing (2060S) | Ada | Blackwell (5060 Ti) |
+|---|---|---|---|
+| P-0 | ผ่าน | ผ่าน | ผ่าน (ความมั่นใจปานกลาง: ncu 2025.2 กับ GB206) |
+| C5n | มี (**ต่ำ**: ไม่มีหลักฐานภายนอกบน Turing) | มี (ปานกลาง–สูง: Finn 2026 บน AD102) | มี (ปานกลาง) |
+| C6 | มี (ต่ำ) | มี (ปานกลาง) | มี (ปานกลาง) |
+| V-2 / V-5 | H-D / ยังอยู่ใน cache (ต่ำ) | H-D / ยังอยู่ใน cache (ปานกลาง) | H-D / ยังอยู่ใน cache (ต่ำ–ปานกลาง) |
+| V-3 | ไม่ทำนาย | ไม่ทำนาย | ไม่ทำนาย |
+| V-4' | นับเป็น line (ต่ำ) | นับเป็น line (ปานกลาง: rule ของ Finn นับ line) | นับเป็น line (ต่ำ) |
+| Z-1 | ไม่ทำนาย | dvsc (ปานกลาง: Finn บอกว่า "stays readable") | ไม่ทำนาย |
+| Z-2 / Z-2b | ≥ 0.94 / ไม่คม (ต่ำ) | ≥ 0.94 / ไม่คม (ปานกลาง) | ≥ 0.94 / ไม่คม (ต่ำ) |
+| Q-3 | ผ่านถ้ามี cap | ผ่าน | ผ่าน |
+| FC | ถ้า control ของ B6b ไม่ผ่าน → artifact ยืนยัน (ต่ำ–ปานกลาง) | เช่นเดียวกัน | เช่นเดียวกัน |
+| **verdict ข้ามรุ่น** | **C5n-X = generalizes, C6-X = generalizes** | | |
+
+**ถ้า C5n-X = Ampere-specific:**
+- เป็น negative ที่สำคัญ: rule ½ L2 ที่ Finn รายงานบน Ada จะขัดกับผลของเรา ต้องตรวจวิธีวัดก่อนสรุป
+- งานของเราจะกลายเป็น characterization ของ Ampere
+
+**เครื่องและงบ:**
+- เช่า 3 เครื่องพร้อมกัน แต่ละเครื่องใช้ `HARD_CAP_S` = 5400 s
+- ใช้ offer ที่ verified, `vms_enabled=true` และ ≤ $0.35/ชม.
+- ถ้าช่วงโหลดก็ถูกคิดเงิน กรณีแย่สุดราว $0.75 ยังอยู่ในเพดาน $1
+- **ไม่เปลี่ยน GPU เอง:** ถ้ารุ่นที่อนุมัติไม่มี offer ให้ข้ามรุ่นนั้นแล้วรายงาน PI ยกเว้นฝั่ง Ada ที่ได้รับอนุมัติไว้ 2 รุ่น
+- image ระบุเองและไม่ใช้ template
+
+**ข้อจำกัด:**
+- architecture ละ 1 การ์ด, consumer เท่านั้น, ไม่มี Hopper/A100 (ไม่มี offer แบบ VM)
+- ไม่ได้ล็อก clock
+- ขนาด L2 เปลี่ยนไปพร้อมกับ architecture
+- ncu ของ Blackwell เป็นรุ่นอื่น
+- ยังไม่ได้รัน smoke บนเครื่องใด
+
+---
+
+> **ผล (MEASURED 2026-11-06 04:57–05:30 UTC, `benchmarks/results/b11_*_20261106/`, D-060):**
+>
+> **ความน่าเชื่อถือ:**
+> - Turing และ Ada รันด้วย wrapper ตัวที่ล็อกไว้ (`cc46ed02…`)
+> - Blackwell ต้องรัน 5 รอบเพราะปัญหา driver ดู D-060
+> - ตัวสรุปรวมผลอยู่ที่ `benchmarks/results/b11_cross_arch_summary.json`
+>
+> | GPU (architecture) | L2 | P-0 | C5n: WBR(0:0.4375) / WBR(0:0.625) | C6: L(0.75) | ตรงกับ GA106 | FC (cell แรก) |
+> |---|---|---|---|---|---|---|
+> | *GA106 (Ampere, อ้างอิง)* | 3 MiB | ✅ | มี: 0.014 / 0.991 | 0.089 | 9/9 | – |
+> | *GA102 (Ampere, B10)* | 6 MiB | ✅ | มี: 0.009 / 0.974 | 0.144 | 7/9 | – |
+> | **TU106 RTX 2060S (Turing)** | 4 MiB | ✅ | **มี:** 0.016 / 0.976 (V-3 คม) | **0.147** | 5/9 (V-2, V-4, Q-1, Q-3) | **artifact ยืนยัน:** c1 0.181 → c2 0.001 และ V-4' = นับเป็น line |
+> | **AD103 RTX 4080S (Ada)** | 64 MiB | ✅ | **มี:** 0.071 / 0.933 (V-3 partial) | **0.058** | 7/9 (V-3, Q-3) | ไม่มีให้ทดสอบ (c1 0.001) และ V-4 = นับเป็น line |
+> | GB206 RTX 5060 Ti (Blackwell) | 32 MiB | **❌** `dram__bytes_*` = n/a | – | – | – | – |
+>
+> **Verdict ข้ามรุ่นตามกฎที่ล็อก:**
+> - **C5n-X = generalizes (มี cap บน 2/2 GPU ใหม่)**
+> - **C6-X = generalizes (ncu ราย kernel นับขาดบน 2/2)**
+> - เมื่อรวม Ampere แล้ว กลไกเกิดบน 3 architecture (Turing, Ampere, Ada) และ 4 die
+> - Blackwell ไม่ผ่าน P-0 จึงไม่นับ
+>
+> **คำทำนายของผู้วิจัยเทียบกับผล:**
+> - verdict ข้ามรุ่นทั้งสองข้อ: ทำนายถูก
+> - C5n บน Turing (ความมั่นใจต่ำ): ถูก
+> - P-0 บน Blackwell: **ผิด**
+> - V-4' (นับเป็น line): ถูกทั้ง Turing และ Ada
+> - Z-1 บน Ada (dvsc): ถูก
+>
+> **ผลรายกฎอื่น:**
+> - Z-1 = dvsc ทั้ง Turing และ Ada
+> - Z-2 ≥ 0.94 ทั้งคู่
+> - V-5 ยังอยู่ใน cache ทุกตัว
+> - Z-2b ไม่คมทุกตัว
+> - **Q-3 ไม่ผ่านทั้ง Turing และ Ada:** v4 ทำนาย write-back ของ write kernel เดี่ยวผิดเกิน 0.1
+>   - Turing ที่ w = 1: 0.372 เทียบกับที่ทำนาย 0.5
+>   - Ada ทุก w: 0.189 / 0.317 / 0.543 เทียบกับที่ทำนาย 0.333 / 0.5 / 0.667
+> - V-2 ของ Turing = inconclusive: Δ +0.049 / +0.053 ที่ r + w = 0.875 คือ clean footprint มีผลเล็กน้อยใกล้ capacity
+> - Q-1 ของ Turing = หายทุก w (0.147 / 0.169 / 0.057)
+>
+> **B10b: artifact "cell แรกของ process" ยืนยันบน Turing**
+> - control ของ V-4 ได้ 0.181 เมื่อเป็น cell แรก และ 0.001 เมื่อเป็น cell ที่สอง
+> - เมื่อแก้แล้ว V-4' = นับเป็น line
+> - ข้อนี้อธิบายได้ว่าทำไม V-4 บน GA102 ตีความไม่ได้ (ยังไม่ได้วัดซ้ำบน GA102)
+> - **ผลสะสม:** cap นับเป็น line บน GA106, TU106 และ AD103
+>
+> **ข้อสังเกต (exploratory หลังเห็นผล):**
+> 1. read cliff ที่ r = 1.031 L2 ได้ RDR **0.539 / 0.542 / 0.531 / 0.516** (GA106 / GA102 / TU106 / AD103) คือเกือบคงที่ข้าม 3 architecture และขนาด L2 3–64 MiB
+> 2. **กราฟขั้นบันไดของ Ada ต่างรูป:** WBR ที่ w = 0.4375…0.6875 ได้ 0.071 / **0.558** / 0.614 / 0.933 / 0.939 คือเริ่มเร็วกว่าและมีช่วงราบ
+>    - ใน B9b ของ Ada ที่เขียน kernel เดียวต่อจาก L2 สะอาด cap ที่วัดได้จริง ≈ w·(1 − A) = 0.61 / 0.68 / 0.69 L2
+>    - ข้อนี้อธิบาย Q-3 ที่ไม่ผ่านได้: การเขียนครั้งเดียวกับการเขียนแบบ steady state อาจมี cap ต่างกัน
+> 3. Turing ใน B9b มี cap ≈ 0.50 / 0.63 / 0.51 L2
+> 4. RB(1, 0.125) ไม่ผ่าน replication บนทุก GPU ใหม่ (0.526 / 0.354 เทียบกับ B6c 0.085) dvsc ที่ cell นี้อ่อนกว่า GA106 ทุกตัว
+>
+> **ข้อจำกัดเพิ่มเติม:**
+> - Blackwell ใช้ driver คนละรุ่น (575.57.08 open) และ ncu 2025.2.1
+> - สาเหตุที่ DRAM metric เป็น n/a บน GB206 ยังไม่ได้พิสูจน์ อาจเป็นข้อจำกัดของ ncu กับ GeForce Blackwell, เป็นผลของ VM หรือเป็นการตั้งค่า
+
+
+---
+
+## B12 pre-registration: ความเพี้ยนของ `do_bench` จาก dirty L2 กับ GEMV ตอน LLM decode (G-0..G-2) — เขียน 2026-11-06 ก่อนวัดบน GPU ใด
+
+**ที่มา (PI, D-061):** "อยากให้ไป merge กับด้าน AI มากขึ้น"
+
+**กลไก:**
+- `triton.testing.do_bench` ล้าง L2 ก่อนจับเวลาทุกครั้งด้วย `cache.zero_()` บน buffer int32 ขนาด 256 MiB ซึ่งเป็นการ**เขียน** (Triton ทุก tag v2.0.0–v3.9.0 ทำแบบนี้ และ benchmarker ของ Inductor ก็เช่นกัน)
+- ตามผล C5n (B6b/B9b/B11) หลังการล้างแบบนี้ L2 จะยังมี **dirty residue ≈ R × L2**
+- kernel ที่ถูกจับเวลาต้องเขียน residue นี้กลับ DRAM ตอนไล่ line ออก
+- Triton #12554 วัดได้บน A100 ว่าผลอิ่มที่ราว ½ L2 แต่ยังอธิบายไม่ได้
+
+**Design** (`dobench_flush_probe.py`, `dobench_flush_probe.sh`, `dobench_flush_score.py` พร้อม test, `remote_b12.sh`):
+- **kernel ที่จับเวลา:** `F.linear(x, W)` แบบ fp16 x = [1, 4096] คือ linear layer ของ LLM ตอน decode ที่ batch 1 ติด memory และอ่าน W ครั้งเดียว
+- **ขนาด W:** w_read × L2 โดย w_read ∈ {2, 4, 8} จึงไล่ทุก line ใน L2 ออก
+- **เปลี่ยนตัวแปรเดียว:** วิธีล้างก่อนเรียก คือ `zero` (เหมือน do_bench) เทียบกับ `read` (`cache.view(float32).sum()`)
+- **range mode** (ncu app-range, 5 รอบ × 3 run): นับ DRAM bytes ของ range ที่มีแค่ GEMV และมี control range ว่าง 2 ช่วง
+- **timing mode** (ไม่มี profiler, 40 รอบ × 3 run, สลับ variant): ใช้ CUDA event เหมือน do_bench โดยไม่ sync ระหว่าง flush กับ start
+- **exploratory:** W ขนาดคงที่ 4096 × 4096 (32 MiB) และ `triton.testing.do_bench` จริงแบบ default เทียบกับแบบ patch `clear_cache` ให้อ่าน
+- ตรวจ correctness กับ fp32 ทุกขนาดก่อนวัด
+- **GPU** (การ์ดรุ่นเดิมที่ PI อนุมัติแล้ว ใช้งบที่เหลือของ B11): RTX 2060S (TU106, 4 MiB), RTX 3090 (GA102, 6 MiB), RTX 4080S (AD103, 64 MiB)
+
+**คำทำนายเชิงปริมาณ:**
+- R_gpu = 1.5 × (1 − A(1.5)) จาก B9b ของแต่ละ GPU ซึ่งเป็นค่าที่วัดไว้แล้ว ไม่ได้ fit ใหม่: GA102 **0.480**, TU106 **0.506**, AD103 **0.686**
+- v4 ทำนาย 0.5 ทุกตัว
+
+| ID | เกณฑ์ |
+|---|---|
+| **G-0 (ต้องผ่านก่อน)** | correctness 0; control range เขียน ≤ 64 KiB; หลัง `read` flush GEMV เขียน ≤ 0.05 L2 และอ่าน 0.9–1.2 × W |
+| **G-1 (ตัวหลัก)** | X(w) = [write ของ GEMV หลัง `zero` − หลัง `read`] / L2 · \|X − R_gpu\| ≤ 0.15 ทุก w → residue ตรงกับที่ B9b ทำนาย · ไม่ผ่านสักขนาด → not · นอกนั้น mixed (รายงานว่าใกล้ R_gpu หรือใกล้ v4 = 0.5 มากกว่า) |
+| G-1b | max X − min X ≤ 0.10 → residue ไม่ขึ้นกับขนาดของ GEMV |
+| **G-2** | Δt = median t(zero) − median t(read) · ทำนายจาก byte ที่อัตรา DRAM ของ run สะอาด: Δt_pred = X·L2 / ((R_read + W_read) / t(read)) · Δt > 0 ทุก w **และ** \|Δt − Δt_pred\| ≤ 0.30 Δt_pred ที่ w = 2 → ความเพี้ยนของเวลา = เวลาที่ใช้เขียน residue กลับที่อัตรา DRAM เดิม |
+| รายงาน | bias = Δt / t(read) (ทำนาย ≈ X / w_read เช่นที่ w = 2: TU106 ≈ 25 %, GA102 ≈ 24 %, AD103 ≈ 34 %) และค่า exploratory |
+
+**คำทำนายของผู้วิจัย:**
+- G-0 ผ่าน
+- **G-1 ผ่านทั้ง 3 GPU** (TU106 และ GA102 มั่นใจปานกลาง–สูง; AD103 มั่นใจปานกลาง เพราะ 256 MiB = 4 L2 เท่านั้น ขณะที่ R มาจาก w = 1.5)
+- AD103 จะใกล้ R_gpu มากกว่า v4
+- G-1b ผ่าน
+- G-2 ผ่าน (ปานกลาง: Triton #12554 เห็นอัตรา DRAM เท่าเดิมบน A100)
+- W 4096 × 4096 บน AD103 เล็กกว่า L2 จึงไล่ residue ออกไม่หมด ไม่ทำนายข้อนี้
+
+**ความหมายถ้าผ่าน:**
+- ใช้กฎ ½ L2 (และ R ที่วัดได้ของแต่ละรุ่น) ทำนายได้ว่า do_bench จะวัดเวลา kernel ที่ติด memory สูงเกินจริงเท่าไรบนการ์ดใดก็ได้: ≈ R·L2 / bytes ที่ kernel อ่าน
+- ทำให้รู้ว่าการเลือก config ด้วย autotune อาจเอนเอียงไปทางไหน
+
+**ข้อจำกัด:**
+- GEMV แบบเดียว (cuBLAS ผ่าน torch), fp16 และ batch 1
+- flush ขนาด 256 MiB คงที่เหมือน do_bench
+- VM และไม่ได้ล็อก clock
+- ไม่มี datacenter GPU
+
+---
+
+## H1 — Fetch-granularity amplification ของ strided read (baseline B1, characterization)
+
+> **If** we increase the read stride s of a 4-byte copy from 1 to 64 at a fixed 64–256 MiB footprint (≫ L2), **then** measured DRAM read bytes (`dram__bytes_read.sum`) should follow `min(4N, g·N/s)` within ±10 %, and kernel time should follow the same curve divided by the memcpy-measured bandwidth within ±20 % for s ≤ g/4, **because** DRAM↔L2 traffic is quantized to g-byte chunks regardless of how many bytes the warp consumes; **potential deviations** are lower DRAM efficiency for scattered sectors (row-buffer misses), TLB misses at large stride, and launch/event overhead for small n_out.
+
+- **สถานะ (2026-11-04): สนับสนุนที่ระดับ timing บน RTX 3060 ตัวเดียว (smoke 10 reps)**
+  วัด T(16)/T(8) ได้ 0.507 ซึ่งตรงกับ model g=32 (0.500) ส่วน g=64 (0.944) ถูกตัดออกด้วย upper bound ทางกายภาพ เพราะต้องใช้ 622 GB/s ซึ่งเกิน peak 360 GB/s
+  ต้องรู้ไว้ด้วยว่า driver รายงาน `cudaLimitMaxL2FetchGranularity` = 64 B **ยังไม่มีผลจาก counter** ดู `reports/BASELINE_REPORT.md` §10
+- **คำทำนายย่อยที่ถูก falsify:** scalar contiguous copy **ไม่ได้**ช้ากว่า u32x4 อย่างมีนัยสำคัญ (ต่างกัน 0.76 %) Little's law จึงไม่ใช่คอขวดที่ 64 MiB บน GPU นี้
+- **ข้อทดสอบที่แยก g ออกจากกันได้ชัด:** เวลาที่ s=16 หารด้วยเวลาที่ s=8 ถ้า g=32 model ทำนายว่า ≈ 0.50 ถ้า g=64 ทำนายว่า ≈ 0.94
+  ablation คือตั้ง `--l2-fetch-granularity 32/64/128` แล้วดูว่าเวลาและ counter เปลี่ยนตามหรือไม่ (driver อาจไม่สนใจค่านี้ ตัวไบนารีจะอ่านค่ากลับมาบันทึกไว้)
+- **Falsified ถ้า:** อัตราส่วน T(16)/T(8) ไม่ตกในช่วง [0.4, 0.65] และไม่ตกในช่วง [0.85, 1.1] หรือ counter ไม่ตรงกับ model ที่ g ใดเลย
+- **Novelty risk: สูงมาก (ยืนยันแล้วจาก Gate A)** prior art ตรงคือ **Ding & Williams PMBS 2019** ซึ่งใช้ profiler counter วัด "stride walls" (stride-0/1/8) และ transactions ต่อ request บน V100 นอกจากนี้ CUDA Best Practices Guide 13.4 §10.2.1.4 ก็อธิบายผลของ stride ไว้แล้ว และ Bell & Garland SC'09 วัดผลของ stride ด้วย timing (ดู `LITERATURE_MATRIX.md` #21–23)
+  **H1 ไม่ใช่ contribution** หน้าที่ของมันคือ *calibrate* วิธีวิจัยของเรา (model ↔ counter ↔ timing) บน hardware จริง ก่อนจะไปอ้างอะไรที่ซับซ้อนกว่านี้
+  มีคำถามย่อยหนึ่งข้อที่อาจยังมีเอกสารน้อย คือผลของ `cudaLimitMaxL2FetchGranularity` บน consumer Ampere ข้อนี้ต้องค้นต่อ
+
+## H2 — Fusion payoff ขึ้นกับ L2 residency ของ intermediate (กลไก L2 สนับสนุนบน 2 GPU × 2 ตระกูล workload; ด้วย model v3 (BW ต่อชนิด kernel) การทำนาย payoff ผ่านการทดสอบ out-of-sample ทั้ง 4 ชุด — §19)
+
+> **If** we fuse a two-stage pointwise pipeline `t = f(x); y = g(t)` (fp32, n elements) into one kernel, **then** end-to-end time of the pair should improve by up to ≈2× when `4n ≫ L2 capacity`, but the gain should shrink toward launch-overhead-only when the intermediate `t` fits in L2, **because** materialization costs DRAM traffic of `write t + read t` (estimated 16n vs. 8n bytes) only when `t` is evicted before it is re-read; **potential regressions** are higher register pressure and lower occupancy when f and g are heavy, and losing a vendor-optimized implementation of either stage.
+
+- **กลไกที่ต้องระวัง:** dirty line ของ `t` ใน L2 สุดท้ายก็ต้องถูก write-back ลง DRAM แม้จะไม่มีใครอ่าน `t` อีกแล้ว (ยกเว้น driver หรือ hardware จะทิ้งให้ซึ่งไม่น่าเป็นไปได้)
+  write-back นี้อาจไปเกิดระหว่าง kernel ถัดไป การนับ DRAM bytes ทีละ kernel จึง**ทำให้เข้าใจผิดได้** ต้องวัด end-to-end ทั้งคู่
+- **ช่วง shape ที่น่าสนใจ:** n·4 B ตั้งแต่ ¼×L2 ถึง 64×L2 crossover ที่ model ทำนายอยู่ใกล้ขนาด L2 ซึ่งต้องอ่านจาก `meta.json` ห้ามสมมติว่าเป็น 3 MB
+- **Generalization (RQ5):** กลไกเดียวกันนี้ ("intermediate อยู่ใน L2 ได้หรือไม่") ใช้กับ stencil หลาย sweep (temporal blocking) ได้ ซึ่งเป็นตระกูล workload ที่ 2
+- **Novelty risk: สูง** kernel fusion สำหรับงาน memory-bound มีงานก่อนหน้าแล้ว เช่น Wahib & Maruyama SC'14, AStitch ASPLOS'22, Ivanov et al. MLSys'21 และ compiler อย่าง XLA, TVM, Triton, `torch.compile` รวมถึง temporal blocking ใน AN5D CGO'20
+  **อัปเดต 2026-11-04 (อ่าน full text แล้ว):** model ของ Wahib & Maruyama SC'14 คิดเฉพาะ DRAM bandwidth, shared memory และ registers **ไม่มี L2 term ไม่มีเรื่อง write-back และไม่มี sector granularity**
+  paper ยังเขียนไว้ด้วยว่า "Varying the data arrays sizes at runtime has no impact on the effectiveness of kernel fusion" ซึ่งเป็นสมมติฐานที่ H2 ตั้งใจจะ falsify ตรง ๆ
+  งานที่ใกล้ที่สุดเชิงประจักษ์คือ Dodović et al. (Electronics 2026) วัด fused vs. unfused ข้ามหลายขนาดบน RTX 3080 Ti/T4/A100 และอธิบายผลด้วย L2 แบบคุณภาพเท่านั้น ไม่มี analytical model
+  ข้อที่ต้องระวังคือ Dodović รายงานว่า "As the arrays grow, speedup decreases slightly" ซึ่งดูสวนกับคำทำนายของเรา จึงเป็นจุดที่การวัดต้องอธิบายให้ได้ (ดู P-B4-4)
+  **ยังไม่ได้อ่าน:** Qiao et al. CGO'19 ซึ่งผลค้นหาบอกว่ามี "analytic model that estimates locality gains" **ต้องอ่านก่อนอ้าง novelty**
+  ความมั่นใจเรื่อง novelty ของส่วน "L2 residency + deferred write-back + granularity" ที่ subagent ประเมินคือ ≈ 0.6 จากงานที่อ่านแล้ว และ ≈ 0.3 ถ้าค้นกว้างกว่านี้ (ดู `LITERATURE_MATRIX.md` §4)
+  ตอนนี้ยังไม่ได้ค้นว่า cost model ใน TVM/Ansor หรือ Halide autoscheduler ครอบคลุมเรื่องนี้ไปแล้วหรือไม่ **ต้องตรวจก่อนอ้าง**
+
+## H3 — Gather ด้วย index แบบ skewed: L2 hit rate ทำนายได้จาก hot-set size (B3 smoke วัดแล้ว: ideal-LFU ทำนาย hit สูงเกินจริง ดู BASELINE_REPORT §12.3)
+
+> **If** gather indices over a table ≫ L2 change from uniform to Zipf(α) skew, **then** measured DRAM bytes per gathered 4-byte element should fall below the ≈32 B/element of uniform random access by the fraction of accesses that hit the hottest rows fitting in L2, and a frequency-ordered layout (hot rows packed contiguously so one 32 B sector carries several hot elements) should reduce DRAM bytes further for α ≳ 1 but **not** for uniform indices or for rows ≥ 32 B, **because** L2→DRAM traffic is per-sector and packing raises useful bytes per sector; **potential regressions** are the one-time remap cost, an extra index-translation gather, and no benefit unless the same index distribution is reused many times.
+
+- **คำทำนายที่ falsify ได้:** ถ้า row ≥ 32 B (เช่น embedding dim ≥ 8 fp32) การ pack layout ต้องลด DRAM bytes ได้ประมาณ 0 ถ้าลดได้มากกว่านั้น แปลว่า model ผิด
+- **Novelty risk: สูง** การ reorder หรือ remap ตาม frequency มีงานก่อนหน้าทั้ง graph reordering, embedding cache ใน recommender systems และ SpMV format อย่าง Bell & Garland SC'09
+  สิ่งที่อาจยังไม่มีคือ model ที่ผูก α, ขนาด row, L2 capacity และจำนวนครั้งที่ reuse เข้าด้วยกันแล้วตรวจกับ counter **ยังไม่ได้ตรวจ**
+
+## H4 (ลำดับรอง) — `cp.async` ใน tiled transpose บน Ampere: คาดว่าจะเป็น negative result
+
+> **If** a shared-memory tiled transpose uses `cp.async` (global→shared copy that bypasses registers, cc ≥ 8.0) instead of register-staged loads, **then** time should **not** improve materially (<5 %) for matrices ≫ L2, **because** a coalesced tiled transpose is already DRAM-bandwidth-bound and `cp.async` changes register/instruction pressure, not DRAM bytes; a gain is expected only where occupancy or latency hiding is the limiter; **potential regressions** are extra synchronization (`cp.async.wait_group` + `__syncthreads`) and more shared memory for multi-stage buffering.
+
+- **Novelty risk: สูง** Luo et al. IPDPS'24 รายงานว่า AsyncPipe ได้ "+19.6% on A100" ที่ block 8×8 แต่ได้เพียง +1.7 % ที่ 32×32 ซึ่งเป็นตัวเลขของผู้เขียน และสอดคล้องกับคำทำนายของเรา
+  สิ่งที่ยังไม่มีคือข้อมูลบน consumer Ampere (GA10x) พร้อมคำอธิบายกลไกด้วย counter คุณค่าจึงอยู่ที่การยืนยันซ้ำ (replication) และ negative result ไม่ใช่สิ่งใหม่
+  CUDA Programming Guide 13.4 ระบุว่า LDGSTS ต้องใช้ cc ≥ 8.0 จึงทดสอบบน sm_86 ได้ ส่วน TMA ต้องใช้ cc ≥ 9.0 จึงอยู่นอก scope
+
+---
+
+## H5 (candidate ใหม่จาก §14.2) — L2 fetch-granularity hint สำหรับ gather ที่ใช้ sector ข้างเคียง
+
+> **If** a gather touches neighbouring 32-B sectors of the same 64-B chunk (e.g. 8-byte pairs or row fragments spanning sectors), **then** setting `cudaLimitMaxL2FetchGranularity` = 64 should cut its time by up to ≈ 1.6× on RTX 3060 with ≤ 2 % cost for single-element gathers, **because** the default issues separate DRAM accesses per 32-B sector and random-access cost is dominated by access count rather than bytes; **potential regressions** are +34 % at 128 B for single-element gathers and unknown effects on streaming kernels and on other GPUs.
+
+- **หลักฐานตอนนี้:** timing เท่านั้น, pattern สังเคราะห์, **เกิดซ้ำบน 2 GPU** (3060: 1.57×, 4060: 1.72× แบบ exploratory) ยังไม่ได้ทดสอบกับ workload จริง เช่น embedding lookup ที่ row 8–16 B
+- **Novelty risk: ยังไม่ได้ตรวจ** เอกสาร CUDA ระบุว่าค่านี้เป็น "performance hint" อาจมีคนเขียนไว้แล้วใน blog, forum หรือ paper ต้องค้นก่อน
+- เรื่องที่ค่าตั้งต้นรายงาน 64 แต่ทำงานแบบ 32 ต้องตรวจกับ driver และ GPU อื่น และอาจเป็นพฤติกรรมเฉพาะเวอร์ชัน driver (535.154.05)
+
+---
+
+## ลำดับที่เสนอ (ยังไม่ใช่การตัดสินใจ Gate D)
+
+1. วัด **B1/H1** บน NVIDIA GPU จริงเพื่อ calibrate วิธีวิจัย ซึ่งถูกที่สุดและพร้อมรันแล้ว
+2. Implement B2 (transpose), B3 (gather) และ B4 (fused vs. materialized) เป็น baseline เท่านั้น ยังไม่ optimize
+3. ดูหลักฐานแล้วเลือก primary hypothesis ข้อเดียว ตอนนี้ **H2 มีศักยภาพทาง novelty สูงสุด** เพราะเชื่อมได้สองตระกูล workload แต่ต้องผ่านการอ่าน Wahib & Maruyama SC'14 ฉบับเต็มก่อน (D-005)

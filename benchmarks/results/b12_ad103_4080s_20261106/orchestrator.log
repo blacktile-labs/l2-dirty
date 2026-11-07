@@ -1,0 +1,13 @@
+[b12_ad103_4080s 06:19:49] package sha256 05e4f2407a30878a, remote script sha256 f2a7a40392e45983
+[b12_ad103_4080s 06:19:51] created instance 59377812 (offer 52024806, image docker.io/vastai/kvm:ubuntu_cli_22.04-2025-05-16, disk 40 GB)
+[b12_ad103_4080s 06:19:52] price dph_total = $0.2562962962962963/h
+[b12_ad103_4080s 06:22:52] ssh ok (root@<host-redacted>:<port>)
+[b12_ad103_4080s 06:23:11] started detached run of benchmarks/scripts/remote_b12.sh
+[b12_ad103_4080s 06:23:19] remote: [06:23:11] 1 toolchain
+[b12_ad103_4080s 06:25:07] remote: [06:25:01] apt rc=0
+[b12_ad103_4080s 06:26:56] remote: [06:26:49] 3 B12
+[b12_ad103_4080s 06:27:24] remote: [06:27:24] B12 rc=0
+[b12_ad103_4080s 06:27:55] remote finished (done=1): rc=0
+[b12_ad103_4080s 06:32:55] download failed
+[b12_ad103_4080s 06:32:55] destroying instance 59377812
+[b12_ad103_4080s 06:33:00] destroyed (verified)

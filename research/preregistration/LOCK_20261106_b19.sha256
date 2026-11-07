@@ -1,0 +1,9 @@
+# Lock written 2026-11-06 before renting any B19 GPU (D-086); local smoke on the laptop used for counts only
+180b87e84379d5a822db6c19d326b70b7707a5bafa003ccbf3f157ae768fe54c  research/HYPOTHESES.md
+021cc7e5841cd116dd062f412f6589028f63f9452a968f717be148e8550a627f  benchmarks/scripts/b19_probe.py
+8d4e10d513769da8e9785583f63940cf1b92f66caebde780023b8ed29fee24a9  benchmarks/scripts/b19_probe.sh
+671ed8f99eb43fffa29097527b7a130039ae74338b22f3b030ce366e68eeed22  benchmarks/scripts/b19_score.py
+ecf49c2ab3508e1a5ac25ed8767b747c97a0717b90bd05cc5e3e98620d759085  benchmarks/scripts/test_b19_score.py
+155a9d43f626c4d0ef35f57e6b6e08077e4923d6fae6061e391446dafba508b9  benchmarks/scripts/remote_b19.sh
+1790320875111ac762260afc57661f7182f478ffbccfa164cd8c35bd5ed96fa6  benchmarks/scripts/cleanbench.py
+1c4c4237b1ecdb1dd75bcaf6227d3028e10bf5e3d8a76c8534085ce66ba2ba96  benchmarks/scripts/vast/vast_run.sh

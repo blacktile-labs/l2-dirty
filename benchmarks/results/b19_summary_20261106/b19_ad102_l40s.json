@@ -1,0 +1,82 @@
+{
+ "device": "NVIDIA L40S",
+ "l2_bytes": 100663296,
+ "R-0": true,
+ "R-0 parts": {
+  "correctness": true,
+  "liger": true,
+  "pad >= 200 us": true
+ },
+ "R-1 plain I": 0.0,
+ "R-2 padded I": -0.0145,
+ "R-1": "no anomaly",
+ "R-2": "n/a",
+ "R-3 none/pr256 padded": 0.9269,
+ "R-3 none/pr256 plain": 0.9286,
+ "R-3": "not warm",
+ "S": {
+  "e_q": 1.0893,
+  "gemv": -0.0031,
+  "rms16": -0.0394,
+  "rms64": 0.7207
+ },
+ "R-4a": "steady charges the deferred output write-back",
+ "R-4b predicted S(rms64)": 0.2841,
+ "R-4b": "not",
+ "T median us": {
+  "gemv pad none": 160.768,
+  "gemv pad pr256": 161.792,
+  "gemv pad zero256": 201.728,
+  "gemv pad zeroL2": 201.728,
+  "gemv plain none": 160.768,
+  "gemv plain pr256": 161.792,
+  "gemv plain zero256": 202.752,
+  "gemv plain zeroL2": 203.776,
+  "gemv16 pad none": 26.576,
+  "gemv16 pad pr256": 28.672,
+  "gemv16 pad zero256": 40.96,
+  "gemv16 pad zeroL2": 39.936,
+  "gemv16 plain none": 26.624,
+  "gemv16 plain pr256": 28.672,
+  "gemv16 plain zero256": 41.648,
+  "gemv16 plain zeroL2": 40.96,
+  "rms16 pad none": 11.264,
+  "rms16 pad pr256": 27.648,
+  "rms16 pad zero256": 54.032,
+  "rms16 pad zeroL2": 53.248,
+  "rms16 plain none": 66.944,
+  "rms16 plain pr256": 27.648,
+  "rms16 plain zero256": 54.272,
+  "rms16 plain zeroL2": 54.272
+ },
+ "M mean us": {
+  "e_q cold": 37.203,
+  "e_q steady": 77.728,
+  "gemv cold": 161.564,
+  "gemv steady": 161.063,
+  "rms16 cold": 27.3,
+  "rms16 steady": 26.225,
+  "rms64 cold": 108.853,
+  "rms64 steady": 187.303
+ },
+ "do_bench shipped median us": {
+  "e_q": 86.016,
+  "gemv": 202.752,
+  "gemv16": 41.872,
+  "rms16": 54.272,
+  "rms64": 206.848
+ },
+ "do_bench shipped / cleanbench cold - 1": {
+  "e_q": 1.3121,
+  "gemv": 0.2549,
+  "rms16": 0.988,
+  "rms64": 0.9003
+ },
+ "host dispatch us": {
+  "rms16": 102.4,
+  "rms64": 95.3,
+  "gemv": 32.6,
+  "gemv16": 31.9,
+  "e_q": 25.6
+ }
+}

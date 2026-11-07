@@ -1,0 +1,16 @@
+cff-version: 1.2.0
+message: "If you use this work, please cite the technical report."
+title: "Dirty L2, Drained Queues: Measurement Pitfalls in GPU Kernel Microbenchmarks"
+type: report
+authors:
+  - given-names: Rungrod
+    family-names: Thongjampa
+    email: rungrod.th@blacktile.dev
+    affiliation: Blacktile Research
+  - given-names: Chanchada
+    family-names: Wathanathonnan
+    email: chanchada.wa@blacktile.dev
+    affiliation: Blacktile Research
+date-released: 2026-11-07
+license: Apache-2.0
+keywords: [GPU, benchmarking, L2 cache, CUDA, CUPTI, Triton, microbenchmark]

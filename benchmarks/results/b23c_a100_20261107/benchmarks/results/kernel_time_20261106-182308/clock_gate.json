@@ -1,0 +1,26 @@
+{
+ "busy samples": 155,
+ "busy median SM MHz": 1410.0,
+ "busy within 1 %": 0.7484,
+ "SM MHz range": [
+  1260.0,
+  1410.0
+ ],
+ "temperature C": [
+  44.0,
+  59.0
+ ],
+ "reasons": {
+  "0x0000000000000000": 116,
+  "0x0000000000000004": 39
+ },
+ "C-1": false,
+ "counter increase us": {
+  "SW Thermal Slowdown": 0,
+  "HW Thermal Slowdown": 0,
+  "HW Power Braking": 0,
+  "SW Power Capping": 0
+ },
+ "C-2": true,
+ "clock gate": false
+}

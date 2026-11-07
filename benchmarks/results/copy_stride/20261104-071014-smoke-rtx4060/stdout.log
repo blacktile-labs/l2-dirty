@@ -1,0 +1,10 @@
+empty_kernel                     n_out=0          done (10 reps)
+memcpy_d2d                       n_out=67108864   done (10 reps)
+copy_contig_u32                  n_out=67108864   done (10 reps)
+copy_contig_u32x4                n_out=67108864   done (10 reps)
+copy_strided_read_u32_s1         n_out=67108864   done (10 reps)
+copy_strided_read_u32_s2         n_out=33554432   done (10 reps)
+copy_strided_read_u32_s8         n_out=8388608    done (10 reps)
+copy_strided_read_u32_s16        n_out=4194304    done (10 reps)
+copy_strided_read_u32_s32        n_out=2097152    done (10 reps)
+correctness_failures=0

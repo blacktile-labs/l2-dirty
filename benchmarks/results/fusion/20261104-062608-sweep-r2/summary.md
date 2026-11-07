@@ -1,0 +1,81 @@
+# fusion summary -- run `20261104-062608-sweep-r2`
+
+- Device: NVIDIA GeForce RTX 3060 (cc 8.6), driver 12020, runtime 12020, L2 2359296 B
+- Correctness failures: 0 (18 checks passed)
+- reps 30, warmup 5, steady iters 10, flush_l2 True
+- ESTIMATED theoretical DRAM BW 360.0 GB/s; ESTIMATED FP32 peak 12845 GFLOP/s (device attributes)
+
+`useful_GBps` = algorithmic bytes of the task / median time (DERIVED). `isolated` = L2 flushed before each rep; `steady` = back-to-back calls.
+
+| variant | params | mode | reps | median_us | p95_us | cv_pct | useful_GBps |
+|---|---|---|---|---|---|---|---|
+| fused | n=221184;l2x=0.375000;K=1;l2_bytes=2359296 | isolated | 30 | 6.144 | 7.168 | 7.997 | 288.000 |
+| fused | n=221184;l2x=0.375000;K=1;l2_bytes=2359296 | steady | 30 | 3.758 | 3.789 | 1.257 | 470.792 |
+| materialized | n=221184;l2x=0.375000;K=1;l2_bytes=2359296 | isolated | 30 | 10.240 | 10.240 | 4.942 | 172.800 |
+| materialized | n=221184;l2x=0.375000;K=1;l2_bytes=2359296 | steady | 30 | 9.830 | 9.933 | 0.928 | 180.007 |
+| stage2_cold | n=221184;l2x=0.375000;K=1;l2_bytes=2359296 | isolated | 30 | 6.192 | 7.168 | 6.046 | 285.767 |
+| stage2_warm | n=221184;l2x=0.375000;K=1;l2_bytes=2359296 | isolated | 30 | 5.120 | 5.269 | 8.935 | 345.600 |
+| fused | n=294912;l2x=0.500000;K=1;l2_bytes=2359296 | isolated | 30 | 7.168 | 8.192 | 4.848 | 329.143 |
+| fused | n=294912;l2x=0.500000;K=1;l2_bytes=2359296 | steady | 30 | 5.325 | 5.426 | 0.984 | 443.060 |
+| materialized | n=294912;l2x=0.500000;K=1;l2_bytes=2359296 | isolated | 30 | 12.288 | 12.486 | 4.232 | 192.000 |
+| materialized | n=294912;l2x=0.500000;K=1;l2_bytes=2359296 | steady | 30 | 13.722 | 13.826 | 0.640 | 171.935 |
+| stage2_cold | n=294912;l2x=0.500000;K=1;l2_bytes=2359296 | isolated | 30 | 7.168 | 7.168 | 5.683 | 329.143 |
+| stage2_warm | n=294912;l2x=0.500000;K=1;l2_bytes=2359296 | isolated | 30 | 5.888 | 6.395 | 8.746 | 400.696 |
+| fused | n=368640;l2x=0.625000;K=1;l2_bytes=2359296 | isolated | 30 | 8.464 | 9.216 | 5.674 | 348.431 |
+| fused | n=368640;l2x=0.625000;K=1;l2_bytes=2359296 | steady | 30 | 10.939 | 10.973 | 0.449 | 269.597 |
+| materialized | n=368640;l2x=0.625000;K=1;l2_bytes=2359296 | isolated | 30 | 18.432 | 19.456 | 2.386 | 160.000 |
+| materialized | n=368640;l2x=0.625000;K=1;l2_bytes=2359296 | steady | 30 | 20.685 | 20.775 | 0.296 | 142.573 |
+| stage2_cold | n=368640;l2x=0.625000;K=1;l2_bytes=2359296 | isolated | 30 | 8.192 | 9.216 | 5.135 | 360.000 |
+| stage2_warm | n=368640;l2x=0.625000;K=1;l2_bytes=2359296 | isolated | 30 | 11.264 | 11.282 | 3.237 | 261.818 |
+| fused | n=442368;l2x=0.750000;K=1;l2_bytes=2359296 | isolated | 30 | 10.960 | 11.264 | 4.344 | 322.896 |
+| fused | n=442368;l2x=0.750000;K=1;l2_bytes=2359296 | steady | 30 | 12.800 | 12.871 | 0.405 | 276.480 |
+| materialized | n=442368;l2x=0.750000;K=1;l2_bytes=2359296 | isolated | 30 | 23.552 | 23.672 | 1.906 | 150.261 |
+| materialized | n=442368;l2x=0.750000;K=1;l2_bytes=2359296 | steady | 30 | 25.376 | 25.437 | 0.222 | 139.460 |
+| stage2_cold | n=442368;l2x=0.750000;K=1;l2_bytes=2359296 | isolated | 30 | 10.240 | 11.091 | 2.744 | 345.600 |
+| stage2_warm | n=442368;l2x=0.750000;K=1;l2_bytes=2359296 | isolated | 30 | 13.312 | 14.336 | 3.147 | 265.846 |
+| fused | n=516096;l2x=0.875000;K=1;l2_bytes=2359296 | isolated | 30 | 12.288 | 13.312 | 3.470 | 336.000 |
+| fused | n=516096;l2x=0.875000;K=1;l2_bytes=2359296 | steady | 30 | 14.643 | 14.797 | 0.481 | 281.962 |
+| materialized | n=516096;l2x=0.875000;K=1;l2_bytes=2359296 | isolated | 30 | 26.672 | 27.648 | 1.802 | 154.798 |
+| materialized | n=516096;l2x=0.875000;K=1;l2_bytes=2359296 | steady | 30 | 28.974 | 28.979 | 0.126 | 142.497 |
+| stage2_cold | n=516096;l2x=0.875000;K=1;l2_bytes=2359296 | isolated | 30 | 12.288 | 12.704 | 2.303 | 336.000 |
+| stage2_warm | n=516096;l2x=0.875000;K=1;l2_bytes=2359296 | isolated | 30 | 15.360 | 16.240 | 1.837 | 268.800 |
+| fused | n=589824;l2x=1.000000;K=1;l2_bytes=2359296 | isolated | 30 | 14.336 | 14.354 | 2.621 | 329.143 |
+| fused | n=589824;l2x=1.000000;K=1;l2_bytes=2359296 | steady | 30 | 16.384 | 16.486 | 0.271 | 288.000 |
+| materialized | n=589824;l2x=1.000000;K=1;l2_bytes=2359296 | isolated | 30 | 30.704 | 30.755 | 1.863 | 153.680 |
+| materialized | n=589824;l2x=1.000000;K=1;l2_bytes=2359296 | steady | 30 | 32.544 | 32.629 | 0.171 | 144.991 |
+| stage2_cold | n=589824;l2x=1.000000;K=1;l2_bytes=2359296 | isolated | 30 | 14.336 | 14.354 | 3.325 | 329.143 |
+| stage2_warm | n=589824;l2x=1.000000;K=1;l2_bytes=2359296 | isolated | 30 | 17.408 | 17.475 | 2.104 | 271.059 |
+| fused | n=737280;l2x=1.250000;K=1;l2_bytes=2359296 | isolated | 30 | 18.432 | 18.432 | 2.576 | 320.000 |
+| fused | n=737280;l2x=1.250000;K=1;l2_bytes=2359296 | steady | 30 | 19.968 | 20.070 | 0.517 | 295.385 |
+| materialized | n=737280;l2x=1.250000;K=1;l2_bytes=2359296 | isolated | 30 | 37.888 | 38.373 | 1.130 | 155.676 |
+| materialized | n=737280;l2x=1.250000;K=1;l2_bytes=2359296 | steady | 30 | 39.724 | 39.744 | 0.326 | 148.482 |
+| stage2_cold | n=737280;l2x=1.250000;K=1;l2_bytes=2359296 | isolated | 30 | 17.888 | 18.432 | 2.762 | 329.732 |
+| stage2_warm | n=737280;l2x=1.250000;K=1;l2_bytes=2359296 | isolated | 30 | 20.480 | 21.504 | 2.173 | 288.000 |
+| fused | n=884736;l2x=1.500000;K=1;l2_bytes=2359296 | isolated | 30 | 21.504 | 21.504 | 1.876 | 329.143 |
+| fused | n=884736;l2x=1.500000;K=1;l2_bytes=2359296 | steady | 30 | 23.552 | 23.648 | 0.220 | 300.522 |
+| materialized | n=884736;l2x=1.500000;K=1;l2_bytes=2359296 | isolated | 30 | 45.056 | 45.056 | 1.052 | 157.091 |
+| materialized | n=884736;l2x=1.500000;K=1;l2_bytes=2359296 | steady | 30 | 46.867 | 46.899 | 0.095 | 151.021 |
+| stage2_cold | n=884736;l2x=1.500000;K=1;l2_bytes=2359296 | isolated | 30 | 21.456 | 21.504 | 2.059 | 329.879 |
+| stage2_warm | n=884736;l2x=1.500000;K=1;l2_bytes=2359296 | isolated | 30 | 24.576 | 24.787 | 1.635 | 288.000 |
+| fused | n=1179648;l2x=2.000000;K=1;l2_bytes=2359296 | isolated | 30 | 28.672 | 28.856 | 1.065 | 329.143 |
+| fused | n=1179648;l2x=2.000000;K=1;l2_bytes=2359296 | steady | 30 | 30.720 | 30.812 | 0.149 | 307.200 |
+| materialized | n=1179648;l2x=2.000000;K=1;l2_bytes=2359296 | isolated | 30 | 59.392 | 59.506 | 0.767 | 158.897 |
+| materialized | n=1179648;l2x=2.000000;K=1;l2_bytes=2359296 | steady | 30 | 61.116 | 61.180 | 0.079 | 154.416 |
+| stage2_cold | n=1179648;l2x=2.000000;K=1;l2_bytes=2359296 | isolated | 30 | 28.672 | 28.707 | 1.582 | 329.143 |
+| stage2_warm | n=1179648;l2x=2.000000;K=1;l2_bytes=2359296 | isolated | 30 | 31.744 | 31.885 | 1.230 | 297.290 |
+
+### Fusion payoff by size and arithmetic intensity
+
+`mat/fused` = materialized time / fused time (MEASURED; >1 means fusion helps). `warm/cold` = stage2 time right after stage1 / after an L2 flush (MEASURED; <1 means t was partly served from L2). `est_r_*` = fraction of t predicted to survive in L2 by the two residency models. `AI_fused` = FLOP per algorithmic DRAM byte. Estimated ridge point = 12845 GFLOP/s / 360 GB/s = 35.7 FLOP/B (ESTIMATE).
+
+| l2x | n | K | fused_us(iso) | mat_us(iso) | mat/fused(iso) | mat/fused(steady) | warm/cold | est_r_lru_cliff | est_r_proportional | AI_fused |
+|---|---|---|---|---|---|---|---|---|---|---|
+| 0.375000 | 221184 | 1 | 6.144 | 10.240 | 1.667 | 2.615 | 0.827 | 1.000 | 1.000 | 0.500 |
+| 0.500000 | 294912 | 1 | 7.168 | 12.288 | 1.714 | 2.577 | 0.821 | 1.000 | 1.000 | 0.500 |
+| 0.625000 | 368640 | 1 | 8.464 | 18.432 | 2.178 | 1.891 | 1.375 | 0.000 | 0.800 | 0.500 |
+| 0.750000 | 442368 | 1 | 10.960 | 23.552 | 2.149 | 1.982 | 1.300 | 0.000 | 0.667 | 0.500 |
+| 0.875000 | 516096 | 1 | 12.288 | 26.672 | 2.171 | 1.979 | 1.250 | 0.000 | 0.571 | 0.500 |
+| 1.000000 | 589824 | 1 | 14.336 | 30.704 | 2.142 | 1.986 | 1.214 | 0.000 | 0.500 | 0.500 |
+| 1.250000 | 737280 | 1 | 18.432 | 37.888 | 2.056 | 1.989 | 1.145 | 0.000 | 0.400 | 0.500 |
+| 1.500000 | 884736 | 1 | 21.504 | 45.056 | 2.095 | 1.990 | 1.145 | 0.000 | 0.333 | 0.500 |
+| 2.000000 | 1179648 | 1 | 28.672 | 59.392 | 2.071 | 1.989 | 1.107 | 0.000 | 0.250 | 0.500 |

@@ -1,0 +1,337 @@
+{
+ "device": "NVIDIA GeForce RTX 5060 Ti",
+ "l2_bytes": 33554432,
+ "cc": "12.0",
+ "versions": {
+  "torch": "2.7.1+cu128",
+  "cuda": "12.8",
+  "triton": "3.3.1",
+  "bitsandbytes": "0.50.2",
+  "liger-kernel": "0.6.2"
+ },
+ "E-0": {
+  "runs": 5,
+  "runs_ok": true,
+  "ptx_ok": true,
+  "evict_ratio": 1.013,
+  "evict_ok": null,
+  "pass": true,
+  "cold_as_sum_ok": true,
+  "pass_amended": true
+ },
+ "bias": {
+  "gemv 4096x4096 tinygemm_k4": 0.1702,
+  "gemv 4096x4096 tinygemm_k8": 0.1687,
+  "gemv 4096x4096 bnb_nf4": 0.2353,
+  "gemv 4096x4096 cublas_fp16": 0.1429,
+  "gemv 4096x4096 tinygemm_k2": 0.0765,
+  "gemv 14336x4096 tinygemm_k4": 0.1567,
+  "gemv 14336x4096 tinygemm_k2": 0.1571,
+  "gemv 14336x4096 bnb_nf4": 0.1129,
+  "gemv 14336x4096 tinygemm_k8": 0.1423,
+  "gemv 14336x4096 cublas_fp16": 0.0655,
+  "gemv 4096x14336 tinygemm_k8": 0.1372,
+  "gemv 4096x14336 cublas_fp16": 0.0708,
+  "gemv 4096x14336 bnb_nf4": 0.1161,
+  "gemv 4096x14336 tinygemm_k2": 0.162,
+  "gemv 4096x14336 tinygemm_k4": 0.1344,
+  "attn L4096 sdpa_bf16": 0.066,
+  "attn L16384 sdpa_bf16": 0.0486,
+  "attn L65536 sdpa_bf16": 0.0364,
+  "rmsnorm T2048 liger_rmsnorm": 0.8913,
+  "rmsnorm T2048 torch_rmsnorm": 0.0548,
+  "rmsnorm T8192 liger_rmsnorm": 0.1098,
+  "rmsnorm T8192 torch_rmsnorm": 0.0142,
+  "swiglu T512 torch_swiglu": 0.3253,
+  "swiglu T512 liger_swiglu": 0.5478,
+  "swiglu T2048 liger_swiglu": 0.0913,
+  "swiglu T2048 torch_swiglu": 0.0532
+ },
+ "B_ref": 0.0655,
+ "F-1": "affected",
+ "F-3": "mildly distorted",
+ "F-3 worst D": -0.0748,
+ "F-3 sign": "mixed",
+ "F-3 per shape": {
+  "4096x4096": {
+   "tinygemm": {
+    "S_zero": 3.357,
+    "S_pr": 3.339,
+    "D": 0.0055,
+    "D_sum": 0.0396
+   },
+   "bnb_nf4": {
+    "S_zero": 2.286,
+    "S_pr": 2.471,
+    "D": -0.0748,
+    "D_sum": -0.0898
+   }
+  },
+  "14336x4096": {
+   "tinygemm": {
+    "S_zero": 3.363,
+    "S_pr": 3.606,
+    "D": -0.0673,
+    "D_sum": -0.0738
+   },
+   "bnb_nf4": {
+    "S_zero": 3.001,
+    "S_pr": 3.135,
+    "D": -0.0426,
+    "D_sum": -0.0209
+   }
+  },
+  "4096x14336": {
+   "tinygemm": {
+    "S_zero": 3.388,
+    "S_pr": 3.642,
+    "D": -0.0696,
+    "D_sum": -0.059
+   },
+   "bnb_nf4": {
+    "S_zero": 2.603,
+    "S_pr": 2.713,
+    "D": -0.0405,
+    "D_sum": -0.0426
+   }
+  }
+ },
+ "F-4": {
+  "attn": {
+   "case": "L65536",
+   "B": {
+    "sdpa_bf16": 0.0364
+   },
+   "verdict": "marginal"
+  },
+  "rmsnorm": {
+   "case": "T8192",
+   "B": {
+    "liger_rmsnorm": 0.1098,
+    "torch_rmsnorm": 0.0142
+   },
+   "verdict": "affected"
+  },
+  "swiglu": {
+   "case": "T2048",
+   "B": {
+    "liger_swiglu": 0.0913,
+    "torch_swiglu": 0.0532
+   },
+   "verdict": "affected"
+  }
+ },
+ "F-6": {
+  "median R": 0.0,
+  "max |R|": 0.0227,
+  "R": {
+   "4096x4096 cublas_fp16": -0.0004,
+   "14336x4096 tinygemm_k4": -0.0073,
+   "14336x4096 tinygemm_k2": -0.0069,
+   "14336x4096 bnb_nf4": 0.0227,
+   "14336x4096 tinygemm_k8": -0.0069,
+   "14336x4096 cublas_fp16": 0.0,
+   "4096x14336 tinygemm_k8": -0.0004,
+   "4096x14336 cublas_fp16": 0.0031,
+   "4096x14336 bnb_nf4": 0.0009,
+   "4096x14336 tinygemm_k2": 0.0145,
+   "4096x14336 tinygemm_k4": 0.0
+  }
+ },
+ "B_l2": 0.0725,
+ "F-7": "similar",
+ "bias_l2w": {
+  "gemv 4096x4096 tinygemm_k4": 0.1714,
+  "gemv 4096x4096 tinygemm_k8": 0.2134,
+  "gemv 4096x4096 bnb_nf4": 0.2546,
+  "gemv 4096x4096 cublas_fp16": 0.1429,
+  "gemv 4096x4096 tinygemm_k2": 0.1071,
+  "gemv 14336x4096 tinygemm_k4": 0.1416,
+  "gemv 14336x4096 tinygemm_k2": 0.159,
+  "gemv 14336x4096 bnb_nf4": 0.1132,
+  "gemv 14336x4096 tinygemm_k8": 0.1421,
+  "gemv 14336x4096 cublas_fp16": 0.0725,
+  "gemv 4096x14336 tinygemm_k8": 0.1523,
+  "gemv 4096x14336 cublas_fp16": 0.0709,
+  "gemv 4096x14336 bnb_nf4": 0.1164,
+  "gemv 4096x14336 tinygemm_k2": 0.1695,
+  "gemv 4096x14336 tinygemm_k4": 0.138,
+  "attn L4096 sdpa_bf16": 0.0767,
+  "attn L16384 sdpa_bf16": 0.0604,
+  "attn L65536 sdpa_bf16": 0.0364,
+  "rmsnorm T2048 liger_rmsnorm": 0.8702,
+  "rmsnorm T2048 torch_rmsnorm": 0.0547,
+  "rmsnorm T8192 liger_rmsnorm": 0.1049,
+  "rmsnorm T8192 torch_rmsnorm": 0.0148,
+  "swiglu T512 torch_swiglu": 0.3497,
+  "swiglu T512 liger_swiglu": 0.5373,
+  "swiglu T2048 liger_swiglu": 0.0944,
+  "swiglu T2048 torch_swiglu": 0.0529
+ },
+ "F-5 inputs": {
+  "B_sum": 0.0655,
+  "D_sum": -0.0738
+ },
+ "tick fraction": 0.276,
+ "t_us": {
+  "gemv 4096x4096 tinygemm_k4": {
+   "sum": 26.62,
+   "pr": 25.76,
+   "l2w": 30.18,
+   "zero": 30.14
+  },
+  "gemv 4096x4096 tinygemm_k8": {
+   "sum": 26.62,
+   "pr": 25.79,
+   "zero": 30.14,
+   "l2w": 31.3
+  },
+  "gemv 4096x4096 bnb_nf4": {
+   "sum": 34.24,
+   "pr": 34.82,
+   "l2w": 43.68,
+   "zero": 43.01
+  },
+  "gemv 4096x4096 cublas_fp16": {
+   "l2w": 98.3,
+   "pr": 86.02,
+   "zero": 98.3,
+   "none": 84.93,
+   "sum": 85.98
+  },
+  "gemv 4096x4096 tinygemm_k2": {
+   "pr": 27.2,
+   "zero": 29.28,
+   "sum": 26.62,
+   "l2w": 30.11
+  },
+  "gemv 14336x4096 tinygemm_k4": {
+   "sum": 77.82,
+   "zero": 90.69,
+   "l2w": 89.5,
+   "pr": 78.4
+  },
+  "gemv 14336x4096 tinygemm_k2": {
+   "l2w": 90.86,
+   "zero": 90.72,
+   "sum": 77.86,
+   "pr": 78.4
+  },
+  "gemv 14336x4096 bnb_nf4": {
+   "zero": 100.32,
+   "pr": 90.14,
+   "sum": 92.19,
+   "l2w": 100.35
+  },
+  "gemv 14336x4096 tinygemm_k8": {
+   "l2w": 89.5,
+   "sum": 77.82,
+   "zero": 89.52,
+   "pr": 78.37
+  },
+  "gemv 14336x4096 cublas_fp16": {
+   "sum": 282.59,
+   "pr": 282.59,
+   "zero": 301.09,
+   "l2w": 303.07
+  },
+  "gemv 4096x14336 tinygemm_k8": {
+   "pr": 80.48,
+   "l2w": 92.74,
+   "zero": 91.52,
+   "sum": 80.45
+  },
+  "gemv 4096x14336 cublas_fp16": {
+   "zero": 309.22,
+   "pr": 288.77,
+   "sum": 289.66,
+   "l2w": 309.25
+  },
+  "gemv 4096x14336 bnb_nf4": {
+   "zero": 118.78,
+   "pr": 106.43,
+   "sum": 106.53,
+   "l2w": 118.82
+  },
+  "gemv 4096x14336 tinygemm_k2": {
+   "zero": 92.14,
+   "pr": 79.3,
+   "sum": 80.45,
+   "l2w": 92.74
+  },
+  "gemv 4096x14336 tinygemm_k4": {
+   "l2w": 91.55,
+   "pr": 80.45,
+   "zero": 91.26,
+   "sum": 80.45
+  },
+  "attn L4096 sdpa_bf16": {
+   "sum": 53.25,
+   "l2w": 57.95,
+   "pr": 53.82,
+   "zero": 57.38
+  },
+  "attn L16384 sdpa_bf16": {
+   "zero": 176.74,
+   "pr": 168.54,
+   "sum": 167.94,
+   "l2w": 178.72
+  },
+  "attn L65536 sdpa_bf16": {
+   "sum": 646.16,
+   "zero": 669.7,
+   "pr": 646.18,
+   "l2w": 669.7
+  },
+  "rmsnorm T2048 liger_rmsnorm": {
+   "sum": 46.53,
+   "zero": 89.09,
+   "l2w": 88.1,
+   "pr": 47.1
+  },
+  "rmsnorm T2048 torch_rmsnorm": {
+   "l2w": 789.47,
+   "sum": 747.49,
+   "pr": 748.51,
+   "zero": 789.5
+  },
+  "rmsnorm T8192 liger_rmsnorm": {
+   "sum": 314.82,
+   "l2w": 348.38,
+   "zero": 349.92,
+   "pr": 315.3
+  },
+  "rmsnorm T8192 torch_rmsnorm": {
+   "pr": 3394.56,
+   "zero": 3442.69,
+   "l2w": 3444.75,
+   "sum": 3394.35
+  },
+  "swiglu T512 torch_swiglu": {
+   "sum": 121.41,
+   "pr": 122.88,
+   "l2w": 165.86,
+   "zero": 162.85
+  },
+  "swiglu T512 liger_swiglu": {
+   "sum": 75.78,
+   "l2w": 117.38,
+   "pr": 76.35,
+   "zero": 118.18
+  },
+  "swiglu T2048 liger_swiglu": {
+   "pr": 414.72,
+   "l2w": 453.86,
+   "sum": 413.7,
+   "zero": 452.58
+  },
+  "swiglu T2048 torch_swiglu": {
+   "pr": 715.78,
+   "zero": 753.89,
+   "l2w": 753.66,
+   "sum": 716.37
+  }
+ },
+ "invalid": [],
+ "notes": {}
+}

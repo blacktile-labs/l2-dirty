@@ -1,0 +1,597 @@
+{
+ "benchmark": "flush_bias_probe",
+ "device": "NVIDIA GeForce RTX 4090",
+ "l2_bytes": 75497472,
+ "cc": "8.9",
+ "sm_count": 128,
+ "versions": {
+  "torch": "2.7.1+cu126",
+  "cuda": "12.6",
+  "triton": "3.3.1",
+  "bitsandbytes": "0.50.2",
+  "liger-kernel": "0.6.2"
+ },
+ "pr_head": "ba27327b9a4667b58e89ae5e1f0d7efe453a2021",
+ "ptx_check": {
+  "ld_volatile_global": 2,
+  "ld_global": 0,
+  "st_global": 0,
+  "buffer_unchanged": true
+ },
+ "amendment": "B17a (l2w mode)",
+ "smoke": false,
+ "run_seed": 1,
+ "rows": [
+  {
+   "family": "gemv",
+   "case": "4096x4096",
+   "bytes": 33554432,
+   "cand": "tinygemm_k4",
+   "ms": {
+    "sum": 0.01398400031030178,
+    "pr": 0.014368000440299511,
+    "l2w": 0.018912000581622124,
+    "zero": 0.019279999658465385
+   },
+   "order": [
+    "sum",
+    "pr",
+    "l2w",
+    "zero"
+   ]
+  },
+  {
+   "family": "gemv",
+   "case": "4096x4096",
+   "bytes": 33554432,
+   "cand": "tinygemm_k8",
+   "ms": {
+    "sum": 0.01369599997997284,
+    "pr": 0.013632000423967838,
+    "zero": 0.01990400068461895,
+    "l2w": 0.019840000197291374
+   },
+   "order": [
+    "sum",
+    "pr",
+    "zero",
+    "l2w"
+   ]
+  },
+  {
+   "family": "gemv",
+   "case": "4096x4096",
+   "bytes": 33554432,
+   "cand": "bnb_nf4",
+   "ms": {
+    "sum": 0.018688000738620758,
+    "pr": 0.018688000738620758,
+    "l2w": 0.03824000060558319,
+    "zero": 0.028416000306606293
+   },
+   "order": [
+    "sum",
+    "pr",
+    "l2w",
+    "zero"
+   ]
+  },
+  {
+   "family": "gemv",
+   "case": "4096x4096",
+   "bytes": 33554432,
+   "cand": "cublas_fp16",
+   "ms": {
+    "l2w": 0.05721599981188774,
+    "pr": 0.040672000497579575,
+    "zero": 0.056992001831531525,
+    "none": 0.05555199831724167,
+    "sum": 0.04022400081157684
+   },
+   "order": [
+    "l2w",
+    "pr",
+    "zero",
+    "none",
+    "sum"
+   ]
+  },
+  {
+   "family": "gemv",
+   "case": "4096x4096",
+   "bytes": 33554432,
+   "cand": "tinygemm_k2",
+   "ms": {
+    "pr": 0.014112000353634357,
+    "zero": 0.01945599913597107,
+    "sum": 0.013632000423967838,
+    "l2w": 0.01961600035429001
+   },
+   "order": [
+    "pr",
+    "zero",
+    "sum",
+    "l2w"
+   ]
+  },
+  {
+   "family": "gemv",
+   "case": "14336x4096",
+   "bytes": 117440512,
+   "cand": "tinygemm_k4",
+   "ms": {
+    "sum": 0.03670400008559227,
+    "zero": 0.052639998495578766,
+    "l2w": 0.051072001457214355,
+    "pr": 0.036768000572919846
+   },
+   "order": [
+    "sum",
+    "zero",
+    "l2w",
+    "pr"
+   ]
+  },
+  {
+   "family": "gemv",
+   "case": "14336x4096",
+   "bytes": 117440512,
+   "cand": "tinygemm_k2",
+   "ms": {
+    "l2w": 0.05299200117588043,
+    "zero": 0.05289600044488907,
+    "sum": 0.037408001720905304,
+    "pr": 0.037376001477241516
+   },
+   "order": [
+    "l2w",
+    "zero",
+    "sum",
+    "pr"
+   ]
+  },
+  {
+   "family": "gemv",
+   "case": "14336x4096",
+   "bytes": 117440512,
+   "cand": "bnb_nf4",
+   "ms": {
+    "zero": 0.06207999959588051,
+    "pr": 0.04447999969124794,
+    "sum": 0.04447999969124794,
+    "l2w": 0.06260799989104271
+   },
+   "order": [
+    "zero",
+    "pr",
+    "sum",
+    "l2w"
+   ]
+  },
+  {
+   "family": "gemv",
+   "case": "14336x4096",
+   "bytes": 117440512,
+   "cand": "tinygemm_k8",
+   "ms": {
+    "l2w": 0.052319999784231186,
+    "sum": 0.03743999823927879,
+    "zero": 0.053599998354911804,
+    "pr": 0.037856001406908035
+   },
+   "order": [
+    "l2w",
+    "sum",
+    "zero",
+    "pr"
+   ]
+  },
+  {
+   "family": "gemv",
+   "case": "14336x4096",
+   "bytes": 117440512,
+   "cand": "cublas_fp16",
+   "ms": {
+    "sum": 0.12691199779510498,
+    "pr": 0.12694400548934937,
+    "zero": 0.1491200029850006,
+    "l2w": 0.14924800395965576
+   },
+   "order": [
+    "sum",
+    "pr",
+    "zero",
+    "l2w"
+   ]
+  },
+  {
+   "family": "gemv",
+   "case": "4096x14336",
+   "bytes": 117440512,
+   "cand": "tinygemm_k8",
+   "ms": {
+    "pr": 0.037376001477241516,
+    "l2w": 0.05286400020122528,
+    "zero": 0.05286400020122528,
+    "sum": 0.03739200159907341
+   },
+   "order": [
+    "pr",
+    "l2w",
+    "zero",
+    "sum"
+   ]
+  },
+  {
+   "family": "gemv",
+   "case": "4096x14336",
+   "bytes": 117440512,
+   "cand": "cublas_fp16",
+   "ms": {
+    "zero": 0.15014399588108063,
+    "pr": 0.1276800036430359,
+    "sum": 0.12729600071907043,
+    "l2w": 0.14985600113868713
+   },
+   "order": [
+    "zero",
+    "pr",
+    "sum",
+    "l2w"
+   ]
+  },
+  {
+   "family": "gemv",
+   "case": "4096x14336",
+   "bytes": 117440512,
+   "cand": "bnb_nf4",
+   "ms": {
+    "zero": 0.0703359991312027,
+    "pr": 0.05321599915623665,
+    "sum": 0.05305600166320801,
+    "l2w": 0.07039999961853027
+   },
+   "order": [
+    "zero",
+    "pr",
+    "sum",
+    "l2w"
+   ]
+  },
+  {
+   "family": "gemv",
+   "case": "4096x14336",
+   "bytes": 117440512,
+   "cand": "tinygemm_k2",
+   "ms": {
+    "zero": 0.0533440001308918,
+    "pr": 0.037856001406908035,
+    "sum": 0.03743999823927879,
+    "l2w": 0.05344000086188316
+   },
+   "order": [
+    "zero",
+    "pr",
+    "sum",
+    "l2w"
+   ]
+  },
+  {
+   "family": "gemv",
+   "case": "4096x14336",
+   "bytes": 117440512,
+   "cand": "tinygemm_k4",
+   "ms": {
+    "l2w": 0.05275199934840202,
+    "pr": 0.03747199848294258,
+    "zero": 0.052799999713897705,
+    "sum": 0.03750399872660637
+   },
+   "order": [
+    "l2w",
+    "pr",
+    "zero",
+    "sum"
+   ]
+  },
+  {
+   "family": "attn",
+   "case": "L4096",
+   "bytes": 16777216,
+   "cand": "sdpa_bf16",
+   "ms": {
+    "sum": 0.0306560005992651,
+    "l2w": 0.0390079990029335,
+    "pr": 0.030912000685930252,
+    "zero": 0.03892799839377403
+   },
+   "order": [
+    "sum",
+    "l2w",
+    "pr",
+    "zero"
+   ]
+  },
+  {
+   "family": "attn",
+   "case": "L16384",
+   "bytes": 67108864,
+   "cand": "sdpa_bf16",
+   "ms": {
+    "zero": 0.11236799880862236,
+    "pr": 0.08344000205397606,
+    "sum": 0.08320000022649765,
+    "l2w": 0.1125119999051094
+   },
+   "order": [
+    "zero",
+    "pr",
+    "sum",
+    "l2w"
+   ]
+  },
+  {
+   "family": "attn",
+   "case": "L65536",
+   "bytes": 268435456,
+   "cand": "sdpa_bf16",
+   "ms": {
+    "sum": 0.3025600016117096,
+    "zero": 0.3625759929418564,
+    "pr": 0.3027839958667755,
+    "l2w": 0.36259201169013977
+   },
+   "order": [
+    "sum",
+    "zero",
+    "pr",
+    "l2w"
+   ]
+  },
+  {
+   "family": "rmsnorm",
+   "case": "T2048",
+   "bytes": 16777216,
+   "cand": "liger_rmsnorm",
+   "ms": {
+    "sum": 0.02252800017595291,
+    "zero": 0.04070400074124336,
+    "l2w": 0.07526399940252304,
+    "pr": 0.0225600004196167
+   },
+   "order": [
+    "sum",
+    "zero",
+    "l2w",
+    "pr"
+   ]
+  },
+  {
+   "family": "rmsnorm",
+   "case": "T2048",
+   "bytes": 16777216,
+   "cand": "torch_rmsnorm",
+   "ms": {
+    "l2w": 0.1674560010433197,
+    "sum": 0.1167680025100708,
+    "pr": 0.1165120005607605,
+    "zero": 0.16675199568271637
+   },
+   "order": [
+    "l2w",
+    "sum",
+    "pr",
+    "zero"
+   ]
+  },
+  {
+   "family": "rmsnorm",
+   "case": "T8192",
+   "bytes": 67108864,
+   "cand": "liger_rmsnorm",
+   "ms": {
+    "sum": 0.09481599926948547,
+    "l2w": 0.15030400454998016,
+    "zero": 0.14983999729156494,
+    "pr": 0.09516800194978714
+   },
+   "order": [
+    "sum",
+    "l2w",
+    "zero",
+    "pr"
+   ]
+  },
+  {
+   "family": "rmsnorm",
+   "case": "T8192",
+   "bytes": 67108864,
+   "cand": "torch_rmsnorm",
+   "ms": {
+    "pr": 1.4059199690818787,
+    "zero": 1.4608480334281921,
+    "l2w": 1.460528016090393,
+    "sum": 1.4061439633369446
+   },
+   "order": [
+    "pr",
+    "zero",
+    "l2w",
+    "sum"
+   ]
+  },
+  {
+   "family": "swiglu",
+   "case": "T512",
+   "bytes": 14680064,
+   "cand": "torch_swiglu",
+   "ms": {
+    "sum": 0.03670400008559227,
+    "pr": 0.03699199855327606,
+    "l2w": 0.06924799829721451,
+    "zero": 0.0692799985408783
+   },
+   "order": [
+    "sum",
+    "pr",
+    "l2w",
+    "zero"
+   ]
+  },
+  {
+   "family": "swiglu",
+   "case": "T512",
+   "bytes": 14680064,
+   "cand": "liger_swiglu",
+   "ms": {
+    "sum": 0.03574400022625923,
+    "l2w": 0.062463998794555664,
+    "pr": 0.036159999668598175,
+    "zero": 0.058639999479055405
+   },
+   "order": [
+    "sum",
+    "l2w",
+    "pr",
+    "zero"
+   ]
+  },
+  {
+   "family": "swiglu",
+   "case": "T2048",
+   "bytes": 58720256,
+   "cand": "liger_swiglu",
+   "ms": {
+    "pr": 0.15347200632095337,
+    "l2w": 0.20307199656963348,
+    "sum": 0.1531520038843155,
+    "zero": 0.20294399559497833
+   },
+   "order": [
+    "pr",
+    "l2w",
+    "sum",
+    "zero"
+   ]
+  },
+  {
+   "family": "swiglu",
+   "case": "T2048",
+   "bytes": 58720256,
+   "cand": "torch_swiglu",
+   "ms": {
+    "pr": 0.2725600004196167,
+    "zero": 0.32528001070022583,
+    "l2w": 0.3259199857711792,
+    "sum": 0.2722240090370178
+   },
+   "order": [
+    "pr",
+    "zero",
+    "l2w",
+    "sum"
+   ]
+  }
+ ],
+ "invalid": [],
+ "notes": {},
+ "kernels": {
+  "gemv 4096x4096 cublas_fp16": [
+   "std::enable_if<!(false), void>::type internal::gemvx::kernel<int, int, __half, __half, __half, float, false, true, true,"
+  ],
+  "gemv 4096x4096 tinygemm_k2": [
+   "void at::native::tinygemm_m16n8k16_chunk_kernel<at::native::ALayout_RM<(at::native::KReductionType)0>, at::native::BLayo"
+  ],
+  "gemv 4096x4096 tinygemm_k4": [
+   "void at::native::tinygemm_m16n8k16_chunk_kernel<at::native::ALayout_RM<(at::native::KReductionType)0>, at::native::BLayo"
+  ],
+  "gemv 4096x4096 tinygemm_k8": [
+   "void at::native::tinygemm_m16n8k16_chunk_kernel<at::native::ALayout_RM<(at::native::KReductionType)0>, at::native::BLayo"
+  ],
+  "gemv 4096x4096 bnb_nf4": [
+   "void gemm_4bit_simt<__half, 1>(__half const*, unsigned char const*, float const*, unsigned char const*, float const*, fl"
+  ],
+  "gemv 14336x4096 cublas_fp16": [
+   "std::enable_if<!(false), void>::type internal::gemvx::kernel<int, int, __half, __half, __half, float, false, true, true,"
+  ],
+  "gemv 14336x4096 tinygemm_k2": [
+   "void at::native::tinygemm_m16n8k16_chunk_kernel<at::native::ALayout_RM<(at::native::KReductionType)0>, at::native::BLayo"
+  ],
+  "gemv 14336x4096 tinygemm_k4": [
+   "void at::native::tinygemm_m16n8k16_chunk_kernel<at::native::ALayout_RM<(at::native::KReductionType)0>, at::native::BLayo"
+  ],
+  "gemv 14336x4096 tinygemm_k8": [
+   "void at::native::tinygemm_m16n8k16_chunk_kernel<at::native::ALayout_RM<(at::native::KReductionType)0>, at::native::BLayo"
+  ],
+  "gemv 14336x4096 bnb_nf4": [
+   "void gemm_4bit_simt<__half, 1>(__half const*, unsigned char const*, float const*, unsigned char const*, float const*, fl"
+  ],
+  "gemv 4096x14336 cublas_fp16": [
+   "std::enable_if<!(false), void>::type internal::gemvx::kernel<int, int, __half, __half, __half, float, false, true, true,"
+  ],
+  "gemv 4096x14336 tinygemm_k2": [
+   "void at::native::tinygemm_m16n8k16_chunk_kernel<at::native::ALayout_RM<(at::native::KReductionType)0>, at::native::BLayo"
+  ],
+  "gemv 4096x14336 tinygemm_k4": [
+   "void at::native::tinygemm_m16n8k16_chunk_kernel<at::native::ALayout_RM<(at::native::KReductionType)0>, at::native::BLayo"
+  ],
+  "gemv 4096x14336 tinygemm_k8": [
+   "void at::native::tinygemm_m16n8k16_chunk_kernel<at::native::ALayout_RM<(at::native::KReductionType)0>, at::native::BLayo"
+  ],
+  "gemv 4096x14336 bnb_nf4": [
+   "void gemm_4bit_simt<__half, 1>(__half const*, unsigned char const*, float const*, unsigned char const*, float const*, fl"
+  ],
+  "attn L4096 sdpa_bf16": [
+   "void pytorch_flash::flash_fwd_splitkv_combine_kernel<Flash_fwd_kernel_traits<128, 64, 128, 4, false, false, cutlass::bfl",
+   "void pytorch_flash::flash_fwd_splitkv_kernel<Flash_fwd_kernel_traits<128, 64, 128, 4, false, false, cutlass::bfloat16_t,"
+  ],
+  "attn L16384 sdpa_bf16": [
+   "void pytorch_flash::flash_fwd_splitkv_combine_kernel<Flash_fwd_kernel_traits<128, 64, 128, 4, false, false, cutlass::bfl",
+   "void pytorch_flash::flash_fwd_splitkv_kernel<Flash_fwd_kernel_traits<128, 64, 128, 4, false, false, cutlass::bfloat16_t,"
+  ],
+  "attn L65536 sdpa_bf16": [
+   "void pytorch_flash::flash_fwd_splitkv_combine_kernel<Flash_fwd_kernel_traits<128, 64, 128, 4, false, false, cutlass::bfl",
+   "void pytorch_flash::flash_fwd_splitkv_kernel<Flash_fwd_kernel_traits<128, 64, 128, 4, false, false, cutlass::bfloat16_t,"
+  ],
+  "rmsnorm T2048 torch_rmsnorm": [
+   "void at::native::elementwise_kernel<128, 2, at::native::gpu_kernel_impl_nocast<at::native::BinaryFunctor<float, float, f",
+   "void at::native::elementwise_kernel<128, 4, at::native::gpu_kernel_impl<at::native::BinaryFunctor<float, float, float, a",
+   "void at::native::reduce_kernel<512, 1, at::native::ReduceOp<float, at::native::MeanOps<float, float, float, float>, unsi",
+   "void at::native::unrolled_elementwise_kernel<at::native::direct_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda()#3}:",
+   "void at::native::vectorized_elementwise_kernel<4, at::native::(anonymous namespace)::pow_tensor_scalar_kernel_impl<float",
+   "void at::native::vectorized_elementwise_kernel<4, at::native::CUDAFunctorOnSelf_add<float>, std::array<char*, 2ul> >(int",
+   "void at::native::vectorized_elementwise_kernel<4, at::native::bfloat16_copy_kernel_cuda(at::TensorIteratorBase&)::{lambd",
+   "void at::native::vectorized_elementwise_kernel<4, at::native::rsqrt_kernel_cuda(at::TensorIteratorBase&)::{lambda()#2}::"
+  ],
+  "rmsnorm T2048 liger_rmsnorm": [
+   "_rms_norm_forward_kernel"
+  ],
+  "rmsnorm T8192 torch_rmsnorm": [
+   "void at::native::elementwise_kernel<128, 2, at::native::gpu_kernel_impl_nocast<at::native::BinaryFunctor<float, float, f",
+   "void at::native::elementwise_kernel<128, 4, at::native::gpu_kernel_impl<at::native::BinaryFunctor<float, float, float, a",
+   "void at::native::reduce_kernel<512, 1, at::native::ReduceOp<float, at::native::MeanOps<float, float, float, float>, unsi",
+   "void at::native::unrolled_elementwise_kernel<at::native::direct_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda()#3}:",
+   "void at::native::vectorized_elementwise_kernel<4, at::native::(anonymous namespace)::pow_tensor_scalar_kernel_impl<float",
+   "void at::native::vectorized_elementwise_kernel<4, at::native::CUDAFunctorOnSelf_add<float>, std::array<char*, 2ul> >(int",
+   "void at::native::vectorized_elementwise_kernel<4, at::native::bfloat16_copy_kernel_cuda(at::TensorIteratorBase&)::{lambd",
+   "void at::native::vectorized_elementwise_kernel<4, at::native::rsqrt_kernel_cuda(at::TensorIteratorBase&)::{lambda()#2}::"
+  ],
+  "rmsnorm T8192 liger_rmsnorm": [
+   "_rms_norm_forward_kernel"
+  ],
+  "swiglu T512 torch_swiglu": [
+   "void at::native::vectorized_elementwise_kernel<4, at::native::(anonymous namespace)::silu_kernel(at::TensorIteratorBase&",
+   "void at::native::vectorized_elementwise_kernel<4, at::native::BinaryFunctor<c10::BFloat16, c10::BFloat16, c10::BFloat16,"
+  ],
+  "swiglu T512 liger_swiglu": [
+   "_swiglu_forward_kernel"
+  ],
+  "swiglu T2048 torch_swiglu": [
+   "void at::native::vectorized_elementwise_kernel<4, at::native::(anonymous namespace)::silu_kernel(at::TensorIteratorBase&",
+   "void at::native::vectorized_elementwise_kernel<4, at::native::BinaryFunctor<c10::BFloat16, c10::BFloat16, c10::BFloat16,"
+  ],
+  "swiglu T2048 liger_swiglu": [
+   "_swiglu_forward_kernel"
+  ]
+ }
+}

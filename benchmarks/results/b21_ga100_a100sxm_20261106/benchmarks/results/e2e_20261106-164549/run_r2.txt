@@ -1,0 +1,1 @@
+15 events, variants=['fp16', 'int4', 'nf4'], correctness_failures=0, notes={'bitsandbytes': '0.50.2'}

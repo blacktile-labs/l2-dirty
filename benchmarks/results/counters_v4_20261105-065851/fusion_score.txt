@@ -1,0 +1,238 @@
+S-0 flush read bytes: max rel err 0.1% -> PASS
+K-1 discriminating cells: 36; v4 strictly closer in 100.0% -> v4 better
+K-2 mean e over discriminating cells: v4 0.102, v3 0.691 (v4 must be <= 0.2) -> PASS
+K-3 all 231 cells: mean e v4 0.040 vs v3 0.132; far cells within 0.1 B: 100.0% of 66 -> PASS
+
+    l2x label                            d   meas    v3    v4   disc
+ 0.1875 fused|isolated|k1                R  1.000  1.00  1.00   
+ 0.1875 fused|isolated|k1                W  0.000  0.00  0.00   
+ 0.1875 fused|steady1|k1                 R  0.000  0.00  0.00   
+ 0.1875 fused|steady1|k1                 W  0.000  0.00  0.00   
+ 0.1875 fused|steady2|k1                 R  0.000  0.00  0.00   
+ 0.1875 fused|steady2|k1                 W  0.000  0.00  0.00   
+ 0.1875 fused|steady3|k1                 R  0.000  0.00  0.00   
+ 0.1875 fused|steady3|k1                 W  0.000  0.00  0.00   
+ 0.1875 materialized|isolated|flush      W  1.101  1.00  1.00   
+ 0.1875 materialized|isolated|k1         R  1.000  1.00  1.00   
+ 0.1875 materialized|isolated|k1         W  0.000  0.00  0.00   
+ 0.1875 materialized|isolated|k2         R  0.000  0.00  0.00   
+ 0.1875 materialized|isolated|k2         W  0.021  0.00  0.00   
+ 0.1875 materialized|steady1|k1          R  0.000  0.00  0.00   
+ 0.1875 materialized|steady1|k1          W  0.035  0.00  0.00   
+ 0.1875 materialized|steady1|k2          R  0.000  0.00  0.00   
+ 0.1875 materialized|steady1|k2          W  0.041  0.00  0.00   
+ 0.1875 materialized|steady2|k1          R  0.000  0.00  0.00   
+ 0.1875 materialized|steady2|k1          W  0.014  0.00  0.00   
+ 0.1875 materialized|steady2|k2          R  0.000  0.00  0.00   
+ 0.1875 materialized|steady2|k2          W  0.030  0.00  0.00   
+ 0.1875 materialized|steady3|k1          R  0.000  0.00  0.00   
+ 0.1875 materialized|steady3|k1          W  0.001  0.00  0.00   
+ 0.1875 materialized|steady3|k2          R  0.000  0.00  0.00   
+ 0.1875 materialized|steady3|k2          W  0.036  0.00  0.00   
+ 0.1875 stage2_cold|isolated|flush       W  2.172  2.00  2.00   
+ 0.1875 stage2_cold|isolated|k1          R  1.000  1.00  1.00   
+ 0.1875 stage2_cold|isolated|k1          W  0.000  0.00  0.00   
+ 0.1875 stage2_warm|isolated|flush       W  1.068  1.00  1.00   
+ 0.1875 stage2_warm|pre|k1               R  1.000  1.00  1.00   
+ 0.1875 stage2_warm|pre|k1               W  0.000  0.00  0.00   
+ 0.1875 stage2_warm|isolated|k1          R  0.000  0.00  0.00   
+ 0.1875 stage2_warm|isolated|k1          W  0.016  0.00  0.00   
+ 0.3125 fused|isolated|k1                R  1.000  1.00  1.00   
+ 0.3125 fused|isolated|k1                W  0.000  0.00  0.00   
+ 0.3125 fused|steady1|k1                 R  0.000  0.00  0.00   
+ 0.3125 fused|steady1|k1                 W  0.000  0.00  0.00   
+ 0.3125 fused|steady2|k1                 R  0.000  0.00  0.00   
+ 0.3125 fused|steady2|k1                 W  0.000  0.00  0.00   
+ 0.3125 fused|steady3|k1                 R  0.000  0.00  0.00   
+ 0.3125 fused|steady3|k1                 W  0.001  0.00  0.00   
+ 0.3125 materialized|isolated|flush      W  1.092  1.00  1.00   
+ 0.3125 materialized|isolated|k1         R  1.002  1.00  1.00   
+ 0.3125 materialized|isolated|k1         W  0.000  0.00  0.00   
+ 0.3125 materialized|isolated|k2         R  0.000  0.00  0.00   
+ 0.3125 materialized|isolated|k2         W  0.632  0.00  0.40   *
+ 0.3125 materialized|steady1|k1          R  0.022  0.00  0.00   
+ 0.3125 materialized|steady1|k1          W  0.572  0.00  1.00   *
+ 0.3125 materialized|steady1|k2          R  0.000  0.00  0.00   
+ 0.3125 materialized|steady1|k2          W  0.921  0.00  1.00   *
+ 0.3125 materialized|steady2|k1          R  0.062  0.00  0.00   
+ 0.3125 materialized|steady2|k1          W  0.505  0.00  1.00   *
+ 0.3125 materialized|steady2|k2          R  0.000  0.00  0.00   
+ 0.3125 materialized|steady2|k2          W  0.883  0.00  1.00   *
+ 0.3125 materialized|steady3|k1          R  0.019  0.00  0.00   
+ 0.3125 materialized|steady3|k1          W  0.574  0.00  1.00   *
+ 0.3125 materialized|steady3|k2          R  0.000  0.00  0.00   
+ 0.3125 materialized|steady3|k2          W  0.886  0.00  1.00   *
+ 0.3125 stage2_cold|isolated|flush       W  1.470  2.00  1.60   *
+ 0.3125 stage2_cold|isolated|k1          R  1.000  1.00  1.00   
+ 0.3125 stage2_cold|isolated|k1          W  0.000  0.00  0.00   
+ 0.3125 stage2_warm|isolated|flush       W  1.032  1.00  1.00   
+ 0.3125 stage2_warm|pre|k1               R  1.000  1.00  1.00   
+ 0.3125 stage2_warm|pre|k1               W  0.000  0.00  0.00   
+ 0.3125 stage2_warm|isolated|k1          R  0.000  0.00  0.00   
+ 0.3125 stage2_warm|isolated|k1          W  0.530  0.00  0.40   *
+  0.375 fused|isolated|k1                R  1.000  1.00  1.00   
+  0.375 fused|isolated|k1                W  0.000  0.00  0.00   
+  0.375 fused|steady1|k1                 R  0.000  0.00  0.00   
+  0.375 fused|steady1|k1                 W  0.001  0.00  0.00   
+  0.375 fused|steady2|k1                 R  0.000  0.00  0.00   
+  0.375 fused|steady2|k1                 W  0.001  0.00  0.00   
+  0.375 fused|steady3|k1                 R  0.000  0.00  0.00   
+  0.375 fused|steady3|k1                 W  0.004  0.00  0.00   
+  0.375 materialized|isolated|flush      W  1.108  1.00  1.00   
+  0.375 materialized|isolated|k1         R  1.000  1.00  1.00   
+  0.375 materialized|isolated|k1         W  0.000  0.00  0.00   
+  0.375 materialized|isolated|k2         R  0.000  0.00  0.00   
+  0.375 materialized|isolated|k2         W  0.732  0.00  0.67   *
+  0.375 materialized|steady1|k1          R  0.917  1.00  1.00   
+  0.375 materialized|steady1|k1          W  0.861  0.33  1.00   *
+  0.375 materialized|steady1|k2          R  0.000  0.00  0.00   
+  0.375 materialized|steady1|k2          W  0.945  0.67  1.00   *
+  0.375 materialized|steady2|k1          R  0.917  1.00  1.00   
+  0.375 materialized|steady2|k1          W  0.851  0.33  1.00   *
+  0.375 materialized|steady2|k2          R  0.000  0.00  0.00   
+  0.375 materialized|steady2|k2          W  0.938  0.67  1.00   *
+  0.375 materialized|steady3|k1          R  0.931  1.00  1.00   
+  0.375 materialized|steady3|k1          W  0.808  0.33  1.00   *
+  0.375 materialized|steady3|k2          R  0.000  0.00  0.00   
+  0.375 materialized|steady3|k2          W  0.916  0.67  1.00   *
+  0.375 stage2_cold|isolated|flush       W  1.292  2.00  1.33   *
+  0.375 stage2_cold|isolated|k1          R  1.000  1.00  1.00   
+  0.375 stage2_cold|isolated|k1          W  0.000  0.00  0.00   
+  0.375 stage2_warm|isolated|flush       W  1.046  1.00  1.00   
+  0.375 stage2_warm|pre|k1               R  1.000  1.00  1.00   
+  0.375 stage2_warm|pre|k1               W  0.000  0.00  0.00   
+  0.375 stage2_warm|isolated|k1          R  0.000  0.00  0.00   
+  0.375 stage2_warm|isolated|k1          W  0.698  0.00  0.67   *
+ 0.4375 fused|isolated|k1                R  1.000  1.00  1.00   
+ 0.4375 fused|isolated|k1                W  0.005  0.00  0.00   
+ 0.4375 fused|steady1|k1                 R  0.000  0.00  0.00   
+ 0.4375 fused|steady1|k1                 W  0.096  0.00  0.00   
+ 0.4375 fused|steady2|k1                 R  0.000  0.00  0.00   
+ 0.4375 fused|steady2|k1                 W  0.218  0.00  0.00   
+ 0.4375 fused|steady3|k1                 R  0.005  0.00  0.00   
+ 0.4375 fused|steady3|k1                 W  0.096  0.00  0.00   
+ 0.4375 materialized|isolated|flush      W  0.981  1.00  1.00   
+ 0.4375 materialized|isolated|k1         R  1.000  1.00  1.00   
+ 0.4375 materialized|isolated|k1         W  0.003  0.00  0.00   
+ 0.4375 materialized|isolated|k2         R  0.000  0.00  0.00   
+ 0.4375 materialized|isolated|k2         W  0.892  0.00  0.86   *
+ 0.4375 materialized|steady1|k1          R  1.000  1.00  1.00   
+ 0.4375 materialized|steady1|k1          W  0.942  0.71  1.00   *
+ 0.4375 materialized|steady1|k2          R  0.000  0.00  0.00   
+ 0.4375 materialized|steady1|k2          W  1.003  0.29  1.00   *
+ 0.4375 materialized|steady2|k1          R  1.000  1.00  1.00   
+ 0.4375 materialized|steady2|k1          W  0.883  0.71  1.00   *
+ 0.4375 materialized|steady2|k2          R  0.000  0.00  0.00   
+ 0.4375 materialized|steady2|k2          W  0.987  0.29  1.00   *
+ 0.4375 materialized|steady3|k1          R  1.000  1.00  1.00   
+ 0.4375 materialized|steady3|k1          W  0.936  0.71  1.00   *
+ 0.4375 materialized|steady3|k2          R  0.000  0.00  0.00   
+ 0.4375 materialized|steady3|k2          W  0.982  0.29  1.00   *
+ 0.4375 stage2_cold|isolated|flush       W  1.039  2.00  1.14   *
+ 0.4375 stage2_cold|isolated|k1          R  1.000  1.00  1.00   
+ 0.4375 stage2_cold|isolated|k1          W  0.004  0.00  0.00   
+ 0.4375 stage2_warm|isolated|flush       W  1.002  1.00  1.00   
+ 0.4375 stage2_warm|pre|k1               R  1.000  1.00  1.00   
+ 0.4375 stage2_warm|pre|k1               W  0.001  0.00  0.00   
+ 0.4375 stage2_warm|isolated|k1          R  0.000  0.00  0.00   
+ 0.4375 stage2_warm|isolated|k1          W  0.884  0.00  0.86   *
+    0.5 fused|isolated|k1                R  1.000  1.00  1.00   
+    0.5 fused|isolated|k1                W  0.039  0.00  0.00   
+    0.5 fused|steady1|k1                 R  0.255  0.00  0.00   
+    0.5 fused|steady1|k1                 W  0.726  0.00  0.00   
+    0.5 fused|steady2|k1                 R  0.353  0.00  0.00   
+    0.5 fused|steady2|k1                 W  0.501  0.00  0.00   
+    0.5 fused|steady3|k1                 R  0.274  0.00  0.00   
+    0.5 fused|steady3|k1                 W  0.660  0.00  0.00   
+    0.5 materialized|isolated|flush      W  0.625  1.00  1.00   
+    0.5 materialized|isolated|k1         R  1.000  1.00  1.00   
+    0.5 materialized|isolated|k1         W  0.106  0.00  0.00   
+    0.5 materialized|isolated|k2         R  0.066  0.00  0.00   
+    0.5 materialized|isolated|k2         W  0.941  0.00  1.00   *
+    0.5 materialized|steady1|k1          R  1.000  1.00  1.00   
+    0.5 materialized|steady1|k1          W  0.983  2.00  1.00   *
+    0.5 materialized|steady1|k2          R  0.061  0.00  0.00   
+    0.5 materialized|steady1|k2          W  0.940  0.00  1.00   *
+    0.5 materialized|steady2|k1          R  1.000  1.00  1.00   
+    0.5 materialized|steady2|k1          W  0.984  2.00  1.00   *
+    0.5 materialized|steady2|k2          R  0.050  0.00  0.00   
+    0.5 materialized|steady2|k2          W  0.977  0.00  1.00   *
+    0.5 materialized|steady3|k1          R  1.000  1.00  1.00   
+    0.5 materialized|steady3|k1          W  0.988  2.00  1.00   *
+    0.5 materialized|steady3|k2          R  0.049  0.00  0.00   
+    0.5 materialized|steady3|k2          W  0.995  0.00  1.00   *
+    0.5 stage2_cold|isolated|flush       W  0.953  2.00  1.00   *
+    0.5 stage2_cold|isolated|k1          R  1.000  1.00  1.00   
+    0.5 stage2_cold|isolated|k1          W  0.075  0.00  0.00   
+    0.5 stage2_warm|isolated|flush       W  0.969  1.00  1.00   
+    0.5 stage2_warm|pre|k1               R  1.000  1.00  1.00   
+    0.5 stage2_warm|pre|k1               W  0.041  0.00  0.00   
+    0.5 stage2_warm|isolated|k1          R  0.063  0.00  0.00   
+    0.5 stage2_warm|isolated|k1          W  0.968  0.00  1.00   *
+      2 fused|isolated|k1                R  1.000  1.00  1.00   
+      2 fused|isolated|k1                W  0.753  0.75  0.75   
+      2 fused|steady1|k1                 R  1.000  1.00  1.00   
+      2 fused|steady1|k1                 W  0.994  1.00  1.00   
+      2 fused|steady2|k1                 R  1.000  1.00  1.00   
+      2 fused|steady2|k1                 W  0.983  1.00  1.00   
+      2 fused|steady3|k1                 R  1.000  1.00  1.00   
+      2 fused|steady3|k1                 W  0.990  1.00  1.00   
+      2 materialized|isolated|flush      W  0.245  0.25  0.25   
+      2 materialized|isolated|k1         R  1.000  1.00  1.00   
+      2 materialized|isolated|k1         W  0.757  0.75  0.75   
+      2 materialized|isolated|k2         R  1.000  1.00  1.00   
+      2 materialized|isolated|k2         W  0.983  1.00  1.00   
+      2 materialized|steady1|k1          R  1.000  1.00  1.00   
+      2 materialized|steady1|k1          W  1.002  1.00  1.00   
+      2 materialized|steady1|k2          R  1.000  1.00  1.00   
+      2 materialized|steady1|k2          W  0.997  1.00  1.00   
+      2 materialized|steady2|k1          R  1.000  1.00  1.00   
+      2 materialized|steady2|k1          W  0.984  1.00  1.00   
+      2 materialized|steady2|k2          R  1.000  1.00  1.00   
+      2 materialized|steady2|k2          W  0.999  1.00  1.00   
+      2 materialized|steady3|k1          R  1.000  1.00  1.00   
+      2 materialized|steady3|k1          W  0.998  1.00  1.00   
+      2 materialized|steady3|k2          R  1.000  1.00  1.00   
+      2 materialized|steady3|k2          W  0.987  1.00  1.00   
+      2 stage2_cold|isolated|flush       W  0.231  0.25  0.25   
+      2 stage2_cold|isolated|k1          R  1.000  1.00  1.00   
+      2 stage2_cold|isolated|k1          W  0.755  0.75  0.75   
+      2 stage2_warm|isolated|flush       W  0.243  0.25  0.25   
+      2 stage2_warm|pre|k1               R  1.000  1.00  1.00   
+      2 stage2_warm|pre|k1               W  0.759  0.75  0.75   
+      2 stage2_warm|isolated|k1          R  1.000  1.00  1.00   
+      2 stage2_warm|isolated|k1          W  0.993  1.00  1.00   
+      3 fused|isolated|k1                R  1.000  1.00  1.00   
+      3 fused|isolated|k1                W  0.837  0.83  0.83   
+      3 fused|steady1|k1                 R  1.000  1.00  1.00   
+      3 fused|steady1|k1                 W  0.992  1.00  1.00   
+      3 fused|steady2|k1                 R  1.000  1.00  1.00   
+      3 fused|steady2|k1                 W  0.993  1.00  1.00   
+      3 fused|steady3|k1                 R  1.000  1.00  1.00   
+      3 fused|steady3|k1                 W  0.999  1.00  1.00   
+      3 materialized|isolated|flush      W  0.164  0.17  0.17   
+      3 materialized|isolated|k1         R  1.000  1.00  1.00   
+      3 materialized|isolated|k1         W  0.846  0.83  0.83   
+      3 materialized|isolated|k2         R  1.000  1.00  1.00   
+      3 materialized|isolated|k2         W  0.991  1.00  1.00   
+      3 materialized|steady1|k1          R  1.000  1.00  1.00   
+      3 materialized|steady1|k1          W  1.007  1.00  1.00   
+      3 materialized|steady1|k2          R  1.000  1.00  1.00   
+      3 materialized|steady1|k2          W  0.985  1.00  1.00   
+      3 materialized|steady2|k1          R  1.000  1.00  1.00   
+      3 materialized|steady2|k1          W  0.995  1.00  1.00   
+      3 materialized|steady2|k2          R  1.000  1.00  1.00   
+      3 materialized|steady2|k2          W  0.993  1.00  1.00   
+      3 materialized|steady3|k1          R  1.000  1.00  1.00   
+      3 materialized|steady3|k1          W  1.006  1.00  1.00   
+      3 materialized|steady3|k2          R  1.000  1.00  1.00   
+      3 materialized|steady3|k2          W  0.987  1.00  1.00   
+      3 stage2_cold|isolated|flush       W  0.160  0.17  0.17   
+      3 stage2_cold|isolated|k1          R  1.000  1.00  1.00   
+      3 stage2_cold|isolated|k1          W  0.835  0.83  0.83   
+      3 stage2_warm|isolated|flush       W  0.165  0.17  0.17   
+      3 stage2_warm|pre|k1               R  1.000  1.00  1.00   
+      3 stage2_warm|pre|k1               W  0.843  0.83  0.83   
+      3 stage2_warm|isolated|k1          R  1.000  1.00  1.00   
+      3 stage2_warm|isolated|k1          W  0.991  1.00  1.00   
+verdict: {"S-0": true, "K-1": "v4 better", "K-1 share": 1.0, "K-2": true, "K-3": true}

@@ -1,0 +1,12 @@
+Traceback (most recent call last):
+  File "/root/dmkl/benchmarks/scripts/wb_probe_firstcell_score.py", line 108, in <module>
+    sys.exit(main())
+  File "/root/dmkl/benchmarks/scripts/wb_probe_firstcell_score.py", line 98, in main
+    sector = b6b.load_set(a.meta, a.kernel_csv, a.range_csv)
+  File "/root/dmkl/benchmarks/scripts/wb_probe_b6b_score.py", line 48, in load_set
+    kr = [ws.align_kernel(load_ncu_raw(p), n, steady, *ws.kernel_names(meta)) for p in kernel_csvs]
+  File "/root/dmkl/benchmarks/scripts/wb_probe_b6b_score.py", line 48, in <listcomp>
+    kr = [ws.align_kernel(load_ncu_raw(p), n, steady, *ws.kernel_names(meta)) for p in kernel_csvs]
+  File "/root/dmkl/benchmarks/scripts/counter_prereg.py", line 211, in load_ncu_raw
+    raise ValueError(f"{path}: column {m!r} missing")
+ValueError: benchmarks/results/wb_probe_firstcell_20261106-052749/sector_kernel_r1.csv: column 'dram__bytes_read.sum' missing

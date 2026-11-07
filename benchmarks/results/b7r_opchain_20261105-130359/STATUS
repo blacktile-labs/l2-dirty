@@ -1,0 +1,19 @@
+warm rc=0
+kernel_r1 rc=0
+range_r1 rc=0
+kernel_r2 rc=0
+range_r2 rc=0
+kernel_r3 rc=0
+range_r3 rc=0
+kernel_r4 rc=0
+range_r4 rc=0
+kernel_r5 rc=0
+range_r5 rc=0
+score rc=0
+plans reproduce the locked predictions: [True, True, True, True, True, True, True, True, True, True]; correctness ok: [True, True, True, True, True, True, True, True, True, True]
+Y-0 a plans identical + correctness: True; b background: median control read 10368 B (<= 16000), max control write 0 B (<= 4000); c max enqueue 4180 us vs spin 2874 us (< 0.8x); d far |d| max 0.026 (<= 0.05) -> FAIL (stop)
+Y-1 edge read segments with |G-K| <= 0.05 B/launch: 90% (need >= 80%) -> reads unchanged by replay mode
+Y-2 edge writes: mean |g| 0.075 vs mean |k| 0.135 B/launch, rho 0.56 -> write error partly a measurement artifact (mean d +0.062)
+Y-3 edge reads+writes: mean |g| 0.086 vs mean |k| 0.113 B/launch, rho 0.76 -> PARTIAL
+descriptive: segment-dirs within 0.1 B/launch of v4: range 83%, kernel 78% (of 72)
+verdict: {"Y-0": false, "Y-0 parts": {"a plans+correctness": true, "b background": true, "c back-to-back": false, "d far sizes agree": true}, "Y-1": "reads unchanged by replay mode", "Y-1 share": 0.9, "Y-2": "write error partly a measurement artifact", "Y-2 rho": 0.557, "Y-3": "PARTIAL", "Y-3 rho": 0.756, "within range": 0.833, "within kernel": 0.778}

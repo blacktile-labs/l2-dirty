@@ -1,0 +1,15 @@
+kernel run 1 rc=0
+kernel run 2 rc=0
+kernel run 3 rc=0
+range run 1 rc=0
+range run 2 rc=0
+range run 3 rc=0
+correctness_failures per run: {'kernel_r1_meta.json': 0, 'kernel_r2_meta.json': 0, 'kernel_r3_meta.json': 0, 'range_r1_meta.json': 0, 'range_r2_meta.json': 0, 'range_r3_meta.json': 0}
+score rc=0
+W-0 sanity: anchor 2:0 RD 1.000, anchor 0:2 WB 0.992, WARM range [1.000, 1.001] -> PASS
+W-1 write-back LRU: 11 in-cache cells with WB >= 0.1, 0 with RD >= 0.1 -> REJECTED
+W-2 WB(0:0.125) = 0.000; deltas at r = (0.625, 0.75): +0.001, +0.108 -> inconclusive
+W-3 rows w=0.125: spread 0.108 rise +0.108, 0.25: spread 0.076 rise +0.076, 0.375: spread 0.045 rise +0.043, 0.5: spread 0.083 rise +0.083 -> flat rows (H-D)
+W-4 median RB/WB over 11 active cells = 0.000 -> cleaned, stays resident
+W-5 median WBR/WB over 11 active cells = 1.017 -> not gap-driven
+verdict: {"W-0": true, "W-1 LRU rejected": true, "W-2": "inconclusive", "W-3": "flat rows (H-D)", "W-4": "cleaned, stays resident", "W-5": "not gap-driven"}

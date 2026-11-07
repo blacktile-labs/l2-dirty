@@ -1,0 +1,11 @@
+[07:39:50] 0 environment
+[07:39:50] 1 toolchain
+[07:41:45] apt rc=0
+2.7.1+cu126 12.6 3.3.1 True
+[07:42:43] 2 counter check (absorb smoke under ncu)
+counter rows: 12
+[07:42:48] 3 B15 absorb
+[07:43:31] B15 rc=0
+[07:43:31] 4 B14 replication
+[07:44:14] B14 rc=0
+[07:44:14] 5 pack

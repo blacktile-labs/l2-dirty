@@ -1,0 +1,41 @@
+ptxas info    : 0 bytes gmem
+ptxas info    : Compiling entry function '_Z21copy_strided_read_u32PKjPjmm' for 'sm_89'
+ptxas info    : Function properties for _Z21copy_strided_read_u32PKjPjmm
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Used 10 registers, used 0 barriers, 384 bytes cmem[0]
+ptxas info    : Compile time = 4.144 ms
+ptxas info    : Compiling entry function '_Z17copy_contig_u32x4PK5uint4PS_m' for 'sm_89'
+ptxas info    : Function properties for _Z17copy_contig_u32x4PK5uint4PS_m
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Used 14 registers, used 0 barriers, 376 bytes cmem[0]
+ptxas info    : Compile time = 3.168 ms
+ptxas info    : Compiling entry function '_Z15copy_contig_u32PKjPjm' for 'sm_89'
+ptxas info    : Function properties for _Z15copy_contig_u32PKjPjm
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Used 10 registers, used 0 barriers, 376 bytes cmem[0]
+ptxas info    : Compile time = 3.091 ms
+ptxas info    : Compiling entry function '_Z12empty_kernelv' for 'sm_89'
+ptxas info    : Function properties for _Z12empty_kernelv
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Used 4 registers, used 0 barriers, 352 bytes cmem[0]
+ptxas info    : Compile time = 0.638 ms
+ptxas info    : Compiling entry function '_Z13flush_l2_readPKjmPj' for 'sm_89'
+ptxas info    : Function properties for _Z13flush_l2_readPKjmPj
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Used 8 registers, used 0 barriers, 376 bytes cmem[0]
+ptxas info    : Compile time = 2.928 ms
+ptxas info    : Compiling entry function '_Z10poison_dstPjmmj' for 'sm_89'
+ptxas info    : Function properties for _Z10poison_dstPjmmj
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Used 14 registers, used 0 barriers, 380 bytes cmem[0], 8 bytes cmem[2]
+ptxas info    : Compile time = 3.898 ms
+ptxas info    : Compiling entry function '_Z8fill_u32Pjmj' for 'sm_89'
+ptxas info    : Function properties for _Z8fill_u32Pjmj
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Used 10 registers, used 0 barriers, 372 bytes cmem[0]
+ptxas info    : Compile time = 2.582 ms
+ptxas info    : Compiling entry function '_Z8init_srcPjmj' for 'sm_89'
+ptxas info    : Function properties for _Z8init_srcPjmj
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Used 12 registers, used 0 barriers, 372 bytes cmem[0], 8 bytes cmem[2]
+ptxas info    : Compile time = 3.729 ms

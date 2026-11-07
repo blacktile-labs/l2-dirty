@@ -1,0 +1,18 @@
+warm rc=0
+kernel_r1 rc=0
+range_r1 rc=0
+kernel_r2 rc=0
+range_r2 rc=0
+kernel_r3 rc=0
+range_r3 rc=0
+score rc=0
+Q-0 correctness failures 0; control writes max 0 B (<= 4000); w 0.375: S_k 1.020 S_r 1.011 S_c 1.003 (in [0.95, 1.15]) -> PASS
+Q-1 S_c - S_k: w 0.75: +0.089, w 1: +0.067, w 1.5: +0.001 (all >= 0.05: loss; all <= 0.02: none) -> mixed
+Q-2 A - W: w 0.75: +0.080, w 1: +0.053, w 1.5: -0.001 -> mixed
+Q-3 A vs v4: w 0.75: 0.328 vs 0.333, w 1: 0.420 vs 0.500, w 1.5: 0.685 vs 0.667 (within 0.1) -> v4 predicts one write kernel's write-backs
+      w      W      F    S_k |      A      B    S_r    S_c |   A_v4   B_v4
+  0.375  0.000  1.020  1.020 |  0.000  1.011  1.011  1.003 |  0.000  1.000
+   0.75  0.248  0.670  0.916 |  0.328  0.664  0.999  1.005 |  0.333  0.667
+      1  0.367  0.575  0.936 |  0.420  0.577  1.000  1.003 |  0.500  0.500
+    1.5  0.686  0.313  0.999 |  0.685  0.313  1.000  1.001 |  0.667  0.333
+verdict: {"Q-0": true, "Q-0 parts": {"a correctness": true, "b control writes": true, "c below-cap sums": true}, "Q-1": "mixed", "Q-1 loss": {"0.75": 0.089, "1": 0.067, "1.5": 0.001}, "Q-2": "mixed", "Q-3": "v4 predicts one write kernel's write-backs"}

@@ -1,0 +1,163 @@
+{
+ "device": "NVIDIA A100-SXM4-40GB",
+ "l2_bytes": 41943040,
+ "runs": 3,
+ "truth us": {
+  "fp16 down": 70.881,
+  "fp16 gate_up": 137.795,
+  "fp16 o": 28.928,
+  "fp16 qkv": 78.881,
+  "int4 down": 32.064,
+  "int4 gate_up": 45.025,
+  "int4 o": 13.951,
+  "int4 qkv": 27.521,
+  "nf4 down": 42.017,
+  "nf4 gate_up": 74.401,
+  "nf4 o": 18.88,
+  "nf4 qkv": 44.513
+ },
+ "E": {
+  "cupti_rot": {
+   "fp16 down": -0.0063,
+   "fp16 gate_up": 0.0109,
+   "fp16 o": -0.0111,
+   "fp16 qkv": 0.015,
+   "int4 down": -0.022,
+   "int4 gate_up": 0.037,
+   "int4 o": -0.0413,
+   "int4 qkv": 0.0058,
+   "nf4 down": 0.0022,
+   "nf4 gate_up": 0.0017,
+   "nf4 o": -0.0153,
+   "nf4 qkv": -0.0108
+  },
+  "cupti_rot_idle": {
+   "fp16 down": -0.0059,
+   "fp16 gate_up": 0.0101,
+   "fp16 o": -0.0111,
+   "fp16 qkv": 0.015,
+   "int4 down": -0.022,
+   "int4 gate_up": -0.021,
+   "int4 o": -0.0413,
+   "int4 qkv": -0.0279,
+   "nf4 down": 0.0023,
+   "nf4 gate_up": -0.0071,
+   "nf4 o": -0.0153,
+   "nf4 qkv": -0.0101
+  },
+  "cupti_cold": {
+   "fp16 down": 0.0032,
+   "fp16 gate_up": 0.0056,
+   "fp16 o": -0.0077,
+   "fp16 qkv": 0.0057,
+   "int4 down": -0.008,
+   "int4 gate_up": -0.0121,
+   "int4 o": 0.0023,
+   "int4 qkv": -0.0163,
+   "nf4 down": 0.0247,
+   "nf4 gate_up": 0.0215,
+   "nf4 o": 0.0475,
+   "nf4 qkv": 0.0295
+  },
+  "event_cold": {
+   "fp16 down": 0.0492,
+   "fp16 gate_up": 0.0304,
+   "fp16 o": 0.1051,
+   "fp16 qkv": 0.0485,
+   "int4 down": 0.0868,
+   "int4 gate_up": 0.0508,
+   "int4 o": 0.2099,
+   "int4 qkv": 0.093,
+   "nf4 down": 0.1035,
+   "nf4 gate_up": 0.0624,
+   "nf4 o": 0.222,
+   "nf4 qkv": 0.1006
+  },
+  "event_graph": {
+   "fp16 down": 0.0046,
+   "fp16 gate_up": 0.0107,
+   "fp16 o": 0.0086,
+   "fp16 qkv": 0.0307,
+   "int4 down": -0.0231,
+   "int4 gate_up": 0.0488,
+   "int4 o": -0.0546,
+   "int4 qkv": 0.0111,
+   "nf4 down": 0.0075,
+   "nf4 gate_up": 0.0097,
+   "nf4 o": -0.0131,
+   "nf4 qkv": -0.0051
+  }
+ },
+ "within 1 %": {
+  "cupti_rot": "4/12",
+  "cupti_rot_idle": "3/12",
+  "cupti_cold": "6/12",
+  "event_cold": "0/12",
+  "event_graph": "5/12"
+ },
+ "tracing effect": {
+  "fp16": 0.0127,
+  "int4": 0.0219,
+  "nf4": 0.0098
+ },
+ "truth IQR/median": {
+  "fp16 down": 0.0086,
+  "fp16 gate_up": 0.004,
+  "fp16 o": 0.0243,
+  "fp16 qkv": 0.0073,
+  "int4 down": 0.015,
+  "int4 gate_up": 0.0057,
+  "int4 o": 0.023,
+  "int4 qkv": 0.0093,
+  "nf4 down": 0.0084,
+  "nf4 gate_up": 0.0039,
+  "nf4 o": 0.0136,
+  "nf4 qkv": 0.013
+ },
+ "kernel share of step": {
+  "fp16": 0.9976,
+  "int4": 1.0155,
+  "nf4": 1.0001
+ },
+ "rotation tracing effect": {
+  "fp16 qkv": 0.0313,
+  "fp16 o": 0.0101,
+  "fp16 gate_up": 0.0078,
+  "fp16 down": 0.0039,
+  "int4 qkv": 0.0157,
+  "int4 o": 0.0374,
+  "int4 gate_up": 0.0176,
+  "int4 down": 0.0171,
+  "nf4 qkv": 0.0117,
+  "nf4 o": 0.0206,
+  "nf4 gate_up": 0.0076,
+  "nf4 down": 0.0108
+ },
+ "truth round spread": {
+  "fp16 qkv": 0.0008,
+  "fp16 o": 0.0006,
+  "fp16 gate_up": 0.0005,
+  "fp16 down": 0.0014,
+  "int4 qkv": 0.0047,
+  "int4 o": 0.0047,
+  "int4 gate_up": 0.0042,
+  "int4 down": 0.004,
+  "nf4 qkv": 0.0025,
+  "nf4 o": 0.0017,
+  "nf4 gate_up": 0.0013,
+  "nf4 down": 0.0023
+ },
+ "shortest warm-up s": 1.0,
+ "W-0 parts": {
+  "3 full runs": true,
+  "correctness": true,
+  "record checks": true,
+  "fp16 and int4 truth": true,
+  "tracing <= 0.5 %": false,
+  "truth stable": true
+ },
+ "W-0": false,
+ "W-1": "not scored (W-0 failed)",
+ "W-2": "not scored (W-0 failed)",
+ "W-3": "not scored (W-0 failed)"
+}

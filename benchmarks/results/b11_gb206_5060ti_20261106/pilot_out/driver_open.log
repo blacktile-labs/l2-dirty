@@ -1,0 +1,330 @@
+[    7.246468] NVRM: GPU 0000:00:07.0: rm_init_adapter failed, device minor number 0
+[    7.248104] [drm:nv_drm_load [nvidia_drm]] *ERROR* [nvidia-drm] [GPU ID 0x00000007] Failed to allocate NvKmsKapiDevice
+[    7.250654] [drm:nv_drm_register_drm_device [nvidia_drm]] *ERROR* [nvidia-drm] [GPU ID 0x00000007] Failed to register device
+[   25.628519] NVRM: The NVIDIA GPU 0000:00:07.0 (PCI ID: 10de:2d04)
+               NVRM: installed in this system requires use of the NVIDIA open kernel modules.
+[   25.628585] NVRM: GPU 0000:00:07.0: RmInitAdapter failed! (0x22:0x56:884)
+[   25.639174] NVRM: GPU 0000:00:07.0: rm_init_adapter failed, device minor number 0
+[   25.691689] nvidia_uvm: module uses symbols nvUvmInterfaceDisableAccessCntr from proprietary module nvidia, inheriting taint.
+[  100.604101] NVRM: The NVIDIA GPU 0000:00:07.0 (PCI ID: 10de:2d04)
+               NVRM: installed in this system requires use of the NVIDIA open kernel modules.
+[  100.604147] NVRM: GPU 0000:00:07.0: RmInitAdapter failed! (0x22:0x56:884)
+[  100.608716] NVRM: GPU 0000:00:07.0: rm_init_adapter failed, device minor number 0
+[  100.758824] NVRM: The NVIDIA GPU 0000:00:07.0 (PCI ID: 10de:2d04)
+               NVRM: installed in this system requires use of the NVIDIA open kernel modules.
+[  100.758866] NVRM: GPU 0000:00:07.0: RmInitAdapter failed! (0x22:0x56:884)
+[  100.763090] NVRM: GPU 0000:00:07.0: rm_init_adapter failed, device minor number 0
+[  100.881100] NVRM: The NVIDIA GPU 0000:00:07.0 (PCI ID: 10de:2d04)
+               NVRM: installed in this system requires use of the NVIDIA open kernel modules.
+[  100.881150] NVRM: GPU 0000:00:07.0: RmInitAdapter failed! (0x22:0x56:884)
+[  100.887269] NVRM: GPU 0000:00:07.0: rm_init_adapter failed, device minor number 0
+--- swap
+Hit:1 http://archive.ubuntu.com/ubuntu jammy InRelease
+Get:2 http://archive.ubuntu.com/ubuntu jammy-updates InRelease [128 kB]
+Get:3 https://nvidia.github.io/libnvidia-container/stable/deb/amd64  InRelease [1477 B]
+Get:4 http://security.ubuntu.com/ubuntu jammy-security InRelease [129 kB]
+Get:5 https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64  InRelease [1578 B]
+Get:6 https://download.docker.com/linux/ubuntu jammy InRelease [48.5 kB]
+Get:7 https://ppa.launchpadcontent.net/graphics-drivers/ppa/ubuntu jammy InRelease [24.3 kB]
+Get:8 http://archive.ubuntu.com/ubuntu jammy-backports InRelease [127 kB]
+Get:9 https://pkgs.tailscale.com/stable/ubuntu jammy InRelease
+Get:10 https://nvidia.github.io/libnvidia-container/stable/deb/amd64  Packages [28.0 kB]
+Get:11 https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64  Packages [3202 kB]
+Get:12 http://archive.ubuntu.com/ubuntu jammy-updates/main amd64 Packages [3963 kB]
+Get:13 https://download.docker.com/linux/ubuntu jammy/stable amd64 Packages [92.7 kB]
+Get:14 http://archive.ubuntu.com/ubuntu jammy-updates/main Translation-en [582 kB]
+Get:15 http://archive.ubuntu.com/ubuntu jammy-updates/main amd64 c-n-f Metadata [20.1 kB]
+Get:16 http://archive.ubuntu.com/ubuntu jammy-updates/restricted amd64 Packages [6815 kB]
+Get:17 http://archive.ubuntu.com/ubuntu jammy-updates/restricted Translation-en [1310 kB]
+Get:18 http://archive.ubuntu.com/ubuntu jammy-updates/restricted amd64 c-n-f Metadata [584 B]
+Get:19 http://archive.ubuntu.com/ubuntu jammy-updates/universe amd64 Packages [1291 kB]
+Get:20 http://archive.ubuntu.com/ubuntu jammy-updates/universe Translation-en [327 kB]
+Get:21 http://archive.ubuntu.com/ubuntu jammy-updates/universe amd64 c-n-f Metadata [30.8 kB]
+Get:22 http://archive.ubuntu.com/ubuntu jammy-updates/multiverse amd64 Packages [86.1 kB]
+Get:23 http://archive.ubuntu.com/ubuntu jammy-updates/multiverse Translation-en [16.5 kB]
+Get:24 http://archive.ubuntu.com/ubuntu jammy-updates/multiverse amd64 c-n-f Metadata [756 B]
+Get:25 https://ppa.launchpadcontent.net/graphics-drivers/ppa/ubuntu jammy/main amd64 Packages [28.6 kB]
+Get:26 https://ppa.launchpadcontent.net/graphics-drivers/ppa/ubuntu jammy/main Translation-en [6076 B]
+Get:27 http://archive.ubuntu.com/ubuntu jammy-backports/main amd64 Packages [70.2 kB]
+Get:28 http://archive.ubuntu.com/ubuntu jammy-backports/main Translation-en [11.4 kB]
+Get:29 http://archive.ubuntu.com/ubuntu jammy-backports/main amd64 c-n-f Metadata [412 B]
+Get:30 http://archive.ubuntu.com/ubuntu jammy-backports/universe amd64 Packages [30.8 kB]
+Get:31 http://archive.ubuntu.com/ubuntu jammy-backports/universe Translation-en [16.9 kB]
+Get:32 http://archive.ubuntu.com/ubuntu jammy-backports/universe amd64 c-n-f Metadata [676 B]
+Get:33 https://pkgs.tailscale.com/stable/ubuntu jammy/main amd64 Packages [16.8 kB]
+Get:34 http://security.ubuntu.com/ubuntu jammy-security/main amd64 Packages [3675 kB]
+Get:35 http://security.ubuntu.com/ubuntu jammy-security/main Translation-en [513 kB]
+Get:36 http://security.ubuntu.com/ubuntu jammy-security/main amd64 c-n-f Metadata [14.7 kB]
+Get:37 http://security.ubuntu.com/ubuntu jammy-security/restricted amd64 Packages [6545 kB]
+Get:38 http://security.ubuntu.com/ubuntu jammy-security/restricted Translation-en [1257 kB]
+Get:39 http://security.ubuntu.com/ubuntu jammy-security/restricted amd64 c-n-f Metadata [600 B]
+Get:40 http://security.ubuntu.com/ubuntu jammy-security/universe amd64 Packages [1057 kB]
+Get:41 http://security.ubuntu.com/ubuntu jammy-security/universe Translation-en [238 kB]
+Get:42 http://security.ubuntu.com/ubuntu jammy-security/universe amd64 c-n-f Metadata [23.2 kB]
+Get:43 http://security.ubuntu.com/ubuntu jammy-security/multiverse amd64 Packages [79.6 kB]
+Get:44 http://security.ubuntu.com/ubuntu jammy-security/multiverse Translation-en [13.6 kB]
+Get:45 http://security.ubuntu.com/ubuntu jammy-security/multiverse amd64 c-n-f Metadata [544 B]
+Fetched 31.8 MB in 4s (7467 kB/s)
+Reading package lists...
+held: libnvidia-cfg1-575
+libnvidia-common-575
+libnvidia-compute-575
+libnvidia-decode-575
+libnvidia-encode-575
+libnvidia-extra-575
+libnvidia-fbc1-575
+libnvidia-gl-575
+nvidia-driver-575
+Canceled hold on libnvidia-cfg1-575.
+Canceled hold on libnvidia-common-575.
+Canceled hold on libnvidia-compute-575.
+Canceled hold on libnvidia-decode-575.
+Canceled hold on libnvidia-encode-575.
+Canceled hold on libnvidia-extra-575.
+Canceled hold on libnvidia-fbc1-575.
+Canceled hold on libnvidia-gl-575.
+Canceled hold on nvidia-driver-575.
+Reading package lists...
+Building dependency tree...
+Reading state information...
+The following packages were automatically installed and are no longer required:
+  dctrl-tools libgail-common libgail18 libgtk2.0-0 libgtk2.0-bin
+  libgtk2.0-common nvidia-firmware-575-575.51.03
+Use 'apt autoremove' to remove them.
+The following additional packages will be installed:
+  dkms libnvidia-cfg1-575 libnvidia-compute-575 libnvidia-decode-575
+  libnvidia-encode-575 libnvidia-extra-575 libnvidia-fbc1-575 libnvidia-gl-575
+  libnvidia-gpucomp-575 libxnvctrl0 nvidia-compute-utils-575
+  nvidia-dkms-575-open nvidia-firmware-575 nvidia-kernel-common-575
+  nvidia-kernel-source-575-open nvidia-modprobe nvidia-persistenced
+  nvidia-settings nvidia-utils-575 pahole xserver-xorg-video-nvidia-575
+Suggested packages:
+  menu nvidia-driver-575
+Recommended packages:
+  libnvidia-compute-575:i386 libnvidia-decode-575:i386
+  libnvidia-encode-575:i386 libnvidia-fbc1-575:i386 libnvidia-gl-575:i386
+The following packages will be REMOVED:
+  nvidia-dkms-575 nvidia-driver-575 nvidia-kernel-source-575
+The following NEW packages will be installed:
+  nvidia-dkms-575-open nvidia-driver-575-open nvidia-firmware-575
+  nvidia-kernel-source-575-open nvidia-persistenced pahole
+The following packages will be upgraded:
+  dkms libnvidia-cfg1-575 libnvidia-compute-575 libnvidia-decode-575
+  libnvidia-encode-575 libnvidia-extra-575 libnvidia-fbc1-575 libnvidia-gl-575
+  libnvidia-gpucomp-575 libxnvctrl0 nvidia-compute-utils-575
+  nvidia-kernel-common-575 nvidia-modprobe nvidia-settings nvidia-utils-575
+  xserver-xorg-video-nvidia-575
+16 upgraded, 6 newly installed, 3 to remove and 319 not upgraded.
+Need to get 296 MB of archives.
+After this operation, 18.3 MB of additional disk space will be used.
+Get:1 http://archive.ubuntu.com/ubuntu jammy-updates/universe amd64 pahole amd64 1.25-0ubuntu1~22.04.2 [565 kB]
+Get:2 https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64  dkms 1:3.4.4-1ubuntu1 [57.7 kB]
+Get:3 https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64  xserver-xorg-video-nvidia-575 575.57.08-0ubuntu1 [1696 kB]
+Get:4 https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64  libnvidia-cfg1-575 575.57.08-0ubuntu1 [145 kB]
+Get:5 https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64  libnvidia-decode-575 575.57.08-0ubuntu1 [2555 kB]
+Get:6 https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64  libnvidia-gl-575 575.57.08-0ubuntu1 [135 MB]
+Get:7 https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64  libnvidia-compute-575 575.57.08-0ubuntu1 [54.2 MB]
+Get:8 https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64  libnvidia-gpucomp-575 575.57.08-0ubuntu1 [17.8 MB]
+Get:9 https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64  nvidia-compute-utils-575 575.57.08-0ubuntu1 [40.6 kB]
+Get:10 https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64  nvidia-persistenced 620.70.06-1ubuntu1 [24.6 kB]
+Get:11 https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64  libnvidia-encode-575 575.57.08-0ubuntu1 [105 kB]
+Get:12 https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64  libnvidia-extra-575 575.57.08-0ubuntu1 [72.4 kB]
+Get:13 https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64  libnvidia-fbc1-575 575.57.08-0ubuntu1 [97.7 kB]
+Get:14 https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64  libxnvctrl0 620.70.06-1ubuntu1 [11.2 kB]
+Get:15 https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64  nvidia-kernel-source-575-open 575.57.08-0ubuntu1 [6480 kB]
+Get:16 https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64  nvidia-firmware-575 575.57.08-0ubuntu1 [74.9 MB]
+Get:17 https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64  nvidia-modprobe 620.70.06-1ubuntu1 [15.7 kB]
+Get:18 https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64  nvidia-kernel-common-575 575.57.08-0ubuntu1 [1244 kB]
+Get:19 https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64  nvidia-dkms-575-open 575.57.08-0ubuntu1 [13.8 kB]
+Get:20 https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64  nvidia-utils-575 575.57.08-0ubuntu1 [457 kB]
+Get:21 https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64  nvidia-driver-575-open 575.57.08-0ubuntu1 [11.5 kB]
+Get:22 https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64  nvidia-settings 620.70.06-1ubuntu1 [845 kB]
+Fetched 296 MB in 22s (13.4 MB/s)
+(Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 130884 files and directories currently installed.)
+Removing nvidia-driver-575 (575.51.03-0ubuntu1) ...
+Removing nvidia-dkms-575 (575.51.03-0ubuntu1) ...
+Removing all DKMS Modules
+Done.
+update-initramfs: deferring update (trigger activated)
+Removing nvidia-kernel-source-575 (575.51.03-0ubuntu1) ...
+Selecting previously unselected package pahole.
+(Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 130307 files and directories currently installed.)
+Preparing to unpack .../00-pahole_1.25-0ubuntu1~22.04.2_amd64.deb ...
+Unpacking pahole (1.25-0ubuntu1~22.04.2) ...
+Preparing to unpack .../01-dkms_1%3a3.4.4-1ubuntu1_all.deb ...
+Unpacking dkms (1:3.4.4-1ubuntu1) over (2.8.7-2ubuntu2.2) ...
+dpkg: warning: unable to delete old directory '/etc/dkms/template-dkms-mkdeb/debian': Directory not empty
+dpkg: warning: unable to delete old directory '/etc/dkms/template-dkms-mkdeb': Directory not empty
+dpkg: warning: unable to delete old directory '/etc/dkms/template-dkms-mkbmdeb/debian': Directory not empty
+dpkg: warning: unable to delete old directory '/etc/dkms/template-dkms-mkbmdeb': Directory not empty
+Preparing to unpack .../02-xserver-xorg-video-nvidia-575_575.57.08-0ubuntu1_amd64.deb ...
+Unpacking xserver-xorg-video-nvidia-575 (575.57.08-0ubuntu1) over (575.51.03-0ubuntu1) ...
+Preparing to unpack .../03-libnvidia-cfg1-575_575.57.08-0ubuntu1_amd64.deb ...
+Unpacking libnvidia-cfg1-575:amd64 (575.57.08-0ubuntu1) over (575.51.03-0ubuntu1) ...
+Preparing to unpack .../04-libnvidia-decode-575_575.57.08-0ubuntu1_amd64.deb ...
+Unpacking libnvidia-decode-575:amd64 (575.57.08-0ubuntu1) over (575.51.03-0ubuntu1) ...
+Preparing to unpack .../05-libnvidia-gl-575_575.57.08-0ubuntu1_amd64.deb ...
+dpkg-query: no packages found matching libnvidia-gl-535
+Unpacking libnvidia-gl-575:amd64 (575.57.08-0ubuntu1) over (575.51.03-0ubuntu1) ...
+Preparing to unpack .../06-libnvidia-compute-575_575.57.08-0ubuntu1_amd64.deb ...
+Unpacking libnvidia-compute-575:amd64 (575.57.08-0ubuntu1) over (575.51.03-0ubuntu1) ...
+Preparing to unpack .../07-libnvidia-gpucomp-575_575.57.08-0ubuntu1_amd64.deb ...
+Unpacking libnvidia-gpucomp-575:amd64 (575.57.08-0ubuntu1) over (575.51.03-0ubuntu1) ...
+Preparing to unpack .../08-nvidia-compute-utils-575_575.57.08-0ubuntu1_amd64.deb ...
+Unpacking nvidia-compute-utils-575 (575.57.08-0ubuntu1) over (575.51.03-0ubuntu1) ...
+Selecting previously unselected package nvidia-persistenced.
+Preparing to unpack .../09-nvidia-persistenced_620.70.06-1ubuntu1_amd64.deb ...
+Unpacking nvidia-persistenced (620.70.06-1ubuntu1) ...
+Preparing to unpack .../10-libnvidia-encode-575_575.57.08-0ubuntu1_amd64.deb ...
+Unpacking libnvidia-encode-575:amd64 (575.57.08-0ubuntu1) over (575.51.03-0ubuntu1) ...
+Preparing to unpack .../11-libnvidia-extra-575_575.57.08-0ubuntu1_amd64.deb ...
+Unpacking libnvidia-extra-575:amd64 (575.57.08-0ubuntu1) over (575.51.03-0ubuntu1) ...
+Preparing to unpack .../12-libnvidia-fbc1-575_575.57.08-0ubuntu1_amd64.deb ...
+Unpacking libnvidia-fbc1-575:amd64 (575.57.08-0ubuntu1) over (575.51.03-0ubuntu1) ...
+Preparing to unpack .../13-libxnvctrl0_620.70.06-1ubuntu1_amd64.deb ...
+Unpacking libxnvctrl0:amd64 (620.70.06-1ubuntu1) over (575.51.03-0ubuntu1) ...
+Selecting previously unselected package nvidia-kernel-source-575-open.
+Preparing to unpack .../14-nvidia-kernel-source-575-open_575.57.08-0ubuntu1_amd64.deb ...
+Unpacking nvidia-kernel-source-575-open (575.57.08-0ubuntu1) ...
+Selecting previously unselected package nvidia-firmware-575.
+Preparing to unpack .../15-nvidia-firmware-575_575.57.08-0ubuntu1_amd64.deb ...
+Unpacking nvidia-firmware-575 (575.57.08-0ubuntu1) ...
+Preparing to unpack .../16-nvidia-modprobe_620.70.06-1ubuntu1_amd64.deb ...
+Unpacking nvidia-modprobe (620.70.06-1ubuntu1) over (575.51.03-0ubuntu1) ...
+Preparing to unpack .../17-nvidia-kernel-common-575_575.57.08-0ubuntu1_amd64.deb ...
+Unpacking nvidia-kernel-common-575 (575.57.08-0ubuntu1) over (575.51.03-0ubuntu1) ...
+Selecting previously unselected package nvidia-dkms-575-open.
+Preparing to unpack .../18-nvidia-dkms-575-open_575.57.08-0ubuntu1_amd64.deb ...
+Unpacking nvidia-dkms-575-open (575.57.08-0ubuntu1) ...
+Preparing to unpack .../19-nvidia-utils-575_575.57.08-0ubuntu1_amd64.deb ...
+Unpacking nvidia-utils-575 (575.57.08-0ubuntu1) over (575.51.03-0ubuntu1) ...
+Selecting previously unselected package nvidia-driver-575-open.
+Preparing to unpack .../20-nvidia-driver-575-open_575.57.08-0ubuntu1_amd64.deb ...
+Unpacking nvidia-driver-575-open (575.57.08-0ubuntu1) ...
+Preparing to unpack .../21-nvidia-settings_620.70.06-1ubuntu1_amd64.deb ...
+Unpacking nvidia-settings (620.70.06-1ubuntu1) over (575.51.03-0ubuntu1) ...
+Setting up nvidia-kernel-source-575-open (575.57.08-0ubuntu1) ...
+Setting up libnvidia-gpucomp-575:amd64 (575.57.08-0ubuntu1) ...
+Setting up nvidia-modprobe (620.70.06-1ubuntu1) ...
+Setting up libxnvctrl0:amd64 (620.70.06-1ubuntu1) ...
+Setting up libnvidia-fbc1-575:amd64 (575.57.08-0ubuntu1) ...
+Setting up pahole (1.25-0ubuntu1~22.04.2) ...
+Setting up nvidia-settings (620.70.06-1ubuntu1) ...
+Installing new version of config file /etc/xdg/autostart/nvidia-settings-autostart.desktop ...
+Setting up nvidia-firmware-575 (575.57.08-0ubuntu1) ...
+Setting up libnvidia-extra-575:amd64 (575.57.08-0ubuntu1) ...
+Setting up libnvidia-cfg1-575:amd64 (575.57.08-0ubuntu1) ...
+Setting up nvidia-persistenced (620.70.06-1ubuntu1) ...
+Warning: The home dir /var/run/nvidia-persistenced/ you specified can't be accessed: No such file or directory
+Adding system user `nvidia-persistenced' (UID 114) ...
+Adding new group `nvidia-persistenced' (GID 121) ...
+Adding new user `nvidia-persistenced' (UID 114) with group `nvidia-persistenced' ...
+Not creating home directory `/var/run/nvidia-persistenced/'.
+nvidia-persistenced.service is a disabled or a static unit, not starting it.
+Setting up xserver-xorg-video-nvidia-575 (575.57.08-0ubuntu1) ...
+Setting up dkms (1:3.4.4-1ubuntu1) ...
+Installing new version of config file /etc/dkms/framework.conf ...
+Installing new version of config file /etc/kernel/header_postinst.d/dkms ...
+Installing new version of config file /etc/kernel/postinst.d/dkms ...
+Installing new version of config file /etc/kernel/prerm.d/dkms ...
+Removing obsolete conffile /etc/dkms/template-dkms-mkdeb/debian/rules ...
+Removing obsolete conffile /etc/dkms/template-dkms-mkdeb/debian/prerm ...
+Removing obsolete conffile /etc/dkms/template-dkms-mkdeb/debian/postinst ...
+Removing obsolete conffile /etc/dkms/template-dkms-mkdeb/debian/dirs ...
+Removing obsolete conffile /etc/dkms/template-dkms-mkdeb/debian/copyright ...
+Removing obsolete conffile /etc/dkms/template-dkms-mkdeb/debian/control ...
+Removing obsolete conffile /etc/dkms/template-dkms-mkdeb/debian/compat ...
+Removing obsolete conffile /etc/dkms/template-dkms-mkdeb/debian/changelog ...
+Removing obsolete conffile /etc/dkms/template-dkms-mkdeb/debian/README.Debian ...
+Removing obsolete conffile /etc/dkms/template-dkms-mkdeb/Makefile ...
+Removing obsolete conffile /etc/dkms/template-dkms-mkbmdeb/debian/rules ...
+Removing obsolete conffile /etc/dkms/template-dkms-mkbmdeb/debian/copyright ...
+Removing obsolete conffile /etc/dkms/template-dkms-mkbmdeb/debian/control ...
+Removing obsolete conffile /etc/dkms/template-dkms-mkbmdeb/debian/compat ...
+Removing obsolete conffile /etc/dkms/template-dkms-mkbmdeb/debian/changelog ...
+Removing obsolete conffile /etc/dkms/template-dkms-mkbmdeb/debian/README.Debian ...
+Removing obsolete conffile /etc/dkms/template-dkms-mkbmdeb/Makefile ...
+Removing obsolete conffile /etc/dkms/sign_helper.sh ...
+Removing obsolete conffile /etc/kernel/install.d/dkms ...
+Setting up nvidia-kernel-common-575 (575.57.08-0ubuntu1) ...
+update-initramfs: deferring update (trigger activated)
+Setting up nvidia-dkms-575-open (575.57.08-0ubuntu1) ...
+update-initramfs: deferring update (trigger activated)
+Loading new nvidia/575.57.08 DKMS files...
+Building for 5.15.0-1079-kvm and 6.8.0-59-generic
+
+Building initial module nvidia/575.57.08 for 5.15.0-1079-kvm
+Sign command: /usr/bin/kmodsign
+Signing key: /var/lib/shim-signed/mok/MOK.priv
+Public certificate (MOK): /var/lib/shim-signed/mok/MOK.der
+
+Building module(s).................... done.
+Signing module /var/lib/dkms/nvidia/575.57.08/build/nvidia.ko
+Signing module /var/lib/dkms/nvidia/575.57.08/build/nvidia-modeset.ko
+Signing module /var/lib/dkms/nvidia/575.57.08/build/nvidia-drm.ko
+Signing module /var/lib/dkms/nvidia/575.57.08/build/nvidia-uvm.ko
+Signing module /var/lib/dkms/nvidia/575.57.08/build/nvidia-peermem.ko
+Installing /lib/modules/5.15.0-1079-kvm/updates/dkms/nvidia.ko
+Installing /lib/modules/5.15.0-1079-kvm/updates/dkms/nvidia-modeset.ko
+Installing /lib/modules/5.15.0-1079-kvm/updates/dkms/nvidia-drm.ko
+Installing /lib/modules/5.15.0-1079-kvm/updates/dkms/nvidia-uvm.ko
+Installing /lib/modules/5.15.0-1079-kvm/updates/dkms/nvidia-peermem.ko
+Running depmod... done.
+
+Building initial module nvidia/575.57.08 for 6.8.0-59-generic
+Sign command: /usr/bin/kmodsign
+Signing key: /var/lib/shim-signed/mok/MOK.priv
+Public certificate (MOK): /var/lib/shim-signed/mok/MOK.der
+
+Building module(s)........................ done.
+Signing module /var/lib/dkms/nvidia/575.57.08/build/nvidia.ko
+Signing module /var/lib/dkms/nvidia/575.57.08/build/nvidia-modeset.ko
+Signing module /var/lib/dkms/nvidia/575.57.08/build/nvidia-drm.ko
+Signing module /var/lib/dkms/nvidia/575.57.08/build/nvidia-uvm.ko
+Signing module /var/lib/dkms/nvidia/575.57.08/build/nvidia-peermem.ko
+Installing /lib/modules/6.8.0-59-generic/updates/dkms/nvidia.ko
+Installing /lib/modules/6.8.0-59-generic/updates/dkms/nvidia-modeset.ko
+Installing /lib/modules/6.8.0-59-generic/updates/dkms/nvidia-drm.ko
+Installing /lib/modules/6.8.0-59-generic/updates/dkms/nvidia-uvm.ko
+Installing /lib/modules/6.8.0-59-generic/updates/dkms/nvidia-peermem.ko
+Running depmod... done.
+Setting up libnvidia-decode-575:amd64 (575.57.08-0ubuntu1) ...
+Setting up libnvidia-compute-575:amd64 (575.57.08-0ubuntu1) ...
+Setting up libnvidia-encode-575:amd64 (575.57.08-0ubuntu1) ...
+Setting up nvidia-utils-575 (575.57.08-0ubuntu1) ...
+Setting up nvidia-compute-utils-575 (575.57.08-0ubuntu1) ...
+Setting up libnvidia-gl-575:amd64 (575.57.08-0ubuntu1) ...
+Setting up nvidia-driver-575-open (575.57.08-0ubuntu1) ...
+Processing triggers for initramfs-tools (0.140ubuntu13.4) ...
+update-initramfs: Generating /boot/initrd.img-6.8.0-59-generic
+Processing triggers for hicolor-icon-theme (0.17-2) ...
+Processing triggers for libc-bin (2.35-0ubuntu3.9) ...
+Processing triggers for man-db (2.10.2-1) ...
+Processing triggers for dbus (1.12.20-2ubuntu4.1) ...
+NEEDRESTART-VER: 3.5
+NEEDRESTART-KCUR: 6.8.0-59-generic
+NEEDRESTART-KEXP: 6.8.0-59-generic
+NEEDRESTART-KSTA: 1
+apt rc=0
+NVRM version: NVIDIA UNIX Open Kernel Module for x86_64  575.57.08  Release Build  (dvs-builder@U22-I3-H04-01-5)  Sat May 24 07:03:13 UTC 2025
+GCC version:  gcc version 12.3.0 (Ubuntu 12.3.0-1ubuntu1~22.04) 
+Fri Nov  6 05:23:02 2026       
++-----------------------------------------------------------------------------------------+
+| NVIDIA-SMI 575.57.08              Driver Version: 575.57.08      CUDA Version: 12.9     |
+|-----------------------------------------+------------------------+----------------------+
+| GPU  Name                 Persistence-M | Bus-Id          Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp   Perf          Pwr:Usage/Cap |           Memory-Usage | GPU-Util  Compute M. |
+|                                         |                        |               MIG M. |
+|=========================================+========================+======================|
+|   0  NVIDIA GeForce RTX 5060 Ti     Off |   00000000:00:07.0 Off |                  N/A |
+| 30%   26C    P0             11W /  180W |       0MiB /  16311MiB |      4%      Default |
+|                                         |                        |                  N/A |
++-----------------------------------------+------------------------+----------------------+
+                                                                                         
++-----------------------------------------------------------------------------------------+
+| Processes:                                                                              |
+|  GPU   GI   CI              PID   Type   Process name                        GPU Memory |
+|        ID   ID                                                               Usage      |
+|=========================================================================================|
+|  No running processes found                                                             |
++-----------------------------------------------------------------------------------------+

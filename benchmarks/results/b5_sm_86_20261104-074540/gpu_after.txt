@@ -1,0 +1,2 @@
+temperature.gpu, clocks.current.sm [MHz], clocks.current.memory [MHz], power.draw [W], pstate
+46, 1995 MHz, 7500 MHz, 88.84 W, P0

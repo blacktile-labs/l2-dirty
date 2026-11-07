@@ -1,0 +1,6 @@
+==WARNING== Note: Running with uncontrolled GPU caches. Profiling results may be inconsistent.
+==WARNING== Note: Running with unmodified GPU clocks. If not controlled otherwise, profiling results may be inconsistent.
+==PROF== Connected to process 3269 (/root/dmkl/benchmarks/build/wb_probe)
+No usable CUDA device: invalid device ordinal
+==PROF== Disconnected from process 3269
+==ERROR== The application returned an error code (3).

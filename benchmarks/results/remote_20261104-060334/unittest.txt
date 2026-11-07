@@ -1,0 +1,32 @@
+test_load_groups_in_order (test_bench_common.TestCsv) ... ok
+test_missing_column_rejected (test_bench_common.TestCsv) ... ok
+test_percentile_matches_numpy_linear (test_bench_common.TestStats) ... ok
+test_percentile_order_independent (test_bench_common.TestStats) ... ok
+test_percentile_rejects_bad_input (test_bench_common.TestStats) ... ok
+test_summarize (test_bench_common.TestStats) ... ok
+test_amplification (test_bench_common.TestTrafficModel) ... ok
+test_brute_force_agrees_with_closed_form (test_bench_common.TestTrafficModel) ... ok
+test_flat_region_until_span_reaches_g (test_bench_common.TestTrafficModel) ... ok
+test_granularity_changes_prediction_at_stride16 (test_bench_common.TestTrafficModel) ... ok
+test_rejects_violated_assumptions (test_bench_common.TestTrafficModel) ... ok
+test_stride1_reads_whole_buffer (test_bench_common.TestTrafficModel) ... ok
+test_theoretical_bw (test_bench_common.TestTrafficModel) ... ok
+test_bytes (test_models_b2_b4.TestFusionModel) ... ok
+test_flops_and_peak (test_models_b2_b4.TestFusionModel) ... ok
+test_residency_models (test_models_b2_b4.TestFusionModel) ... ok
+test_random_bounds_are_ordered (test_models_b2_b4.TestGatherModel) ... ok
+test_random_requires_stats (test_models_b2_b4.TestGatherModel) ... ok
+test_seq (test_models_b2_b4.TestGatherModel) ... ok
+test_totals (test_models_b2_b4.TestGatherModel) ... ok
+test_fusion_summary (test_models_b2_b4.TestGenericCsvAndSummaries) ... ok
+test_gather_summary (test_models_b2_b4.TestGenericCsvAndSummaries) ... ok
+test_parse_params (test_models_b2_b4.TestGenericCsvAndSummaries) ... ok
+test_transpose_summary (test_models_b2_b4.TestGenericCsvAndSummaries) ... ok
+test_bank_conflicts (test_models_b2_b4.TestTransposeModel) ... ok
+test_dram_same_for_all_variants (test_models_b2_b4.TestTransposeModel) ... ok
+test_naive_store_sectors_8x (test_models_b2_b4.TestTransposeModel) ... ok
+
+----------------------------------------------------------------------
+Ran 27 tests in 0.005s
+
+OK

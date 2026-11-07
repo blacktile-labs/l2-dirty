@@ -1,0 +1,13 @@
+[b12_ga102_3090 06:19:43] package sha256 05e4f2407a30878a, remote script sha256 f2a7a40392e45983
+[b12_ga102_3090 06:19:45] created instance 59377806 (offer 59353129, image docker.io/vastai/kvm:ubuntu_cli_22.04-2025-05-16, disk 24 GB)
+[b12_ga102_3090 06:19:47] price dph_total = $0.24444444444444446/h
+[b12_ga102_3090 06:22:01] ssh ok (root@<host-redacted>:<port>)
+[b12_ga102_3090 06:22:08] started detached run of benchmarks/scripts/remote_b12.sh
+[b12_ga102_3090 06:22:11] remote: [06:22:08] 1 toolchain
+[b12_ga102_3090 06:24:33] remote: [06:24:11] apt rc=0
+[b12_ga102_3090 06:25:43] remote: [06:25:39] 2 counter check (smoke range run)
+[b12_ga102_3090 06:26:06] remote: [06:25:44] 3 B12
+[b12_ga102_3090 06:26:30] remote finished (done=1): rc=0
+[b12_ga102_3090 06:26:36] downloaded pilot_results.tgz -> /home/rungrod/data-move-kernel-lab/.vast_work/b12_ga102_3090
+[b12_ga102_3090 06:26:36] destroying instance 59377806
+[b12_ga102_3090 06:26:40] destroyed (verified)

@@ -1,0 +1,20 @@
+== 07:45:40 python3
+== 07:45:40 environment
+== 07:45:40 tests
+unittest rc=0
+test_host_cpp rc=0
+== 07:45:41 build sm_86
+build copy_stride rc=0
+build fusion rc=0
+build stencil rc=0
+== 07:45:48 B1 smoke, 256 MiB footprint (BW for calibration)
+B1 rc=0
+== 07:45:49 B5 stencil sweep rep 1
+B5 r1 rc=0
+== 07:45:51 B5 stencil sweep rep 2
+B5 r2 rc=0
+== 07:45:52 B5 stencil sweep rep 3
+B5 r3 rc=0
+== 07:45:53 B4 fusion sweep (same instance, cross-family comparison)
+B4 ref rc=0
+== 07:45:54 done

@@ -1,0 +1,253 @@
+==WARNING== Note: Running with uncontrolled GPU caches. Profiling results may be inconsistent.
+==WARNING== Note: Running with unmodified GPU clocks. If not controlled otherwise, profiling results may be inconsistent.
+==PROF== Connected to process 11371 (/root/dmkl/benchmarks/build/wb_probe)
+==PROF== Profiling "fill_u32_kernel" - 0: Application replay pass 1
+==PROF== Profiling "fill_gen_kernel" - 1: Application replay pass 1
+==PROF== Profiling "fill_u32_kernel" - 2: Application replay pass 1
+==PROF== Profiling "rw1s_kernel" - 3: Application replay pass 1
+==PROF== Profiling "readback1s_kernel" - 4: Application replay pass 1
+==PROF== Profiling "fill_u32_kernel" - 5: Application replay pass 1
+==PROF== Profiling "rw1s_kernel" - 6: Application replay pass 1
+==PROF== Profiling "readback1s_kernel" - 7: Application replay pass 1
+==PROF== Profiling "fill_u32_kernel" - 8: Application replay pass 1
+==PROF== Profiling "rw1s_kernel" - 9: Application replay pass 1
+==PROF== Profiling "readback1s_kernel" - 10: Application replay pass 1
+==PROF== Profiling "fill_u32_kernel" - 11: Application replay pass 1
+==PROF== Profiling "rw1s_kernel" - 12: Application replay pass 1
+==PROF== Profiling "readback1s_kernel" - 13: Application replay pass 1
+==PROF== Profiling "fill_u32_kernel" - 14: Application replay pass 1
+==PROF== Profiling "rw1s_kernel" - 15: Application replay pass 1
+==PROF== Profiling "readback1s_kernel" - 16: Application replay pass 1
+==PROF== Profiling "fill_u32_kernel" - 17: Application replay pass 1
+==PROF== Profiling "rw1s_kernel" - 18: Application replay pass 1
+==PROF== Profiling "readback1s_kernel" - 19: Application replay pass 1
+==PROF== Profiling "fill_u32_kernel" - 20: Application replay pass 1
+==PROF== Profiling "flush_l2_read_kernel" - 21: Application replay pass 1
+==PROF== Profiling "rw1s_kernel" - 22: Application replay pass 1
+==PROF== Profiling "rw1s_kernel" - 23: Application replay pass 1
+==PROF== Profiling "rw1s_kernel" - 24: Application replay pass 1
+==PROF== Profiling "rw1s_kernel" - 25: Application replay pass 1
+==PROF== Profiling "rw1s_kernel" - 26: Application replay pass 1
+==PROF== Profiling "rw1s_kernel" - 27: Application replay pass 1
+==PROF== Profiling "readback1s_kernel" - 28: Application replay pass 1
+==PROF== Profiling "fill_u32_kernel" - 29: Application replay pass 1
+==PROF== Profiling "flush_l2_read_kernel" - 30: Application replay pass 1
+==PROF== Profiling "rw1s_kernel" - 31: Application replay pass 1
+==PROF== Profiling "rw1s_kernel" - 32: Application replay pass 1
+==PROF== Profiling "rw1s_kernel" - 33: Application replay pass 1
+==PROF== Profiling "rw1s_kernel" - 34: Application replay pass 1
+==PROF== Profiling "rw1s_kernel" - 35: Application replay pass 1
+==PROF== Profiling "rw1s_kernel" - 36: Application replay pass 1
+==PROF== Profiling "readback1s_kernel" - 37: Application replay pass 1
+==PROF== Profiling "fill_u32_kernel" - 38: Application replay pass 1
+==PROF== Profiling "flush_l2_read_kernel" - 39: Application replay pass 1
+==PROF== Profiling "rw1s_kernel" - 40: Application replay pass 1
+==PROF== Profiling "rw1s_kernel" - 41: Application replay pass 1
+==PROF== Profiling "rw1s_kernel" - 42: Application replay pass 1
+==PROF== Profiling "rw1s_kernel" - 43: Application replay pass 1
+==PROF== Profiling "rw1s_kernel" - 44: Application replay pass 1
+==PROF== Profiling "rw1s_kernel" - 45: Application replay pass 1
+==PROF== Profiling "readback1s_kernel" - 46: Application replay pass 1
+==PROF== Profiling "fill_u32_kernel" - 47: Application replay pass 1
+==PROF== Profiling "flush_l2_read_kernel" - 48: Application replay pass 1
+==PROF== Profiling "rw1s_kernel" - 49: Application replay pass 1
+==PROF== Profiling "rw1s_kernel" - 50: Application replay pass 1
+==PROF== Profiling "rw1s_kernel" - 51: Application replay pass 1
+==PROF== Profiling "rw1s_kernel" - 52: Application replay pass 1
+==PROF== Profiling "rw1s_kernel" - 53: Application replay pass 1
+==PROF== Profiling "rw1s_kernel" - 54: Application replay pass 1
+==PROF== Profiling "readback1s_kernel" - 55: Application replay pass 1
+==PROF== Profiling "fill_u32_kernel" - 56: Application replay pass 1
+==PROF== Profiling "flush_l2_read_kernel" - 57: Application replay pass 1
+==PROF== Profiling "rw1s_kernel" - 58: Application replay pass 1
+==PROF== Profiling "rw1s_kernel" - 59: Application replay pass 1
+==PROF== Profiling "rw1s_kernel" - 60: Application replay pass 1
+==PROF== Profiling "rw1s_kernel" - 61: Application replay pass 1
+==PROF== Profiling "rw1s_kernel" - 62: Application replay pass 1
+==PROF== Profiling "rw1s_kernel" - 63: Application replay pass 1
+==PROF== Profiling "readback1s_kernel" - 64: Application replay pass 1
+==PROF== Profiling "fill_u32_kernel" - 65: Application replay pass 1
+==PROF== Profiling "flush_l2_read_kernel" - 66: Application replay pass 1
+==PROF== Profiling "rw1s_kernel" - 67: Application replay pass 1
+==PROF== Profiling "rw1s_kernel" - 68: Application replay pass 1
+==PROF== Profiling "rw1s_kernel" - 69: Application replay pass 1
+==PROF== Profiling "rw1s_kernel" - 70: Application replay pass 1
+==PROF== Profiling "rw1s_kernel" - 71: Application replay pass 1
+==PROF== Profiling "rw1s_kernel" - 72: Application replay pass 1
+==PROF== Profiling "readback1s_kernel" - 73: Application replay pass 1
+r=0       w=0.25    nc=0        nd=262144   ok
+r=0       w=0.375   nc=0        nd=393216   ok
+r=0       w=0.625   nc=0        nd=655360   ok
+r=0       w=0.75    nc=0        nd=786432   ok
+r=0       w=0.875   nc=0        nd=917504   ok
+r=0       w=2       nc=0        nd=2097152  ok
+correctness_failures=0
+==PROF== Disconnected from process 11371
+==PROF== Connected to process 11458 (/root/dmkl/benchmarks/build/wb_probe)
+==PROF== Profiling "fill_u32_kernel" - 0: Application replay pass 2
+==PROF== Profiling "fill_gen_kernel" - 1: Application replay pass 2
+==PROF== Profiling "fill_u32_kernel" - 2: Application replay pass 2
+==PROF== Profiling "rw1s_kernel" - 3: Application replay pass 2
+==PROF== Profiling "readback1s_kernel" - 4: Application replay pass 2
+==PROF== Profiling "fill_u32_kernel" - 5: Application replay pass 2
+==PROF== Profiling "rw1s_kernel" - 6: Application replay pass 2
+==PROF== Profiling "readback1s_kernel" - 7: Application replay pass 2
+==PROF== Profiling "fill_u32_kernel" - 8: Application replay pass 2
+==PROF== Profiling "rw1s_kernel" - 9: Application replay pass 2
+==PROF== Profiling "readback1s_kernel" - 10: Application replay pass 2
+==PROF== Profiling "fill_u32_kernel" - 11: Application replay pass 2
+==PROF== Profiling "rw1s_kernel" - 12: Application replay pass 2
+==PROF== Profiling "readback1s_kernel" - 13: Application replay pass 2
+==PROF== Profiling "fill_u32_kernel" - 14: Application replay pass 2
+==PROF== Profiling "rw1s_kernel" - 15: Application replay pass 2
+==PROF== Profiling "readback1s_kernel" - 16: Application replay pass 2
+==PROF== Profiling "fill_u32_kernel" - 17: Application replay pass 2
+==PROF== Profiling "rw1s_kernel" - 18: Application replay pass 2
+==PROF== Profiling "readback1s_kernel" - 19: Application replay pass 2
+==PROF== Profiling "fill_u32_kernel" - 20: Application replay pass 2
+==PROF== Profiling "flush_l2_read_kernel" - 21: Application replay pass 2
+==PROF== Profiling "rw1s_kernel" - 22: Application replay pass 2
+==PROF== Profiling "rw1s_kernel" - 23: Application replay pass 2
+==PROF== Profiling "rw1s_kernel" - 24: Application replay pass 2
+==PROF== Profiling "rw1s_kernel" - 25: Application replay pass 2
+==PROF== Profiling "rw1s_kernel" - 26: Application replay pass 2
+==PROF== Profiling "rw1s_kernel" - 27: Application replay pass 2
+==PROF== Profiling "readback1s_kernel" - 28: Application replay pass 2
+==PROF== Profiling "fill_u32_kernel" - 29: Application replay pass 2
+==PROF== Profiling "flush_l2_read_kernel" - 30: Application replay pass 2
+==PROF== Profiling "rw1s_kernel" - 31: Application replay pass 2
+==PROF== Profiling "rw1s_kernel" - 32: Application replay pass 2
+==PROF== Profiling "rw1s_kernel" - 33: Application replay pass 2
+==PROF== Profiling "rw1s_kernel" - 34: Application replay pass 2
+==PROF== Profiling "rw1s_kernel" - 35: Application replay pass 2
+==PROF== Profiling "rw1s_kernel" - 36: Application replay pass 2
+==PROF== Profiling "readback1s_kernel" - 37: Application replay pass 2
+==PROF== Profiling "fill_u32_kernel" - 38: Application replay pass 2
+==PROF== Profiling "flush_l2_read_kernel" - 39: Application replay pass 2
+==PROF== Profiling "rw1s_kernel" - 40: Application replay pass 2
+==PROF== Profiling "rw1s_kernel" - 41: Application replay pass 2
+==PROF== Profiling "rw1s_kernel" - 42: Application replay pass 2
+==PROF== Profiling "rw1s_kernel" - 43: Application replay pass 2
+==PROF== Profiling "rw1s_kernel" - 44: Application replay pass 2
+==PROF== Profiling "rw1s_kernel" - 45: Application replay pass 2
+==PROF== Profiling "readback1s_kernel" - 46: Application replay pass 2
+==PROF== Profiling "fill_u32_kernel" - 47: Application replay pass 2
+==PROF== Profiling "flush_l2_read_kernel" - 48: Application replay pass 2
+==PROF== Profiling "rw1s_kernel" - 49: Application replay pass 2
+==PROF== Profiling "rw1s_kernel" - 50: Application replay pass 2
+==PROF== Profiling "rw1s_kernel" - 51: Application replay pass 2
+==PROF== Profiling "rw1s_kernel" - 52: Application replay pass 2
+==PROF== Profiling "rw1s_kernel" - 53: Application replay pass 2
+==PROF== Profiling "rw1s_kernel" - 54: Application replay pass 2
+==PROF== Profiling "readback1s_kernel" - 55: Application replay pass 2
+==PROF== Profiling "fill_u32_kernel" - 56: Application replay pass 2
+==PROF== Profiling "flush_l2_read_kernel" - 57: Application replay pass 2
+==PROF== Profiling "rw1s_kernel" - 58: Application replay pass 2
+==PROF== Profiling "rw1s_kernel" - 59: Application replay pass 2
+==PROF== Profiling "rw1s_kernel" - 60: Application replay pass 2
+==PROF== Profiling "rw1s_kernel" - 61: Application replay pass 2
+==PROF== Profiling "rw1s_kernel" - 62: Application replay pass 2
+==PROF== Profiling "rw1s_kernel" - 63: Application replay pass 2
+==PROF== Profiling "readback1s_kernel" - 64: Application replay pass 2
+==PROF== Profiling "fill_u32_kernel" - 65: Application replay pass 2
+==PROF== Profiling "flush_l2_read_kernel" - 66: Application replay pass 2
+==PROF== Profiling "rw1s_kernel" - 67: Application replay pass 2
+==PROF== Profiling "rw1s_kernel" - 68: Application replay pass 2
+==PROF== Profiling "rw1s_kernel" - 69: Application replay pass 2
+==PROF== Profiling "rw1s_kernel" - 70: Application replay pass 2
+==PROF== Profiling "rw1s_kernel" - 71: Application replay pass 2
+==PROF== Profiling "rw1s_kernel" - 72: Application replay pass 2
+==PROF== Profiling "readback1s_kernel" - 73: Application replay pass 2
+r=0       w=0.25    nc=0        nd=262144   ok
+r=0       w=0.375   nc=0        nd=393216   ok
+r=0       w=0.625   nc=0        nd=655360   ok
+r=0       w=0.75    nc=0        nd=786432   ok
+r=0       w=0.875   nc=0        nd=917504   ok
+r=0       w=2       nc=0        nd=2097152  ok
+correctness_failures=0
+==PROF== Disconnected from process 11458
+==PROF== Connected to process 11545 (/root/dmkl/benchmarks/build/wb_probe)
+==PROF== Profiling "fill_u32_kernel" - 0: Application replay pass 3
+==PROF== Profiling "fill_gen_kernel" - 1: Application replay pass 3
+==PROF== Profiling "fill_u32_kernel" - 2: Application replay pass 3
+==PROF== Profiling "rw1s_kernel" - 3: Application replay pass 3
+==PROF== Profiling "readback1s_kernel" - 4: Application replay pass 3
+==PROF== Profiling "fill_u32_kernel" - 5: Application replay pass 3
+==PROF== Profiling "rw1s_kernel" - 6: Application replay pass 3
+==PROF== Profiling "readback1s_kernel" - 7: Application replay pass 3
+==PROF== Profiling "fill_u32_kernel" - 8: Application replay pass 3
+==PROF== Profiling "rw1s_kernel" - 9: Application replay pass 3
+==PROF== Profiling "readback1s_kernel" - 10: Application replay pass 3
+==PROF== Profiling "fill_u32_kernel" - 11: Application replay pass 3
+==PROF== Profiling "rw1s_kernel" - 12: Application replay pass 3
+==PROF== Profiling "readback1s_kernel" - 13: Application replay pass 3
+==PROF== Profiling "fill_u32_kernel" - 14: Application replay pass 3
+==PROF== Profiling "rw1s_kernel" - 15: Application replay pass 3
+==PROF== Profiling "readback1s_kernel" - 16: Application replay pass 3
+==PROF== Profiling "fill_u32_kernel" - 17: Application replay pass 3
+==PROF== Profiling "rw1s_kernel" - 18: Application replay pass 3
+==PROF== Profiling "readback1s_kernel" - 19: Application replay pass 3
+==PROF== Profiling "fill_u32_kernel" - 20: Application replay pass 3
+==PROF== Profiling "flush_l2_read_kernel" - 21: Application replay pass 3
+==PROF== Profiling "rw1s_kernel" - 22: Application replay pass 3
+==PROF== Profiling "rw1s_kernel" - 23: Application replay pass 3
+==PROF== Profiling "rw1s_kernel" - 24: Application replay pass 3
+==PROF== Profiling "rw1s_kernel" - 25: Application replay pass 3
+==PROF== Profiling "rw1s_kernel" - 26: Application replay pass 3
+==PROF== Profiling "rw1s_kernel" - 27: Application replay pass 3
+==PROF== Profiling "readback1s_kernel" - 28: Application replay pass 3
+==PROF== Profiling "fill_u32_kernel" - 29: Application replay pass 3
+==PROF== Profiling "flush_l2_read_kernel" - 30: Application replay pass 3
+==PROF== Profiling "rw1s_kernel" - 31: Application replay pass 3
+==PROF== Profiling "rw1s_kernel" - 32: Application replay pass 3
+==PROF== Profiling "rw1s_kernel" - 33: Application replay pass 3
+==PROF== Profiling "rw1s_kernel" - 34: Application replay pass 3
+==PROF== Profiling "rw1s_kernel" - 35: Application replay pass 3
+==PROF== Profiling "rw1s_kernel" - 36: Application replay pass 3
+==PROF== Profiling "readback1s_kernel" - 37: Application replay pass 3
+==PROF== Profiling "fill_u32_kernel" - 38: Application replay pass 3
+==PROF== Profiling "flush_l2_read_kernel" - 39: Application replay pass 3
+==PROF== Profiling "rw1s_kernel" - 40: Application replay pass 3
+==PROF== Profiling "rw1s_kernel" - 41: Application replay pass 3
+==PROF== Profiling "rw1s_kernel" - 42: Application replay pass 3
+==PROF== Profiling "rw1s_kernel" - 43: Application replay pass 3
+==PROF== Profiling "rw1s_kernel" - 44: Application replay pass 3
+==PROF== Profiling "rw1s_kernel" - 45: Application replay pass 3
+==PROF== Profiling "readback1s_kernel" - 46: Application replay pass 3
+==PROF== Profiling "fill_u32_kernel" - 47: Application replay pass 3
+==PROF== Profiling "flush_l2_read_kernel" - 48: Application replay pass 3
+==PROF== Profiling "rw1s_kernel" - 49: Application replay pass 3
+==PROF== Profiling "rw1s_kernel" - 50: Application replay pass 3
+==PROF== Profiling "rw1s_kernel" - 51: Application replay pass 3
+==PROF== Profiling "rw1s_kernel" - 52: Application replay pass 3
+==PROF== Profiling "rw1s_kernel" - 53: Application replay pass 3
+==PROF== Profiling "rw1s_kernel" - 54: Application replay pass 3
+==PROF== Profiling "readback1s_kernel" - 55: Application replay pass 3
+==PROF== Profiling "fill_u32_kernel" - 56: Application replay pass 3
+==PROF== Profiling "flush_l2_read_kernel" - 57: Application replay pass 3
+==PROF== Profiling "rw1s_kernel" - 58: Application replay pass 3
+==PROF== Profiling "rw1s_kernel" - 59: Application replay pass 3
+==PROF== Profiling "rw1s_kernel" - 60: Application replay pass 3
+==PROF== Profiling "rw1s_kernel" - 61: Application replay pass 3
+==PROF== Profiling "rw1s_kernel" - 62: Application replay pass 3
+==PROF== Profiling "rw1s_kernel" - 63: Application replay pass 3
+==PROF== Profiling "readback1s_kernel" - 64: Application replay pass 3
+==PROF== Profiling "fill_u32_kernel" - 65: Application replay pass 3
+==PROF== Profiling "flush_l2_read_kernel" - 66: Application replay pass 3
+==PROF== Profiling "rw1s_kernel" - 67: Application replay pass 3
+==PROF== Profiling "rw1s_kernel" - 68: Application replay pass 3
+==PROF== Profiling "rw1s_kernel" - 69: Application replay pass 3
+==PROF== Profiling "rw1s_kernel" - 70: Application replay pass 3
+==PROF== Profiling "rw1s_kernel" - 71: Application replay pass 3
+==PROF== Profiling "rw1s_kernel" - 72: Application replay pass 3
+==PROF== Profiling "readback1s_kernel" - 73: Application replay pass 3
+r=0       w=0.25    nc=0        nd=262144   ok
+r=0       w=0.375   nc=0        nd=393216   ok
+r=0       w=0.625   nc=0        nd=655360   ok
+r=0       w=0.75    nc=0        nd=786432   ok
+r=0       w=0.875   nc=0        nd=917504   ok
+r=0       w=2       nc=0        nd=2097152  ok
+correctness_failures=0
+==PROF== Disconnected from process 11545
+==PROF== Creating report from application replay data: 0%....................100%
+==PROF== Report: /root/dmkl/benchmarks/results/wb_probe_firstcell_20261106-050157/sector_kernel_r3.ncu-rep

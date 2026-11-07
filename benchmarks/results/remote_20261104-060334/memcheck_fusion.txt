@@ -1,0 +1,8 @@
+========= COMPUTE-SANITIZER
+n=147456;l2x=0.250000;K=1;l2_bytes=2359296       ok
+n=147456;l2x=0.250000;K=8;l2_bytes=2359296       ok
+n=589824;l2x=1.000000;K=1;l2_bytes=2359296       ok
+n=589824;l2x=1.000000;K=8;l2_bytes=2359296       ok
+correctness_failures=0
+========= LEAK SUMMARY: 0 bytes leaked in 0 allocations
+========= ERROR SUMMARY: 0 errors

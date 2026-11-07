@@ -1,0 +1,13 @@
+{
+ "gpus": [
+  "NVIDIA L40S",
+  "NVIDIA A100-SXM4-40GB",
+  "NVIDIA GeForce RTX 5090"
+ ],
+ "R-0 pass": 3,
+ "R-2": "queue drain explains the anomaly on 1/1 GPUs where it replicates",
+ "R-2 all": true,
+ "R-3": "1/3 warm",
+ "R-4a": "3/3",
+ "R-4b": "not (2/3)"
+}

@@ -1,0 +1,65 @@
+==WARNING== Please consult the documentation for current range-based replay mode limitations and requirements.
+==PROF== Connected to process 4595 (/usr/bin/python3.10)
+==PROF== Profiling "range" - 0: Application replay pass 1
+==PROF== Profiling "range" - 1: Application replay pass 1
+==PROF== Profiling "range" - 2: Application replay pass 1
+==PROF== Profiling "range" - 3: Application replay pass 1
+==PROF== Profiling "range" - 4: Application replay pass 1
+==PROF== Profiling "range" - 5: Application replay pass 1
+range: 6 events, correctness_failures=0
+==PROF== Disconnected from process 4595
+[4595] python3.10@127.0.0.1
+  range, Context 1, Device 0, CC 8.9
+    Section: Command line profiler metrics
+    --------------------- ----------- ------------
+    Metric Name           Metric Unit Metric Value
+    --------------------- ----------- ------------
+    dram__bytes_read.sum        Kbyte        11.78
+    dram__bytes_write.sum        byte            0
+    --------------------- ----------- ------------
+
+  range, Context 1, Device 0, CC 8.9
+    Section: Command line profiler metrics
+    --------------------- ----------- ------------
+    Metric Name           Metric Unit Metric Value
+    --------------------- ----------- ------------
+    dram__bytes_read.sum         byte          128
+    dram__bytes_write.sum        byte            0
+    --------------------- ----------- ------------
+
+  range, Context 1, Device 0, CC 8.9
+    Section: Command line profiler metrics
+    --------------------- ----------- ------------
+    Metric Name           Metric Unit Metric Value
+    --------------------- ----------- ------------
+    dram__bytes_read.sum        Mbyte       134.25
+    dram__bytes_write.sum       Kbyte        40.32
+    --------------------- ----------- ------------
+
+  range, Context 1, Device 0, CC 8.9
+    Section: Command line profiler metrics
+    --------------------- ----------- ------------
+    Metric Name           Metric Unit Metric Value
+    --------------------- ----------- ------------
+    dram__bytes_read.sum        Mbyte       134.27
+    dram__bytes_write.sum       Kbyte        58.62
+    --------------------- ----------- ------------
+
+  range, Context 1, Device 0, CC 8.9
+    Section: Command line profiler metrics
+    --------------------- ----------- ------------
+    Metric Name           Metric Unit Metric Value
+    --------------------- ----------- ------------
+    dram__bytes_read.sum        Mbyte       134.25
+    dram__bytes_write.sum       Kbyte        39.42
+    --------------------- ----------- ------------
+
+  range, Context 1, Device 0, CC 8.9
+    Section: Command line profiler metrics
+    --------------------- ----------- ------------
+    Metric Name           Metric Unit Metric Value
+    --------------------- ----------- ------------
+    dram__bytes_read.sum        Mbyte       134.25
+    dram__bytes_write.sum       Kbyte        35.58
+    --------------------- ----------- ------------
+

@@ -1,0 +1,20 @@
+I-0 correctness True; control writes max 0 B (<= 4000); baseline A+B w 0.125: 1.020, w 0.25: 1.033, w 0.375: 1.009 (in [0.95, 1.15]) -> PASS
+I-1 A at T = 0: w 0.125: 0.000, w 0.25: 0.000, w 0.375: 0.000 (<= 0.05) -> no write-back while writing below the cap
+I-2 IWB after 10 ms host idle: w 0.125: -0.129, w 0.25: -0.026, w 0.375: -0.034 (all >= 0.5: exists; all <= 0.1: none) -> no idle write-back
+I-3 (descriptive)   w    idle   T ms      A      B    IWB   n
+                0.125 host      0  0.000  1.020  0.000  15
+                0.125 host    0.1  0.000  1.077 -0.057  15
+                0.125 host      1  0.000  1.066 -0.047  15
+                0.125 host     10  0.000  1.148 -0.129  15
+                0.125 spin     10  0.000  1.232 -0.213  15
+                 0.25 host      0  0.000  1.033  0.000  15
+                 0.25 host    0.1  0.000  1.033 -0.000  15
+                 0.25 host      1  0.000  1.031  0.002  15
+                 0.25 host     10  0.000  1.059 -0.026  15
+                 0.25 spin     10  0.000  1.076 -0.042  15
+                0.375 host      0  0.000  1.009  0.000  15
+                0.375 host    0.1  0.000  1.006  0.002  15
+                0.375 host      1  0.000  1.006  0.002  15
+                0.375 host     10  0.002  1.043 -0.034  15
+                0.375 spin     10  0.002  1.048 -0.039  15
+verdict: {"I-0": true, "I-0 parts": {"a correctness": true, "b control writes": true, "c baseline A+B": true}, "I-1": "no write-back while writing below the cap", "I-2": "no idle write-back", "I-2 IWB": {"0.125": -0.129, "0.25": -0.026, "0.375": -0.034}}

@@ -1,0 +1,36 @@
+ptxas info    : 0 bytes gmem
+ptxas info    : Compiling entry function '_ZN3dmk20flush_l2_read_kernelEPKjmPj' for 'sm_120'
+ptxas info    : Function properties for _ZN3dmk20flush_l2_read_kernelEPKjmPj
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Used 10 registers, used 0 barriers
+ptxas info    : Compile time = 4.002 ms
+ptxas info    : Compiling entry function '_ZN3dmk15fill_gen_kernelEPjmji' for 'sm_120'
+ptxas info    : Function properties for _ZN3dmk15fill_gen_kernelEPjmji
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Used 12 registers, used 0 barriers
+ptxas info    : Compile time = 6.707 ms
+ptxas info    : Compiling entry function '_ZN3dmk15fill_u32_kernelEPjmj' for 'sm_120'
+ptxas info    : Function properties for _ZN3dmk15fill_u32_kernelEPjmj
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Used 12 registers, used 0 barriers
+ptxas info    : Compile time = 3.125 ms
+ptxas info    : Compiling entry function '_Z17readback1s_kernelPKjmPj' for 'sm_120'
+ptxas info    : Function properties for _Z17readback1s_kernelPKjmPj
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Used 48 registers, used 1 barriers, 128 bytes smem
+ptxas info    : Compile time = 28.077 ms
+ptxas info    : Compiling entry function '_Z11rw1s_kernelPKjmPjmjS1_' for 'sm_120'
+ptxas info    : Function properties for _Z11rw1s_kernelPKjmPjmjS1_
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Used 25 registers, used 1 barriers, 128 bytes smem
+ptxas info    : Compile time = 9.917 ms
+ptxas info    : Compiling entry function '_Z15readback_kernelPKjmPj' for 'sm_120'
+ptxas info    : Function properties for _Z15readback_kernelPKjmPj
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Used 25 registers, used 1 barriers, 128 bytes smem
+ptxas info    : Compile time = 7.715 ms
+ptxas info    : Compiling entry function '_Z9rw_kernelPKjmPjmjS1_' for 'sm_120'
+ptxas info    : Function properties for _Z9rw_kernelPKjmPjmjS1_
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Used 25 registers, used 1 barriers, 128 bytes smem
+ptxas info    : Compile time = 9.403 ms

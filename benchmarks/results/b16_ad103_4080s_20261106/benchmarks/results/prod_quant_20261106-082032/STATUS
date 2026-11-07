@@ -1,0 +1,10 @@
+run_r1 rc=0
+run_r2 rc=0
+run_r3 rc=0
+score rc=0
+NVIDIA GeForce RTX 4080 SUPER (L2 64 MiB): P-0 PASS
+  4096x4096: S_tinygemm {'zero': 3.13, 'read': 3.199, 'D': -0.0215}; S_bnb {'zero': 1.946, 'read': 2.133, 'D': -0.0876}; bias {'tinygemm_k4': 0.4375, 'tinygemm_k8': 0.4339, 'bnb_nf4': 0.5417, 'cublas_fp16': 0.4066, 'tinygemm_k2': 0.4118}; faster 4-bit {'zero': 'tinygemm', 'read': 'tinygemm'}; tinygemm pick {'zero': 'tinygemm_k4', 'read': 'tinygemm_k4', 'regret': 0.0}
+  4096x14336: S_tinygemm {'zero': 2.91, 'read': 3.5, 'D': -0.1684}; S_bnb {'zero': 2.097, 'read': 2.333, 'D': -0.1014}; bias {'tinygemm_k4': 0.3958, 'tinygemm_k8': 0.3958, 'bnb_nf4': 0.2917, 'cublas_fp16': 0.1607, 'tinygemm_k2': 0.4082}; faster 4-bit {'zero': 'tinygemm', 'read': 'tinygemm'}; tinygemm pick {'zero': 'tinygemm_k4', 'read': 'tinygemm_k4', 'regret': 0.0}
+  14336x4096: S_tinygemm {'zero': 2.952, 'read': 3.555, 'D': -0.1696}; S_bnb {'zero': 2.466, 'read': 2.931, 'D': -0.1586}; bias {'cublas_fp16': 0.1661, 'tinygemm_k4': 0.4043, 'tinygemm_k2': 0.4013, 'bnb_nf4': 0.386, 'tinygemm_k8': 0.4043}; faster 4-bit {'zero': 'tinygemm', 'read': 'tinygemm'}; tinygemm pick {'zero': 'tinygemm_k4', 'read': 'tinygemm_k4', 'regret': 0.0}
+V-1 worst D -0.1696 -> distorted (speedup under-estimated); V-2 -> no flip; V-3 max regret 0.0
+verdict: {"P-0": true, "V-1": "distorted", "V-1 worst D": -0.1696, "V-1 sign": "speedup under-estimated", "V-2": "no flip", "V-3 max regret": 0.0}

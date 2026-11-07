@@ -1,0 +1,16 @@
+range_r1 rc=0
+timing_r1 rc=0
+range_r2 rc=0
+timing_r2 rc=0
+range_r3 rc=0
+timing_r3 rc=0
+score rc=0
+NVIDIA GeForce RTX 4080 SUPER, L2 67108864 B; G-0 {'correctness': True, 'control writes': True, 'read flush leaves no dirty data': True, 'GEMV reads its weight': True} -> PASS
+G-1 X = w 2: 0.241, w 4: 0.242, w 8: 0.243 vs R_gpu 0.6861 (tol 0.15) and v4 0.5 -> not; closer to v4 (0.5) {'B9b': 0.4441, 'v4': 0.258}
+G-1b spread 0.001 -> residue independent of the GEMV size
+G-2 w 2: dt 26.62 us vs pred 23.61 us, w 4: dt 27.52 us vs pred 23.35 us, w 8: dt 28.67 us vs pred 23.29 us -> timing bias = residue write-back at the clean DRAM rate
+bias (t_zero / t_read - 1): {"2": 0.1361, "4": 0.0713, "8": 0.0373, "fixed 4096x4096": 0.3846}
+do_bench default / read-patched - 1 (exploratory, last run): {"2": 0.1412, "4": 0.0716, "8": 0.0373, "fixed": 0.3871}
+summary per w: {"2": {"Wz": 16200576.0, "Wr": 0.0, "Rz": 134226432.0, "Rr": 134226560.0, "weight": 134217728, "n": 15, "X": 0.2}, "4": {"Wz": 16231552.0, "Wr": 0.0, "Rz": 268446208.0, "Rr": 268444032.0, "weight": 268435456, "n": 15, "X": 0.2}, "8": {"Wz": 16279936.0, "Wr": 0.0, "Rz": 536881408.0, "Rr": 536893696.0, "weight": 536870912, "n": 15, "X": 0.2}}
+verdict: {"G-0": true, "G-1": "not", "G-1b": "residue independent of the GEMV size", "G-2": "timing bias = residue write-back at the clean DRAM rate"}
+results: benchmarks/results/dobench_flush_20261106-062649

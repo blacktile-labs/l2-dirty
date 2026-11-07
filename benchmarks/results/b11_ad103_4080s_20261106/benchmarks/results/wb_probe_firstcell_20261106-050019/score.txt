@@ -1,0 +1,12 @@
+     r      w    r+w      WB     WBR      RB      RD     RDR   WARM  state
+     0   0.25   0.25   0.000   0.000   0.000       -       -   None  inactive
+     0  0.375  0.375   0.000   0.000   0.000       -       -   None  inactive
+     0  0.625  0.625   0.983   0.997   0.000       -       -   None  active
+     0   0.75   0.75   0.985   0.997   0.000       -       -   None  active
+     0  0.875  0.875   0.988   0.997   0.000       -       -   None  active
+     0      2      2   0.995   0.999   1.000       -       -   None  active
+F-0 correctness failures 0; sector 0:2 WB/WBR 0.995/0.999 -> PASS
+F-1 control WBR(0:0.375) as second cell = 0.000 (per-kernel WB 0.000) -> first-cell artifact supported
+F-2 dummy WBR(0:0.25) as first cell = 0.000 (per-kernel WB 0.000) -> no first-cell inflation
+V-4' median WBR at w=(0.625, 0.75, 0.875) = 0.997 (each: 0.997, 0.997, 0.997) -> counts lines
+verdict: {"F-0": true, "F-1": "first-cell artifact supported", "F-1 control WBR": 0.0, "F-1 control WB": 0.0, "F-2": "no first-cell inflation", "F-2 dummy WBR": 0.0, "V-4'": "counts lines", "V-4' median WBR": 0.9973}

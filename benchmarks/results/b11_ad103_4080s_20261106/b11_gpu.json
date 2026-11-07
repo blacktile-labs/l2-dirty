@@ -1,0 +1,46 @@
+{
+ "gpu": "Ada AD103 (RTX 4080S)",
+ "P-0": true,
+ "verdicts": {
+  "V-2": "H-D confirmed (dirty footprint only)",
+  "V-3": "partial",
+  "V-4": "counts lines",
+  "V-5": "resident",
+  "Z-1": "dvsc supported",
+  "Z-2": "effective capacity >= 0.94 L2",
+  "Z-2b": "reads retained just above capacity (not LRU-sharp)",
+  "Q-1": "mixed",
+  "Q-3": "v4 does not"
+ },
+ "match": {
+  "V-2": true,
+  "V-3": false,
+  "V-4": true,
+  "V-5": true,
+  "Z-1": true,
+  "Z-2": true,
+  "Z-2b": true,
+  "Q-1": true,
+  "Q-3": false
+ },
+ "n_match": 7,
+ "C5n": "present (transition in 0.44-0.63 L2)",
+ "C5n values": {
+  "WBR(0:0.4375)": 0.07094247000558036,
+  "WBR(0:0.625)": 0.9333740234375,
+  "WBR(0:0.6875)": 0.9390744295987216
+ },
+ "C6": "present",
+ "C6 loss": 0.058,
+ "first-cell": {
+  "F-0": true,
+  "F-1": "first-cell artifact supported",
+  "F-2": "no first-cell inflation",
+  "V-4'": "counts lines"
+ },
+ "FC": "nothing to test (control passes as first cell)",
+ "FC values": {
+  "c1 (first)": 0.0013020833333333333,
+  "c2 (second)": 0.0
+ }
+}

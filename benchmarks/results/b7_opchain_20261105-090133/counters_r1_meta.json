@@ -1,0 +1,38 @@
+{
+ "benchmark": "torch_opchain",
+ "mode": "counters",
+ "smoke": false,
+ "device": "NVIDIA GeForce RTX 3060 Laptop GPU",
+ "l2_bytes": 3145728,
+ "torch": "2.7.1+cu126",
+ "triton": "3.3.1",
+ "cuda_runtime": "12.6",
+ "H": 4096,
+ "sizes_l2x": [
+  0.125,
+  0.1875,
+  0.25,
+  0.3125,
+  0.375,
+  0.5,
+  1.0,
+  2.0,
+  3.0
+ ],
+ "seed": 1234,
+ "flush_bytes": 16777216,
+ "steady_calls_counters": 3,
+ "correctness": {
+  "l2x=0.125;M=24": "ok",
+  "l2x=0.1875;M=36": "ok",
+  "l2x=0.25;M=48": "ok",
+  "l2x=0.3125;M=60": "ok",
+  "l2x=0.375;M=72": "ok",
+  "l2x=0.5;M=96": "ok",
+  "l2x=1;M=192": "ok",
+  "l2x=2;M=384": "ok",
+  "l2x=3;M=576": "ok"
+ },
+ "dynamo_recompile_limit": 64,
+ "correctness_failures": 0
+}

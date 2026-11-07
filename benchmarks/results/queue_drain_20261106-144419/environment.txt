@@ -1,0 +1,7 @@
+Fri Nov  6 14:44:19 UTC 2026
+name, driver_version, temperature.gpu, clocks.current.sm [MHz], clocks.current.memory [MHz], pstate
+NVIDIA GeForce RTX 3060 Laptop GPU, 591.74, 55, 1282 MHz, 6000 MHz, P0
+2.7.1+cu126 12.6 3.3.1
+ea484e813cbc8897e1da0549040081436669131bc37ba6895a39e00c5e818827  benchmarks/scripts/queue_drain_probe.sh
+6f536482b6ab4f895817188cd69b3d6c41228e37655b5a9a3c4dd9465b42b860  benchmarks/scripts/queue_drain_probe.py
+8ae61b2374bfb10af93f2c2b7b0106f4cbfb5f4ef62b08a697e56100df9a8d3c  benchmarks/scripts/queue_drain_score.py

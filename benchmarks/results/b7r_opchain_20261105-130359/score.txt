@@ -1,0 +1,81 @@
+plans reproduce the locked predictions: [True, True, True, True, True, True, True, True, True, True]; correctness ok: [True, True, True, True, True, True, True, True, True, True]
+Y-0 a plans identical + correctness: True; b background: median control read 10368 B (<= 16000), max control write 0 B (<= 4000); c max enqueue 4180 us vs spin 2874 us (< 0.8x); d far |d| max 0.026 (<= 0.05) -> FAIL (stop)
+Y-1 edge read segments with |G-K| <= 0.05 B/launch: 90% (need >= 80%) -> reads unchanged by replay mode
+Y-2 edge writes: mean |g| 0.075 vs mean |k| 0.135 B/launch, rho 0.56 -> write error partly a measurement artifact (mean d +0.062)
+Y-3 edge reads+writes: mean |g| 0.086 vs mean |k| 0.113 B/launch, rho 0.76 -> PARTIAL
+descriptive: segment-dirs within 0.1 B/launch of v4: range 83%, kernel 78% (of 72)
+
+    l2x variant  mode     n  dir     P      K      G   k/launch g/launch d/launch
+  0.125 eager    isolated 3 read   2.042  2.113  2.096   +0.024   +0.018   -0.006
+  0.125 eager    isolated 3 write  0.000  0.000  0.006   +0.000   +0.002   +0.002
+  0.125 compiled isolated 1 read   2.042  2.060  2.044   +0.019   +0.003   -0.016
+  0.125 compiled isolated 1 write  0.000  0.000  0.000   +0.000   +0.000   +0.000
+  0.125 eager    steady   9 read   2.042  2.042  2.273   +0.000   +0.026   +0.026
+  0.125 eager    steady   9 write  0.000  0.092  0.026   +0.010   +0.003   -0.007
+  0.125 compiled steady   3 read   2.042  2.042  2.035   +0.000   -0.002   -0.002
+  0.125 compiled steady   3 write  0.000  0.000  0.000   +0.000   +0.000   +0.000
+ 0.1875 eager    isolated 3 read   2.028  2.028  2.017   +0.000   -0.004   -0.004
+ 0.1875 eager    isolated 3 write  0.000  0.017  0.005   +0.006   +0.002   -0.004
+ 0.1875 compiled isolated 1 read   2.028  2.040  2.036   +0.012   +0.008   -0.004
+ 0.1875 compiled isolated 1 write  0.000  0.000  0.000   +0.000   +0.000   +0.000
+ 0.1875 eager    steady   9 read   2.028  2.133  2.019   +0.012   -0.001   -0.013
+ 0.1875 eager    steady   9 write  2.333  2.456  2.617   +0.014   +0.032   +0.018
+ 0.1875 compiled steady   3 read   2.028  2.028  2.023   +0.000   -0.002   -0.002
+ 0.1875 compiled steady   3 write  0.000  0.002  0.000   +0.001   +0.000   -0.001
+   0.25 eager    isolated 3 read   2.021  2.021  2.023   +0.000   +0.001   +0.001  edge
+   0.25 eager    isolated 3 write  0.000  0.532  0.509   +0.177   +0.170   -0.007  edge
+   0.25 compiled isolated 1 read   2.021  2.030  2.022   +0.009   +0.001   -0.008  edge
+   0.25 compiled isolated 1 write  0.000  0.000  0.000   +0.000   +0.000   +0.000  edge
+   0.25 eager    steady   9 read   6.062  5.465  5.202   -0.066   -0.096   -0.029  edge
+   0.25 eager    steady   9 write  3.000  3.516  3.882   +0.057   +0.098   +0.041  edge
+   0.25 compiled steady   3 read   2.021  2.336  2.155   +0.105   +0.045   -0.060  edge
+   0.25 compiled steady   3 write  1.021  0.803  0.834   -0.073   -0.062   +0.010  edge
+ 0.3125 eager    isolated 3 read   2.017  2.017  2.017   +0.000   -0.000   -0.000  edge
+ 0.3125 eager    isolated 3 write  1.400  1.252  1.307   -0.049   -0.031   +0.018  edge
+ 0.3125 compiled isolated 1 read   2.017  2.024  2.024   +0.007   +0.007   +0.000  edge
+ 0.3125 compiled isolated 1 write  0.000  0.021  0.004   +0.021   +0.004   -0.016  edge
+ 0.3125 eager    steady   9 read   6.050  6.052  6.054   +0.000   +0.000   +0.000  edge
+ 0.3125 eager    steady   9 write  7.383  5.710  6.340   -0.186   -0.116   +0.070  edge
+ 0.3125 compiled steady   3 read   2.017  3.938  4.144   +0.640   +0.709   +0.069  edge
+ 0.3125 compiled steady   3 write  1.817  1.487  1.482   -0.110   -0.112   -0.002  edge
+  0.375 eager    isolated 3 read   2.347  2.014  2.013   -0.111   -0.111   -0.000  edge
+  0.375 eager    isolated 3 write  1.778  0.869  1.607   -0.303   -0.057   +0.246  edge
+  0.375 compiled isolated 1 read   2.014  2.020  2.015   +0.006   +0.001   -0.005  edge
+  0.375 compiled isolated 1 write  0.111  0.034  0.001   -0.077   -0.110   -0.033  edge
+  0.375 eager    steady   9 read   7.041  6.044  6.037   -0.111   -0.112   -0.001  edge
+  0.375 eager    steady   9 write  7.458  4.263  7.388   -0.355   -0.008   +0.347  edge
+  0.375 compiled steady   3 read   6.042  5.836  5.927   -0.069   -0.038   +0.030  edge
+  0.375 compiled steady   3 write  2.111  1.577  1.751   -0.178   -0.120   +0.058  edge
+    0.5 eager    isolated 3 read   3.010  2.043  2.035   -0.323   -0.325   -0.003  edge
+    0.5 eager    isolated 3 write  2.333  1.464  2.003   -0.290   -0.110   +0.180  edge
+    0.5 compiled isolated 1 read   2.010  2.015  2.020   +0.005   +0.009   +0.005  edge
+    0.5 compiled isolated 1 write  0.333  0.083  0.081   -0.250   -0.253   -0.002  edge
+    0.5 eager    steady   9 read   9.031  6.130  6.040   -0.322   -0.332   -0.010  edge
+    0.5 eager    steady   9 write  8.333  6.087  8.010   -0.250   -0.036   +0.214  edge
+    0.5 compiled steady   3 read   6.031  6.024  6.015   -0.002   -0.005   -0.003  edge
+    0.5 compiled steady   3 write  2.333  1.976  2.094   -0.119   -0.080   +0.040  edge
+      1 eager    isolated 3 read   4.005  3.945  3.843   -0.020   -0.054   -0.034  edge
+      1 eager    isolated 3 write  2.667  2.490  2.577   -0.059   -0.030   +0.029  edge
+      1 compiled isolated 1 read   2.005  2.007  2.012   +0.002   +0.007   +0.005  edge
+      1 compiled isolated 1 write  0.667  0.590  0.577   -0.077   -0.090   -0.013  edge
+      1 eager    steady   9 read  12.016 11.866 11.547   -0.017   -0.052   -0.035  edge
+      1 eager    steady   9 write  8.667  8.164  8.554   -0.056   -0.013   +0.043  edge
+      1 compiled steady   3 read   6.016  6.019  6.035   +0.001   +0.006   +0.005  edge
+      1 compiled steady   3 write  2.667  2.598  2.637   -0.023   -0.010   +0.013  edge
+      2 eager    isolated 3 read   4.003  4.004  4.003   +0.001   -0.000   -0.001
+      2 eager    isolated 3 write  2.833  2.710  2.788   -0.041   -0.015   +0.026
+      2 compiled isolated 1 read   2.003  2.007  2.004   +0.004   +0.002   -0.003
+      2 compiled isolated 1 write  0.833  0.762  0.775   -0.071   -0.058   +0.013
+      2 eager    steady   9 read  12.008 12.016 12.031   +0.001   +0.003   +0.002
+      2 eager    steady   9 write  8.833  8.579  8.785   -0.028   -0.005   +0.023
+      2 compiled steady   3 read   6.008  6.020  6.019   +0.004   +0.004   -0.000
+      2 compiled steady   3 write  2.833  2.728  2.765   -0.035   -0.023   +0.012
+      3 eager    isolated 3 read   4.002  4.006  4.003   +0.001   +0.000   -0.001
+      3 eager    isolated 3 write  2.889  2.815  2.852   -0.025   -0.012   +0.012
+      3 compiled isolated 1 read   2.002  2.005  2.004   +0.003   +0.002   -0.001
+      3 compiled isolated 1 write  0.889  0.841  0.851   -0.048   -0.038   +0.010
+      3 eager    steady   9 read  12.005 12.020 12.010   +0.002   +0.001   -0.001
+      3 eager    steady   9 write  8.889  8.725  8.849   -0.018   -0.004   +0.014
+      3 compiled steady   3 read   6.005  6.017  6.014   +0.004   +0.003   -0.001
+      3 compiled steady   3 write  2.889  2.826  2.846   -0.021   -0.014   +0.007
+verdict: {"Y-0": false, "Y-0 parts": {"a plans+correctness": true, "b background": true, "c back-to-back": false, "d far sizes agree": true}, "Y-1": "reads unchanged by replay mode", "Y-1 share": 0.9, "Y-2": "write error partly a measurement artifact", "Y-2 rho": 0.557, "Y-3": "PARTIAL", "Y-3 rho": 0.756, "within range": 0.833, "within kernel": 0.778}

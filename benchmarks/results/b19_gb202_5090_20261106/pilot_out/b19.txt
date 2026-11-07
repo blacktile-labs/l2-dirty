@@ -1,0 +1,14 @@
+run_r1 rc=0
+run_r2 rc=0
+run_r3 rc=0
+score rc=0
+NVIDIA GeForce RTX 5090 (L2 96 MiB): R-0 {'correctness': True, 'liger': True, 'pad >= 200 us': True} -> PASS
+R-1 plain I 0.000 -> no anomaly; R-2 padded I -0.091 -> n/a
+R-3 none/pr256 padded 0.875 (plain 0.920) -> not warm
+R-4 S {'e_q': 0.6707, 'gemv': 0.002, 'rms16': -0.1412, 'rms64': 0.0979}; R-4a -> steady charges the deferred output write-back; R-4b pred 0.1044 -> the residue predicts the cold/steady gap
+T median us: {"gemv pad none": 73.728, "gemv pad pr256": 73.728, "gemv pad zero256": 81.92, "gemv pad zeroL2": 79.872, "gemv plain none": 73.376, "gemv plain pr256": 73.728, "gemv plain zero256": 81.92, "gemv plain zeroL2": 81.92, "gemv16 pad none": 14.336, "gemv16 pad pr256": 16.384, "gemv16 pad zero256": 24.608, "gemv16 pad zeroL2": 24.576, "gemv16 plain none": 15.072, "gemv16 plain pr256": 16.384, "gemv16 plain zero256": 24.576, "gemv16 plain zeroL2": 24.576, "rms16 pad none": 10.24, "rms16 pad pr256": 16.384, "rms16 pad zero256": 22.528, "rms16 pad zeroL2": 20.48, "rms16 plain none": 34.4, "rms16 plain pr256": 16.384, "rms16 plain zero256": 22.528, "rms16 plain zeroL2": 22.528}
+M mean us: {"e_q cold": 19.266, "e_q steady": 32.188, "gemv cold": 74.049, "gemv steady": 74.196, "rms16 cold": 16.677, "rms16 steady": 14.323, "rms64 cold": 68.341, "rms64 steady": 75.035}
+do_bench shipped / cleanbench cold - 1: {"e_q": 0.7839, "gemv": 0.1063, "rms16": 0.3509, "rms64": 0.2886}
+host dispatch us: {"rms16": 42.9, "rms64": 41.8, "gemv": 13.7, "gemv16": 13.6, "e_q": 11.2}
+verdict: {"R-0": true, "R-1": "no anomaly", "R-2": "n/a", "R-3": "not warm", "R-4a": "steady charges the deferred output write-back", "R-4b": "the residue predicts the cold/steady gap"}
+results: benchmarks/results/b19_20261106-150011

@@ -1,0 +1,893 @@
+{
+ "LOCK_20261104_laptop.sha256": {
+  "commit": "4e11fdfb6bc3355f90451a5c81ba23218f987308",
+  "commit_date": "2026-11-04T20:14:26+07:00",
+  "files": [
+   {
+    "path": "research/HYPOTHESES.md",
+    "status": "exported"
+   },
+   {
+    "path": "research/preregistration/counters_rtx3060laptop.json",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/scripts/local_v3_laptop.sh",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/scripts/local_counters.sh",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/scripts/counter_prereg.py",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/scripts/model_v3.py",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/scripts/cache_sim.py",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/scripts/cache_sim_b5.py",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/src/fusion.cu",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/src/stencil.cu",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/src/common.cuh",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/src/stencil_host.hpp",
+    "status": "exported"
+   }
+  ],
+  "note": "research/HYPOTHESES.md was edited between writing this lock and committing it; the locked version is not in the history, so 11 of 12 files can be verified. This lock covers the first laptop counter round (fusion and stencil counters, before B10)."
+ },
+ "LOCK_20261106_b10.sha256": {
+  "commit": "786303405356301a215bf4af4b36228926d1ec90",
+  "commit_date": "2026-11-06T10:32:11+07:00",
+  "files": [
+   {
+    "path": "research/HYPOTHESES.md",
+    "status": "exported"
+   },
+   {
+    "path": "research/preregistration/b8_predictions.json",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/src/wb_probe.cu",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/src/common.cuh",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/src/dmk_host.hpp",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/scripts/build.sh",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/scripts/remote_vm_pilot.sh",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/scripts/vast/vast_run.sh",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/scripts/wb_probe_b6b.sh",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/scripts/wb_probe_b8.sh",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/scripts/queued_wb_probe.sh",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/scripts/queued_wb_probe.py",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/scripts/idle_wb_probe.py",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/scripts/torch_opchain.py",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/scripts/wb_probe_b6b_score.py",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/scripts/wb_probe_b8_score.py",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/scripts/wb_probe_score.py",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/scripts/queued_wb_score.py",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/scripts/cache_sim.py",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/scripts/cache_sim_v4.py",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/scripts/cache_sim_v5cand.py",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/scripts/counter_prereg.py",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/scripts/harness_env.py",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/results/wb_probe_20261105-042441/wb_probe.binary",
+    "status": "exported"
+   }
+  ]
+ },
+ "LOCK_20261106_b11.sha256": {
+  "commit": "48eb83e1b85a6c6ef629579533b476b293d73dc6",
+  "commit_date": "2026-11-06T11:52:46+07:00",
+  "files": [
+   {
+    "path": "research/HYPOTHESES.md",
+    "status": "exported"
+   },
+   {
+    "path": "research/preregistration/b8_predictions.json",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/src/wb_probe.cu",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/src/common.cuh",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/src/dmk_host.hpp",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/scripts/build.sh",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/scripts/remote_vm_pilot.sh",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/scripts/vast/vast_run.sh",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/scripts/wb_probe_b6b.sh",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/scripts/wb_probe_b8.sh",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/scripts/wb_probe_firstcell.sh",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/scripts/queued_wb_probe.sh",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/scripts/queued_wb_probe.py",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/scripts/idle_wb_probe.py",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/scripts/torch_opchain.py",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/scripts/wb_probe_b6b_score.py",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/scripts/wb_probe_b8_score.py",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/scripts/wb_probe_score.py",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/scripts/wb_probe_firstcell_score.py",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/scripts/queued_wb_score.py",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/scripts/b11_summary.py",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/scripts/cache_sim.py",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/scripts/cache_sim_v4.py",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/scripts/cache_sim_v5cand.py",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/scripts/counter_prereg.py",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/scripts/harness_env.py",
+    "status": "exported"
+   }
+  ]
+ },
+ "LOCK_20261106_b12.sha256": {
+  "commit": "ee2196ffe6b00e767da35fea91f2493e2febfd16",
+  "commit_date": "2026-11-06T13:18:59+07:00",
+  "files": [
+   {
+    "path": "research/HYPOTHESES.md",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/scripts/dobench_flush_probe.py",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/scripts/dobench_flush_probe.sh",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/scripts/dobench_flush_score.py",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/scripts/test_dobench_flush_score.py",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/scripts/remote_b12.sh",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/scripts/vast/vast_run.sh",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/scripts/counter_prereg.py",
+    "status": "exported"
+   }
+  ]
+ },
+ "LOCK_20261106_b13.sha256": {
+  "commit": "004ae5d137e148b7508201614479950e2194086c",
+  "commit_date": "2026-11-06T13:52:58+07:00",
+  "files": [
+   {
+    "path": "research/HYPOTHESES.md",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/scripts/autotune_bias_probe.py",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/scripts/autotune_bias_probe.sh",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/scripts/autotune_bias_score.py",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/scripts/test_autotune_bias_score.py",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/scripts/remote_b13.sh",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/scripts/vast/vast_run.sh",
+    "status": "exported"
+   }
+  ]
+ },
+ "LOCK_20261106_b14.sha256": {
+  "commit": "8fad0fb0d65832fea3ae968703c5cae22b5a8bce",
+  "commit_date": "2026-11-06T14:15:15+07:00",
+  "files": [
+   {
+    "path": "research/HYPOTHESES.md",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/scripts/quant_bias_probe.py",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/scripts/quant_bias_probe.sh",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/scripts/quant_bias_score.py",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/scripts/test_quant_bias_score.py",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/scripts/remote_b14.sh",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/scripts/vast/vast_run.sh",
+    "status": "exported"
+   }
+  ]
+ },
+ "LOCK_20261106_b15.sha256": {
+  "commit": "ba9ac81f95ad5fb4a2caab954698ae4592ea5d4c",
+  "commit_date": "2026-11-06T14:37:52+07:00",
+  "files": [
+   {
+    "path": "research/HYPOTHESES.md",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/scripts/absorb_probe.py",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/scripts/absorb_probe.sh",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/scripts/absorb_score.py",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/scripts/test_absorb_score.py",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/scripts/remote_b15.sh",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/scripts/quant_bias_probe.py",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/scripts/quant_bias_probe.sh",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/scripts/quant_bias_score.py",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/scripts/vast/vast_run.sh",
+    "status": "exported"
+   }
+  ]
+ },
+ "LOCK_20261106_b16.sha256": {
+  "commit": "8717b8ff031044ef3a5a89436c8ecd25b65169af",
+  "commit_date": "2026-11-06T15:16:30+07:00",
+  "files": [
+   {
+    "path": "research/HYPOTHESES.md",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/scripts/prod_quant_probe.py",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/scripts/prod_quant_probe.sh",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/scripts/prod_quant_score.py",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/scripts/test_prod_quant_score.py",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/scripts/remote_b16.sh",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/scripts/vast/vast_run.sh",
+    "status": "exported"
+   }
+  ]
+ },
+ "LOCK_20261106_b17.sha256": {
+  "commit": "82fac53f0520332d19974fc7514306bc90482044",
+  "commit_date": "2026-11-06T16:03:54+07:00",
+  "files": [
+   {
+    "path": "research/HYPOTHESES.md",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/scripts/flush_bias_probe.py",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/scripts/flush_bias_probe.sh",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/scripts/flush_bias_score.py",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/scripts/test_flush_bias_score.py",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/scripts/remote_b17.sh",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/scripts/vast/vast_run.sh",
+    "status": "exported"
+   }
+  ]
+ },
+ "LOCK_20261106_b17a.sha256": {
+  "commit": "799c626ed8afab7d990aaaa5dd2c52c9e3e14d5c",
+  "commit_date": "2026-11-06T16:07:32+07:00",
+  "files": [
+   {
+    "path": "research/HYPOTHESES.md",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/scripts/flush_bias_probe.py",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/scripts/flush_bias_probe.sh",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/scripts/flush_bias_score.py",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/scripts/test_flush_bias_score.py",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/scripts/remote_b17.sh",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/scripts/vast/vast_run.sh",
+    "status": "exported"
+   }
+  ]
+ },
+ "LOCK_20261106_b17b.sha256": {
+  "commit": "782b4ef34587272f90900ddb6dd983decb8cffc0",
+  "commit_date": "2026-11-06T16:18:27+07:00",
+  "files": [
+   {
+    "path": "research/HYPOTHESES.md",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/scripts/flush_bias_probe.py",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/scripts/flush_bias_probe.sh",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/scripts/flush_bias_score.py",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/scripts/test_flush_bias_score.py",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/scripts/remote_b17.sh",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/scripts/vast/vast_run.sh",
+    "status": "exported"
+   }
+  ]
+ },
+ "LOCK_20261106_b18.sha256": {
+  "commit": "a8c37911ba80f3da8bfe1a6b0a6e8fc57d207e07",
+  "commit_date": "2026-11-06T21:32:06+07:00",
+  "files": [
+   {
+    "path": "research/HYPOTHESES.md",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/scripts/flush_fix_probe.py",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/scripts/flush_fix_probe.sh",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/scripts/flush_fix_score.py",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/scripts/test_flush_fix_score.py",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/scripts/counter_prereg.py",
+    "status": "exported"
+   }
+  ]
+ },
+ "LOCK_20261106_b18b.sha256": {
+  "commit": "021f0763031378f6c4f37d935e9de1b348921385",
+  "commit_date": "2026-11-06T21:44:19+07:00",
+  "files": [
+   {
+    "path": "research/HYPOTHESES.md",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/scripts/queue_drain_probe.py",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/scripts/queue_drain_probe.sh",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/scripts/queue_drain_score.py",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/scripts/test_queue_drain_score.py",
+    "status": "exported"
+   }
+  ]
+ },
+ "LOCK_20261106_b18c.sha256": {
+  "commit": "8ea4455d87d41907f449d833ce6fa3aa09b23646",
+  "commit_date": "2026-11-06T21:49:41+07:00",
+  "files": [
+   {
+    "path": "research/HYPOTHESES.md",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/scripts/cleanbench.py",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/scripts/cleanbench_validate.py",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/scripts/cleanbench_validate.sh",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/scripts/cleanbench_score.py",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/scripts/test_cleanbench_score.py",
+    "status": "exported"
+   }
+  ]
+ },
+ "LOCK_20261106_b19.sha256": {
+  "commit": "3ec241a15963b240cc2bef814a6a69f204794a4b",
+  "commit_date": "2026-11-06T21:54:48+07:00",
+  "files": [
+   {
+    "path": "research/HYPOTHESES.md",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/scripts/b19_probe.py",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/scripts/b19_probe.sh",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/scripts/b19_score.py",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/scripts/test_b19_score.py",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/scripts/remote_b19.sh",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/scripts/cleanbench.py",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/scripts/vast/vast_run.sh",
+    "status": "exported"
+   }
+  ]
+ },
+ "LOCK_20261106_b20.sha256": {
+  "commit": "1c2cfabe9433664f7b6726d52ace6e269e899f0c",
+  "commit_date": "2026-11-06T22:52:54+07:00",
+  "files": [
+   {
+    "path": "research/HYPOTHESES.md",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/scripts/ncu_version_probe.sh",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/scripts/ncu_version_score.py",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/scripts/test_ncu_version_score.py",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/scripts/queued_wb_probe.sh",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/scripts/queued_wb_probe.py",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/scripts/queued_wb_score.py",
+    "status": "exported"
+   }
+  ]
+ },
+ "LOCK_20261106_b21.sha256": {
+  "commit": "6dfc3205201cc99eaec9595b8b1c153e9a231932",
+  "commit_date": "2026-11-06T23:11:33+07:00",
+  "files": [
+   {
+    "path": "research/HYPOTHESES.md",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/scripts/e2e_probe.py",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/scripts/e2e_probe.sh",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/scripts/e2e_score.py",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/scripts/test_e2e_score.py",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/scripts/remote_b21.sh",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/scripts/cleanbench.py",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/scripts/vast/vast_run.sh",
+    "status": "exported"
+   }
+  ]
+ },
+ "LOCK_20261106_b22.sha256": {
+  "commit": "67721b48f75209f4034a6791c42fb2ee56d55034",
+  "commit_date": "2026-11-06T23:57:34+07:00",
+  "files": [
+   {
+    "path": "research/HYPOTHESES.md",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/scripts/graph_time_probe.py",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/scripts/graph_time_probe.sh",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/scripts/graph_time_score.py",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/scripts/test_graph_time_score.py",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/scripts/remote_b22.sh",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/scripts/e2e_probe.py",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/scripts/cleanbench.py",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/scripts/vast/vast_run.sh",
+    "status": "exported"
+   }
+  ]
+ },
+ "LOCK_20261107_b23.sha256": {
+  "commit": "0c6598dc5a3f2699ebcb2ad44b342c27cbc74ad5",
+  "commit_date": "2026-11-07T00:53:41+07:00",
+  "files": [
+   {
+    "path": "research/HYPOTHESES.md",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/scripts/kernel_time_probe.py",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/scripts/cupti_records.py",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/scripts/kernel_time_probe.sh",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/scripts/kernel_time_score.py",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/scripts/test_kernel_time_score.py",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/scripts/test_cupti_records.py",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/scripts/remote_b23.sh",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/scripts/graph_time_probe.py",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/scripts/e2e_probe.py",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/scripts/cleanbench.py",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/scripts/vast/vast_run.sh",
+    "status": "exported"
+   }
+  ]
+ },
+ "LOCK_20261107_b23b.sha256": {
+  "commit": "82df2f2e5b8e609c333241fce97ad3749c1f56e9",
+  "commit_date": "2026-11-07T01:08:38+07:00",
+  "files": [
+   {
+    "path": "research/HYPOTHESES.md",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/scripts/clock_gate.py",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/scripts/test_clock_gate.py",
+    "status": "exported"
+   }
+  ]
+ },
+ "LOCK_20261107_b23c.sha256": {
+  "commit": "22a8e5bede4ca8c6d0e57050b10e1a39bbc7c39f",
+  "commit_date": "2026-11-07T01:18:05+07:00",
+  "files": [
+   {
+    "path": "research/HYPOTHESES.md",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/scripts/remote_b23c.sh",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/scripts/clock_gate.py",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/scripts/test_clock_gate.py",
+    "status": "exported"
+   },
+   {
+    "path": "benchmarks/scripts/vast/vast_run.sh",
+    "status": "exported"
+   }
+  ]
+ }
+}

@@ -1,0 +1,8 @@
+NVIDIA GeForce RTX 5090 (L2 96 MiB, cc 12.0): E-0 FAIL, E-0' PASS {'runs': 5, 'runs_ok': True, 'ptx_ok': True, 'evict_ratio': 0.462, 'evict_ok': False, 'pass': False, 'cold_as_sum_ok': True, 'pass_amended': True}
+  F-1 B_ref 0.1084 -> affected
+  F-3 worst D 0.3707 -> distorted (mixed); per shape {'4096x4096': {'tinygemm': {'S_zero': 3.801, 'S_pr': 2.773, 'D': 0.3707, 'D_sum': 0.4803}, 'bnb_nf4': {'S_zero': 2.409, 'S_pr': 1.857, 'D': 0.2971, 'D_sum': 0.2971}}, '14336x4096': {'tinygemm': {'S_zero': 3.147, 'S_pr': 3.272, 'D': -0.0383, 'D_sum': 0.049}, 'bnb_nf4': {'S_zero': 2.178, 'S_pr': 2.337, 'D': -0.0682, 'D_sum': -0.0329}}, '4096x14336': {'tinygemm': {'S_zero': 3.116, 'S_pr': 3.337, 'D': -0.0661, 'D_sum': -0.0386}, 'bnb_nf4': {'S_zero': 1.818, 'S_pr': 1.953, 'D': -0.069, 'D_sum': -0.0675}}}
+  F-4 {fam: (B, verdict)}: {'attn': ({'sdpa_bf16': 0.055}, 'affected'), 'rmsnorm': ({'liger_rmsnorm': 0.2647, 'torch_rmsnorm': 0.0211}, 'affected'), 'swiglu': ({'liger_swiglu': 0.2391, 'torch_swiglu': 0.1257}, 'affected')}
+  F-6 sum vs pr flush: {'median R': 0.0, 'max |R|': 0.0016, 'R': {'14336x4096 cublas_fp16': -0.0013, '4096x14336 cublas_fp16': 0.0, '4096x14336 bnb_nf4': 0.0016}}
+  F-7 B_l2 0.1014 vs B_ref 0.1084 -> similar
+  F-5 inputs {'B_sum': 0.1098, 'D_sum': 0.049}; tick fraction 0.476; invalid []
+verdict: {"device": "NVIDIA GeForce RTX 5090", "B_ref": 0.1084, "F-1": "affected", "F-3": "distorted", "F-3 worst D": 0.3707, "F-3 sign": "mixed", "B_l2": 0.1014, "F-7": "similar", "E-0": false}

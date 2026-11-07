@@ -1,0 +1,14 @@
+full_kernel_r1 rc=0
+full_kernel_r2 rc=0
+full_kernel_r3 rc=0
+full_range_r1 rc=0
+full_range_r2 rc=0
+full_range_r3 rc=0
+sector_kernel_r1 rc=0
+sector_kernel_r2 rc=0
+sector_kernel_r3 rc=0
+sector_range_r1 rc=0
+sector_range_r2 rc=0
+sector_range_r3 rc=0
+correctness_failures per run: {'full_kernel_r1_meta.json': 0, 'full_kernel_r2_meta.json': 0, 'full_kernel_r3_meta.json': 0, 'full_range_r1_meta.json': 0, 'full_range_r2_meta.json': 0, 'full_range_r3_meta.json': 0, 'sector_kernel_r1_meta.json': 0, 'sector_kernel_r2_meta.json': 0, 'sector_kernel_r3_meta.json': 0, 'sector_range_r1_meta.json': 0, 'sector_range_r2_meta.json': 0, 'sector_range_r3_meta.json': 0}
+score rc=1

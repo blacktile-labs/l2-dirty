@@ -1,0 +1,262 @@
+{
+ "benchmark": "dobench_flush_probe",
+ "mode": "range",
+ "device": "NVIDIA GeForce RTX 3090",
+ "l2_bytes": 6291456,
+ "sm_count": 82,
+ "torch": "2.7.1+cu126",
+ "K": 4096,
+ "flush_bytes": 268435456,
+ "smoke": false,
+ "reps": 5,
+ "seed": 1234,
+ "events": [
+  {
+   "kind": "control"
+  },
+  {
+   "kind": "control"
+  },
+  {
+   "kind": "gemv",
+   "variant": "zero",
+   "w_read": 2,
+   "rep": 0,
+   "weight_bytes": 12582912,
+   "out_bytes": 3072
+  },
+  {
+   "kind": "gemv",
+   "variant": "read",
+   "w_read": 2,
+   "rep": 0,
+   "weight_bytes": 12582912,
+   "out_bytes": 3072
+  },
+  {
+   "kind": "gemv",
+   "variant": "zero",
+   "w_read": 2,
+   "rep": 1,
+   "weight_bytes": 12582912,
+   "out_bytes": 3072
+  },
+  {
+   "kind": "gemv",
+   "variant": "read",
+   "w_read": 2,
+   "rep": 1,
+   "weight_bytes": 12582912,
+   "out_bytes": 3072
+  },
+  {
+   "kind": "gemv",
+   "variant": "zero",
+   "w_read": 2,
+   "rep": 2,
+   "weight_bytes": 12582912,
+   "out_bytes": 3072
+  },
+  {
+   "kind": "gemv",
+   "variant": "read",
+   "w_read": 2,
+   "rep": 2,
+   "weight_bytes": 12582912,
+   "out_bytes": 3072
+  },
+  {
+   "kind": "gemv",
+   "variant": "zero",
+   "w_read": 2,
+   "rep": 3,
+   "weight_bytes": 12582912,
+   "out_bytes": 3072
+  },
+  {
+   "kind": "gemv",
+   "variant": "read",
+   "w_read": 2,
+   "rep": 3,
+   "weight_bytes": 12582912,
+   "out_bytes": 3072
+  },
+  {
+   "kind": "gemv",
+   "variant": "zero",
+   "w_read": 2,
+   "rep": 4,
+   "weight_bytes": 12582912,
+   "out_bytes": 3072
+  },
+  {
+   "kind": "gemv",
+   "variant": "read",
+   "w_read": 2,
+   "rep": 4,
+   "weight_bytes": 12582912,
+   "out_bytes": 3072
+  },
+  {
+   "kind": "gemv",
+   "variant": "zero",
+   "w_read": 4,
+   "rep": 0,
+   "weight_bytes": 25165824,
+   "out_bytes": 6144
+  },
+  {
+   "kind": "gemv",
+   "variant": "read",
+   "w_read": 4,
+   "rep": 0,
+   "weight_bytes": 25165824,
+   "out_bytes": 6144
+  },
+  {
+   "kind": "gemv",
+   "variant": "zero",
+   "w_read": 4,
+   "rep": 1,
+   "weight_bytes": 25165824,
+   "out_bytes": 6144
+  },
+  {
+   "kind": "gemv",
+   "variant": "read",
+   "w_read": 4,
+   "rep": 1,
+   "weight_bytes": 25165824,
+   "out_bytes": 6144
+  },
+  {
+   "kind": "gemv",
+   "variant": "zero",
+   "w_read": 4,
+   "rep": 2,
+   "weight_bytes": 25165824,
+   "out_bytes": 6144
+  },
+  {
+   "kind": "gemv",
+   "variant": "read",
+   "w_read": 4,
+   "rep": 2,
+   "weight_bytes": 25165824,
+   "out_bytes": 6144
+  },
+  {
+   "kind": "gemv",
+   "variant": "zero",
+   "w_read": 4,
+   "rep": 3,
+   "weight_bytes": 25165824,
+   "out_bytes": 6144
+  },
+  {
+   "kind": "gemv",
+   "variant": "read",
+   "w_read": 4,
+   "rep": 3,
+   "weight_bytes": 25165824,
+   "out_bytes": 6144
+  },
+  {
+   "kind": "gemv",
+   "variant": "zero",
+   "w_read": 4,
+   "rep": 4,
+   "weight_bytes": 25165824,
+   "out_bytes": 6144
+  },
+  {
+   "kind": "gemv",
+   "variant": "read",
+   "w_read": 4,
+   "rep": 4,
+   "weight_bytes": 25165824,
+   "out_bytes": 6144
+  },
+  {
+   "kind": "gemv",
+   "variant": "zero",
+   "w_read": 8,
+   "rep": 0,
+   "weight_bytes": 50331648,
+   "out_bytes": 12288
+  },
+  {
+   "kind": "gemv",
+   "variant": "read",
+   "w_read": 8,
+   "rep": 0,
+   "weight_bytes": 50331648,
+   "out_bytes": 12288
+  },
+  {
+   "kind": "gemv",
+   "variant": "zero",
+   "w_read": 8,
+   "rep": 1,
+   "weight_bytes": 50331648,
+   "out_bytes": 12288
+  },
+  {
+   "kind": "gemv",
+   "variant": "read",
+   "w_read": 8,
+   "rep": 1,
+   "weight_bytes": 50331648,
+   "out_bytes": 12288
+  },
+  {
+   "kind": "gemv",
+   "variant": "zero",
+   "w_read": 8,
+   "rep": 2,
+   "weight_bytes": 50331648,
+   "out_bytes": 12288
+  },
+  {
+   "kind": "gemv",
+   "variant": "read",
+   "w_read": 8,
+   "rep": 2,
+   "weight_bytes": 50331648,
+   "out_bytes": 12288
+  },
+  {
+   "kind": "gemv",
+   "variant": "zero",
+   "w_read": 8,
+   "rep": 3,
+   "weight_bytes": 50331648,
+   "out_bytes": 12288
+  },
+  {
+   "kind": "gemv",
+   "variant": "read",
+   "w_read": 8,
+   "rep": 3,
+   "weight_bytes": 50331648,
+   "out_bytes": 12288
+  },
+  {
+   "kind": "gemv",
+   "variant": "zero",
+   "w_read": 8,
+   "rep": 4,
+   "weight_bytes": 50331648,
+   "out_bytes": 12288
+  },
+  {
+   "kind": "gemv",
+   "variant": "read",
+   "w_read": 8,
+   "rep": 4,
+   "weight_bytes": 50331648,
+   "out_bytes": 12288
+  }
+ ],
+ "correctness_failures": 0
+}

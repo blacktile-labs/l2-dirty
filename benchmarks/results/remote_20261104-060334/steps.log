@@ -1,0 +1,24 @@
+== 06:03:34 python3
+== 06:03:34 environment
+== 06:03:34 unit tests (CPU: Python + C++ host)
+unittest rc=0
+test_host_cpp rc=0
+== 06:03:34 build sm_86
+build rc=0
+== 06:03:44 smoke B1 copy_stride
+smoke copy_stride rc=0
+== 06:03:44 smoke transpose
+smoke transpose rc=0
+== 06:03:45 smoke gather
+smoke gather rc=0
+== 06:03:48 smoke fusion
+smoke fusion rc=0
+== 06:03:58 compute-sanitizer memcheck (reduced sizes, 1 rep)
+memcheck copy_stride rc=0 ========= ERROR SUMMARY: 0 errors
+memcheck transpose rc=0 ========= ERROR SUMMARY: 0 errors
+memcheck gather rc=0 ========= ERROR SUMMARY: 0 errors
+memcheck fusion rc=0 ========= ERROR SUMMARY: 0 errors
+== 06:03:59 ncu counters (may be permission-blocked)
+ncu rc=3
+== 06:04:00 post-run nvidia-smi
+== 06:04:00 done

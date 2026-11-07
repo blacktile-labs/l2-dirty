@@ -1,0 +1,14 @@
+run_r1 rc=0
+run_r2 rc=0
+run_r3 rc=0
+run_r4 rc=0
+run_r5 rc=0
+score rc=0
+NVIDIA GeForce RTX 5060 Ti (L2 32 MiB, cc 12.0): E-0 PASS {'runs': 5, 'runs_ok': True, 'ptx_ok': True, 'evict_ratio': 1.013, 'evict_ok': None, 'pass': True}
+  F-1 B_ref 0.0655 -> affected
+  F-3 worst D -0.0748 -> mildly distorted (mixed); per shape {'4096x4096': {'tinygemm': {'S_zero': 3.357, 'S_pr': 3.339, 'D': 0.0055, 'D_sum': 0.0396}, 'bnb_nf4': {'S_zero': 2.286, 'S_pr': 2.471, 'D': -0.0748, 'D_sum': -0.0898}}, '14336x4096': {'tinygemm': {'S_zero': 3.363, 'S_pr': 3.606, 'D': -0.0673, 'D_sum': -0.0738}, 'bnb_nf4': {'S_zero': 3.001, 'S_pr': 3.135, 'D': -0.0426, 'D_sum': -0.0209}}, '4096x14336': {'tinygemm': {'S_zero': 3.388, 'S_pr': 3.642, 'D': -0.0696, 'D_sum': -0.059}, 'bnb_nf4': {'S_zero': 2.603, 'S_pr': 2.713, 'D': -0.0405, 'D_sum': -0.0426}}}
+  F-4 {fam: (B, verdict)}: {'attn': ({'sdpa_bf16': 0.0364}, 'marginal'), 'rmsnorm': ({'liger_rmsnorm': 0.1098, 'torch_rmsnorm': 0.0142}, 'affected'), 'swiglu': ({'liger_swiglu': 0.0913, 'torch_swiglu': 0.0532}, 'affected')}
+  F-6 sum vs pr flush: {'median R': 0.0, 'max |R|': 0.0227, 'R': {'4096x4096 cublas_fp16': -0.0004, '14336x4096 tinygemm_k4': -0.0073, '14336x4096 tinygemm_k2': -0.0069, '14336x4096 bnb_nf4': 0.0227, '14336x4096 tinygemm_k8': -0.0069, '14336x4096 cublas_fp16': 0.0, '4096x14336 tinygemm_k8': -0.0004, '4096x14336 cublas_fp16': 0.0031, '4096x14336 bnb_nf4': 0.0009, '4096x14336 tinygemm_k2': 0.0145, '4096x14336 tinygemm_k4': 0.0}}
+  F-7 B_l2 0.0725 vs B_ref 0.0655 -> similar
+  F-5 inputs {'B_sum': 0.0655, 'D_sum': -0.0738}; tick fraction 0.276; invalid []
+verdict: {"device": "NVIDIA GeForce RTX 5060 Ti", "B_ref": 0.0655, "F-1": "affected", "F-3": "mildly distorted", "F-3 worst D": -0.0748, "F-3 sign": "mixed", "B_l2": 0.0725, "F-7": "similar", "E-0": true}

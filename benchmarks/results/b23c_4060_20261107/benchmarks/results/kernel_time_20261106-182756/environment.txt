@@ -1,0 +1,103 @@
+Fri Nov  6 18:27:56 UTC 2026
++0000
+name, driver_version, temperature.gpu, clocks.current.sm [MHz], clocks.current.memory [MHz], pstate, power.limit [W], utilization.gpu [%]
+NVIDIA GeForce RTX 4060, 595.91.07, 38, 2805 MHz, 8501 MHz, P0, 115.00 W, 10 %
+
+==============NVSMI LOG==============
+
+Timestamp                                              : Fri Nov  6 18:27:56 2026
+Driver Version                                         : 595.91.07
+CUDA Version                                           : 13.2
+
+Attached GPUs                                          : 1
+GPU 00000000:05:00.0
+    Performance State                                  : P0
+    Clocks Event Reasons
+        Idle                                           : Not Active
+        Applications Clocks Setting                    : Not Active
+        SW Power Cap                                   : Not Active
+        HW Slowdown                                    : Not Active
+            HW Thermal Slowdown                        : Not Active
+            HW Power Brake Slowdown                    : Not Active
+        Sync Boost                                     : Not Active
+        SW Thermal Slowdown                            : Not Active
+        Display Clock Setting                          : Not Active
+    Clocks Event Reasons Counters
+        SW Power Capping                               : 5794762477 us
+        Sync Boost                                     : 0 us
+        SW Thermal Slowdown                            : 11603186 us
+        HW Thermal Slowdown                            : 110077 us
+        HW Power Braking                               : 0 us
+    Sparse Operation Mode                              : N/A
+    GPU Power Readings
+        Average Power Draw                             : N/A
+        Instantaneous Power Draw                       : N/A
+        Current Power Limit                            : 115.00 W
+        Requested Power Limit                          : 115.00 W
+        Default Power Limit                            : 115.00 W
+        Min Power Limit                                : 90.00 W
+        Max Power Limit                                : 115.00 W
+    Power Samples
+        Duration                                       : 2.66 sec
+        Number of Samples                              : 119
+        Max                                            : 83.93 W
+        Min                                            : 56.73 W
+        Avg                                            : 60.83 W
+    GPU Memory Power Readings 
+        Average Power Draw                             : N/A
+        Instantaneous Power Draw                       : N/A
+    Module Power Readings
+        Average Power Draw                             : N/A
+        Instantaneous Power Draw                       : N/A
+        Current Power Limit                            : N/A
+        Requested Power Limit                          : N/A
+        Default Power Limit                            : N/A
+        Min Power Limit                                : N/A
+        Max Power Limit                                : N/A
+    EDPp Multiplier                                    : N/A
+    Clocks
+        Graphics                                       : 2805 MHz
+        SM                                             : 2805 MHz
+        Memory                                         : 8501 MHz
+        Video                                          : 2190 MHz
+    Applications Clocks
+        Graphics                                       : Requested functionality has been deprecated
+        Memory                                         : Requested functionality has been deprecated
+    Default Applications Clocks
+        Graphics                                       : Requested functionality has been deprecated
+        Memory                                         : Requested functionality has been deprecated
+    Deferred Clocks
+        Memory                                         : N/A
+    Max Clocks
+        Graphics                                       : 3105 MHz
+        SM                                             : 3105 MHz
+        Memory                                         : 8501 MHz
+        Video                                          : 2415 MHz
+    Max Customer Boost Clocks
+        Graphics                                       : N/A
+    SM Clock Samples
+        Duration                                       : Not Found
+        Number of Samples                              : Not Found
+        Max                                            : Not Found
+        Min                                            : Not Found
+        Avg                                            : Not Found
+    Memory Clock Samples
+        Duration                                       : Not Found
+        Number of Samples                              : Not Found
+        Max                                            : Not Found
+        Min                                            : Not Found
+        Avg                                            : Not Found
+    Clock Policy
+        Auto Boost                                     : N/A
+        Auto Boost Default                             : N/A
+
+CPU(s):                                  80
+Model name:                              Intel(R) Xeon(R) CPU E5-2673 v4 @ 2.30GHz
+2.7.1+cu126 12.6 3.3.1 0.50.2
+2a8ebac7861bc11b4c4e2a5911dceb26925c86d24204fb3ed57d3c32cb99593d  benchmarks/scripts/kernel_time_probe.sh
+25fea2cdcae1257e754dea324adaf5434cb2654c44ef6c9ce69459591a90f8bc  benchmarks/scripts/kernel_time_probe.py
+924b3fd323ca12649d622a94c6e787827d7322172b0b9d94516d5a88b1cc672a  benchmarks/scripts/kernel_time_score.py
+69e2f8bfd4010128ec89e240db56dbf8ec28278c52d6948b4854222179cc0d46  benchmarks/scripts/cupti_records.py
+d7fd013851a650478903635e2f7429661ed05ece3febacc2e3337ae6cec39f22  benchmarks/scripts/graph_time_probe.py
+a9245301a6cf4dd929ac1d39d7025b09aadcc943a7726089d472d4fdeacdaec3  benchmarks/scripts/e2e_probe.py
+1790320875111ac762260afc57661f7182f478ffbccfa164cd8c35bd5ed96fa6  benchmarks/scripts/cleanbench.py

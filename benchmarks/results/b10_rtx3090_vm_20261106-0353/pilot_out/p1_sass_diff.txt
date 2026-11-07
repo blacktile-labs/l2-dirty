@@ -1,0 +1,4 @@
+rw_kernel: 216 vs 216 instructions; text identical=True; encoding identical=True
+readback_kernel: 176 vs 176 instructions; text identical=True; encoding identical=True
+flush_l2_read_kernel: 48 vs 48 instructions; text identical=True; encoding identical=True
+P-1: PASS (identical SASS)

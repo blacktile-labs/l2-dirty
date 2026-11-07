@@ -1,0 +1,14 @@
+run_r1 rc=0
+run_r2 rc=0
+run_r3 rc=0
+score rc=0
+NVIDIA GeForce RTX 3060 Laptop GPU; T-0 correctness True, complete True -> PASS
+T-1 {'e_large': 0.0162, 'e_mid': 0.0563, 'gemv4': -0.0005, 't_small': 0.0941} -> partial
+T-2 S {'e_large': 0.1399, 'e_mid': 0.3806, 'gemv4': 0.0024, 't_small': 0.4553} (bands {'gemv4': (-0.05, 0.05), 'e_mid': (0.3, 1.0), 'e_large': (0.05, 0.2)}) -> steady mode charges the deferred write-back as predicted
+M mean us: {"e_large cold_256": 45.599, "e_large cold_2L2": 46.336, "e_large steady": 51.978, "e_mid cold_256": 9.82, "e_mid cold_2L2": 10.373, "e_mid steady": 13.558, "gemv4 cold_256": 55.982, "gemv4 cold_2L2": 55.951, "gemv4 steady": 56.115, "t_small cold_256": 10.885, "t_small cold_2L2": 11.909, "t_small steady": 15.841}
+IQR / median: {"e_large cold_256": 0.0227, "e_large cold_2L2": 0.0222, "e_large steady": 0.02, "e_mid cold_256": 0.1111, "e_mid cold_2L2": 0.1, "e_mid steady": 0.0769, "gemv4 cold_256": 0.0182, "gemv4 cold_2L2": 0.0183, "gemv4 steady": 0.0182, "t_small cold_256": 0.1, "t_small cold_2L2": 0.0909, "t_small steady": 0.0667}
+pad us: {"e_large": 219.3, "e_mid": 216.7, "gemv4": 350.6, "t_small": 249.7}
+host dispatch us: {"e_large": 73.1, "e_mid": 72.2, "gemv4": 116.9, "t_small": 83.2}
+do_bench shipped median us: {"gemv4": 62.464, "e_large": 52.224, "e_mid": 13.312, "t_small": 15.36}
+do_bench shipped / cleanbench cold_256 - 1: {"gemv4": 0.1158, "e_large": 0.1453, "e_mid": 0.3556, "t_small": 0.4111}
+verdict: {"T-0": true, "T-1": "partial", "T-2": "steady mode charges the deferred write-back as predicted"}

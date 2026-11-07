@@ -1,0 +1,80 @@
+{
+ "cells": [
+  {
+   "r": 0,
+   "w": 0.25,
+   "n_steady_samples": 12,
+   "WB": 0.0,
+   "RD": null,
+   "RB": 3.0517578125e-05,
+   "WARM": null,
+   "WBR": 0.0,
+   "RDR": null
+  },
+  {
+   "r": 0,
+   "w": 0.375,
+   "n_steady_samples": 12,
+   "WB": 0.0,
+   "RD": null,
+   "RB": 0.0,
+   "WARM": null,
+   "WBR": 0.0,
+   "RDR": null
+  },
+  {
+   "r": 0,
+   "w": 0.625,
+   "n_steady_samples": 12,
+   "WB": 0.982769775390625,
+   "RD": null,
+   "RB": 1.220703125e-05,
+   "WARM": null,
+   "WBR": 0.9966949462890625,
+   "RDR": null
+  },
+  {
+   "r": 0,
+   "w": 0.75,
+   "n_steady_samples": 12,
+   "WB": 0.9852701822916666,
+   "RD": null,
+   "RB": 0.0,
+   "WARM": null,
+   "WBR": 0.9974568684895834,
+   "RDR": null
+  },
+  {
+   "r": 0,
+   "w": 0.875,
+   "n_steady_samples": 12,
+   "WB": 0.9877275739397322,
+   "RD": null,
+   "RB": 0.0,
+   "WARM": null,
+   "WBR": 0.9973122732979911,
+   "RDR": null
+  },
+  {
+   "r": 0,
+   "w": 2,
+   "n_steady_samples": 12,
+   "WB": 0.9946784973144531,
+   "RD": null,
+   "RB": 1.0000076293945312,
+   "WARM": null,
+   "WBR": 0.998835563659668,
+   "RDR": null
+  }
+ ],
+ "verdict": {
+  "F-0": true,
+  "F-1": "first-cell artifact supported",
+  "F-1 control WBR": 0.0,
+  "F-1 control WB": 0.0,
+  "F-2": "no first-cell inflation",
+  "F-2 dummy WBR": 0.0,
+  "V-4'": "counts lines",
+  "V-4' median WBR": 0.9973
+ }
+}

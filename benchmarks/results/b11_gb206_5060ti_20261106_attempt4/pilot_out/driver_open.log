@@ -1,0 +1,107 @@
+               NVRM: installed in this system requires use of the NVIDIA open kernel modules.
+[   64.271911] NVRM: GPU 0000:00:07.0: RmInitAdapter failed! (0x22:0x56:884)
+[   64.276268] NVRM: GPU 0000:00:07.0: rm_init_adapter failed, device minor number 0
+[   64.329763] nvidia_uvm: module uses symbols nvUvmInterfaceDisableAccessCntr from proprietary module nvidia, inheriting taint.
+[  141.735023] NVRM: The NVIDIA GPU 0000:00:07.0 (PCI ID: 10de:2d04)
+               NVRM: installed in this system requires use of the NVIDIA open kernel modules.
+[  141.735069] NVRM: GPU 0000:00:07.0: RmInitAdapter failed! (0x22:0x56:884)
+[  141.739314] NVRM: GPU 0000:00:07.0: rm_init_adapter failed, device minor number 0
+[  146.063516] NVRM: The NVIDIA GPU 0000:00:07.0 (PCI ID: 10de:2d04)
+               NVRM: installed in this system requires use of the NVIDIA open kernel modules.
+[  146.063563] NVRM: GPU 0000:00:07.0: RmInitAdapter failed! (0x22:0x56:884)
+[  146.067713] NVRM: GPU 0000:00:07.0: rm_init_adapter failed, device minor number 0
+[  146.190661] NVRM: The NVIDIA GPU 0000:00:07.0 (PCI ID: 10de:2d04)
+               NVRM: installed in this system requires use of the NVIDIA open kernel modules.
+[  146.190711] NVRM: GPU 0000:00:07.0: RmInitAdapter failed! (0x22:0x56:884)
+[  146.196858] NVRM: GPU 0000:00:07.0: rm_init_adapter failed, device minor number 0
+[  146.345441] NVRM: The NVIDIA GPU 0000:00:07.0 (PCI ID: 10de:2d04)
+               NVRM: installed in this system requires use of the NVIDIA open kernel modules.
+[  146.345618] NVRM: GPU 0000:00:07.0: RmInitAdapter failed! (0x22:0x56:884)
+[  146.351420] NVRM: GPU 0000:00:07.0: rm_init_adapter failed, device minor number 0
+--- swap
+Hit:1 http://archive.ubuntu.com/ubuntu jammy InRelease
+Get:2 http://archive.ubuntu.com/ubuntu jammy-updates InRelease [128 kB]
+Get:3 https://nvidia.github.io/libnvidia-container/stable/deb/amd64  InRelease [1477 B]
+Get:4 https://download.docker.com/linux/ubuntu jammy InRelease [48.5 kB]
+Get:5 https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64  InRelease [1578 B]
+Get:6 https://ppa.launchpadcontent.net/graphics-drivers/ppa/ubuntu jammy InRelease [24.3 kB]
+Get:7 http://archive.ubuntu.com/ubuntu jammy-backports InRelease [127 kB]
+Get:8 https://pkgs.tailscale.com/stable/ubuntu jammy InRelease
+Get:9 http://security.ubuntu.com/ubuntu jammy-security InRelease [129 kB]
+Get:10 https://nvidia.github.io/libnvidia-container/stable/deb/amd64  Packages [28.0 kB]
+Get:11 https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64  Packages [3202 kB]
+Get:12 https://download.docker.com/linux/ubuntu jammy/stable amd64 Packages [92.7 kB]
+Get:13 http://archive.ubuntu.com/ubuntu jammy-updates/main amd64 Packages [3963 kB]
+Get:14 http://archive.ubuntu.com/ubuntu jammy-updates/main Translation-en [582 kB]
+Get:15 http://archive.ubuntu.com/ubuntu jammy-updates/main amd64 c-n-f Metadata [20.1 kB]
+Get:16 http://archive.ubuntu.com/ubuntu jammy-updates/restricted amd64 Packages [6815 kB]
+Get:17 http://archive.ubuntu.com/ubuntu jammy-updates/restricted Translation-en [1310 kB]
+Get:18 http://archive.ubuntu.com/ubuntu jammy-updates/restricted amd64 c-n-f Metadata [584 B]
+Get:19 http://archive.ubuntu.com/ubuntu jammy-updates/universe amd64 Packages [1291 kB]
+Get:20 http://archive.ubuntu.com/ubuntu jammy-updates/universe Translation-en [327 kB]
+Get:21 http://archive.ubuntu.com/ubuntu jammy-updates/universe amd64 c-n-f Metadata [30.8 kB]
+Get:22 http://archive.ubuntu.com/ubuntu jammy-updates/multiverse amd64 Packages [86.1 kB]
+Get:23 http://archive.ubuntu.com/ubuntu jammy-updates/multiverse Translation-en [16.5 kB]
+Get:24 http://archive.ubuntu.com/ubuntu jammy-updates/multiverse amd64 c-n-f Metadata [756 B]
+Get:25 http://archive.ubuntu.com/ubuntu jammy-backports/main amd64 Packages [70.2 kB]
+Get:26 http://archive.ubuntu.com/ubuntu jammy-backports/main Translation-en [11.4 kB]
+Get:27 http://archive.ubuntu.com/ubuntu jammy-backports/main amd64 c-n-f Metadata [412 B]
+Get:28 http://archive.ubuntu.com/ubuntu jammy-backports/universe amd64 Packages [30.8 kB]
+Get:29 http://archive.ubuntu.com/ubuntu jammy-backports/universe Translation-en [16.9 kB]
+Get:30 http://archive.ubuntu.com/ubuntu jammy-backports/universe amd64 c-n-f Metadata [676 B]
+Get:31 https://pkgs.tailscale.com/stable/ubuntu jammy/main amd64 Packages [16.8 kB]
+Get:32 https://ppa.launchpadcontent.net/graphics-drivers/ppa/ubuntu jammy/main amd64 Packages [28.6 kB]
+Get:33 http://security.ubuntu.com/ubuntu jammy-security/main amd64 Packages [3675 kB]
+Get:34 https://ppa.launchpadcontent.net/graphics-drivers/ppa/ubuntu jammy/main Translation-en [6076 B]
+Get:35 http://security.ubuntu.com/ubuntu jammy-security/main Translation-en [513 kB]
+Get:36 http://security.ubuntu.com/ubuntu jammy-security/main amd64 c-n-f Metadata [14.7 kB]
+Get:37 http://security.ubuntu.com/ubuntu jammy-security/restricted amd64 Packages [6545 kB]
+Get:38 http://security.ubuntu.com/ubuntu jammy-security/restricted Translation-en [1257 kB]
+Get:39 http://security.ubuntu.com/ubuntu jammy-security/restricted amd64 c-n-f Metadata [600 B]
+Get:40 http://security.ubuntu.com/ubuntu jammy-security/universe amd64 Packages [1057 kB]
+Get:41 http://security.ubuntu.com/ubuntu jammy-security/universe Translation-en [238 kB]
+Get:42 http://security.ubuntu.com/ubuntu jammy-security/universe amd64 c-n-f Metadata [23.2 kB]
+Get:43 http://security.ubuntu.com/ubuntu jammy-security/multiverse amd64 Packages [79.6 kB]
+Get:44 http://security.ubuntu.com/ubuntu jammy-security/multiverse Translation-en [13.6 kB]
+Get:45 http://security.ubuntu.com/ubuntu jammy-security/multiverse amd64 c-n-f Metadata [544 B]
+Fetched 31.8 MB in 4s (7640 kB/s)
+Reading package lists...
+Reading package lists...
+Building dependency tree...
+Reading state information...
+Some packages could not be installed. This may mean that you have
+requested an impossible situation or if you are using the unstable
+distribution that some required packages have not yet been created
+or been moved out of Incoming.
+The following information may help to resolve the situation:
+
+The following packages have unmet dependencies:
+ nvidia-driver-575 : Depends: nvidia-dkms-575 (= 575.51.03-0ubuntu1) but it is not going to be installed
+                     Depends: nvidia-kernel-common-575 (= 575.51.03-0ubuntu1) but 575.57.08-0ubuntu1 is to be installed
+                     Depends: nvidia-kernel-source-575 (= 575.51.03-0ubuntu1) but it is not installable
+                     Depends: nvidia-compute-utils-575 (= 575.51.03-0ubuntu1) but 575.57.08-0ubuntu1 is to be installed
+                     Depends: nvidia-utils-575 (= 575.51.03-0ubuntu1) but 575.57.08-0ubuntu1 is to be installed
+                     Depends: xserver-xorg-video-nvidia-575 (= 575.51.03-0ubuntu1) but 575.57.08-0ubuntu1 is to be installed
+                     Recommends: libnvidia-compute-575:i386 (= 575.51.03-0ubuntu1)
+                     Recommends: libnvidia-decode-575:i386 (= 575.51.03-0ubuntu1)
+                     Recommends: libnvidia-encode-575:i386 (= 575.51.03-0ubuntu1)
+                     Recommends: libnvidia-fbc1-575:i386 (= 575.51.03-0ubuntu1)
+                     Recommends: libnvidia-gl-575:i386 (= 575.51.03-0ubuntu1)
+ nvidia-driver-575-open : Depends: libnvidia-gl-575 (= 575.57.08-0ubuntu1) but 575.51.03-0ubuntu1 is to be installed
+                          Depends: libnvidia-compute-575 (= 575.57.08-0ubuntu1) but 575.51.03-0ubuntu1 is to be installed
+                          Depends: libnvidia-extra-575 (= 575.57.08-0ubuntu1) but 575.51.03-0ubuntu1 is to be installed
+                          Depends: libnvidia-decode-575 (= 575.57.08-0ubuntu1) but 575.51.03-0ubuntu1 is to be installed
+                          Depends: libnvidia-encode-575 (= 575.57.08-0ubuntu1) but 575.51.03-0ubuntu1 is to be installed
+                          Depends: libnvidia-fbc1-575 (= 575.57.08-0ubuntu1) but 575.51.03-0ubuntu1 is to be installed
+                          Recommends: libnvidia-compute-575:i386 (= 575.57.08-0ubuntu1)
+                          Recommends: libnvidia-decode-575:i386 (= 575.57.08-0ubuntu1)
+                          Recommends: libnvidia-encode-575:i386 (= 575.57.08-0ubuntu1)
+                          Recommends: libnvidia-fbc1-575:i386 (= 575.57.08-0ubuntu1)
+                          Recommends: libnvidia-gl-575:i386 (= 575.57.08-0ubuntu1)
+ nvidia-utils-575 : Depends: libnvidia-compute-575 (>= 575.57.08) but 575.51.03-0ubuntu1 is to be installed
+ xserver-xorg-video-nvidia-575 : Depends: libnvidia-cfg1-575 (= 575.57.08-0ubuntu1) but 575.51.03-0ubuntu1 is to be installed
+E: Error, pkgProblemResolver::Resolve generated breaks, this may be caused by held packages.
+apt rc=100
+NVRM version: NVIDIA UNIX x86_64 Kernel Module  575.51.03  Wed Apr 16 14:22:51 UTC 2025
+GCC version:  gcc version 12.3.0 (Ubuntu 12.3.0-1ubuntu1~22.04) 
+No devices were found

@@ -1,0 +1,168 @@
+{
+ "device": "NVIDIA GeForce RTX 3090",
+ "l2_bytes": 6291456,
+ "P-0": true,
+ "V-1": "mildly distorted",
+ "V-1 worst D": -0.076,
+ "V-1 sign": "mixed signs",
+ "V-2": "no flip",
+ "V-3 max regret": 0.0238,
+ "per shape": {
+  "4096x4096": {
+   "S_tinygemm": {
+    "zero": 2.778,
+    "read": 2.943,
+    "D": -0.0562
+   },
+   "S_bnb_nf4": {
+    "zero": 2.021,
+    "read": 2.032,
+    "D": -0.0054
+   },
+   "t_us": {
+    "tinygemm_k4": {
+     "zero": 18.43,
+     "read": 16.38
+    },
+    "tinygemm_k8": {
+     "zero": 18.43,
+     "read": 16.35
+    },
+    "bnb_nf4": {
+     "zero": 25.33,
+     "read": 23.68
+    },
+    "cublas_fp16": {
+     "zero": 51.2,
+     "read": 48.13
+    },
+    "tinygemm_k2": {
+     "zero": 19.46,
+     "read": 16.38
+    }
+   },
+   "bias": {
+    "tinygemm_k4": 0.125,
+    "tinygemm_k8": 0.1272,
+    "bnb_nf4": 0.0696,
+    "cublas_fp16": 0.0638,
+    "tinygemm_k2": 0.1875
+   },
+   "faster_4bit": {
+    "zero": "tinygemm",
+    "read": "tinygemm"
+   },
+   "tinygemm_pick": {
+    "zero": "tinygemm_k4",
+    "read": "tinygemm_k8",
+    "regret": 0.002
+   }
+  },
+  "4096x14336": {
+   "S_tinygemm": {
+    "zero": 3.213,
+    "read": 3.477,
+    "D": -0.076
+   },
+   "S_bnb_nf4": {
+    "zero": 2.157,
+    "read": 2.213,
+    "D": -0.0251
+   },
+   "t_us": {
+    "tinygemm_k4": {
+     "zero": 48.13,
+     "read": 44.03
+    },
+    "tinygemm_k8": {
+     "zero": 48.13,
+     "read": 43.01
+    },
+    "bnb_nf4": {
+     "zero": 71.68,
+     "read": 67.58
+    },
+    "cublas_fp16": {
+     "zero": 154.62,
+     "read": 149.54
+    },
+    "tinygemm_k2": {
+     "zero": 53.25,
+     "read": 46.08
+    }
+   },
+   "bias": {
+    "tinygemm_k4": 0.093,
+    "tinygemm_k8": 0.119,
+    "bnb_nf4": 0.0606,
+    "cublas_fp16": 0.034,
+    "tinygemm_k2": 0.1556
+   },
+   "faster_4bit": {
+    "zero": "tinygemm",
+    "read": "tinygemm"
+   },
+   "tinygemm_pick": {
+    "zero": "tinygemm_k4",
+    "read": "tinygemm_k8",
+    "regret": 0.0238
+   }
+  },
+  "14336x4096": {
+   "S_tinygemm": {
+    "zero": 3.409,
+    "read": 3.625,
+    "D": -0.0596
+   },
+   "S_bnb_nf4": {
+    "zero": 2.727,
+    "read": 2.685,
+    "D": 0.0157
+   },
+   "t_us": {
+    "cublas_fp16": {
+     "zero": 153.6,
+     "read": 148.48
+    },
+    "tinygemm_k4": {
+     "zero": 45.06,
+     "read": 40.96
+    },
+    "tinygemm_k2": {
+     "zero": 46.08,
+     "read": 43.01
+    },
+    "bnb_nf4": {
+     "zero": 56.32,
+     "read": 55.3
+    },
+    "tinygemm_k8": {
+     "zero": 45.06,
+     "read": 40.96
+    }
+   },
+   "bias": {
+    "cublas_fp16": 0.0345,
+    "tinygemm_k4": 0.1,
+    "tinygemm_k2": 0.0714,
+    "bnb_nf4": 0.0185,
+    "tinygemm_k8": 0.1
+   },
+   "faster_4bit": {
+    "zero": "tinygemm",
+    "read": "tinygemm"
+   },
+   "tinygemm_pick": {
+    "zero": "tinygemm_k4",
+    "read": "tinygemm_k4",
+    "regret": 0.0
+   }
+  }
+ },
+ "notes": {
+  "4096x4096 _bnb_version": "0.50.2",
+  "14336x4096 _bnb_version": "0.50.2",
+  "4096x14336 _bnb_version": "0.50.2"
+ },
+ "invalid": []
+}

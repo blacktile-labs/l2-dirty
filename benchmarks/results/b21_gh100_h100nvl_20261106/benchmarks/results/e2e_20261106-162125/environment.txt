@@ -1,0 +1,10 @@
+Fri Nov  6 16:21:25 UTC 2026
+name, driver_version, temperature.gpu, clocks.current.sm [MHz], clocks.current.memory [MHz], pstate, power.limit [W]
+NVIDIA H100 NVL, 580.178.04, 39, 1785 MHz, 2619 MHz, P0, 400.00 W
+CPU(s):                                  40
+Model name:                              AMD EPYC 9V84 96-Core Processor
+2.7.1+cu126 12.6 3.3.1 0.50.2
+f97df2b211b86ae5d07a505578c19c27772d3a4a0c882fc258976cc079d4ec79  benchmarks/scripts/e2e_probe.sh
+a9245301a6cf4dd929ac1d39d7025b09aadcc943a7726089d472d4fdeacdaec3  benchmarks/scripts/e2e_probe.py
+7e2b6fa09ffc7c52dcfa5ede74f62ff989902ee43f71444e247a3f34dab5d3a9  benchmarks/scripts/e2e_score.py
+1790320875111ac762260afc57661f7182f478ffbccfa164cd8c35bd5ed96fa6  benchmarks/scripts/cleanbench.py

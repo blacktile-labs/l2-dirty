@@ -1,0 +1,8 @@
+Fri Nov  6 08:22:18 UTC 2026
+name, driver_version, temperature.gpu, clocks.current.sm [MHz], clocks.current.memory [MHz], pstate
+NVIDIA GeForce RTX 4090, 575.51.03, 28, 2520 MHz, 10501 MHz, P0
+2.7.1+cu126 12.6 3.3.1
+bitsandbytes 0.50.2
+adba5fabe445d36ad345e6980250e236b386b09007d8de7d179a08f817ccd78e  benchmarks/scripts/prod_quant_probe.sh
+df930c16673d2b3de0996100c2612466e6030ca7cd8355c8a5ace4db3d55145e  benchmarks/scripts/prod_quant_probe.py
+81526915f0cbc0c318163e4c4008e2db4cf6808cfa6e8bbbad73f06be35d0c13  benchmarks/scripts/prod_quant_score.py

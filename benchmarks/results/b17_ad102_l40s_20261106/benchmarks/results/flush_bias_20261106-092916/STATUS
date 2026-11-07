@@ -1,0 +1,14 @@
+run_r1 rc=0
+run_r2 rc=0
+run_r3 rc=0
+run_r4 rc=0
+run_r5 rc=0
+score rc=0
+NVIDIA L40S (L2 96 MiB, cc 8.9): E-0 FAIL, E-0' PASS {'runs': 5, 'runs_ok': True, 'ptx_ok': True, 'evict_ratio': 1.02, 'evict_ok': False, 'pass': False, 'cold_as_sum_ok': True, 'pass_amended': True}
+  F-1 B_ref 0.2532 -> affected
+  F-3 worst D -0.1683 -> distorted (mixed); per shape {'4096x4096': {'tinygemm': {'S_zero': 3.174, 'S_pr': 3.059, 'D': 0.0376, 'D_sum': -0.0234}, 'bnb_nf4': {'S_zero': 2.086, 'S_pr': 2.334, 'D': -0.1063, 'D_sum': -0.1176}}, '14336x4096': {'tinygemm': {'S_zero': 3.066, 'S_pr': 3.511, 'D': -0.1268, 'D_sum': -0.1268}, 'bnb_nf4': {'S_zero': 2.389, 'S_pr': 2.873, 'D': -0.1683, 'D_sum': -0.1683}}, '4096x14336': {'tinygemm': {'S_zero': 3.092, 'S_pr': 3.556, 'D': -0.1303, 'D_sum': -0.1303}, 'bnb_nf4': {'S_zero': 2.072, 'S_pr': 2.462, 'D': -0.1582, 'D_sum': -0.1582}}}
+  F-4 {fam: (B, verdict)}: {'attn': ({'sdpa_bf16': 0.2828}, 'affected'), 'rmsnorm': ({'liger_rmsnorm': 0.8796, 'torch_rmsnorm': 0.0611}, 'affected'), 'swiglu': ({'liger_swiglu': 0.478, 'torch_swiglu': 0.2043}, 'affected')}
+  F-6 sum vs pr flush: {'median R': 0.0, 'max |R|': 0.0213, 'R': {'4096x4096 cublas_fp16': 0.0, '14336x4096 tinygemm_k4': 0.0, '14336x4096 tinygemm_k2': 0.0, '14336x4096 bnb_nf4': 0.0, '14336x4096 tinygemm_k8': 0.0, '14336x4096 cublas_fp16': 0.0, '4096x14336 tinygemm_k8': -0.0193, '4096x14336 cublas_fp16': 0.0, '4096x14336 bnb_nf4': 0.0, '4096x14336 tinygemm_k2': 0.0, '4096x14336 tinygemm_k4': -0.0213}}
+  F-7 B_l2 0.2555 vs B_ref 0.2532 -> similar
+  F-5 inputs {'B_sum': 0.2532, 'D_sum': -0.1268}; tick fraction 0.829; invalid []
+verdict: {"device": "NVIDIA L40S", "B_ref": 0.2532, "F-1": "affected", "F-3": "distorted", "F-3 worst D": -0.1683, "F-3 sign": "mixed", "B_l2": 0.2555, "F-7": "similar", "E-0": false}

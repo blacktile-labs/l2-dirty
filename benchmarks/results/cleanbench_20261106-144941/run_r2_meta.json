@@ -1,0 +1,1003 @@
+{
+ "benchmark": "cleanbench_validate",
+ "device": "NVIDIA GeForce RTX 3060 Laptop GPU",
+ "l2_bytes": 3145728,
+ "torch": "2.7.1+cu126",
+ "triton": "3.3.1",
+ "smoke": false,
+ "seed": 1820,
+ "calls_per_cell": 5,
+ "reps": 100,
+ "events": [
+  {
+   "kind": "bench",
+   "kernel": "e_mid",
+   "config": "steady",
+   "mean_us": 13.905920004472136,
+   "median_us": 14.336000196635723,
+   "p25_us": 13.311999849975109,
+   "p75_us": 14.336000196635723,
+   "pad_us": 237.78599961588043,
+   "host_dispatch_us": 79.26199987196014,
+   "flush_bytes": 0,
+   "warnings": [
+    "median 14.3 us is within ~30 timer ticks (1.024 us): differences under ~5 % are not resolved"
+   ],
+   "tick_fraction": 1.0
+  },
+  {
+   "kind": "bench",
+   "kernel": "e_large",
+   "config": "steady",
+   "mean_us": 52.26495906710625,
+   "median_us": 52.22399905323982,
+   "p25_us": 51.96799896657467,
+   "p75_us": 52.22399905323982,
+   "pad_us": 219.3495001847623,
+   "host_dispatch_us": 73.11650006158743,
+   "flush_bytes": 0,
+   "warnings": [],
+   "tick_fraction": 1.0
+  },
+  {
+   "kind": "bench",
+   "kernel": "t_small",
+   "config": "cold_256",
+   "mean_us": 10.95679996535182,
+   "median_us": 11.264000087976456,
+   "p25_us": 10.239999741315842,
+   "p75_us": 11.264000087976456,
+   "pad_us": 512.0804985381255,
+   "host_dispatch_us": 170.6934995127085,
+   "flush_bytes": 268435456,
+   "warnings": [
+    "median 11.3 us is within ~30 timer ticks (1.024 us): differences under ~5 % are not resolved",
+    "cold mode: up to ~L2/2 of this kernel's own write-back is not timed (see mode='steady')"
+   ],
+   "tick_fraction": 1.0
+  },
+  {
+   "kind": "bench",
+   "kernel": "e_mid",
+   "config": "cold_2L2",
+   "mean_us": 10.373439937829971,
+   "median_us": 10.239999741315842,
+   "p25_us": 10.239999741315842,
+   "p75_us": 11.264000087976456,
+   "pad_us": 247.5614992363262,
+   "host_dispatch_us": 82.52049974544207,
+   "flush_bytes": 6291456,
+   "warnings": [
+    "median 10.2 us is within ~30 timer ticks (1.024 us): differences under ~5 % are not resolved",
+    "IQR is 10% of the median: noisy, increase reps or check clocks",
+    "cold mode: up to ~L2/2 of this kernel's own write-back is not timed (see mode='steady')"
+   ],
+   "tick_fraction": 0.99
+  },
+  {
+   "kind": "bench",
+   "kernel": "e_mid",
+   "config": "cold_256",
+   "mean_us": 9.810880068689585,
+   "median_us": 9.216000325977802,
+   "p25_us": 9.216000325977802,
+   "p75_us": 10.239999741315842,
+   "pad_us": 259.60050015783054,
+   "host_dispatch_us": 86.53350005261018,
+   "flush_bytes": 268435456,
+   "warnings": [
+    "median 9.2 us is within ~30 timer ticks (1.024 us): differences under ~5 % are not resolved",
+    "IQR is 11% of the median: noisy, increase reps or check clocks",
+    "cold mode: up to ~L2/2 of this kernel's own write-back is not timed (see mode='steady')"
+   ],
+   "tick_fraction": 0.98
+  },
+  {
+   "kind": "bench",
+   "kernel": "e_mid",
+   "config": "cold_256",
+   "mean_us": 9.8617600556463,
+   "median_us": 10.239999741315842,
+   "p25_us": 9.216000325977802,
+   "p75_us": 10.239999741315842,
+   "pad_us": 207.95850059585064,
+   "host_dispatch_us": 69.31950019861688,
+   "flush_bytes": 268435456,
+   "warnings": [
+    "median 10.2 us is within ~30 timer ticks (1.024 us): differences under ~5 % are not resolved",
+    "cold mode: up to ~L2/2 of this kernel's own write-back is not timed (see mode='steady')"
+   ],
+   "tick_fraction": 0.99
+  },
+  {
+   "kind": "bench",
+   "kernel": "e_large",
+   "config": "cold_256",
+   "mean_us": 45.43488048017025,
+   "median_us": 45.05600035190582,
+   "p25_us": 45.05600035190582,
+   "p75_us": 46.08000069856644,
+   "pad_us": 204.79949989749002,
+   "host_dispatch_us": 68.26649996583001,
+   "flush_bytes": 268435456,
+   "warnings": [
+    "cold mode: up to ~L2/2 of this kernel's own write-back is not timed (see mode='steady')"
+   ],
+   "tick_fraction": 1.0
+  },
+  {
+   "kind": "bench",
+   "kernel": "e_mid",
+   "config": "steady",
+   "mean_us": 13.260800037533045,
+   "median_us": 13.311999849975109,
+   "p25_us": 13.311999849975109,
+   "p75_us": 13.311999849975109,
+   "pad_us": 197.88900135608856,
+   "host_dispatch_us": 65.96300045202952,
+   "flush_bytes": 0,
+   "warnings": [
+    "median 13.3 us is within ~30 timer ticks (1.024 us): differences under ~5 % are not resolved"
+   ],
+   "tick_fraction": 1.0
+  },
+  {
+   "kind": "bench",
+   "kernel": "gemv4",
+   "config": "cold_2L2",
+   "mean_us": 56.22784040868282,
+   "median_us": 56.32000043988228,
+   "p25_us": 55.296000093221664,
+   "p75_us": 56.32000043988228,
+   "pad_us": 329.4689986432786,
+   "host_dispatch_us": 109.82299954775954,
+   "flush_bytes": 6291456,
+   "warnings": [
+    "cold mode: up to ~L2/2 of this kernel's own write-back is not timed (see mode='steady')"
+   ],
+   "tick_fraction": 1.0
+  },
+  {
+   "kind": "bench",
+   "kernel": "e_mid",
+   "config": "cold_2L2",
+   "mean_us": 10.364479944109917,
+   "median_us": 10.239999741315842,
+   "p25_us": 10.239999741315842,
+   "p75_us": 11.264000087976456,
+   "pad_us": 217.45799904238083,
+   "host_dispatch_us": 72.48599968079361,
+   "flush_bytes": 6291456,
+   "warnings": [
+    "median 10.2 us is within ~30 timer ticks (1.024 us): differences under ~5 % are not resolved",
+    "IQR is 10% of the median: noisy, increase reps or check clocks",
+    "cold mode: up to ~L2/2 of this kernel's own write-back is not timed (see mode='steady')"
+   ],
+   "tick_fraction": 0.95
+  },
+  {
+   "kind": "bench",
+   "kernel": "e_large",
+   "config": "steady",
+   "mean_us": 51.88607893884182,
+   "median_us": 52.22399905323982,
+   "p25_us": 51.19999870657921,
+   "p75_us": 52.22399905323982,
+   "pad_us": 199.45800113418954,
+   "host_dispatch_us": 66.48600037806318,
+   "flush_bytes": 0,
+   "warnings": [],
+   "tick_fraction": 1.0
+  },
+  {
+   "kind": "bench",
+   "kernel": "e_large",
+   "config": "cold_2L2",
+   "mean_us": 46.27456076443195,
+   "median_us": 46.08000069856644,
+   "p25_us": 46.08000069856644,
+   "p75_us": 47.10400104522705,
+   "pad_us": 201.49500005572918,
+   "host_dispatch_us": 67.1650000185764,
+   "flush_bytes": 6291456,
+   "warnings": [
+    "cold mode: up to ~L2/2 of this kernel's own write-back is not timed (see mode='steady')"
+   ],
+   "tick_fraction": 1.0
+  },
+  {
+   "kind": "bench",
+   "kernel": "e_large",
+   "config": "cold_2L2",
+   "mean_us": 52.70528066903353,
+   "median_us": 46.08000069856644,
+   "p25_us": 46.08000069856644,
+   "p75_us": 47.10400104522705,
+   "pad_us": 236.8605005358404,
+   "host_dispatch_us": 78.95350017861347,
+   "flush_bytes": 6291456,
+   "warnings": [
+    "cold mode: up to ~L2/2 of this kernel's own write-back is not timed (see mode='steady')"
+   ],
+   "tick_fraction": 1.0
+  },
+  {
+   "kind": "bench",
+   "kernel": "e_large",
+   "config": "cold_2L2",
+   "mean_us": 46.438400745391846,
+   "median_us": 46.08000069856644,
+   "p25_us": 46.08000069856644,
+   "p75_us": 47.10400104522705,
+   "pad_us": 216.40049999405164,
+   "host_dispatch_us": 72.13349999801721,
+   "flush_bytes": 6291456,
+   "warnings": [
+    "cold mode: up to ~L2/2 of this kernel's own write-back is not timed (see mode='steady')"
+   ],
+   "tick_fraction": 1.0
+  },
+  {
+   "kind": "bench",
+   "kernel": "t_small",
+   "config": "steady",
+   "mean_us": 15.687679816037416,
+   "median_us": 15.359999611973763,
+   "p25_us": 15.359999611973763,
+   "p75_us": 16.383999958634377,
+   "pad_us": 231.95699850475648,
+   "host_dispatch_us": 77.3189995015855,
+   "flush_bytes": 0,
+   "warnings": [
+    "median 15.4 us is within ~30 timer ticks (1.024 us): differences under ~5 % are not resolved"
+   ],
+   "tick_fraction": 1.0
+  },
+  {
+   "kind": "bench",
+   "kernel": "e_mid",
+   "config": "cold_256",
+   "mean_us": 9.994240058586001,
+   "median_us": 10.239999741315842,
+   "p25_us": 9.216000325977802,
+   "p75_us": 10.239999741315842,
+   "pad_us": 303.3959987988055,
+   "host_dispatch_us": 101.13199959960184,
+   "flush_bytes": 268435456,
+   "warnings": [
+    "median 10.2 us is within ~30 timer ticks (1.024 us): differences under ~5 % are not resolved",
+    "cold mode: up to ~L2/2 of this kernel's own write-back is not timed (see mode='steady')"
+   ],
+   "tick_fraction": 1.0
+  },
+  {
+   "kind": "bench",
+   "kernel": "t_small",
+   "config": "cold_256",
+   "mean_us": 10.90559996664524,
+   "median_us": 11.264000087976456,
+   "p25_us": 10.239999741315842,
+   "p75_us": 11.264000087976456,
+   "pad_us": 247.6334998391394,
+   "host_dispatch_us": 82.5444999463798,
+   "flush_bytes": 268435456,
+   "warnings": [
+    "median 11.3 us is within ~30 timer ticks (1.024 us): differences under ~5 % are not resolved",
+    "cold mode: up to ~L2/2 of this kernel's own write-back is not timed (see mode='steady')"
+   ],
+   "tick_fraction": 1.0
+  },
+  {
+   "kind": "bench",
+   "kernel": "e_mid",
+   "config": "steady",
+   "mean_us": 13.025280125439167,
+   "median_us": 13.311999849975109,
+   "p25_us": 12.28800043463707,
+   "p75_us": 13.311999849975109,
+   "pad_us": 231.33300101108034,
+   "host_dispatch_us": 77.11100033702678,
+   "flush_bytes": 0,
+   "warnings": [
+    "median 13.3 us is within ~30 timer ticks (1.024 us): differences under ~5 % are not resolved"
+   ],
+   "tick_fraction": 1.0
+  },
+  {
+   "kind": "bench",
+   "kernel": "t_small",
+   "config": "steady",
+   "mean_us": 15.349759804084897,
+   "median_us": 15.359999611973763,
+   "p25_us": 15.359999611973763,
+   "p75_us": 15.359999611973763,
+   "pad_us": 235.46699958387762,
+   "host_dispatch_us": 78.48899986129254,
+   "flush_bytes": 0,
+   "warnings": [
+    "median 15.4 us is within ~30 timer ticks (1.024 us): differences under ~5 % are not resolved"
+   ],
+   "tick_fraction": 1.0
+  },
+  {
+   "kind": "bench",
+   "kernel": "gemv4",
+   "config": "cold_2L2",
+   "mean_us": 55.848960280418396,
+   "median_us": 56.32000043988228,
+   "p25_us": 55.296000093221664,
+   "p75_us": 56.32000043988228,
+   "pad_us": 399.9734999524662,
+   "host_dispatch_us": 133.3244999841554,
+   "flush_bytes": 6291456,
+   "warnings": [
+    "cold mode: up to ~L2/2 of this kernel's own write-back is not timed (see mode='steady')"
+   ],
+   "tick_fraction": 1.0
+  },
+  {
+   "kind": "bench",
+   "kernel": "gemv4",
+   "config": "cold_256",
+   "mean_us": 55.95136024057865,
+   "median_us": 55.296000093221664,
+   "p25_us": 55.296000093221664,
+   "p75_us": 56.32000043988228,
+   "pad_us": 317.66849861014634,
+   "host_dispatch_us": 105.88949953671545,
+   "flush_bytes": 268435456,
+   "warnings": [
+    "cold mode: up to ~L2/2 of this kernel's own write-back is not timed (see mode='steady')"
+   ],
+   "tick_fraction": 1.0
+  },
+  {
+   "kind": "bench",
+   "kernel": "gemv4",
+   "config": "cold_256",
+   "mean_us": 56.49408046156168,
+   "median_us": 56.32000043988228,
+   "p25_us": 55.296000093221664,
+   "p75_us": 57.34400078654289,
+   "pad_us": 299.84849879838293,
+   "host_dispatch_us": 99.94949959946098,
+   "flush_bytes": 268435456,
+   "warnings": [
+    "cold mode: up to ~L2/2 of this kernel's own write-back is not timed (see mode='steady')"
+   ],
+   "tick_fraction": 1.0
+  },
+  {
+   "kind": "bench",
+   "kernel": "e_mid",
+   "config": "cold_2L2",
+   "mean_us": 10.527039924636483,
+   "median_us": 10.239999741315842,
+   "p25_us": 10.239999741315842,
+   "p75_us": 11.264000087976456,
+   "pad_us": 202.15199856465915,
+   "host_dispatch_us": 67.38399952155305,
+   "flush_bytes": 6291456,
+   "warnings": [
+    "median 10.2 us is within ~30 timer ticks (1.024 us): differences under ~5 % are not resolved",
+    "IQR is 10% of the median: noisy, increase reps or check clocks",
+    "cold mode: up to ~L2/2 of this kernel's own write-back is not timed (see mode='steady')"
+   ],
+   "tick_fraction": 0.99
+  },
+  {
+   "kind": "bench",
+   "kernel": "e_large",
+   "config": "cold_256",
+   "mean_us": 45.578240528702736,
+   "median_us": 46.08000069856644,
+   "p25_us": 45.05600035190582,
+   "p75_us": 46.08000069856644,
+   "pad_us": 237.36899993309635,
+   "host_dispatch_us": 79.12299997769878,
+   "flush_bytes": 268435456,
+   "warnings": [
+    "cold mode: up to ~L2/2 of this kernel's own write-back is not timed (see mode='steady')"
+   ],
+   "tick_fraction": 1.0
+  },
+  {
+   "kind": "bench",
+   "kernel": "gemv4",
+   "config": "steady",
+   "mean_us": 56.60672038793564,
+   "median_us": 56.32000043988228,
+   "p25_us": 55.296000093221664,
+   "p75_us": 57.34400078654289,
+   "pad_us": 418.5330008112942,
+   "host_dispatch_us": 139.5110002704314,
+   "flush_bytes": 0,
+   "warnings": [],
+   "tick_fraction": 1.0
+  },
+  {
+   "kind": "bench",
+   "kernel": "gemv4",
+   "config": "steady",
+   "mean_us": 57.05728031694889,
+   "median_us": 56.32000043988228,
+   "p25_us": 55.296000093221664,
+   "p75_us": 56.32000043988228,
+   "pad_us": 376.49549994966947,
+   "host_dispatch_us": 125.49849998322316,
+   "flush_bytes": 0,
+   "warnings": [],
+   "tick_fraction": 1.0
+  },
+  {
+   "kind": "bench",
+   "kernel": "e_large",
+   "config": "steady",
+   "mean_us": 52.15231902897358,
+   "median_us": 52.22399905323982,
+   "p25_us": 51.19999870657921,
+   "p75_us": 52.22399905323982,
+   "pad_us": 329.7944999758329,
+   "host_dispatch_us": 109.93149999194429,
+   "flush_bytes": 0,
+   "warnings": [],
+   "tick_fraction": 1.0
+  },
+  {
+   "kind": "bench",
+   "kernel": "e_mid",
+   "config": "cold_2L2",
+   "mean_us": 10.43455995619297,
+   "median_us": 10.239999741315842,
+   "p25_us": 10.239999741315842,
+   "p75_us": 11.264000087976456,
+   "pad_us": 321.2219999113586,
+   "host_dispatch_us": 107.07399997045286,
+   "flush_bytes": 6291456,
+   "warnings": [
+    "median 10.2 us is within ~30 timer ticks (1.024 us): differences under ~5 % are not resolved",
+    "IQR is 10% of the median: noisy, increase reps or check clocks",
+    "cold mode: up to ~L2/2 of this kernel's own write-back is not timed (see mode='steady')"
+   ],
+   "tick_fraction": 1.0
+  },
+  {
+   "kind": "bench",
+   "kernel": "gemv4",
+   "config": "cold_2L2",
+   "mean_us": 55.91072030365467,
+   "median_us": 55.296000093221664,
+   "p25_us": 55.296000093221664,
+   "p75_us": 56.32000043988228,
+   "pad_us": 333.42900042043766,
+   "host_dispatch_us": 111.14300014014589,
+   "flush_bytes": 6291456,
+   "warnings": [
+    "cold mode: up to ~L2/2 of this kernel's own write-back is not timed (see mode='steady')"
+   ],
+   "tick_fraction": 0.99
+  },
+  {
+   "kind": "bench",
+   "kernel": "e_large",
+   "config": "steady",
+   "mean_us": 51.55839882791042,
+   "median_us": 51.19999870657921,
+   "p25_us": 51.19999870657921,
+   "p75_us": 52.22399905323982,
+   "pad_us": 207.3345003736904,
+   "host_dispatch_us": 69.11150012456346,
+   "flush_bytes": 0,
+   "warnings": [],
+   "tick_fraction": 1.0
+  },
+  {
+   "kind": "bench",
+   "kernel": "e_mid",
+   "config": "cold_2L2",
+   "mean_us": 10.567679926753044,
+   "median_us": 10.239999741315842,
+   "p25_us": 10.239999741315842,
+   "p75_us": 11.264000087976456,
+   "pad_us": 367.68750032933895,
+   "host_dispatch_us": 122.56250010977965,
+   "flush_bytes": 6291456,
+   "warnings": [
+    "median 10.2 us is within ~30 timer ticks (1.024 us): differences under ~5 % are not resolved",
+    "IQR is 10% of the median: noisy, increase reps or check clocks",
+    "cold mode: up to ~L2/2 of this kernel's own write-back is not timed (see mode='steady')"
+   ],
+   "tick_fraction": 1.0
+  },
+  {
+   "kind": "bench",
+   "kernel": "e_mid",
+   "config": "steady",
+   "mean_us": 13.598720049485564,
+   "median_us": 13.311999849975109,
+   "p25_us": 13.0559999961406,
+   "p75_us": 14.336000196635723,
+   "pad_us": 211.53449824851123,
+   "host_dispatch_us": 70.51149941617041,
+   "flush_bytes": 0,
+   "warnings": [
+    "median 13.3 us is within ~30 timer ticks (1.024 us): differences under ~5 % are not resolved"
+   ],
+   "tick_fraction": 1.0
+  },
+  {
+   "kind": "bench",
+   "kernel": "gemv4",
+   "config": "cold_256",
+   "mean_us": 55.982080325484276,
+   "median_us": 56.32000043988228,
+   "p25_us": 55.296000093221664,
+   "p75_us": 56.32000043988228,
+   "pad_us": 391.699501506082,
+   "host_dispatch_us": 130.56650050202734,
+   "flush_bytes": 268435456,
+   "warnings": [
+    "cold mode: up to ~L2/2 of this kernel's own write-back is not timed (see mode='steady')"
+   ],
+   "tick_fraction": 1.0
+  },
+  {
+   "kind": "bench",
+   "kernel": "e_large",
+   "config": "cold_256",
+   "mean_us": 45.834240578114986,
+   "median_us": 46.08000069856644,
+   "p25_us": 45.05600035190582,
+   "p75_us": 46.08000069856644,
+   "pad_us": 206.63849954871694,
+   "host_dispatch_us": 68.87949984957231,
+   "flush_bytes": 268435456,
+   "warnings": [
+    "cold mode: up to ~L2/2 of this kernel's own write-back is not timed (see mode='steady')"
+   ],
+   "tick_fraction": 1.0
+  },
+  {
+   "kind": "bench",
+   "kernel": "e_mid",
+   "config": "cold_256",
+   "mean_us": 9.82048007659614,
+   "median_us": 9.216000325977802,
+   "p25_us": 9.216000325977802,
+   "p75_us": 10.239999741315842,
+   "pad_us": 214.737000533205,
+   "host_dispatch_us": 71.579000177735,
+   "flush_bytes": 268435456,
+   "warnings": [
+    "median 9.2 us is within ~30 timer ticks (1.024 us): differences under ~5 % are not resolved",
+    "IQR is 11% of the median: noisy, increase reps or check clocks",
+    "cold mode: up to ~L2/2 of this kernel's own write-back is not timed (see mode='steady')"
+   ],
+   "tick_fraction": 0.99
+  },
+  {
+   "kind": "bench",
+   "kernel": "t_small",
+   "config": "cold_256",
+   "mean_us": 11.141120018437505,
+   "median_us": 11.264000087976456,
+   "p25_us": 10.239999741315842,
+   "p75_us": 11.264000087976456,
+   "pad_us": 303.57450032170163,
+   "host_dispatch_us": 101.19150010723388,
+   "flush_bytes": 268435456,
+   "warnings": [
+    "median 11.3 us is within ~30 timer ticks (1.024 us): differences under ~5 % are not resolved",
+    "cold mode: up to ~L2/2 of this kernel's own write-back is not timed (see mode='steady')"
+   ],
+   "tick_fraction": 1.0
+  },
+  {
+   "kind": "bench",
+   "kernel": "e_mid",
+   "config": "steady",
+   "mean_us": 13.557760072872043,
+   "median_us": 13.311999849975109,
+   "p25_us": 13.311999849975109,
+   "p75_us": 14.336000196635723,
+   "pad_us": 239.34900082167587,
+   "host_dispatch_us": 79.78300027389196,
+   "flush_bytes": 0,
+   "warnings": [
+    "median 13.3 us is within ~30 timer ticks (1.024 us): differences under ~5 % are not resolved"
+   ],
+   "tick_fraction": 1.0
+  },
+  {
+   "kind": "bench",
+   "kernel": "e_large",
+   "config": "cold_2L2",
+   "mean_us": 46.74560081213713,
+   "median_us": 46.08000069856644,
+   "p25_us": 46.08000069856644,
+   "p75_us": 47.10400104522705,
+   "pad_us": 226.41599980488536,
+   "host_dispatch_us": 75.47199993496179,
+   "flush_bytes": 6291456,
+   "warnings": [
+    "cold mode: up to ~L2/2 of this kernel's own write-back is not timed (see mode='steady')"
+   ],
+   "tick_fraction": 1.0
+  },
+  {
+   "kind": "bench",
+   "kernel": "t_small",
+   "config": "cold_2L2",
+   "mean_us": 12.053120210766792,
+   "median_us": 12.28800043463707,
+   "p25_us": 11.264000087976456,
+   "p75_us": 12.28800043463707,
+   "pad_us": 287.4179999707849,
+   "host_dispatch_us": 95.80599999026163,
+   "flush_bytes": 6291456,
+   "warnings": [
+    "median 12.3 us is within ~30 timer ticks (1.024 us): differences under ~5 % are not resolved",
+    "cold mode: up to ~L2/2 of this kernel's own write-back is not timed (see mode='steady')"
+   ],
+   "tick_fraction": 0.99
+  },
+  {
+   "kind": "bench",
+   "kernel": "e_large",
+   "config": "cold_256",
+   "mean_us": 45.55776048451662,
+   "median_us": 45.05600035190582,
+   "p25_us": 45.05600035190582,
+   "p75_us": 46.08000069856644,
+   "pad_us": 289.8990010180569,
+   "host_dispatch_us": 96.6330003393523,
+   "flush_bytes": 268435456,
+   "warnings": [
+    "cold mode: up to ~L2/2 of this kernel's own write-back is not timed (see mode='steady')"
+   ],
+   "tick_fraction": 1.0
+  },
+  {
+   "kind": "bench",
+   "kernel": "gemv4",
+   "config": "cold_256",
+   "mean_us": 55.296000093221664,
+   "median_us": 55.296000093221664,
+   "p25_us": 54.27199974656105,
+   "p75_us": 55.296000093221664,
+   "pad_us": 350.6174994072353,
+   "host_dispatch_us": 116.87249980241177,
+   "flush_bytes": 268435456,
+   "warnings": [
+    "cold mode: up to ~L2/2 of this kernel's own write-back is not timed (see mode='steady')"
+   ],
+   "tick_fraction": 1.0
+  },
+  {
+   "kind": "bench",
+   "kernel": "gemv4",
+   "config": "cold_2L2",
+   "mean_us": 55.67488022148609,
+   "median_us": 55.296000093221664,
+   "p25_us": 55.296000093221664,
+   "p75_us": 56.32000043988228,
+   "pad_us": 352.29599870945094,
+   "host_dispatch_us": 117.43199956981698,
+   "flush_bytes": 6291456,
+   "warnings": [
+    "cold mode: up to ~L2/2 of this kernel's own write-back is not timed (see mode='steady')"
+   ],
+   "tick_fraction": 1.0
+  },
+  {
+   "kind": "bench",
+   "kernel": "e_large",
+   "config": "steady",
+   "mean_us": 51.90655894577503,
+   "median_us": 51.711998879909515,
+   "p25_us": 51.19999870657921,
+   "p75_us": 52.22399905323982,
+   "pad_us": 200.40599929416203,
+   "host_dispatch_us": 66.80199976472068,
+   "flush_bytes": 0,
+   "warnings": [],
+   "tick_fraction": 1.0
+  },
+  {
+   "kind": "bench",
+   "kernel": "t_small",
+   "config": "cold_2L2",
+   "mean_us": 14.704640079289675,
+   "median_us": 11.776000261306763,
+   "p25_us": 11.264000087976456,
+   "p75_us": 12.28800043463707,
+   "pad_us": 222.1125009782554,
+   "host_dispatch_us": 74.03750032608514,
+   "flush_bytes": 6291456,
+   "warnings": [
+    "median 11.8 us is within ~30 timer ticks (1.024 us): differences under ~5 % are not resolved",
+    "cold mode: up to ~L2/2 of this kernel's own write-back is not timed (see mode='steady')"
+   ],
+   "tick_fraction": 1.0
+  },
+  {
+   "kind": "bench",
+   "kernel": "t_small",
+   "config": "cold_256",
+   "mean_us": 10.915839970111847,
+   "median_us": 11.264000087976456,
+   "p25_us": 10.239999741315842,
+   "p75_us": 11.264000087976456,
+   "pad_us": 225.92999948756187,
+   "host_dispatch_us": 75.30999982918729,
+   "flush_bytes": 268435456,
+   "warnings": [
+    "median 11.3 us is within ~30 timer ticks (1.024 us): differences under ~5 % are not resolved",
+    "cold mode: up to ~L2/2 of this kernel's own write-back is not timed (see mode='steady')"
+   ],
+   "tick_fraction": 1.0
+  },
+  {
+   "kind": "bench",
+   "kernel": "t_small",
+   "config": "steady",
+   "mean_us": 16.046399911865592,
+   "median_us": 15.359999611973763,
+   "p25_us": 15.359999611973763,
+   "p75_us": 16.383999958634377,
+   "pad_us": 227.65649964640033,
+   "host_dispatch_us": 75.88549988213344,
+   "flush_bytes": 0,
+   "warnings": [
+    "median 15.4 us is within ~30 timer ticks (1.024 us): differences under ~5 % are not resolved"
+   ],
+   "tick_fraction": 0.99
+  },
+  {
+   "kind": "bench",
+   "kernel": "e_large",
+   "config": "cold_256",
+   "mean_us": 45.56832052767277,
+   "median_us": 45.05600035190582,
+   "p25_us": 45.05600035190582,
+   "p75_us": 46.08000069856644,
+   "pad_us": 196.42799907160224,
+   "host_dispatch_us": 65.47599969053408,
+   "flush_bytes": 268435456,
+   "warnings": [
+    "cold mode: up to ~L2/2 of this kernel's own write-back is not timed (see mode='steady')"
+   ],
+   "tick_fraction": 0.99
+  },
+  {
+   "kind": "bench",
+   "kernel": "t_small",
+   "config": "cold_256",
+   "mean_us": 10.691839922219515,
+   "median_us": 10.239999741315842,
+   "p25_us": 10.239999741315842,
+   "p75_us": 11.264000087976456,
+   "pad_us": 261.32250104637933,
+   "host_dispatch_us": 87.10750034879311,
+   "flush_bytes": 268435456,
+   "warnings": [
+    "median 10.2 us is within ~30 timer ticks (1.024 us): differences under ~5 % are not resolved",
+    "IQR is 10% of the median: noisy, increase reps or check clocks",
+    "cold mode: up to ~L2/2 of this kernel's own write-back is not timed (see mode='steady')"
+   ],
+   "tick_fraction": 0.97
+  },
+  {
+   "kind": "bench",
+   "kernel": "gemv4",
+   "config": "cold_256",
+   "mean_us": 55.296000093221664,
+   "median_us": 55.296000093221664,
+   "p25_us": 55.296000093221664,
+   "p75_us": 55.296000093221664,
+   "pad_us": 402.0209994450852,
+   "host_dispatch_us": 134.0069998150284,
+   "flush_bytes": 268435456,
+   "warnings": [
+    "cold mode: up to ~L2/2 of this kernel's own write-back is not timed (see mode='steady')"
+   ],
+   "tick_fraction": 1.0
+  },
+  {
+   "kind": "bench",
+   "kernel": "gemv4",
+   "config": "steady",
+   "mean_us": 56.60672020167112,
+   "median_us": 56.32000043988228,
+   "p25_us": 55.296000093221664,
+   "p75_us": 56.32000043988228,
+   "pad_us": 326.0579992456769,
+   "host_dispatch_us": 108.68599974855897,
+   "flush_bytes": 0,
+   "warnings": [],
+   "tick_fraction": 1.0
+  },
+  {
+   "kind": "bench",
+   "kernel": "gemv4",
+   "config": "steady",
+   "mean_us": 56.5555202588439,
+   "median_us": 56.32000043988228,
+   "p25_us": 55.296000093221664,
+   "p75_us": 56.32000043988228,
+   "pad_us": 314.32349987881025,
+   "host_dispatch_us": 104.77449995960342,
+   "flush_bytes": 0,
+   "warnings": [],
+   "tick_fraction": 1.0
+  },
+  {
+   "kind": "bench",
+   "kernel": "gemv4",
+   "config": "cold_2L2",
+   "mean_us": 55.97184032201767,
+   "median_us": 56.32000043988228,
+   "p25_us": 55.296000093221664,
+   "p75_us": 56.32000043988228,
+   "pad_us": 572.8920000365179,
+   "host_dispatch_us": 190.96400001217262,
+   "flush_bytes": 6291456,
+   "warnings": [
+    "cold mode: up to ~L2/2 of this kernel's own write-back is not timed (see mode='steady')"
+   ],
+   "tick_fraction": 1.0
+  },
+  {
+   "kind": "bench",
+   "kernel": "e_mid",
+   "config": "cold_256",
+   "mean_us": 9.820160064846277,
+   "median_us": 9.728000033646822,
+   "p25_us": 9.216000325977802,
+   "p75_us": 10.239999741315842,
+   "pad_us": 198.3045003726147,
+   "host_dispatch_us": 66.1015001242049,
+   "flush_bytes": 268435456,
+   "warnings": [
+    "median 9.7 us is within ~30 timer ticks (1.024 us): differences under ~5 % are not resolved",
+    "IQR is 11% of the median: noisy, increase reps or check clocks",
+    "cold mode: up to ~L2/2 of this kernel's own write-back is not timed (see mode='steady')"
+   ],
+   "tick_fraction": 1.0
+  },
+  {
+   "kind": "bench",
+   "kernel": "t_small",
+   "config": "steady",
+   "mean_us": 15.995199838653207,
+   "median_us": 15.359999611973763,
+   "p25_us": 15.359999611973763,
+   "p75_us": 16.383999958634377,
+   "pad_us": 237.82200059940806,
+   "host_dispatch_us": 79.27400019980269,
+   "flush_bytes": 0,
+   "warnings": [
+    "median 15.4 us is within ~30 timer ticks (1.024 us): differences under ~5 % are not resolved"
+   ],
+   "tick_fraction": 0.99
+  },
+  {
+   "kind": "bench",
+   "kernel": "t_small",
+   "config": "steady",
+   "mean_us": 15.841279840096831,
+   "median_us": 15.359999611973763,
+   "p25_us": 15.359999611973763,
+   "p75_us": 16.383999958634377,
+   "pad_us": 225.14100101034273,
+   "host_dispatch_us": 75.04700033678091,
+   "flush_bytes": 0,
+   "warnings": [
+    "median 15.4 us is within ~30 timer ticks (1.024 us): differences under ~5 % are not resolved"
+   ],
+   "tick_fraction": 1.0
+  },
+  {
+   "kind": "bench",
+   "kernel": "t_small",
+   "config": "cold_2L2",
+   "mean_us": 11.86848022043705,
+   "median_us": 12.28800043463707,
+   "p25_us": 11.264000087976456,
+   "p75_us": 12.28800043463707,
+   "pad_us": 254.16900098207407,
+   "host_dispatch_us": 84.72300032735802,
+   "flush_bytes": 6291456,
+   "warnings": [
+    "median 12.3 us is within ~30 timer ticks (1.024 us): differences under ~5 % are not resolved",
+    "cold mode: up to ~L2/2 of this kernel's own write-back is not timed (see mode='steady')"
+   ],
+   "tick_fraction": 0.99
+  },
+  {
+   "kind": "bench",
+   "kernel": "e_large",
+   "config": "cold_2L2",
+   "mean_us": 46.30528073757887,
+   "median_us": 46.08000069856644,
+   "p25_us": 46.08000069856644,
+   "p75_us": 47.10400104522705,
+   "pad_us": 201.721499706764,
+   "host_dispatch_us": 67.24049990225467,
+   "flush_bytes": 6291456,
+   "warnings": [
+    "cold mode: up to ~L2/2 of this kernel's own write-back is not timed (see mode='steady')"
+   ],
+   "tick_fraction": 1.0
+  },
+  {
+   "kind": "bench",
+   "kernel": "t_small",
+   "config": "cold_2L2",
+   "mean_us": 11.991360215470195,
+   "median_us": 12.28800043463707,
+   "p25_us": 11.264000087976456,
+   "p75_us": 12.28800043463707,
+   "pad_us": 225.15599948746967,
+   "host_dispatch_us": 75.05199982915656,
+   "flush_bytes": 6291456,
+   "warnings": [
+    "median 12.3 us is within ~30 timer ticks (1.024 us): differences under ~5 % are not resolved",
+    "cold mode: up to ~L2/2 of this kernel's own write-back is not timed (see mode='steady')"
+   ],
+   "tick_fraction": 0.99
+  },
+  {
+   "kind": "bench",
+   "kernel": "gemv4",
+   "config": "steady",
+   "mean_us": 56.42240025103092,
+   "median_us": 56.32000043988228,
+   "p25_us": 55.296000093221664,
+   "p75_us": 56.32000043988228,
+   "pad_us": 325.4280004512111,
+   "host_dispatch_us": 108.4760001504037,
+   "flush_bytes": 0,
+   "warnings": [],
+   "tick_fraction": 1.0
+  },
+  {
+   "kind": "bench",
+   "kernel": "t_small",
+   "config": "cold_2L2",
+   "mean_us": 11.909120213240385,
+   "median_us": 12.28800043463707,
+   "p25_us": 11.264000087976456,
+   "p75_us": 12.28800043463707,
+   "pad_us": 232.63050024979748,
+   "host_dispatch_us": 77.54350008326583,
+   "flush_bytes": 6291456,
+   "warnings": [
+    "median 12.3 us is within ~30 timer ticks (1.024 us): differences under ~5 % are not resolved",
+    "cold mode: up to ~L2/2 of this kernel's own write-back is not timed (see mode='steady')"
+   ],
+   "tick_fraction": 1.0
+  },
+  {
+   "kind": "do_bench",
+   "kernel": "gemv4",
+   "median_us": 61.43999844789505
+  },
+  {
+   "kind": "do_bench",
+   "kernel": "e_large",
+   "median_us": 52.22399905323982
+  },
+  {
+   "kind": "do_bench",
+   "kernel": "e_mid",
+   "median_us": 13.311999849975109
+  },
+  {
+   "kind": "do_bench",
+   "kernel": "t_small",
+   "median_us": 15.359999611973763
+  }
+ ],
+ "correctness_failures": 0
+}

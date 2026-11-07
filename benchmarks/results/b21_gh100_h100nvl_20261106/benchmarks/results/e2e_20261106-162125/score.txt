@@ -1,0 +1,4 @@
+NVIDIA H100 NVL (L2 60 MiB): U-0 {'correctness': True, 'fp16 and int4 captured': True, 'stable steps': True} -> PASS
+T {'fp16': 532.19, 'int4': 286.02, 'nf4': 465.12} · E {'fp16 write': 0.324, 'fp16 cold': 0.084, 'fp16 steady': 0.0951, 'fp16 l2w': 0.3228, 'int4 write': 0.2258, 'int4 cold': 0.1723, 'int4 steady': 0.1586, 'int4 l2w': 0.2159, 'nf4 write': 0.1465, 'nf4 cold': 0.1368, 'nf4 steady': 0.0774, 'nf4 l2w': 0.2249}
+D {'int4 write': 0.0802, 'int4 cold': -0.0753, 'int4 steady': -0.0549, 'int4 l2w': 0.0879, 'nf4 write': 0.1549, 'nf4 cold': -0.0465, 'nf4 steady': 0.0164, 'nf4 l2w': 0.0799}
+verdict: {"U-0": true, "U-1": "not", "U-2": "the shipped write flush over-predicts the step", "U-3": "not"}

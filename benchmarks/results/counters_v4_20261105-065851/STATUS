@@ -1,0 +1,18 @@
+fusion run 1 ncu rc=0
+fusion run 2 ncu rc=0
+fusion run 3 ncu rc=0
+fusion score rc=0
+S-0 flush read bytes: max rel err 0.1% -> PASS
+K-1 discriminating cells: 36; v4 strictly closer in 100.0% -> v4 better
+K-2 mean e over discriminating cells: v4 0.102, v3 0.691 (v4 must be <= 0.2) -> PASS
+K-3 all 231 cells: mean e v4 0.040 vs v3 0.132; far cells within 0.1 B: 100.0% of 66 -> PASS
+verdict: {"S-0": true, "K-1": "v4 better", "K-1 share": 1.0, "K-2": true, "K-3": true}
+stencil run 1 ncu rc=0
+stencil run 2 ncu rc=0
+stencil run 3 ncu rc=0
+stencil score rc=0
+S-0 flush read bytes: max rel err 0.4% -> PASS
+K-1 discriminating cells: 132; v4 strictly closer in 78.0% -> v4 better
+K-2 mean e over discriminating cells: v4 0.237, v3 0.617 (v4 must be <= 0.2) -> FAIL
+K-3 all 518 cells: mean e v4 0.075 vs v3 0.171; far cells within 0.1 B: 100.0% of 148 -> PASS
+verdict: {"S-0": true, "K-1": "v4 better", "K-1 share": 0.78, "K-2": false, "K-3": true}

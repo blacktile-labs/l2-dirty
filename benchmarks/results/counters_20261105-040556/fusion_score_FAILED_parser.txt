@@ -1,0 +1,13 @@
+Traceback (most recent call last):
+  File "/mnt/e/data-move-kernel-lab/benchmarks/scripts/counter_prereg.py", line 323, in <module>
+    sys.exit(main())
+             ^^^^^^
+  File "/mnt/e/data-move-kernel-lab/benchmarks/scripts/counter_prereg.py", line 319, in main
+    return cmd_predict(args) if args.cmd == "predict" else cmd_score(args)
+                                                           ^^^^^^^^^^^^^^^
+  File "/mnt/e/data-move-kernel-lab/benchmarks/scripts/counter_prereg.py", line 246, in cmd_score
+    segs = align(load_ncu_raw(args.ncu_csv), args.bench, len(sizes))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/e/data-move-kernel-lab/benchmarks/scripts/counter_prereg.py", line 235, in align
+    raise ValueError(f"{bench} size #{s}: launch sequence differs from launch_plan at ID "
+ValueError: fusion size #0: launch sequence differs from launch_plan at ID ?: []... vs ['flush_l2_read_kernel', 'fused_kernel', 'fused_kernel', 'fused_kernel', 'fused_kernel', 'flush_l2_read_kernel', 'stage1_kernel', 'stage2_kernel']...

@@ -1,0 +1,13 @@
+[b15_ad102_l40s 07:38:06] package sha256 11043da5abba409e, remote script sha256 c4b4da112b3fdb1f
+[b15_ad102_l40s 07:38:08] created instance 59385345 (offer 59242907, image docker.io/vastai/kvm:ubuntu_cli_22.04-2025-05-16, disk 40 GB)
+[b15_ad102_l40s 07:38:11] price dph_total = $0.811111111111111/h
+[b15_ad102_l40s 07:39:42] ssh ok (root@<host-redacted>:<port>)
+[b15_ad102_l40s 07:39:51] started detached run of benchmarks/scripts/remote_b15.sh
+[b15_ad102_l40s 07:39:56] remote: [07:39:50] 1 toolchain
+[b15_ad102_l40s 07:42:01] remote: [07:41:45] apt rc=0
+[b15_ad102_l40s 07:42:51] remote: [07:42:48] 3 B15 absorb
+[b15_ad102_l40s 07:43:41] remote: [07:43:31] 4 B14 replication
+[b15_ad102_l40s 07:44:31] remote finished (done=1): rc=0
+[b15_ad102_l40s 07:44:36] downloaded pilot_results.tgz -> /home/rungrod/data-move-kernel-lab/.vast_work/b15_ad102_l40s
+[b15_ad102_l40s 07:44:36] destroying instance 59385345
+[b15_ad102_l40s 07:44:41] destroyed (verified)

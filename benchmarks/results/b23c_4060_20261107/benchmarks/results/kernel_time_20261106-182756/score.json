@@ -1,0 +1,169 @@
+{
+ "device": "NVIDIA GeForce RTX 4060",
+ "l2_bytes": 25165824,
+ "runs": 3,
+ "truth us": {
+  "fp16 down": 351.266,
+  "fp16 gate_up": 698.658,
+  "fp16 o": 131.489,
+  "fp16 qkv": 390.817,
+  "int4 down": 95.68,
+  "int4 gate_up": 187.937,
+  "int4 o": 36.704,
+  "int4 qkv": 105.537,
+  "nf4 down": 109.569,
+  "nf4 gate_up": 202.177,
+  "nf4 o": 42.56,
+  "nf4 qkv": 115.456
+ },
+ "E": {
+  "cupti_rot": {
+   "fp16 down": 0.0001,
+   "fp16 gate_up": 0.0,
+   "fp16 o": 0.0,
+   "fp16 qkv": -0.0002,
+   "int4 down": -0.0064,
+   "int4 gate_up": -0.0014,
+   "int4 o": -0.0157,
+   "int4 qkv": 0.0006,
+   "nf4 down": -0.1322,
+   "nf4 gate_up": -0.0681,
+   "nf4 o": -0.1421,
+   "nf4 qkv": -0.1161
+  },
+  "cupti_rot_idle": {
+   "fp16 down": 0.0001,
+   "fp16 gate_up": 0.0,
+   "fp16 o": 0.0,
+   "fp16 qkv": -0.0001,
+   "int4 down": -0.0077,
+   "int4 gate_up": -0.0017,
+   "int4 o": -0.0174,
+   "int4 qkv": -0.0003,
+   "nf4 down": -0.1294,
+   "nf4 gate_up": -0.0733,
+   "nf4 o": -0.1541,
+   "nf4 qkv": -0.1305
+  },
+  "cupti_cold": {
+   "fp16 down": 0.0012,
+   "fp16 gate_up": 0.0007,
+   "fp16 o": 0.0039,
+   "fp16 qkv": 0.0011,
+   "int4 down": -0.0037,
+   "int4 gate_up": -0.0005,
+   "int4 o": 0.0,
+   "int4 qkv": 0.0012,
+   "nf4 down": 0.0967,
+   "nf4 gate_up": 0.0158,
+   "nf4 o": 0.0823,
+   "nf4 qkv": 0.0266
+  },
+  "event_cold": {
+   "fp16 down": 0.0081,
+   "fp16 gate_up": 0.0042,
+   "fp16 o": 0.0221,
+   "fp16 qkv": 0.0074,
+   "int4 down": 0.0226,
+   "int4 gate_up": 0.0121,
+   "int4 o": 0.0645,
+   "int4 qkv": 0.0239,
+   "nf4 down": 0.1171,
+   "nf4 gate_up": 0.0269,
+   "nf4 o": 0.1353,
+   "nf4 qkv": 0.0455
+  },
+  "event_graph": {
+   "fp16 down": 0.0016,
+   "fp16 gate_up": 0.0009,
+   "fp16 o": 0.0047,
+   "fp16 qkv": 0.0014,
+   "int4 down": 0.0017,
+   "int4 gate_up": 0.0018,
+   "int4 o": -0.0109,
+   "int4 qkv": 0.0059,
+   "nf4 down": -0.1268,
+   "nf4 gate_up": -0.0667,
+   "nf4 o": -0.1408,
+   "nf4 qkv": -0.1173
+  }
+ },
+ "within 1 %": {
+  "cupti_rot": "7/12",
+  "cupti_rot_idle": "7/12",
+  "cupti_cold": "8/12",
+  "event_cold": "3/12",
+  "event_graph": "7/12"
+ },
+ "tracing effect": {
+  "fp16": 0.0003,
+  "int4": 0.002,
+  "nf4": 0.0026
+ },
+ "truth IQR/median": {
+  "fp16 down": 0.0008,
+  "fp16 gate_up": 0.0004,
+  "fp16 o": 0.0017,
+  "fp16 qkv": 0.0007,
+  "int4 down": 0.0054,
+  "int4 gate_up": 0.0017,
+  "int4 o": 0.0078,
+  "int4 qkv": 0.0033,
+  "nf4 down": 0.0073,
+  "nf4 gate_up": 0.003,
+  "nf4 o": 0.0098,
+  "nf4 qkv": 0.0056
+ },
+ "kernel share of step": {
+  "fp16": 0.9997,
+  "int4": 1.0001,
+  "nf4": 1.0005
+ },
+ "rotation tracing effect": {
+  "fp16 qkv": 0.0004,
+  "fp16 o": 0.0013,
+  "fp16 gate_up": 0.0002,
+  "fp16 down": 0.0007,
+  "int4 qkv": 0.0018,
+  "int4 o": 0.0045,
+  "int4 gate_up": 0.0009,
+  "int4 down": 0.0007,
+  "nf4 qkv": 0.0095,
+  "nf4 o": 0.0086,
+  "nf4 gate_up": 0.0075,
+  "nf4 down": 0.0003
+ },
+ "truth round spread": {
+  "fp16 qkv": 0.0001,
+  "fp16 o": 0.0,
+  "fp16 gate_up": 0.0,
+  "fp16 down": 0.0002,
+  "int4 qkv": 0.0012,
+  "int4 o": 0.0026,
+  "int4 gate_up": 0.0007,
+  "int4 down": 0.0023,
+  "nf4 qkv": 0.0066,
+  "nf4 o": 0.009,
+  "nf4 gate_up": 0.0033,
+  "nf4 down": 0.0022
+ },
+ "shortest warm-up s": 1.0,
+ "W-0 parts": {
+  "3 full runs": true,
+  "correctness": true,
+  "record checks": true,
+  "fp16 and int4 truth": true,
+  "tracing <= 0.5 %": true,
+  "truth stable": true
+ },
+ "W-0": true,
+ "W-1 max |E_cupti_rot|": 0.1421,
+ "W-1": "not",
+ "W-2 median |E| cupti_cold / event_cold": [
+  0.0024,
+  0.0233
+ ],
+ "W-2": "CUPTI closer than events",
+ "W-3 median idle / warm - 1": -0.0006,
+ "W-3": "warm-up effect < 1 %"
+}

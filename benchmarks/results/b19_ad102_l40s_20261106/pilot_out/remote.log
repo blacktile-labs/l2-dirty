@@ -1,0 +1,10 @@
+[14:59:37] 0 environment
+[14:59:37] 1 toolchain
+[14:59:58] apt rc=0
+[14:59:58] compute capability 8.9 -> torch index cu126
+2.7.1+cu126 12.6 3.3.1 True bnb 0.50.2 liger 0.6.2
+[15:01:38] 2 smoke
+[15:01:44] smoke rc=0 37 events, kernels=['e_q', 'gemv', 'gemv16', 'rms16', 'rms64'], correctness_failures=0, notes={'liger': '0.6.2'}
+[15:01:44] 3 B19
+[15:02:18] B19 rc=0
+[15:02:18] 4 pack

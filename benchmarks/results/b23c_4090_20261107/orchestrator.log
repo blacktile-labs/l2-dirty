@@ -1,0 +1,6 @@
+[b23c_4090 18:18:45] package sha256 a534d3bc2f64ce33, remote script sha256 3da2dfe623f3e481
+[b23c_4090 18:18:47] created instance 59452519 (offer 59149356, image nvidia/cuda:12.8.1-runtime-ubuntu22.04, disk 30 GB)
+[b23c_4090 18:18:49] price dph_total = $0.3816666666666667/h
+[b23c_4090 18:28:57] SSH not reachable within 600 s
+[b23c_4090 18:28:57] destroying instance 59452519
+[b23c_4090 18:29:00] destroyed (verified)

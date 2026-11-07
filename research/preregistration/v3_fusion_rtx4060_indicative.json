@@ -1,0 +1,668 @@
+{
+ "kind": "model v3 pre-registration (fusion)",
+ "gpu_label": "rtx4060",
+ "indicative": true,
+ "note": "INDICATIVE v3 predictions written 2026-11-04 BEFORE the new-size measurements. Parameters calibrated (l2x 2 and 4, tau >= 0) on EXISTING runs listed in calib_run; the binding scoring recalibrates on run 1 of the new measurement. 13pt_c (B5b) has no data yet: assumed tau = tau_13pt and beta = max(beta_5pt, beta_13pt * 152/216) from the static SASS instruction counts (216 -> 152 per element).",
+ "created_utc": "2026-11-04T08:29:45+00:00",
+ "sha256": {
+  "cache_sim.py": "ea8ad8ef2d928b1ec06009eb93d63427fe75a617aaa2d585fcae99bf0c8d4622",
+  "cache_sim_b5.py": "1b3e47d5ee90a948c489694022908d8ec0b69dba051993eacff4067a24cd5f13",
+  "model_v3.py": "33c385692222c75f9705cc6f408a1f5588466cef91365a8d28bc885dc7ec20d4"
+ },
+ "l2_bytes": 25165824,
+ "calib_run": "benchmarks/results/fusion/20261104-075140-b5-sm_89-b4ref",
+ "calib_l2x": [
+  2.0,
+  4.0
+ ],
+ "assumptions": [],
+ "params": {
+  "pw_fused|isolated": {
+   "tau_us": 0.0,
+   "bw_gbps": 255.4800727021807
+  },
+  "pw_stage|isolated": {
+   "tau_us": 0.0,
+   "bw_gbps": 254.2256794187919
+  },
+  "pw_fused|steady": {
+   "tau_us": 1.623499999999088,
+   "bw_gbps": 251.53593065371953
+  },
+  "pw_stage|steady": {
+   "tau_us": 0.7127500000012029,
+   "bw_gbps": 251.44545428431238
+  }
+ },
+ "primary": [
+  "materialized/fused_iso",
+  "stage2_warm/stage2_cold_iso"
+ ],
+ "decision_rule": "PRIMARY ratios ['materialized/fused_iso', 'stage2_warm/stage2_cold_iso']: per policy MAPE over sizes l2x >= 0.5625 excluding calibration sizes [2.0, 4.0], median over runs. Lower MAPE wins; both > 10 % falsifies v3 for this GPU/bench.",
+ "rows": [
+  {
+   "l2x": 0.125,
+   "n": 786432,
+   "policy": "lru",
+   "pred_ratios": {
+    "materialized/fused_iso": 1.0049341722136669,
+    "stage2_warm/stage2_cold_iso": 0.0,
+    "materialized/fused_ste": 0.8780412688655415
+   },
+   "pred_us": {
+    "fused|isolated": 12.313007299270073,
+    "materialized|isolated": 12.37376179775281,
+    "stage2_cold|isolated": 12.37376179775281,
+    "stage2_warm|isolated": 0.0,
+    "fused|steady": 1.623499999999088,
+    "materialized|steady": 1.4255000000024058
+   },
+   "dram_bytes": {
+    "fused|isolated": 3145728,
+    "materialized|isolated": 3145728,
+    "stage2_cold|isolated": 3145728,
+    "stage2_warm|isolated": 0,
+    "fused|steady": 0,
+    "materialized|steady": 0
+   }
+  },
+  {
+   "l2x": 0.125,
+   "n": 786432,
+   "policy": "random",
+   "pred_ratios": {
+    "materialized/fused_iso": 1.0049341722136669,
+    "stage2_warm/stage2_cold_iso": 0.0,
+    "materialized/fused_ste": 0.8780412688655415
+   },
+   "pred_us": {
+    "fused|isolated": 12.313007299270073,
+    "materialized|isolated": 12.37376179775281,
+    "stage2_cold|isolated": 12.37376179775281,
+    "stage2_warm|isolated": 0.0,
+    "fused|steady": 1.623499999999088,
+    "materialized|steady": 1.4255000000024058
+   },
+   "dram_bytes": {
+    "fused|isolated": 3145728,
+    "materialized|isolated": 3145728,
+    "stage2_cold|isolated": 3145728,
+    "stage2_warm|isolated": 0,
+    "fused|steady": 0,
+    "materialized|steady": 0
+   }
+  },
+  {
+   "l2x": 0.5625,
+   "n": 3538944,
+   "policy": "lru",
+   "pred_ratios": {
+    "materialized/fused_iso": 2.8138156821982676,
+    "stage2_warm/stage2_cold_iso": 1.8,
+    "materialized/fused_ste": 1.984756284891865
+   },
+   "pred_us": {
+    "fused|isolated": 61.56503649635036,
+    "materialized|isolated": 173.23266516853934,
+    "stage2_cold|isolated": 61.86880898876405,
+    "stage2_warm|isolated": 111.3638561797753,
+    "fused|steady": 114.17820312499913,
+    "materialized|steady": 226.61590625000198
+   },
+   "dram_bytes": {
+    "fused|isolated": 15728640,
+    "materialized|isolated": 44040192,
+    "stage2_cold|isolated": 15728640,
+    "stage2_warm|isolated": 28311552,
+    "fused|steady": 28311552,
+    "materialized|steady": 56623104
+   }
+  },
+  {
+   "l2x": 0.5625,
+   "n": 3538944,
+   "policy": "random",
+   "pred_ratios": {
+    "materialized/fused_iso": 2.05420235236663,
+    "stage2_warm/stage2_cold_iso": 1.044116330367826,
+    "materialized/fused_ste": 6.274687764200013
+   },
+   "pred_us": {
+    "fused|isolated": 61.55351309270928,
+    "materialized|isolated": 126.44337139147356,
+    "stage2_cold|isolated": 61.85722872666492,
+    "stage2_warm|isolated": 64.58614266480865,
+    "fused|steady": 25.29884524599621,
+    "materialized|steady": 158.74235471344207
+   },
+   "dram_bytes": {
+    "fused|isolated": 15725696,
+    "materialized|isolated": 32145152,
+    "stage2_cold|isolated": 15725696,
+    "stage2_warm|isolated": 16419456,
+    "fused|steady": 5955200,
+    "materialized|steady": 39556608
+   }
+  },
+  {
+   "l2x": 0.6875,
+   "n": 4325376,
+   "policy": "lru",
+   "pred_ratios": {
+    "materialized/fused_iso": 2.584116442835144,
+    "stage2_warm/stage2_cold_iso": 1.5714285714285714,
+    "materialized/fused_ste": 1.987624861321352
+   },
+   "pred_us": {
+    "fused|isolated": 86.19105109489051,
+    "materialized|isolated": 222.7277123595506,
+    "stage2_cold|isolated": 86.61633258426967,
+    "stage2_warm|isolated": 136.1113797752809,
+    "fused|steady": 139.19035937499916,
+    "materialized|steady": 276.6582187500019
+   },
+   "dram_bytes": {
+    "fused|isolated": 22020096,
+    "materialized|isolated": 56623104,
+    "stage2_cold|isolated": 22020096,
+    "stage2_warm|isolated": 34603008,
+    "fused|steady": 34603008,
+    "materialized|steady": 69206016
+   }
+  },
+  {
+   "l2x": 0.6875,
+   "n": 4325376,
+   "policy": "random",
+   "pred_ratios": {
+    "materialized/fused_iso": 2.129902652023806,
+    "stage2_warm/stage2_cold_iso": 1.119444945664511,
+    "materialized/fused_ste": 3.309822688259863
+   },
+   "pred_us": {
+    "fused|isolated": 86.07631807602931,
+    "materialized|isolated": 183.3341781465795,
+    "stage2_cold|isolated": 86.50103345293482,
+    "stage2_warm|isolated": 96.83314469364467,
+    "fused|steady": 68.64978907203586,
+    "materialized|steady": 227.21862941487828
+   },
+   "dram_bytes": {
+    "fused|isolated": 21990784,
+    "materialized|isolated": 46608256,
+    "stage2_cold|isolated": 21990784,
+    "stage2_warm|isolated": 24617472,
+    "fused|steady": 16859520,
+    "materialized|steady": 56774656
+   }
+  },
+  {
+   "l2x": 0.8125,
+   "n": 5111808,
+   "policy": "lru",
+   "pred_ratios": {
+    "materialized/fused_iso": 2.456505754300075,
+    "stage2_warm/stage2_cold_iso": 1.4444444444444444,
+    "materialized/fused_ste": 1.9896195256600742
+   },
+   "pred_us": {
+    "fused|isolated": 110.81706569343065,
+    "materialized|isolated": 272.2227595505618,
+    "stage2_cold|isolated": 111.3638561797753,
+    "stage2_warm|isolated": 160.85890337078655,
+    "fused|steady": 164.20251562499917,
+    "materialized|steady": 326.70053125000175
+   },
+   "dram_bytes": {
+    "fused|isolated": 28311552,
+    "materialized|isolated": 69206016,
+    "stage2_cold|isolated": 28311552,
+    "stage2_warm|isolated": 40894464,
+    "fused|steady": 40894464,
+    "materialized|steady": 81788928
+   }
+  },
+  {
+   "l2x": 0.8125,
+   "n": 5111808,
+   "policy": "random",
+   "pred_ratios": {
+    "materialized/fused_iso": 2.1681416328685974,
+    "stage2_warm/stage2_cold_iso": 1.1574961751898825,
+    "materialized/fused_ste": 2.6870707737895847
+   },
+   "pred_us": {
+    "fused|isolated": 110.6878031656307,
+    "materialized|isolated": 239.98683429416846,
+    "stage2_cold|isolated": 111.2339558484024,
+    "stage2_warm|isolated": 128.75287844576604,
+    "fused|steady": 107.9378859030397,
+    "materialized|steady": 290.0367385946928
+   },
+   "dram_bytes": {
+    "fused|isolated": 28278528,
+    "materialized|isolated": 61010816,
+    "stage2_cold|isolated": 28278528,
+    "stage2_warm|isolated": 32732288,
+    "fused|steady": 26741888,
+    "materialized|steady": 72569984
+   }
+  },
+  {
+   "l2x": 0.9375,
+   "n": 5898240,
+   "policy": "lru",
+   "pred_ratios": {
+    "materialized/fused_iso": 2.375298952505031,
+    "stage2_warm/stage2_cold_iso": 1.3636363636363638,
+    "materialized/fused_ste": 1.9910868434076252
+   },
+   "pred_us": {
+    "fused|isolated": 135.4430802919708,
+    "materialized|isolated": 321.7178067415731,
+    "stage2_cold|isolated": 136.1113797752809,
+    "stage2_warm|isolated": 185.60642696629216,
+    "fused|steady": 189.21467187499917,
+    "materialized|steady": 376.74284375000167
+   },
+   "dram_bytes": {
+    "fused|isolated": 34603008,
+    "materialized|isolated": 81788928,
+    "stage2_cold|isolated": 34603008,
+    "stage2_warm|isolated": 47185920,
+    "fused|steady": 47185920,
+    "materialized|steady": 94371840
+   }
+  },
+  {
+   "l2x": 0.9375,
+   "n": 5898240,
+   "policy": "random",
+   "pred_ratios": {
+    "materialized/fused_iso": 2.1796187279317745,
+    "stage2_warm/stage2_cold_iso": 1.1689169183395511,
+    "materialized/fused_ste": 2.4250418422437443
+   },
+   "pred_us": {
+    "fused|isolated": 135.37093376482665,
+    "materialized|isolated": 295.05702245142794,
+    "stage2_cold|isolated": 136.0388772647472,
+    "stage2_warm|isolated": 159.01814518668073,
+    "fused|steady": 143.75393801371172,
+    "materialized|steady": 348.60931467056446
+   },
+   "dram_bytes": {
+    "fused|isolated": 34584576,
+    "materialized|isolated": 75011072,
+    "stage2_cold|isolated": 34584576,
+    "stage2_warm|isolated": 40426496,
+    "fused|steady": 35750912,
+    "materialized|steady": 87297792
+   }
+  },
+  {
+   "l2x": 1.125,
+   "n": 7077888,
+   "policy": "lru",
+   "pred_ratios": {
+    "materialized/fused_iso": 2.2969923936312386,
+    "stage2_warm/stage2_cold_iso": 1.2857142857142858,
+    "materialized/fused_ste": 1.9926808153812174
+   },
+   "pred_us": {
+    "fused|isolated": 172.38210218978102,
+    "materialized|isolated": 395.9603775280899,
+    "stage2_cold|isolated": 173.23266516853934,
+    "stage2_warm|isolated": 222.7277123595506,
+    "fused|steady": 226.7329062499992,
+    "materialized|steady": 451.8063125000015
+   },
+   "dram_bytes": {
+    "fused|isolated": 44040192,
+    "materialized|isolated": 100663296,
+    "stage2_cold|isolated": 44040192,
+    "stage2_warm|isolated": 56623104,
+    "fused|steady": 56623104,
+    "materialized|steady": 113246208
+   }
+  },
+  {
+   "l2x": 1.125,
+   "n": 7077888,
+   "policy": "random",
+   "pred_ratios": {
+    "materialized/fused_iso": 2.1823463624430626,
+    "stage2_warm/stage2_cold_iso": 1.1716311603135101,
+    "materialized/fused_ste": 2.23148845484413
+   },
+   "pred_us": {
+    "fused|isolated": 172.33801264541515,
+    "materialized|isolated": 376.10123500738825,
+    "stage2_cold|isolated": 173.18835807876874,
+    "stage2_warm|isolated": 202.9128769286195,
+    "fused|steady": 193.9563562812797,
+    "materialized|steady": 432.81136978531043
+   },
+   "dram_bytes": {
+    "fused|isolated": 44028928,
+    "materialized|isolated": 95614592,
+    "stage2_cold|isolated": 44028928,
+    "stage2_warm|isolated": 51585664,
+    "fused|steady": 48378624,
+    "materialized|steady": 108470016
+   }
+  },
+  {
+   "l2x": 1.375,
+   "n": 8650752,
+   "policy": "lru",
+   "pred_ratios": {
+    "materialized/fused_iso": 2.2331870493637047,
+    "stage2_warm/stage2_cold_iso": 1.222222222222222,
+    "materialized/fused_ste": 1.9941338476830717
+   },
+   "pred_us": {
+    "fused|isolated": 221.6341313868613,
+    "materialized|isolated": 494.9504719101124,
+    "stage2_cold|isolated": 222.7277123595506,
+    "stage2_warm|isolated": 272.2227595505618,
+    "fused|steady": 276.7572187499992,
+    "materialized|steady": 551.8909375000014
+   },
+   "dram_bytes": {
+    "fused|isolated": 56623104,
+    "materialized|isolated": 125829120,
+    "stage2_cold|isolated": 56623104,
+    "stage2_warm|isolated": 69206016,
+    "fused|steady": 69206016,
+    "materialized|steady": 138412032
+   }
+  },
+  {
+   "l2x": 1.375,
+   "n": 8650752,
+   "policy": "random",
+   "pred_ratios": {
+    "materialized/fused_iso": 2.1733744789689475,
+    "stage2_warm/stage2_cold_iso": 1.1627033283000443,
+    "materialized/fused_ste": 2.1198922175536676
+   },
+   "pred_us": {
+    "fused|isolated": 221.64415173785355,
+    "materialized|isolated": 481.7157427997718,
+    "stage2_cold|isolated": 222.73778215268027,
+    "stage2_warm|isolated": 258.97796064709155,
+    "fused|steady": 254.75148785654625,
+    "materialized|steady": 540.04569651731
+   },
+   "dram_bytes": {
+    "fused|isolated": 56625664,
+    "materialized|isolated": 122464512,
+    "stage2_cold|isolated": 56625664,
+    "stage2_warm|isolated": 65838848,
+    "fused|steady": 63670784,
+    "materialized|steady": 135433600
+   }
+  },
+  {
+   "l2x": 1.75,
+   "n": 11010048,
+   "policy": "lru",
+   "pred_ratios": {
+    "materialized/fused_iso": 2.177357373129612,
+    "stage2_warm/stage2_cold_iso": 1.1666666666666665,
+    "materialized/fused_ste": 1.995538578275378
+   },
+   "pred_us": {
+    "fused|isolated": 295.51217518248177,
+    "materialized|isolated": 643.4356134831462,
+    "stage2_cold|isolated": 296.97028314606746,
+    "stage2_warm|isolated": 346.4653303370787,
+    "fused|steady": 351.79368749999924,
+    "materialized|steady": 702.0178750000011
+   },
+   "dram_bytes": {
+    "fused|isolated": 75497472,
+    "materialized|isolated": 163577856,
+    "stage2_cold|isolated": 75497472,
+    "stage2_warm|isolated": 88080384,
+    "fused|steady": 88080384,
+    "materialized|steady": 176160768
+   }
+  },
+  {
+   "l2x": 1.75,
+   "n": 11010048,
+   "policy": "random",
+   "pred_ratios": {
+    "materialized/fused_iso": 2.1522125581002056,
+    "stage2_warm/stage2_cold_iso": 1.1416453113135916,
+    "materialized/fused_ste": 2.046377113608167
+   },
+   "pred_us": {
+    "fused|isolated": 295.6083705520073,
+    "materialized|isolated": 636.212047381569,
+    "stage2_cold|isolated": 297.0669531601124,
+    "stage2_warm|isolated": 339.14509422145665,
+    "fused|steady": 340.0870498345685,
+    "materialized|steady": 695.9463554159812
+   },
+   "dram_bytes": {
+    "fused|isolated": 75522048,
+    "materialized|isolated": 161741440,
+    "stage2_cold|isolated": 75522048,
+    "stage2_warm|isolated": 86219392,
+    "fused|steady": 85135744,
+    "materialized|steady": 174634112
+   }
+  },
+  {
+   "l2x": 2.0,
+   "n": 12582912,
+   "policy": "lru",
+   "pred_ratios": {
+    "materialized/fused_iso": 2.1534303690292864,
+    "stage2_warm/stage2_cold_iso": 1.1428571428571428,
+    "materialized/fused_ste": 1.9961835955581941
+   },
+   "pred_us": {
+    "fused|isolated": 344.76420437956205,
+    "materialized|isolated": 742.4257078651686,
+    "stage2_cold|isolated": 346.4653303370787,
+    "stage2_warm|isolated": 395.9603775280899,
+    "fused|steady": 401.81799999999924,
+    "materialized|steady": 802.102500000001
+   },
+   "dram_bytes": {
+    "fused|isolated": 88080384,
+    "materialized|isolated": 188743680,
+    "stage2_cold|isolated": 88080384,
+    "stage2_warm|isolated": 100663296,
+    "fused|steady": 100663296,
+    "materialized|steady": 201326592
+   }
+  },
+  {
+   "l2x": 2.0,
+   "n": 12582912,
+   "policy": "random",
+   "pred_ratios": {
+    "materialized/fused_iso": 2.1393342706629475,
+    "stage2_warm/stage2_cold_iso": 1.128830255568309,
+    "materialized/fused_ste": 2.027502992844802
+   },
+   "pred_us": {
+    "fused|isolated": 344.835348871607,
+    "materialized|isolated": 737.7180795770424,
+    "stage2_cold|isolated": 346.53682586829945,
+    "stage2_warm|isolated": 391.18125370874304,
+    "fused|steady": 393.63378554344104,
+    "materialized|steady": 798.0936782741556
+   },
+   "dram_bytes": {
+    "fused|isolated": 88098560,
+    "materialized|isolated": 187546880,
+    "stage2_cold|isolated": 88098560,
+    "stage2_warm|isolated": 99448320,
+    "fused|steady": 98604672,
+    "materialized|steady": 200318592
+   }
+  },
+  {
+   "l2x": 2.5,
+   "n": 15728640,
+   "policy": "lru",
+   "pred_ratios": {
+    "materialized/fused_iso": 2.1215276968955195,
+    "stage2_warm/stage2_cold_iso": 1.1111111111111112,
+    "materialized/fused_ste": 1.997087871702969
+   },
+   "pred_us": {
+    "fused|isolated": 443.2682627737226,
+    "materialized|isolated": 940.4058966292135,
+    "stage2_cold|isolated": 445.4554247191012,
+    "stage2_warm|isolated": 494.9504719101124,
+    "fused|steady": 501.86662499999926,
+    "materialized|steady": 1002.2717500000006
+   },
+   "dram_bytes": {
+    "fused|isolated": 113246208,
+    "materialized|isolated": 239075328,
+    "stage2_cold|isolated": 113246208,
+    "stage2_warm|isolated": 125829120,
+    "fused|steady": 125829120,
+    "materialized|steady": 251658240
+   }
+  },
+  {
+   "l2x": 2.5,
+   "n": 15728640,
+   "policy": "random",
+   "pred_ratios": {
+    "materialized/fused_iso": 2.1166703523102406,
+    "stage2_warm/stage2_cold_iso": 1.106277615823973,
+    "materialized/fused_ste": 2.0080764696138926
+   },
+   "pred_us": {
+    "fused|isolated": 443.2417088435932,
+    "materialized|isolated": 938.1965840165615,
+    "stage2_cold|isolated": 445.42873976730755,
+    "stage2_warm|isolated": 492.7678442492539,
+    "fused|steady": 498.3106161320997,
+    "materialized|steady": 1000.6458228136704
+   },
+   "dram_bytes": {
+    "fused|isolated": 113239424,
+    "materialized|isolated": 238513664,
+    "stage2_cold|isolated": 113239424,
+    "stage2_warm|isolated": 125274240,
+    "fused|steady": 124934656,
+    "materialized|steady": 251249408
+   }
+  },
+  {
+   "l2x": 3.0,
+   "n": 18874368,
+   "policy": "lru",
+   "pred_ratios": {
+    "materialized/fused_iso": 2.1012259964467583,
+    "stage2_warm/stage2_cold_iso": 1.090909090909091,
+    "materialized/fused_ste": 1.9976915354777955
+   },
+   "pred_us": {
+    "fused|isolated": 541.7723211678832,
+    "materialized|isolated": 1138.3860853932586,
+    "stage2_cold|isolated": 544.4455191011236,
+    "stage2_warm|isolated": 593.9405662921349,
+    "fused|steady": 601.9152499999994,
+    "materialized|steady": 1202.441
+   },
+   "dram_bytes": {
+    "fused|isolated": 138412032,
+    "materialized|isolated": 289406976,
+    "stage2_cold|isolated": 138412032,
+    "stage2_warm|isolated": 150994944,
+    "fused|steady": 150994944,
+    "materialized|steady": 301989888
+   }
+  },
+  {
+   "l2x": 3.0,
+   "n": 18874368,
+   "policy": "random",
+   "pred_ratios": {
+    "materialized/fused_iso": 2.099448467874371,
+    "stage2_warm/stage2_cold_iso": 1.0891402899054674,
+    "materialized/fused_ste": 2.001718137440096
+   },
+   "pred_us": {
+    "fused|isolated": 541.7592947115933,
+    "materialized|isolated": 1137.3957212389544,
+    "stage2_cold|isolated": 544.432428370055,
+    "stage2_warm|isolated": 592.9632928688993,
+    "fused|steady": 600.3316352895094,
+    "materialized|steady": 1201.6947228380839
+   },
+   "dram_bytes": {
+    "fused|isolated": 138408704,
+    "materialized|isolated": 289155200,
+    "stage2_cold|isolated": 138408704,
+    "stage2_warm|isolated": 150746496,
+    "fused|steady": 150596608,
+    "materialized|steady": 301802240
+   }
+  },
+  {
+   "l2x": 4.0,
+   "n": 25165824,
+   "policy": "lru",
+   "pred_ratios": {
+    "materialized/fused_iso": 2.0768639559082454,
+    "stage2_warm/stage2_cold_iso": 1.0666666666666667,
+    "materialized/fused_ste": 1.9984470316859158
+   },
+   "pred_us": {
+    "fused|isolated": 738.7804379562043,
+    "materialized|isolated": 1534.3464629213486,
+    "stage2_cold|isolated": 742.4257078651686,
+    "stage2_warm|isolated": 791.9207550561798,
+    "fused|steady": 802.0124999999995,
+    "materialized|steady": 1602.7794999999994
+   },
+   "dram_bytes": {
+    "fused|isolated": 188743680,
+    "materialized|isolated": 390070272,
+    "stage2_cold|isolated": 188743680,
+    "stage2_warm|isolated": 201326592,
+    "fused|steady": 201326592,
+    "materialized|steady": 402653184
+   }
+  },
+  {
+   "l2x": 4.0,
+   "n": 25165824,
+   "policy": "random",
+   "pred_ratios": {
+    "materialized/fused_iso": 2.0760154600152685,
+    "stage2_warm/stage2_cold_iso": 1.0658223368424478,
+    "materialized/fused_ste": 1.9989503302324527
+   },
+   "pred_us": {
+    "fused|isolated": 739.0089019588276,
+    "materialized|isolated": 1534.1939055554337,
+    "stage2_cold|isolated": 742.6552991485254,
+    "stage2_warm|isolated": 791.5386064069085,
+    "fused|steady": 801.7076847006475,
+    "materialized|steady": 1602.5738410822544
+   },
+   "dram_bytes": {
+    "fused|isolated": 188802048,
+    "materialized|isolated": 390031488,
+    "stage2_cold|isolated": 188802048,
+    "stage2_warm|isolated": 201229440,
+    "fused|steady": 201249920,
+    "materialized|steady": 402601472
+   }
+  }
+ ]
+}

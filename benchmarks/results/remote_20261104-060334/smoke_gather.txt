@@ -1,0 +1,44 @@
+gather       T=16777216;M=4194304;dist=seq            ok
+scatter_add  T=16777216;M=4194304;dist=seq            ok
+gather       T=16777216;M=4194304;dist=uniform        ok
+scatter_add  T=16777216;M=4194304;dist=uniform        ok
+gather       T=16777216;M=4194304;dist=zipf1.0        ok
+scatter_add  T=16777216;M=4194304;dist=zipf1.0        ok
+correctness_failures=0
+
+# gather summary -- run `20261104-060345-smoke-remote`
+
+- Device: NVIDIA GeForce RTX 3060 (cc 8.6), driver 12020, runtime 12020, L2 2359296 B
+- Correctness failures: 0 (6 checks passed)
+- reps 10, warmup 3, steady iters 10, flush_l2 True
+- ESTIMATED theoretical DRAM BW 360.0 GB/s; ESTIMATED FP32 peak 12845 GFLOP/s (device attributes)
+
+`useful_GBps` = algorithmic bytes of the task / median time (DERIVED). `isolated` = L2 flushed before each rep; `steady` = back-to-back calls.
+
+| variant | params | mode | reps | median_us | p95_us | cv_pct | useful_GBps |
+|---|---|---|---|---|---|---|---|
+| gather | T=16777216;M=4194304;dist=seq | isolated | 10 | 151.552 | 151.728 | 0.067 | 332.108 |
+| gather | T=16777216;M=4194304;dist=seq | steady | 10 | 154.109 | 154.112 | 0.032 | 326.598 |
+| scatter_add | T=16777216;M=4194304;dist=seq | isolated | 10 | 197.632 | 197.632 | 0.212 | 339.565 |
+| scatter_add | T=16777216;M=4194304;dist=seq | steady | 10 | 199.782 | 199.864 | 0.035 | 335.910 |
+| gather | T=16777216;M=4194304;dist=uniform | isolated | 10 | 1238.528 | 1239.040 | 0.044 | 40.638 |
+| gather | T=16777216;M=4194304;dist=uniform | steady | 10 | 1238.221 | 1238.437 | 0.010 | 40.648 |
+| scatter_add | T=16777216;M=4194304;dist=uniform | isolated | 10 | 2917.376 | 2921.114 | 0.088 | 23.003 |
+| scatter_add | T=16777216;M=4194304;dist=uniform | steady | 10 | 2920.760 | 2922.233 | 0.047 | 22.977 |
+| gather | T=16777216;M=4194304;dist=zipf1.0 | isolated | 10 | 667.648 | 668.341 | 0.107 | 75.387 |
+| gather | T=16777216;M=4194304;dist=zipf1.0 | steady | 10 | 667.034 | 667.284 | 0.025 | 75.456 |
+| scatter_add | T=16777216;M=4194304;dist=zipf1.0 | isolated | 10 | 2021.376 | 2025.472 | 0.171 | 33.200 |
+| scatter_add | T=16777216;M=4194304;dist=zipf1.0 | steady | 10 | 2022.451 | 2023.208 | 0.040 | 33.182 |
+
+### Traffic bounds (isolated mode)
+
+`est_*_MiB` are model bytes; `impl_GBps_*` = estimate / measured median. If the *compulsory* (lower-bound) bytes imply more than the estimated DRAM peak (360 GB/s), the model's 32-B-sector assumption is contradicted.
+
+| variant | dist | T | median_us | hot_sector_share | max_elem_count | est_MiB_compulsory | est_MiB_hot_set | est_MiB_no_reuse | impl_GBps_compulsory | impl_GBps_no_reuse | compulsory_exceeds_peak |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| gather | seq | 16777216 | 151.552 | 0.141 | 1 | 48.000 | 48.000 | 48.000 | 332.108 | 332.108 | no |
+| scatter_add | seq | 16777216 | 197.632 | 0.141 | 1 | 64.000 | 64.000 | 64.000 | 339.565 | 339.565 | no |
+| gather | uniform | 16777216 | 1238.528 | 0.099 | 6 | 87.339 | 149.557 | 160.000 | 73.944 | 135.461 | no |
+| scatter_add | uniform | 16777216 | 2917.376 | 0.099 | 6 | 142.679 | 267.115 | 288.000 | 51.282 | 103.514 | no |
+| gather | zipf1.0 | 16777216 | 667.648 | 0.706 | 242780 | 59.465 | 71.828 | 160.000 | 93.392 | 251.288 | no |
+| scatter_add | zipf1.0 | 16777216 | 2021.376 | 0.706 | 242780 | 86.929 | 111.657 | 288.000 | 45.094 | 149.398 | no |

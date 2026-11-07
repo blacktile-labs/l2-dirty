@@ -1,0 +1,36 @@
+Thu Nov  5 06:38:39 UTC 2026
+Linux LAPTOP-NAG5V2KI <rented-host-ip>-microsoft-standard-WSL2 #1 SMP PREEMPT_DYNAMIC Tue Oct  6 19:13:07 UTC 2026 x86_64 x86_64 x86_64 GNU/Linux
+name, driver_version, temperature.gpu, clocks.current.sm [MHz], clocks.current.memory [MHz], pstate
+NVIDIA GeForce RTX 3060 Laptop GPU, 591.74, 61, 1282 MHz, 6000 MHz, P0
+NVIDIA (R) Nsight Compute Command Line Profiler
+Copyright (c) 2018-2024 NVIDIA Corporation
+Version 2024.2.1.0 (build 34372528) (public-release)
+d4097fb52fc4cf2aa76eb9a854331ddd76a0d001
+ M HANDOFF.md
+ M benchmarks/scripts/build.sh
+ M benchmarks/scripts/counter_prereg.py
+ M environment/HARDWARE.md
+ M research/DECISION_LOG.md
+ M research/HYPOTHESES.md
+?? benchmarks/results/counters_20261105-040556/
+?? benchmarks/results/wb_probe_20261105-042441/
+?? benchmarks/results/wb_probe_b6b_20261105-063839/
+?? benchmarks/results/wb_probe_b6b_smoke_20261105-063722/
+?? benchmarks/results/wb_probe_smoke_20261105-042304/
+?? benchmarks/scripts/test_wb_probe_b6b_score.py
+?? benchmarks/scripts/test_wb_probe_score.py
+?? benchmarks/scripts/wb_probe.sh
+?? benchmarks/scripts/wb_probe_b6b.sh
+?? benchmarks/scripts/wb_probe_b6b_score.py
+?? benchmarks/scripts/wb_probe_score.py
+?? benchmarks/src/wb_probe.cu
+0dc645e864eedfb289c4916bcde8739a7abbd7126662eaaaafed1b972a9112d8  benchmarks/scripts/wb_probe_b6b.sh
+0921da369c3181ce9a64ad89e41321bc0b2e3bfb4bbde7bbcde6e354cc6d90f3  benchmarks/build/wb_probe
+7dbbd451e459d54b247f5567073131701085e40b50942a75a4335f644ebd77ee  benchmarks/src/wb_probe.cu
+7a5ea8b826772234d1e9a17990149dee6d5726dee203cf4fa2785e5c224a8c44  benchmarks/src/common.cuh
+5bcd6f86be78df111a5ba0ea398c8e0ba33e61ea7d4ebafc937aa8a6ed12c862  benchmarks/src/dmk_host.hpp
+8f7092ba238caf1396bb66219010d71b8fc10950b4fbf0b52e1fcd65b6b88482  benchmarks/scripts/wb_probe_b6b_score.py
+e7751d8771d93045e11338fa6401ae3af505c6c7a77c04fc4f00081a4479b884  benchmarks/scripts/wb_probe_score.py
+e7d21047cb71d492393bca1f04047e1ff175179eace83e68b190145c00d50d57  benchmarks/scripts/counter_prereg.py
+FULL=0:0.1875,0.5:0.1875,0.625:0.1875,0.6875:0.1875,0:0.3125,0.375:0.3125,0.5:0.3125,0.5625:0.3125,0:0.4375,0:0.5,0:0.5625,0:0.625,0:0.6875,2:0,0:2
+SECT=0:0.375,0:0.625,0:0.75,0:0.875,0:2

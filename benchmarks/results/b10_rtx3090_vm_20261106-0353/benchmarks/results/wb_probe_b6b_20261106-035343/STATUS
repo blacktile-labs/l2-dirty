@@ -1,0 +1,23 @@
+full_kernel_r1 rc=0
+full_kernel_r2 rc=0
+full_kernel_r3 rc=0
+full_range_r1 rc=0
+full_range_r2 rc=0
+full_range_r3 rc=0
+sector_kernel_r1 rc=0
+sector_kernel_r2 rc=0
+sector_kernel_r3 rc=0
+sector_range_r1 rc=0
+sector_range_r2 rc=0
+sector_range_r3 rc=0
+correctness_failures per run: {'full_kernel_r1_meta.json': 0, 'full_kernel_r2_meta.json': 0, 'full_kernel_r3_meta.json': 0, 'full_range_r1_meta.json': 0, 'full_range_r2_meta.json': 0, 'full_range_r3_meta.json': 0, 'sector_kernel_r1_meta.json': 0, 'sector_kernel_r2_meta.json': 0, 'sector_kernel_r3_meta.json': 0, 'sector_range_r1_meta.json': 0, 'sector_range_r2_meta.json': 0, 'sector_range_r3_meta.json': 0}
+score rc=0
+V-0 sanity: full 2:0 RD/RDR 1.000/1.001, full 0:2 WB/WBR 0.970/0.993, sector 0:2 WB/WBR 0.970/0.987, WARM [1.000, 1.001] -> PASS
+V-1 WBR(0.0, 0.5) 0.149 (B6 0.190), WBR(0.0, 0.625) 0.974 (B6 0.992) -> PASS
+V-2 row w=0.1875: WBR(0)=0.031; delta WBR at r=(0.5, 0.625, 0.6875): -0.031, -0.030, -0.001  [per-kernel WB deltas, not decisive: +0.000, +0.094, +0.226]
+V-2 row w=0.3125: WBR(0)=0.000; delta WBR at r=(0.375, 0.5, 0.5625): +0.000, +0.004, +0.036  [per-kernel WB deltas, not decisive: -0.000, +0.107, +0.222]
+V-2 -> H-D confirmed (dirty footprint only)
+V-3 WBR(0:0.4375) = 0.009, WBR(0:0.5625) = 0.725 -> partial
+V-4 one-sector-per-line: control WBR 0.143; median WBR at w=(0.625, 0.75, 0.875) = 0.954 (each: 0.566, 0.954, 0.975) -> control failed (WBR(0:0.375) = 0.143); not interpreted
+V-5 median RB/WB over 10 active cells = 0.001 -> resident
+verdict: {"V-0": true, "V-1 replicates B6": true, "V-2": "H-D confirmed (dirty footprint only)", "V-3": "partial", "V-4": "control failed (WBR(0:0.375) = 0.143); not interpreted", "V-5": "resident"}

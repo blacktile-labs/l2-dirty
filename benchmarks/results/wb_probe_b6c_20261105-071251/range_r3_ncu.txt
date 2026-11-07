@@ -1,0 +1,78 @@
+==WARNING== Please consult the documentation for current range-based replay mode limitations and requirements.
+==WARNING== Note: Running with uncontrolled GPU caches. Profiling results may be inconsistent.
+==WARNING== Note: Running with unmodified GPU clocks. If not controlled otherwise, profiling results may be inconsistent.
+==PROF== Connected to process 179625 (/mnt/e/data-move-kernel-lab/benchmarks/build/wb_probe)
+==PROF== Profiling "range" - 0: Application replay pass 1
+==PROF== Profiling "range" - 1: Application replay pass 1
+==PROF== Profiling "range" - 2: Application replay pass 1
+==PROF== Profiling "range" - 3: Application replay pass 1
+==PROF== Profiling "range" - 4: Application replay pass 1
+==PROF== Profiling "range" - 5: Application replay pass 1
+==PROF== Profiling "range" - 6: Application replay pass 1
+==PROF== Profiling "range" - 7: Application replay pass 1
+==PROF== Profiling "range" - 8: Application replay pass 1
+==PROF== Profiling "range" - 9: Application replay pass 1
+==PROF== Profiling "range" - 10: Application replay pass 1
+==PROF== Profiling "range" - 11: Application replay pass 1
+==PROF== Profiling "range" - 12: Application replay pass 1
+==PROF== Profiling "range" - 13: Application replay pass 1
+==PROF== Profiling "range" - 14: Application replay pass 1
+==PROF== Profiling "range" - 15: Application replay pass 1
+==PROF== Profiling "range" - 16: Application replay pass 1
+r=0.875   w=0.25    nc=688128   nd=196608   ok
+r=1       w=0.25    nc=786432   nd=196608   ok
+r=1.25    w=0.25    nc=983040   nd=196608   ok
+r=1.75    w=0.25    nc=1376256  nd=196608   ok
+r=0.75    w=0.375   nc=589824   nd=294912   ok
+r=0.875   w=0.375   nc=688128   nd=294912   ok
+r=1.125   w=0.375   nc=884736   nd=294912   ok
+r=1.625   w=0.375   nc=1277952  nd=294912   ok
+r=1       w=0.125   nc=786432   nd=98304    ok
+r=1.125   w=0.125   nc=884736   nd=98304    ok
+r=1.375   w=0.125   nc=1081344  nd=98304    ok
+r=1.875   w=0.125   nc=1474560  nd=98304    ok
+r=0.5     w=0.25    nc=393216   nd=196608   ok
+r=2       w=0       nc=1572864  nd=0        ok
+r=0       w=2       nc=0        nd=1572864  ok
+r=0.625   w=0.5     nc=491520   nd=393216   ok
+r=0.5     w=0.75    nc=393216   nd=589824   ok
+correctness_failures=0
+==PROF== Disconnected from process 179625
+==PROF== Connected to process 179713 (/mnt/e/data-move-kernel-lab/benchmarks/build/wb_probe)
+==PROF== Profiling "range" - 0: Application replay pass 2
+==PROF== Profiling "range" - 1: Application replay pass 2
+==PROF== Profiling "range" - 2: Application replay pass 2
+==PROF== Profiling "range" - 3: Application replay pass 2
+==PROF== Profiling "range" - 4: Application replay pass 2
+==PROF== Profiling "range" - 5: Application replay pass 2
+==PROF== Profiling "range" - 6: Application replay pass 2
+==PROF== Profiling "range" - 7: Application replay pass 2
+==PROF== Profiling "range" - 8: Application replay pass 2
+==PROF== Profiling "range" - 9: Application replay pass 2
+==PROF== Profiling "range" - 10: Application replay pass 2
+==PROF== Profiling "range" - 11: Application replay pass 2
+==PROF== Profiling "range" - 12: Application replay pass 2
+==PROF== Profiling "range" - 13: Application replay pass 2
+==PROF== Profiling "range" - 14: Application replay pass 2
+==PROF== Profiling "range" - 15: Application replay pass 2
+==PROF== Profiling "range" - 16: Application replay pass 2
+r=0.875   w=0.25    nc=688128   nd=196608   ok
+r=1       w=0.25    nc=786432   nd=196608   ok
+r=1.25    w=0.25    nc=983040   nd=196608   ok
+r=1.75    w=0.25    nc=1376256  nd=196608   ok
+r=0.75    w=0.375   nc=589824   nd=294912   ok
+r=0.875   w=0.375   nc=688128   nd=294912   ok
+r=1.125   w=0.375   nc=884736   nd=294912   ok
+r=1.625   w=0.375   nc=1277952  nd=294912   ok
+r=1       w=0.125   nc=786432   nd=98304    ok
+r=1.125   w=0.125   nc=884736   nd=98304    ok
+r=1.375   w=0.125   nc=1081344  nd=98304    ok
+r=1.875   w=0.125   nc=1474560  nd=98304    ok
+r=0.5     w=0.25    nc=393216   nd=196608   ok
+r=2       w=0       nc=1572864  nd=0        ok
+r=0       w=2       nc=0        nd=1572864  ok
+r=0.625   w=0.5     nc=491520   nd=393216   ok
+r=0.5     w=0.75    nc=393216   nd=589824   ok
+correctness_failures=0
+==PROF== Disconnected from process 179713
+==PROF== Report: /mnt/e/data-move-kernel-lab/benchmarks/results/wb_probe_b6c_20261105-071251/range_r3.ncu-rep

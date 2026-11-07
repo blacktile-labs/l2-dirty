@@ -1,0 +1,9 @@
+run_r1 rc=0
+run_r2 rc=0
+run_r3 rc=0
+score rc=0
+NVIDIA GeForce RTX 4060 (L2 24 MiB): U-0 {'correctness': True, 'fp16 and int4 captured': True, 'stable steps': True} -> PASS
+T {'fp16': 6290.43, 'int4': 1702.91, 'nf4': 1963.01} · E {'fp16 write': 0.0822, 'fp16 cold': 0.006, 'fp16 steady': 0.006, 'fp16 l2w': 0.0828, 'int4 write': 0.436, 'int4 cold': 0.0198, 'int4 steady': 0.0222, 'int4 l2w': 0.4263, 'nf4 write': 0.2186, 'nf4 cold': 0.0162, 'nf4 steady': -0.1236, 'nf4 l2w': 0.2456}
+D {'int4 write': -0.2464, 'int4 cold': -0.0136, 'int4 steady': -0.0159, 'int4 l2w': -0.2408, 'nf4 write': -0.1119, 'nf4 cold': -0.01, 'nf4 steady': 0.1479, 'nf4 l2w': -0.1307}
+verdict: {"U-0": true, "U-1": "cold predicts the in-model step", "U-2": "n/a (small L2)", "U-3": "cold predicts the int4 speedup better than the write flush"}
+results: benchmarks/results/e2e_20261106-162601

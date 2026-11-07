@@ -1,0 +1,10 @@
+run_r1 rc=0
+run_r2 rc=0
+run_r3 rc=0
+score rc=0
+NVIDIA GeForce RTX 2060 SUPER: U-0 PASS (runs 3)
+  4096x4096: t_us zero {'fp16': 88.06, 'w8': 50.27, 'w4': 44.7} read {'fp16': 82.18, 'w8': 43.52, 'w4': 43.49}; S_w8 {'zero': 1.752, 'read': 1.888, 'D': -0.0723}; S_w4 {'zero': 1.97, 'read': 1.89, 'D': 0.0425}; fastest {'zero': 'w4', 'read': 'w4'}; regret +0.00%
+  4096x14336: t_us zero {'fp16': 286.72, 'w8': 151.55, 'w4': 147.95} read {'fp16': 279.76, 'w8': 144.48, 'w4': 142.88}; S_w8 {'zero': 1.892, 'read': 1.936, 'D': -0.0229}; S_w4 {'zero': 1.938, 'read': 1.958, 'D': -0.0103}; fastest {'zero': 'w4', 'read': 'w4'}; regret +0.00%
+  14336x4096: t_us zero {'fp16': 286.22, 'w8': 149.5, 'w4': 134.82} read {'fp16': 279.36, 'w8': 143.14, 'w4': 133.76}; S_w8 {'zero': 1.914, 'read': 1.952, 'D': -0.0191}; S_w4 {'zero': 2.123, 'read': 2.089, 'D': 0.0165}; fastest {'zero': 'w4', 'read': 'w4'}; regret +0.00%
+U-1 worst D -7.23% -> mildly distorted (mixed signs); U-2 -> no flip
+verdict: {"U-0": true, "U-1": "mildly distorted", "U-1 worst D": -0.0723, "U-1 sign": "mixed signs", "U-2": "no flip"}

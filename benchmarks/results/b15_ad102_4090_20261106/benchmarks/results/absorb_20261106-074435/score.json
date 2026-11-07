@@ -1,0 +1,90 @@
+{
+ "device": "NVIDIA GeForce RTX 4090",
+ "K-0": true,
+ "K-1": "penalty grows with bandwidth use",
+ "K-2": "bytes differ",
+ "per shape": {
+  "4096x14336": {
+   "n": 36,
+   "rho_dt_U": 0.747,
+   "cv_E": 0.397,
+   "E_median_over_L2": 0.3173,
+   "r2_slack_model": -0.511,
+   "most_bw_used": [
+    [
+     "fp16_bn16_bk256_w4",
+     1.0,
+     50.2
+    ],
+    [
+     "fp16_bn16_bk256_w8",
+     1.0,
+     50.2
+    ],
+    [
+     "fp16_bn32_bk256_w4",
+     1.0,
+     50.2
+    ]
+   ],
+   "least_bw_used": [
+    [
+     "w4_bn32_bk128_w8",
+     0.414,
+     30.2
+    ],
+    [
+     "w4_bn16_bk128_w4",
+     0.408,
+     29.7
+    ],
+    [
+     "w4_bn32_bk128_w4",
+     0.268,
+     18.4
+    ]
+   ]
+  },
+  "14336x4096": {
+   "n": 36,
+   "rho_dt_U": 0.851,
+   "cv_E": 0.45,
+   "E_median_over_L2": 0.3034,
+   "r2_slack_model": 0.538,
+   "most_bw_used": [
+    [
+     "fp16_bn8_bk256_w4",
+     1.0,
+     50.2
+    ],
+    [
+     "fp16_bn32_bk256_w8",
+     1.0,
+     50.2
+    ],
+    [
+     "fp16_bn32_bk128_w8",
+     1.0,
+     51.2
+    ]
+   ],
+   "least_bw_used": [
+    [
+     "w4_bn16_bk128_w4",
+     0.575,
+     19.5
+    ],
+    [
+     "w4_bn8_bk128_w4",
+     0.545,
+     20.5
+    ],
+    [
+     "w4_bn16_bk128_w8",
+     0.535,
+     20.5
+    ]
+   ]
+  }
+ }
+}

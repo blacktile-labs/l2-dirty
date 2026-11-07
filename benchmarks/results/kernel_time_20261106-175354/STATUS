@@ -1,0 +1,5 @@
+run_r1 rc=0
+run_r2 rc=0
+run_r3 rc=0
+score rc=0
+NVIDIA GeForce RTX 3060 Laptop GPU (L2 3 MiB): W-0 {'3 full runs': True, 'correctness': True, 'record checks': True, 'fp16 and int4 truth': True, 'tracing <= 0.5 %': False, 'truth stable': False} -> FAIL

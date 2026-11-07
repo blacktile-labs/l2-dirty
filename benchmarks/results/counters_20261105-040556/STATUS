@@ -1,0 +1,8 @@
+fusion ncu rc=0
+fusion score rc=1
+stencil ncu rc=0
+stencil score rc=0
+S-0 flush read bytes: median 16.000 MiB vs 16.000 MiB; max rel err 0.0% -> PASS
+C-4: PASS (best policy lru: 100.0% >= 90% required)
+C-3 (directional, cliff zone): lower mean e -> lru
+verdict: {"S-0": true, "C-4": true}

@@ -1,0 +1,1 @@
+NVIDIA A100-SXM4-40GB (L2 40 MiB): W-0 {'3 full runs': True, 'correctness': True, 'record checks': True, 'fp16 and int4 truth': True, 'tracing <= 0.5 %': False, 'truth stable': True} -> FAIL

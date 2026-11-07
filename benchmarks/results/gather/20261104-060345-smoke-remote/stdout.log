@@ -1,0 +1,7 @@
+gather       T=16777216;M=4194304;dist=seq            ok
+scatter_add  T=16777216;M=4194304;dist=seq            ok
+gather       T=16777216;M=4194304;dist=uniform        ok
+scatter_add  T=16777216;M=4194304;dist=uniform        ok
+gather       T=16777216;M=4194304;dist=zipf1.0        ok
+scatter_add  T=16777216;M=4194304;dist=zipf1.0        ok
+correctness_failures=0

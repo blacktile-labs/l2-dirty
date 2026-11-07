@@ -1,0 +1,1 @@
+timing: 72 rows, 0 invalid candidates

@@ -1,0 +1,158 @@
+{
+ "benchmark": "absorb_probe",
+ "mode": "range",
+ "device": "NVIDIA GeForce RTX 4090",
+ "l2_bytes": 75497472,
+ "torch": "2.7.1+cu126",
+ "triton": "3.3.1",
+ "smoke": true,
+ "run_seed": 0,
+ "rows": [
+  {
+   "shape": [
+    4096,
+    14336
+   ],
+   "cand": "w4_bn8_bk128_w4",
+   "format": "w4",
+   "weight_bytes": 29360128,
+   "kind": "range",
+   "mode": "zero",
+   "rep": 0
+  },
+  {
+   "shape": [
+    4096,
+    14336
+   ],
+   "cand": "w4_bn8_bk128_w4",
+   "format": "w4",
+   "weight_bytes": 29360128,
+   "kind": "range",
+   "mode": "read",
+   "rep": 0
+  },
+  {
+   "shape": [
+    4096,
+    14336
+   ],
+   "cand": "w8_bn8_bk128_w4",
+   "format": "w8",
+   "weight_bytes": 58720256,
+   "kind": "range",
+   "mode": "read",
+   "rep": 0
+  },
+  {
+   "shape": [
+    4096,
+    14336
+   ],
+   "cand": "w8_bn8_bk128_w4",
+   "format": "w8",
+   "weight_bytes": 58720256,
+   "kind": "range",
+   "mode": "zero",
+   "rep": 0
+  },
+  {
+   "shape": [
+    4096,
+    14336
+   ],
+   "cand": "fp16_bn8_bk128_w8",
+   "format": "fp16",
+   "weight_bytes": 117440512,
+   "kind": "range",
+   "mode": "zero",
+   "rep": 0
+  },
+  {
+   "shape": [
+    4096,
+    14336
+   ],
+   "cand": "fp16_bn8_bk128_w8",
+   "format": "fp16",
+   "weight_bytes": 117440512,
+   "kind": "range",
+   "mode": "read",
+   "rep": 0
+  },
+  {
+   "shape": [
+    4096,
+    14336
+   ],
+   "cand": "fp16_bn8_bk128_w4",
+   "format": "fp16",
+   "weight_bytes": 117440512,
+   "kind": "range",
+   "mode": "read",
+   "rep": 0
+  },
+  {
+   "shape": [
+    4096,
+    14336
+   ],
+   "cand": "fp16_bn8_bk128_w4",
+   "format": "fp16",
+   "weight_bytes": 117440512,
+   "kind": "range",
+   "mode": "zero",
+   "rep": 0
+  },
+  {
+   "shape": [
+    4096,
+    14336
+   ],
+   "cand": "w4_bn8_bk128_w8",
+   "format": "w4",
+   "weight_bytes": 29360128,
+   "kind": "range",
+   "mode": "zero",
+   "rep": 0
+  },
+  {
+   "shape": [
+    4096,
+    14336
+   ],
+   "cand": "w4_bn8_bk128_w8",
+   "format": "w4",
+   "weight_bytes": 29360128,
+   "kind": "range",
+   "mode": "read",
+   "rep": 0
+  },
+  {
+   "shape": [
+    4096,
+    14336
+   ],
+   "cand": "w8_bn8_bk128_w8",
+   "format": "w8",
+   "weight_bytes": 58720256,
+   "kind": "range",
+   "mode": "read",
+   "rep": 0
+  },
+  {
+   "shape": [
+    4096,
+    14336
+   ],
+   "cand": "w8_bn8_bk128_w8",
+   "format": "w8",
+   "weight_bytes": 58720256,
+   "kind": "range",
+   "mode": "zero",
+   "rep": 0
+  }
+ ],
+ "invalid": [],
+ "n_candidates": 6
+}

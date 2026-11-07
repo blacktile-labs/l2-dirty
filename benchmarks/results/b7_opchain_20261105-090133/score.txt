@@ -1,0 +1,333 @@
+plan of the measured run gives identical predictions to the locked ones: True
+R-0 flush reads: max rel err 0.18% -> PASS
+R-1 cells within 0.1 B: v4 73.1% (v3 72.1%) of 323; need >= 80% -> FAIL
+R-2 discriminating cells 32: v4 strictly closer in 81.2% -> v4 better (mean e v4 0.240, v3 0.637)
+R-3 far cells (l2x >= 2.0) within 0.1 B: 100.0% of 72 -> PASS
+   eager    mean e: v4 0.094, v3 0.141 (233 cells)
+   compiled mean e: v4 0.090, v3 0.106 (90 cells)
+
+    l2x variant  mode     kernel          d     meas    v3    v4
+  0.125 eager    isolated eager_add1      R    1.070  1.04  1.04
+  0.125 eager    isolated eager_add1      W    0.000  0.00  0.00
+  0.125 eager    isolated eager_gelu      R    0.031  0.00  0.00
+  0.125 eager    isolated eager_gelu      W    0.000  0.00  0.00
+  0.125 eager    isolated eager_add2      R    1.012  1.00  1.00
+  0.125 eager    isolated eager_add2      W    0.002  0.00  0.00
+  0.125 compiled isolated flush           W    2.455  2.00  2.00
+  0.125 compiled isolated inductor_fused  R    2.060  2.04  2.04
+  0.125 compiled isolated inductor_fused  W    0.000  0.00  0.00
+  0.125 eager    steady   flush           W    1.063  1.00  1.00
+  0.125 eager    steady   eager_add1      R    1.042  1.04  1.04
+  0.125 eager    steady   eager_add1      W    0.000  0.00  0.00
+  0.125 eager    steady   eager_gelu      R    0.000  0.00  0.00
+  0.125 eager    steady   eager_gelu      W    0.000  0.00  0.00
+  0.125 eager    steady   eager_add2      R    1.000  1.00  1.00
+  0.125 eager    steady   eager_add2      W    0.000  0.00  0.00
+  0.125 eager    steady   eager_add1      R    0.000  0.00  0.00
+  0.125 eager    steady   eager_add1      W    0.000  0.00  0.00
+  0.125 eager    steady   eager_gelu      R    0.000  0.00  0.00
+  0.125 eager    steady   eager_gelu      W    0.010  0.00  0.00
+  0.125 eager    steady   eager_add2      R    0.000  0.00  0.00
+  0.125 eager    steady   eager_add2      W    0.037  0.00  0.00
+  0.125 eager    steady   eager_add1      R    0.000  0.00  0.00
+  0.125 eager    steady   eager_add1      W    0.048  0.00  0.00
+  0.125 eager    steady   eager_gelu      R    0.000  0.00  0.00
+  0.125 eager    steady   eager_gelu      W    0.065  0.00  0.00
+  0.125 eager    steady   eager_add2      R    0.000  0.00  0.00
+  0.125 eager    steady   eager_add2      W    0.033  0.00  0.00
+  0.125 compiled steady   flush           W    3.438  3.00  3.00
+  0.125 compiled steady   inductor_fused  R    2.042  2.04  2.04
+  0.125 compiled steady   inductor_fused  W    0.000  0.00  0.00
+  0.125 compiled steady   inductor_fused  R    0.000  0.00  0.00
+  0.125 compiled steady   inductor_fused  W    0.000  0.00  0.00
+  0.125 compiled steady   inductor_fused  R    0.000  0.00  0.00
+  0.125 compiled steady   inductor_fused  W    0.000  0.00  0.00
+ 0.1875 eager    isolated flush           W    1.463  1.33  1.33
+ 0.1875 eager    isolated eager_add1      R    1.028  1.03  1.03
+ 0.1875 eager    isolated eager_add1      W    0.000  0.00  0.00
+ 0.1875 eager    isolated eager_gelu      R    0.000  0.00  0.00
+ 0.1875 eager    isolated eager_gelu      W    0.004  0.00  0.00
+ 0.1875 eager    isolated eager_add2      R    1.000  1.00  1.00
+ 0.1875 eager    isolated eager_add2      W    0.004  0.00  0.00
+ 0.1875 compiled isolated flush           W    2.192  2.00  2.00
+ 0.1875 compiled isolated inductor_fused  R    2.040  2.03  2.03
+ 0.1875 compiled isolated inductor_fused  W    0.000  0.00  0.00
+ 0.1875 eager    steady   flush           W    1.104  1.00  1.00
+ 0.1875 eager    steady   eager_add1      R    1.028  1.03  1.03
+ 0.1875 eager    steady   eager_add1      W    0.000  0.00  0.00
+ 0.1875 eager    steady   eager_gelu      R    0.000  0.00  0.00
+ 0.1875 eager    steady   eager_gelu      W    0.002  0.00  0.00
+ 0.1875 eager    steady   eager_add2      R    1.000  1.00  1.00
+ 0.1875 eager    steady   eager_add2      W    0.020  0.00  0.00
+ 0.1875 eager    steady   eager_add1      R    0.000  0.00  0.00
+ 0.1875 eager    steady   eager_add1      W    0.000  0.00  0.00
+ 0.1875 eager    steady   eager_gelu      R    0.000  0.00  0.00
+ 0.1875 eager    steady   eager_gelu      W    0.557  0.00  0.33  *
+ 0.1875 eager    steady   eager_add2      R    0.066  0.00  0.00
+ 0.1875 eager    steady   eager_add2      W    0.156  0.00  0.00
+ 0.1875 eager    steady   eager_add1      R    0.001  0.00  0.00
+ 0.1875 eager    steady   eager_add1      W    0.778  0.00  1.00  *
+ 0.1875 eager    steady   eager_gelu      R    0.000  0.00  0.00
+ 0.1875 eager    steady   eager_gelu      W    0.723  0.00  1.00  *
+ 0.1875 eager    steady   eager_add2      R    0.098  0.00  0.00
+ 0.1875 eager    steady   eager_add2      W    0.115  0.00  0.00
+ 0.1875 compiled steady   flush           W    2.344  3.00  2.67  *
+ 0.1875 compiled steady   inductor_fused  R    2.028  2.03  2.03
+ 0.1875 compiled steady   inductor_fused  W    0.000  0.00  0.00
+ 0.1875 compiled steady   inductor_fused  R    0.000  0.00  0.00
+ 0.1875 compiled steady   inductor_fused  W    0.009  0.00  0.00
+ 0.1875 compiled steady   inductor_fused  R    0.000  0.00  0.00
+ 0.1875 compiled steady   inductor_fused  W    0.013  0.00  0.00
+   0.25 eager    isolated flush           W    1.667  1.50  1.50
+   0.25 eager    isolated eager_add1      R    1.021  1.02  1.02
+   0.25 eager    isolated eager_add1      W    0.000  0.00  0.00
+   0.25 eager    isolated eager_gelu      R    0.000  0.00  0.00
+   0.25 eager    isolated eager_gelu      W    0.122  0.00  0.00
+   0.25 eager    isolated eager_add2      R    1.000  1.00  1.00
+   0.25 eager    isolated eager_add2      W    0.319  0.00  0.00
+   0.25 compiled isolated flush           W    1.774  2.00  2.00
+   0.25 compiled isolated inductor_fused  R    2.030  2.02  2.02
+   0.25 compiled isolated inductor_fused  W    0.000  0.00  0.00
+   0.25 eager    steady   flush           W    1.100  1.00  1.00
+   0.25 eager    steady   eager_add1      R    1.021  1.02  1.02
+   0.25 eager    steady   eager_add1      W    0.000  0.00  0.00
+   0.25 eager    steady   eager_gelu      R    0.000  0.00  0.00
+   0.25 eager    steady   eager_gelu      W    0.079  0.00  0.00
+   0.25 eager    steady   eager_add2      R    1.000  1.00  1.00
+   0.25 eager    steady   eager_add2      W    0.326  0.00  0.00
+   0.25 eager    steady   eager_add1      R    0.526  1.02  1.02
+   0.25 eager    steady   eager_add1      W    0.057  0.01  0.01
+   0.25 eager    steady   eager_gelu      R    0.000  0.00  0.00
+   0.25 eager    steady   eager_gelu      W    0.772  0.50  0.99  *
+   0.25 eager    steady   eager_add2      R    1.000  1.00  1.00
+   0.25 eager    steady   eager_add2      W    0.338  0.49  0.00  *
+   0.25 eager    steady   eager_add1      R    0.753  1.02  1.02
+   0.25 eager    steady   eager_add1      W    0.797  0.68  1.00  *
+   0.25 eager    steady   eager_gelu      R    0.000  0.00  0.00
+   0.25 eager    steady   eager_gelu      W    0.782  0.34  1.00  *
+   0.25 eager    steady   eager_add2      R    1.000  1.00  1.00
+   0.25 eager    steady   eager_add2      W    0.333  0.49  0.00  *
+   0.25 compiled steady   flush           W    1.771  2.00  2.00
+   0.25 compiled steady   inductor_fused  R    2.021  2.02  2.02
+   0.25 compiled steady   inductor_fused  W    0.000  0.00  0.00
+   0.25 compiled steady   inductor_fused  R    0.015  0.00  0.00
+   0.25 compiled steady   inductor_fused  W    0.171  0.02  0.02
+   0.25 compiled steady   inductor_fused  R    0.230  0.00  0.00
+   0.25 compiled steady   inductor_fused  W    0.638  1.00  1.00
+ 0.3125 eager    isolated flush           W    1.349  1.58  1.58
+ 0.3125 eager    isolated eager_add1      R    1.017  1.02  1.02
+ 0.3125 eager    isolated eager_add1      W    0.000  0.00  0.00
+ 0.3125 eager    isolated eager_gelu      R    0.000  0.00  0.00
+ 0.3125 eager    isolated eager_gelu      W    0.512  0.00  0.40  *
+ 0.3125 eager    isolated eager_add2      R    1.000  1.00  1.00
+ 0.3125 eager    isolated eager_add2      W    0.765  0.00  1.00  *
+ 0.3125 compiled isolated flush           W    1.479  2.00  1.60  *
+ 0.3125 compiled isolated inductor_fused  R    2.024  2.02  2.02
+ 0.3125 compiled isolated inductor_fused  W    0.036  0.00  0.00
+ 0.3125 eager    steady   flush           W    1.071  1.00  1.00
+ 0.3125 eager    steady   eager_add1      R    1.017  1.02  1.02
+ 0.3125 eager    steady   eager_add1      W    0.000  0.00  0.00
+ 0.3125 eager    steady   eager_gelu      R    0.000  0.00  0.00
+ 0.3125 eager    steady   eager_gelu      W    0.443  0.00  0.40  *
+ 0.3125 eager    steady   eager_add2      R    1.000  1.00  1.00
+ 0.3125 eager    steady   eager_add2      W    0.772  0.00  1.00  *
+ 0.3125 eager    steady   eager_add1      R    1.017  1.02  1.02
+ 0.3125 eager    steady   eager_add1      W    0.698  0.41  0.99  *
+ 0.3125 eager    steady   eager_gelu      R    0.000  0.00  0.00
+ 0.3125 eager    steady   eager_gelu      W    0.711  0.50  0.99  *
+ 0.3125 eager    steady   eager_add2      R    1.000  1.00  1.00
+ 0.3125 eager    steady   eager_add2      W    0.742  0.09  1.00  *
+ 0.3125 eager    steady   eager_add1      R    1.017  1.02  1.02
+ 0.3125 eager    steady   eager_add1      W    0.849  1.21  1.00
+ 0.3125 eager    steady   eager_gelu      R    0.000  0.00  0.00
+ 0.3125 eager    steady   eager_gelu      W    0.731  0.61  1.00  *
+ 0.3125 eager    steady   eager_add2      R    1.000  1.00  1.00
+ 0.3125 eager    steady   eager_add2      W    0.786  0.09  1.00  *
+ 0.3125 compiled steady   flush           W    1.408  2.00  1.60  *
+ 0.3125 compiled steady   inductor_fused  R    2.017  2.02  2.02
+ 0.3125 compiled steady   inductor_fused  W    0.004  0.00  0.00
+ 0.3125 compiled steady   inductor_fused  R    0.343  0.00  0.00
+ 0.3125 compiled steady   inductor_fused  W    0.446  0.82  0.82
+ 0.3125 compiled steady   inductor_fused  R    1.532  0.00  0.00
+ 0.3125 compiled steady   inductor_fused  W    0.895  1.00  1.00
+  0.375 eager    isolated flush           W    1.223  0.99  0.99
+  0.375 eager    isolated eager_add1      R    1.014  1.01  1.01
+  0.375 eager    isolated eager_add1      W    0.000  0.00  0.00
+  0.375 eager    isolated eager_gelu      R    0.000  0.00  0.00
+  0.375 eager    isolated eager_gelu      W    0.621  0.00  0.67  *
+  0.375 eager    isolated eager_add2      R    1.000  1.33  1.33
+  0.375 eager    isolated eager_add2      W    0.783  0.89  1.11
+  0.375 compiled isolated flush           W    1.275  1.44  1.22
+  0.375 compiled isolated inductor_fused  R    2.020  2.01  2.01
+  0.375 compiled isolated inductor_fused  W    0.003  0.11  0.11
+  0.375 eager    steady   flush           W    1.025  0.89  0.89
+  0.375 eager    steady   eager_add1      R    1.014  1.01  1.01
+  0.375 eager    steady   eager_add1      W    0.006  0.00  0.00
+  0.375 eager    steady   eager_gelu      R    0.000  0.00  0.00
+  0.375 eager    steady   eager_gelu      W    0.597  0.00  0.67  *
+  0.375 eager    steady   eager_add2      R    1.000  1.33  1.33
+  0.375 eager    steady   eager_add2      W    0.814  0.89  1.11
+  0.375 eager    steady   eager_add1      R    1.014  1.01  1.01
+  0.375 eager    steady   eager_add1      W    0.935  0.80  0.58
+  0.375 eager    steady   eager_gelu      R    0.000  0.00  0.00
+  0.375 eager    steady   eager_gelu      W    0.731  0.33  0.99  *
+  0.375 eager    steady   eager_add2      R    1.000  1.33  1.33
+  0.375 eager    steady   eager_add2      W    0.798  0.89  1.11
+  0.375 eager    steady   eager_add1      R    1.014  1.01  1.01
+  0.375 eager    steady   eager_add1      W    0.911  1.23  1.00
+  0.375 eager    steady   eager_gelu      R    0.000  0.00  0.00
+  0.375 eager    steady   eager_gelu      W    0.681  0.22  0.88  *
+  0.375 eager    steady   eager_add2      R    1.000  1.33  1.33
+  0.375 eager    steady   eager_add2      W    0.823  0.89  1.11
+  0.375 compiled steady   flush           W    1.201  1.44  1.22
+  0.375 compiled steady   inductor_fused  R    2.014  2.01  2.01
+  0.375 compiled steady   inductor_fused  W    0.003  0.11  0.11
+  0.375 compiled steady   inductor_fused  R    1.935  2.01  2.01
+  0.375 compiled steady   inductor_fused  W    0.687  1.00  1.00
+  0.375 compiled steady   inductor_fused  R    1.997  2.01  2.01
+  0.375 compiled steady   inductor_fused  W    1.013  1.00  1.00
+    0.5 eager    isolated flush           W    0.925  0.67  0.67
+    0.5 eager    isolated eager_add1      R    1.010  1.01  1.01
+    0.5 eager    isolated eager_add1      W    0.053  0.00  0.00
+    0.5 eager    isolated eager_gelu      R    0.005  0.00  0.00
+    0.5 eager    isolated eager_gelu      W    0.752  0.00  1.00  *
+    0.5 eager    isolated eager_add2      R    1.003  2.00  2.00
+    0.5 eager    isolated eager_add2      W    0.906  2.33  1.33  *
+    0.5 compiled isolated flush           W    0.950  0.67  0.67
+    0.5 compiled isolated inductor_fused  R    2.015  2.01  2.01
+    0.5 compiled isolated inductor_fused  W    0.067  0.33  0.33
+    0.5 eager    steady   flush           W    0.922  0.67  0.67
+    0.5 eager    steady   eager_add1      R    1.010  1.01  1.01
+    0.5 eager    steady   eager_add1      W    0.061  0.00  0.00
+    0.5 eager    steady   eager_gelu      R    0.005  0.00  0.00
+    0.5 eager    steady   eager_gelu      W    0.763  0.00  1.00  *
+    0.5 eager    steady   eager_add2      R    1.005  2.00  2.00
+    0.5 eager    steady   eager_add2      W    0.879  2.33  1.33  *
+    0.5 eager    steady   eager_add1      R    1.010  1.01  1.01
+    0.5 eager    steady   eager_add1      W    0.941  0.67  0.67
+    0.5 eager    steady   eager_gelu      R    0.004  0.00  0.00
+    0.5 eager    steady   eager_gelu      W    0.823  0.00  1.00  *
+    0.5 eager    steady   eager_add2      R    1.003  2.00  2.00
+    0.5 eager    steady   eager_add2      W    0.953  2.33  1.33  *
+    0.5 eager    steady   eager_add1      R    1.010  1.01  1.01
+    0.5 eager    steady   eager_add1      W    0.910  0.67  0.67
+    0.5 eager    steady   eager_gelu      R    0.010  0.00  0.00
+    0.5 eager    steady   eager_gelu      W    0.849  0.00  1.00  *
+    0.5 eager    steady   eager_add2      R    1.002  2.00  2.00
+    0.5 eager    steady   eager_add2      W    0.909  2.33  1.33  *
+    0.5 compiled steady   flush           W    0.923  0.67  0.67
+    0.5 compiled steady   inductor_fused  R    2.010  2.01  2.01
+    0.5 compiled steady   inductor_fused  W    0.081  0.33  0.33
+    0.5 compiled steady   inductor_fused  R    2.001  2.01  2.01
+    0.5 compiled steady   inductor_fused  W    0.944  1.00  1.00
+    0.5 compiled steady   inductor_fused  R    2.004  2.01  2.01
+    0.5 compiled steady   inductor_fused  W    0.979  1.00  1.00
+      1 eager    isolated flush           W    0.472  0.33  0.33
+      1 eager    isolated eager_add1      R    1.005  1.01  1.01
+      1 eager    isolated eager_add1      W    0.525  0.50  0.50
+      1 eager    isolated eager_gelu      R    0.912  1.00  1.00
+      1 eager    isolated eager_gelu      W    0.964  1.00  1.00
+      1 eager    isolated eager_add2      R    1.962  2.00  2.00
+      1 eager    isolated eager_add2      W    1.003  1.17  1.17
+      1 compiled isolated flush           W    0.423  0.33  0.33
+      1 compiled isolated inductor_fused  R    2.008  2.01  2.01
+      1 compiled isolated inductor_fused  W    0.578  0.67  0.67
+      1 eager    steady   flush           W    0.412  0.33  0.33
+      1 eager    steady   eager_add1      R    1.006  1.01  1.01
+      1 eager    steady   eager_add1      W    0.520  0.50  0.50
+      1 eager    steady   eager_gelu      R    0.895  1.00  1.00
+      1 eager    steady   eager_gelu      W    0.979  1.00  1.00
+      1 eager    steady   eager_add2      R    1.963  2.00  2.00
+      1 eager    steady   eager_add2      W    1.009  1.17  1.17
+      1 eager    steady   eager_add1      R    1.006  1.01  1.01
+      1 eager    steady   eager_add1      W    0.925  0.83  0.83
+      1 eager    steady   eager_gelu      R    0.897  1.00  1.00
+      1 eager    steady   eager_gelu      W    0.965  1.00  1.00
+      1 eager    steady   eager_add2      R    1.962  2.00  2.00
+      1 eager    steady   eager_add2      W    0.997  1.17  1.17
+      1 eager    steady   eager_add1      R    1.005  1.01  1.01
+      1 eager    steady   eager_add1      W    0.926  0.83  0.83
+      1 eager    steady   eager_gelu      R    0.906  1.00  1.00
+      1 eager    steady   eager_gelu      W    0.961  1.00  1.00
+      1 eager    steady   eager_add2      R    1.960  2.00  2.00
+      1 eager    steady   eager_add2      W    0.999  1.17  1.17
+      1 compiled steady   flush           W    0.418  0.33  0.33
+      1 compiled steady   inductor_fused  R    2.007  2.01  2.01
+      1 compiled steady   inductor_fused  W    0.584  0.67  0.67
+      1 compiled steady   inductor_fused  R    2.006  2.01  2.01
+      1 compiled steady   inductor_fused  W    1.017  1.00  1.00
+      1 compiled steady   inductor_fused  R    2.006  2.01  2.01
+      1 compiled steady   inductor_fused  W    1.010  1.00  1.00
+      2 eager    isolated flush           W    0.179  0.17  0.17
+      2 eager    isolated eager_add1      R    1.004  1.00  1.00
+      2 eager    isolated eager_add1      W    0.765  0.75  0.75
+      2 eager    isolated eager_gelu      R    1.000  1.00  1.00
+      2 eager    isolated eager_gelu      W    0.980  1.00  1.00
+      2 eager    isolated eager_add2      R    2.000  2.00  2.00
+      2 eager    isolated eager_add2      W    0.989  1.08  1.08
+      2 compiled isolated flush           W    0.222  0.17  0.17
+      2 compiled isolated inductor_fused  R    2.006  2.00  2.00
+      2 compiled isolated inductor_fused  W    0.769  0.83  0.83
+      2 eager    steady   flush           W    0.229  0.17  0.17
+      2 eager    steady   eager_add1      R    1.005  1.00  1.00
+      2 eager    steady   eager_add1      W    0.766  0.75  0.75
+      2 eager    steady   eager_gelu      R    1.000  1.00  1.00
+      2 eager    steady   eager_gelu      W    0.981  1.00  1.00
+      2 eager    steady   eager_add2      R    2.000  2.00  2.00
+      2 eager    steady   eager_add2      W    0.992  1.08  1.08
+      2 eager    steady   eager_add1      R    1.004  1.00  1.00
+      2 eager    steady   eager_add1      W    0.966  0.92  0.92
+      2 eager    steady   eager_gelu      R    1.000  1.00  1.00
+      2 eager    steady   eager_gelu      W    0.981  1.00  1.00
+      2 eager    steady   eager_add2      R    2.000  2.00  2.00
+      2 eager    steady   eager_add2      W    0.998  1.08  1.08
+      2 eager    steady   eager_add1      R    1.004  1.00  1.00
+      2 eager    steady   eager_add1      W    0.970  0.92  0.92
+      2 eager    steady   eager_gelu      R    1.000  1.00  1.00
+      2 eager    steady   eager_gelu      W    0.979  1.00  1.00
+      2 eager    steady   eager_add2      R    2.000  2.00  2.00
+      2 eager    steady   eager_add2      W    1.001  1.08  1.08
+      2 compiled steady   flush           W    0.218  0.17  0.17
+      2 compiled steady   inductor_fused  R    2.004  2.00  2.00
+      2 compiled steady   inductor_fused  W    0.768  0.83  0.83
+      2 compiled steady   inductor_fused  R    2.005  2.00  2.00
+      2 compiled steady   inductor_fused  W    0.979  1.00  1.00
+      2 compiled steady   inductor_fused  R    2.006  2.00  2.00
+      2 compiled steady   inductor_fused  W    0.997  1.00  1.00
+      3 eager    isolated flush           W    0.151  0.11  0.11
+      3 eager    isolated eager_add1      R    1.004  1.00  1.00
+      3 eager    isolated eager_add1      W    0.839  0.83  0.83
+      3 eager    isolated eager_gelu      R    1.000  1.00  1.00
+      3 eager    isolated eager_gelu      W    0.985  1.00  1.00
+      3 eager    isolated eager_add2      R    2.001  2.00  2.00
+      3 eager    isolated eager_add2      W    0.997  1.06  1.06
+      3 compiled isolated flush           W    0.147  0.11  0.11
+      3 compiled isolated inductor_fused  R    2.005  2.00  2.00
+      3 compiled isolated inductor_fused  W    0.844  0.89  0.89
+      3 eager    steady   flush           W    0.153  0.11  0.11
+      3 eager    steady   eager_add1      R    1.004  1.00  1.00
+      3 eager    steady   eager_add1      W    0.842  0.83  0.83
+      3 eager    steady   eager_gelu      R    1.000  1.00  1.00
+      3 eager    steady   eager_gelu      W    0.987  1.00  1.00
+      3 eager    steady   eager_add2      R    2.000  2.00  2.00
+      3 eager    steady   eager_add2      W    0.991  1.06  1.06
+      3 eager    steady   eager_add1      R    1.003  1.00  1.00
+      3 eager    steady   eager_add1      W    0.981  0.94  0.94
+      3 eager    steady   eager_gelu      R    1.000  1.00  1.00
+      3 eager    steady   eager_gelu      W    0.990  1.00  1.00
+      3 eager    steady   eager_add2      R    2.000  2.00  2.00
+      3 eager    steady   eager_add2      W    0.999  1.06  1.06
+      3 eager    steady   eager_add1      R    1.004  1.00  1.00
+      3 eager    steady   eager_add1      W    0.981  0.94  0.94
+      3 eager    steady   eager_gelu      R    1.000  1.00  1.00
+      3 eager    steady   eager_gelu      W    0.989  1.00  1.00
+      3 eager    steady   eager_add2      R    2.000  2.00  2.00
+      3 eager    steady   eager_add2      W    0.997  1.06  1.06
+      3 compiled steady   flush           W    0.148  0.11  0.11
+      3 compiled steady   inductor_fused  R    2.004  2.00  2.00
+      3 compiled steady   inductor_fused  W    0.848  0.89  0.89
+      3 compiled steady   inductor_fused  R    2.006  2.00  2.00
+      3 compiled steady   inductor_fused  W    0.999  1.00  1.00
+      3 compiled steady   inductor_fused  R    2.005  2.00  2.00
+      3 compiled steady   inductor_fused  W    0.986  1.00  1.00
+verdict: {"R-0": true, "R-1": false, "R-1 share v4": 0.731, "R-1 share v3": 0.721, "R-2": "v4 better", "R-2 share": 0.812, "R-3": true, "plan_consistent": true}

@@ -1,0 +1,13 @@
+benchmark,variant,params,n_elems,logical_read_bytes,logical_write_bytes,timing_mode,iters_per_rep,flush_l2,rep,time_ms
+gather,gather,T=1048576;M=262144;dist=seq,262144,2097152,1048576,isolated,1,1,0,0.701440
+gather,gather,T=1048576;M=262144;dist=seq,262144,2097152,1048576,steady,1,0,0,0.760832
+gather,scatter_add,T=1048576;M=262144;dist=seq,262144,3145728,1048576,isolated,1,1,0,0.704512
+gather,scatter_add,T=1048576;M=262144;dist=seq,262144,3145728,1048576,steady,1,0,0,0.758560
+gather,gather,T=1048576;M=262144;dist=uniform,262144,2097152,1048576,isolated,1,1,0,0.745472
+gather,gather,T=1048576;M=262144;dist=uniform,262144,2097152,1048576,steady,1,0,0,0.790528
+gather,scatter_add,T=1048576;M=262144;dist=uniform,262144,3145728,1048576,isolated,1,1,0,0.778240
+gather,scatter_add,T=1048576;M=262144;dist=uniform,262144,3145728,1048576,steady,1,0,0,0.835328
+gather,gather,T=1048576;M=262144;dist=zipf1.0,262144,2097152,1048576,isolated,1,1,0,0.724992
+gather,gather,T=1048576;M=262144;dist=zipf1.0,262144,2097152,1048576,steady,1,0,0,0.788480
+gather,scatter_add,T=1048576;M=262144;dist=zipf1.0,262144,3145728,1048576,isolated,1,1,0,0.753664
+gather,scatter_add,T=1048576;M=262144;dist=zipf1.0,262144,3145728,1048576,steady,1,0,0,0.804864

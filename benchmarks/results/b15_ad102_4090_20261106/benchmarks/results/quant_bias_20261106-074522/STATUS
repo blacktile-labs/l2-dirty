@@ -1,0 +1,10 @@
+run_r1 rc=0
+run_r2 rc=0
+run_r3 rc=0
+score rc=0
+NVIDIA GeForce RTX 4090: U-0 PASS (runs 3)
+  4096x4096: t_us zero {'fp16': 54.27, 'w8': 30.72, 'w4': 22.53} read {'fp16': 38.91, 'w8': 21.5, 'w4': 14.34}; S_w8 {'zero': 1.767, 'read': 1.81, 'D': -0.0237}; S_w4 {'zero': 2.409, 'read': 2.714, 'D': -0.1124}; fastest {'zero': 'w4', 'read': 'w4'}; regret +0.00%
+  4096x14336: t_us zero {'fp16': 149.5, 'w8': 92.16, 'w4': 60.42} read {'fp16': 126.98, 'w8': 66.56, 'w4': 40.96}; S_w8 {'zero': 1.622, 'read': 1.908, 'D': -0.1496}; S_w4 {'zero': 2.475, 'read': 3.1, 'D': -0.2017}; fastest {'zero': 'w4', 'read': 'w4'}; regret +0.00%
+  14336x4096: t_us zero {'fp16': 149.5, 'w8': 91.14, 'w4': 50.18} read {'fp16': 126.98, 'w8': 65.54, 'w4': 36.86}; S_w8 {'zero': 1.64, 'read': 1.937, 'D': -0.1533}; S_w4 {'zero': 2.98, 'read': 3.444, 'D': -0.135}; fastest {'zero': 'w4', 'read': 'w4'}; regret +0.00%
+U-1 worst D -20.17% -> distorted (speedup under-estimated); U-2 -> no flip
+verdict: {"U-0": true, "U-1": "distorted", "U-1 worst D": -0.2017, "U-1 sign": "speedup under-estimated", "U-2": "no flip"}

@@ -1,0 +1,2 @@
+fusion ncu rc=1
+ncu: permission-blocked (ERR_NVGPUCTRPERM); counters = unavailable

@@ -1,0 +1,5 @@
+max SM clock 1410 MHz, lock target 1057 MHz
+The current user does not have permission to change clocks for GPU 00000000:B3:00.0.
+Terminating early due to previous errors.
+lock rc=4
+locked=0 target_mhz=1057

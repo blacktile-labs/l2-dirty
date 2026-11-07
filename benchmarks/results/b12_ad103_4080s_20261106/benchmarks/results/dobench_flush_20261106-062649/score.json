@@ -1,0 +1,54 @@
+{
+ "device": "NVIDIA GeForce RTX 4080 SUPER",
+ "l2_bytes": 67108864,
+ "R_gpu": 0.6861,
+ "G-0": true,
+ "G-0 parts": {
+  "correctness": true,
+  "control writes": true,
+  "read flush leaves no dirty data": true,
+  "GEMV reads its weight": true
+ },
+ "G-1": "not",
+ "G-1 closer to": "v4 (0.5)",
+ "G-1 MAE": {
+  "B9b": 0.4441,
+  "v4": 0.258
+ },
+ "X": {
+  "2": 0.2414,
+  "4": 0.2419,
+  "8": 0.2426
+ },
+ "G-1b": "residue independent of the GEMV size",
+ "G-2": "timing bias = residue write-back at the clean DRAM rate",
+ "G-2 detail": {
+  "2": {
+   "dt_us": 26.62,
+   "dt_pred_us": 23.61,
+   "t_read_us": 195.58
+  },
+  "4": {
+   "dt_us": 27.52,
+   "dt_pred_us": 23.35,
+   "t_read_us": 386.18
+  },
+  "8": {
+   "dt_us": 28.67,
+   "dt_pred_us": 23.29,
+   "t_read_us": 768.0
+  }
+ },
+ "bias": {
+  "2": 0.1361,
+  "4": 0.0713,
+  "8": 0.0373,
+  "fixed 4096x4096": 0.3846
+ },
+ "do_bench (exploratory)": {
+  "2": 0.1412,
+  "4": 0.0716,
+  "8": 0.0373,
+  "fixed": 0.3871
+ }
+}

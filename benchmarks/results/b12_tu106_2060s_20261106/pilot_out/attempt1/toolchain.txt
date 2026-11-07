@@ -1,0 +1,2 @@
+benchmarks/scripts/remote_b12.sh: line 38: ncu: command not found
+2.7.1+cu126 12.6 3.3.1 True

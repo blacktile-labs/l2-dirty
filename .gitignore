@@ -1,0 +1,8 @@
+__pycache__/
+*.pyc
+.env
+.vast_work/
+*.ncu-rep
+*.ncu-repz
+*.nsys-rep
+benchmarks/results/*smoke*/

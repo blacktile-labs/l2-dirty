@@ -1,0 +1,43 @@
+{
+ "device": "NVIDIA H100 NVL",
+ "l2_bytes": 62914560,
+ "T step us": {
+  "fp16": 616.38,
+  "int4": 363.74,
+  "nf4": 507.84
+ },
+ "step IQR/median": {
+  "fp16": 0.005,
+  "int4": 0.0151,
+  "nf4": 0.0127
+ },
+ "E": {
+  "fp16 graph": -0.1218,
+  "fp16 cold": -0.0452,
+  "fp16 write": 0.1677,
+  "int4 graph": -0.1951,
+  "int4 cold": -0.0641,
+  "int4 write": 0.0047,
+  "nf4 graph": -0.1039,
+  "nf4 cold": 0.0444,
+  "nf4 write": 0.0698
+ },
+ "V-0": true,
+ "V-0 parts": {
+  "correctness": true,
+  "steps": true,
+  "stable": true
+ },
+ "D": {
+  "int4 graph": 0.091,
+  "int4 cold": 0.0203,
+  "int4 write": 0.1623,
+  "nf4 graph": -0.02,
+  "nf4 cold": -0.0857,
+  "nf4 write": 0.0915
+ },
+ "V-1 max |E_graph|": 0.1951,
+ "V-1": "not",
+ "V-2": "not",
+ "V-3": "not"
+}

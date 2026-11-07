@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "/root/dmkl/benchmarks/scripts/wb_probe_b8_score.py", line 161, in <module>
+    sys.exit(main())
+  File "/root/dmkl/benchmarks/scripts/wb_probe_b8_score.py", line 143, in main
+    kr = [ws.align_kernel(load_ncu_raw(p), n, steady, *ws.kernel_names(meta)) for p in a.kernel_csv]
+  File "/root/dmkl/benchmarks/scripts/wb_probe_b8_score.py", line 143, in <listcomp>
+    kr = [ws.align_kernel(load_ncu_raw(p), n, steady, *ws.kernel_names(meta)) for p in a.kernel_csv]
+  File "/root/dmkl/benchmarks/scripts/counter_prereg.py", line 211, in load_ncu_raw
+    raise ValueError(f"{path}: column {m!r} missing")
+ValueError: benchmarks/results/wb_probe_b8_20261106-052616/kernel_r1.csv: column 'dram__bytes_read.sum' missing

@@ -1,0 +1,387 @@
+{
+ "benchmark": "flush_bias_probe",
+ "device": "NVIDIA GeForce RTX 4060 Ti",
+ "l2_bytes": 33554432,
+ "cc": "8.9",
+ "sm_count": 34,
+ "versions": {
+  "torch": "2.7.1+cu126",
+  "cuda": "12.6",
+  "triton": "3.3.1",
+  "bitsandbytes": "0.50.2",
+  "liger-kernel": null
+ },
+ "pr_head": "ba27327b9a4667b58e89ae5e1f0d7efe453a2021",
+ "ptx_check": {
+  "ld_volatile_global": 2,
+  "ld_global": 0,
+  "st_global": 0,
+  "buffer_unchanged": true
+ },
+ "smoke": false,
+ "run_seed": 5,
+ "rows": [
+  {
+   "family": "gemv",
+   "case": "4096x4096",
+   "bytes": 33554432,
+   "cand": "cublas_fp16",
+   "ms": {
+    "none": 0.12598399817943573,
+    "sum": 0.12697599828243256,
+    "pr": 0.12697599828243256,
+    "zero": 0.16383999586105347
+   },
+   "order": [
+    "none",
+    "sum",
+    "pr",
+    "zero"
+   ]
+  },
+  {
+   "family": "gemv",
+   "case": "4096x4096",
+   "bytes": 33554432,
+   "cand": "tinygemm_k2",
+   "ms": {
+    "pr": 0.035840000957250595,
+    "sum": 0.035840000957250595,
+    "zero": 0.05222399905323982
+   },
+   "order": [
+    "pr",
+    "sum",
+    "zero"
+   ]
+  },
+  {
+   "family": "gemv",
+   "case": "4096x4096",
+   "bytes": 33554432,
+   "cand": "tinygemm_k8",
+   "ms": {
+    "zero": 0.05119999870657921,
+    "sum": 0.035840000957250595,
+    "pr": 0.035840000957250595
+   },
+   "order": [
+    "zero",
+    "sum",
+    "pr"
+   ]
+  },
+  {
+   "family": "gemv",
+   "case": "4096x4096",
+   "bytes": 33554432,
+   "cand": "tinygemm_k4",
+   "ms": {
+    "sum": 0.035840000957250595,
+    "pr": 0.035840000957250595,
+    "zero": 0.05119999870657921
+   },
+   "order": [
+    "sum",
+    "pr",
+    "zero"
+   ]
+  },
+  {
+   "family": "gemv",
+   "case": "4096x4096",
+   "bytes": 33554432,
+   "cand": "bnb_nf4",
+   "ms": {
+    "zero": 0.06963200122117996,
+    "pr": 0.04608000069856644,
+    "sum": 0.04608000069856644
+   },
+   "order": [
+    "zero",
+    "pr",
+    "sum"
+   ]
+  },
+  {
+   "family": "gemv",
+   "case": "14336x4096",
+   "bytes": 117440512,
+   "cand": "tinygemm_k8",
+   "ms": {
+    "zero": 0.1658879965543747,
+    "sum": 0.11776000261306763,
+    "pr": 0.11776000261306763
+   },
+   "order": [
+    "zero",
+    "sum",
+    "pr"
+   ]
+  },
+  {
+   "family": "gemv",
+   "case": "14336x4096",
+   "bytes": 117440512,
+   "cand": "tinygemm_k4",
+   "ms": {
+    "pr": 0.11776000261306763,
+    "sum": 0.11776000261306763,
+    "zero": 0.1658879965543747
+   },
+   "order": [
+    "pr",
+    "sum",
+    "zero"
+   ]
+  },
+  {
+   "family": "gemv",
+   "case": "14336x4096",
+   "bytes": 117440512,
+   "cand": "bnb_nf4",
+   "ms": {
+    "sum": 0.1308159977197647,
+    "zero": 0.16179199516773224,
+    "pr": 0.130048006772995
+   },
+   "order": [
+    "sum",
+    "zero",
+    "pr"
+   ]
+  },
+  {
+   "family": "gemv",
+   "case": "14336x4096",
+   "bytes": 117440512,
+   "cand": "cublas_fp16",
+   "ms": {
+    "zero": 0.4699839949607849,
+    "pr": 0.43212801218032837,
+    "sum": 0.43212801218032837
+   },
+   "order": [
+    "zero",
+    "pr",
+    "sum"
+   ]
+  },
+  {
+   "family": "gemv",
+   "case": "14336x4096",
+   "bytes": 117440512,
+   "cand": "tinygemm_k2",
+   "ms": {
+    "sum": 0.11776000261306763,
+    "zero": 0.1669120043516159,
+    "pr": 0.11878400295972824
+   },
+   "order": [
+    "sum",
+    "zero",
+    "pr"
+   ]
+  },
+  {
+   "family": "gemv",
+   "case": "4096x14336",
+   "bytes": 117440512,
+   "cand": "bnb_nf4",
+   "ms": {
+    "pr": 0.14950400590896606,
+    "sum": 0.15052799880504608,
+    "zero": 0.17819199711084366
+   },
+   "order": [
+    "pr",
+    "sum",
+    "zero"
+   ]
+  },
+  {
+   "family": "gemv",
+   "case": "4096x14336",
+   "bytes": 117440512,
+   "cand": "tinygemm_k8",
+   "ms": {
+    "pr": 0.11776000261306763,
+    "zero": 0.1658879965543747,
+    "sum": 0.11776000261306763
+   },
+   "order": [
+    "pr",
+    "zero",
+    "sum"
+   ]
+  },
+  {
+   "family": "gemv",
+   "case": "4096x14336",
+   "bytes": 117440512,
+   "cand": "tinygemm_k4",
+   "ms": {
+    "zero": 0.16486400365829468,
+    "sum": 0.11771200224757195,
+    "pr": 0.11776000261306763
+   },
+   "order": [
+    "zero",
+    "sum",
+    "pr"
+   ]
+  },
+  {
+   "family": "gemv",
+   "case": "4096x14336",
+   "bytes": 117440512,
+   "cand": "cublas_fp16",
+   "ms": {
+    "pr": 0.43212801218032837,
+    "sum": 0.43212801218032837,
+    "zero": 0.4700160026550293
+   },
+   "order": [
+    "pr",
+    "sum",
+    "zero"
+   ]
+  },
+  {
+   "family": "gemv",
+   "case": "4096x14336",
+   "bytes": 117440512,
+   "cand": "tinygemm_k2",
+   "ms": {
+    "zero": 0.1658879965543747,
+    "sum": 0.11776000261306763,
+    "pr": 0.11776000261306763
+   },
+   "order": [
+    "zero",
+    "sum",
+    "pr"
+   ]
+  },
+  {
+   "family": "attn",
+   "case": "L4096",
+   "bytes": 16777216,
+   "cand": "sdpa_bf16",
+   "ms": {
+    "zero": 0.09728000313043594,
+    "pr": 0.07160000130534172,
+    "sum": 0.07147200033068657
+   },
+   "order": [
+    "zero",
+    "pr",
+    "sum"
+   ]
+  },
+  {
+   "family": "attn",
+   "case": "L16384",
+   "bytes": 67108864,
+   "cand": "sdpa_bf16",
+   "ms": {
+    "zero": 0.35225600004196167,
+    "sum": 0.26009601354599,
+    "pr": 0.26009601354599
+   },
+   "order": [
+    "zero",
+    "sum",
+    "pr"
+   ]
+  },
+  {
+   "family": "attn",
+   "case": "L65536",
+   "bytes": 268435456,
+   "cand": "sdpa_bf16",
+   "ms": {
+    "sum": 0.9953280091285706,
+    "zero": 1.0885119438171387,
+    "pr": 0.9953280091285706
+   },
+   "order": [
+    "sum",
+    "zero",
+    "pr"
+   ]
+  },
+  {
+   "family": "rmsnorm",
+   "case": "T2048",
+   "bytes": 16777216,
+   "cand": "torch_rmsnorm",
+   "ms": {
+    "sum": 1.1407359838485718,
+    "zero": 1.2498239874839783,
+    "pr": 1.1422719955444336
+   },
+   "order": [
+    "sum",
+    "zero",
+    "pr"
+   ]
+  },
+  {
+   "family": "rmsnorm",
+   "case": "T8192",
+   "bytes": 67108864,
+   "cand": "torch_rmsnorm",
+   "ms": {
+    "pr": 5.21011209487915,
+    "sum": 5.207039833068848,
+    "zero": 5.305344104766846
+   },
+   "order": [
+    "pr",
+    "sum",
+    "zero"
+   ]
+  },
+  {
+   "family": "swiglu",
+   "case": "T512",
+   "bytes": 14680064,
+   "cand": "torch_swiglu",
+   "ms": {
+    "zero": 0.2595840096473694,
+    "sum": 0.17318399995565414,
+    "pr": 0.1730560064315796
+   },
+   "order": [
+    "zero",
+    "sum",
+    "pr"
+   ]
+  },
+  {
+   "family": "swiglu",
+   "case": "T2048",
+   "bytes": 58720256,
+   "cand": "torch_swiglu",
+   "ms": {
+    "zero": 1.1898880004882812,
+    "sum": 1.0844160318374634,
+    "pr": 1.0864640474319458
+   },
+   "order": [
+    "zero",
+    "sum",
+    "pr"
+   ]
+  }
+ ],
+ "invalid": [],
+ "notes": {
+  "rmsnorm T2048 liger_error": "ModuleNotFoundError(\"No module named 'liger_kernel'\")",
+  "rmsnorm T8192 liger_error": "ModuleNotFoundError(\"No module named 'liger_kernel'\")",
+  "swiglu T512 liger_error": "ModuleNotFoundError(\"No module named 'liger_kernel'\")",
+  "swiglu T2048 liger_error": "ModuleNotFoundError(\"No module named 'liger_kernel'\")"
+ },
+ "kernels": {}
+}

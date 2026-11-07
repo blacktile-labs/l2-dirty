@@ -1,0 +1,1 @@
+cuobjdump fatal   : Could not open input file '/root/dmkl/benchmarks/build/wb_probe'

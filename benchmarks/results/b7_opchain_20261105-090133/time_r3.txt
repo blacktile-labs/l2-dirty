@@ -1,0 +1,10 @@
+l2x 0.125   M 24    graph_isolated:    16.1/    9.8 us (1.65x)  graph_steady:     8.7/    3.7 us (2.37x)  e2e_steady:    48.7/   90.3 us (0.54x)
+l2x 0.1875  M 36    graph_isolated:    16.0/    8.1 us (1.97x)  graph_steady:    10.9/    4.2 us (2.58x)  e2e_steady:    39.9/   68.9 us (0.58x)
+l2x 0.25    M 48    graph_isolated:    20.8/   11.2 us (1.86x)  graph_steady:    12.1/    4.9 us (2.45x)  e2e_steady:    36.8/   67.2 us (0.55x)
+l2x 0.3125  M 60    graph_isolated:    25.5/   13.3 us (1.92x)  graph_steady:    19.3/    5.4 us (3.56x)  e2e_steady:    63.1/   92.8 us (0.68x)
+l2x 0.375   M 72    graph_isolated:    27.4/   15.0 us (1.82x)  graph_steady:    23.0/   12.0 us (1.93x)  e2e_steady:    42.8/   70.6 us (0.61x)
+l2x 0.5     M 96    graph_isolated:    46.7/   20.4 us (2.29x)  graph_steady:    30.5/   17.3 us (1.76x)  e2e_steady:    66.8/   93.6 us (0.71x)
+l2x 1       M 192   graph_isolated:    83.4/   37.8 us (2.21x)  graph_steady:    86.4/   37.4 us (2.31x)  e2e_steady:    98.1/   74.5 us (1.32x)
+l2x 2       M 384   graph_isolated:   164.8/   68.9 us (2.39x)  graph_steady:   168.1/   71.1 us (2.37x)  e2e_steady:   180.0/   89.4 us (2.01x)
+l2x 3       M 576   graph_isolated:   250.6/  105.7 us (2.37x)  graph_steady:   249.0/  106.6 us (2.34x)  e2e_steady:   261.1/  112.8 us (2.31x)
+correctness_failures=0

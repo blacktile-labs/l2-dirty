@@ -1,0 +1,4 @@
+# Lock written 2026-11-07 before any B23b measurement (D-103); B23 files unchanged (LOCK_20261107_b23.sha256)
+0a207c6e22316bec9ab45ed2876525b2ca8e431d26e328096f93f2aecf38a54d  research/HYPOTHESES.md
+f85d1ecaddc93d3bbdb9dca09142d1a0d4fc215733a1e4f22561ee030bc37ac9  benchmarks/scripts/clock_gate.py
+c09d8fef0b4e17bf190a0477b8c478414c0ed773ecb80212138a8ad651ec976b  benchmarks/scripts/test_clock_gate.py

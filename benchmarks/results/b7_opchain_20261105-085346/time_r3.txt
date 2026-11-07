@@ -1,0 +1,15 @@
+W1105 15:58:22.906000 255617 torch/_dynamo/convert_frame.py:964] [0/8] torch._dynamo hit config.recompile_limit (8)
+W1105 15:58:22.906000 255617 torch/_dynamo/convert_frame.py:964] [0/8]    function: 'chain' (/mnt/e/data-move-kernel-lab/benchmarks/scripts/torch_opchain.py:71)
+W1105 15:58:22.906000 255617 torch/_dynamo/convert_frame.py:964] [0/8]    last reason: 0/7: tensor 'r' size mismatch at index 0. expected 384, actual 576
+W1105 15:58:22.906000 255617 torch/_dynamo/convert_frame.py:964] [0/8] To log all recompilation reasons, use TORCH_LOGS="recompiles".
+W1105 15:58:22.906000 255617 torch/_dynamo/convert_frame.py:964] [0/8] To diagnose recompilation issues, see https://pytorch.org/docs/main/torch.compiler_troubleshooting.html.
+l2x 0.125   M 24    graph_isolated:    13.4/    7.9 us (1.70x)  graph_steady:     8.8/    3.6 us (2.46x)  e2e_steady:    41.3/   73.9 us (0.56x)
+l2x 0.1875  M 36    graph_isolated:    16.0/    9.5 us (1.69x)  graph_steady:    10.3/    4.3 us (2.37x)  e2e_steady:   179.0/   66.2 us (2.70x)
+l2x 0.25    M 48    graph_isolated:    20.5/   12.8 us (1.60x)  graph_steady:    12.1/    4.8 us (2.52x)  e2e_steady:    45.0/   70.7 us (0.64x)
+l2x 0.3125  M 60    graph_isolated:    25.2/   12.7 us (1.99x)  graph_steady:    19.4/    5.4 us (3.59x)  e2e_steady:    41.6/   64.6 us (0.64x)
+l2x 0.375   M 72    graph_isolated:    27.2/   14.7 us (1.86x)  graph_steady:    22.3/   12.0 us (1.87x)  e2e_steady:    41.3/   89.6 us (0.46x)
+l2x 0.5     M 96    graph_isolated:    34.6/   21.6 us (1.60x)  graph_steady:    29.9/   16.9 us (1.77x)  e2e_steady:    76.6/   64.4 us (1.19x)
+l2x 1       M 192   graph_isolated:    83.1/   35.4 us (2.35x)  graph_steady:    84.0/   37.0 us (2.27x)  e2e_steady:    91.0/   65.9 us (1.38x)
+l2x 2       M 384   graph_isolated:   168.2/   71.5 us (2.35x)  graph_steady:   167.6/   70.7 us (2.37x)  e2e_steady:   178.6/   77.1 us (2.32x)
+l2x 3       M 576   graph_isolated:   249.8/  249.3 us (1.00x)  graph_steady:   249.8/  249.6 us (1.00x)  e2e_steady:   259.5/  266.7 us (0.97x)
+correctness_failures=0

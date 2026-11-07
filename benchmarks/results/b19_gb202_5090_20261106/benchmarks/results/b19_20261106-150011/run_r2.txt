@@ -1,0 +1,1 @@
+69 events, kernels=['e_q', 'gemv', 'gemv16', 'rms16', 'rms64'], correctness_failures=0, notes={'liger': '0.6.2'}

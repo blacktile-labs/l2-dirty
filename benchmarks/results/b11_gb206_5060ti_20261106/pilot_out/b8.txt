@@ -1,0 +1,9 @@
+kernel_r1 rc=0
+kernel_r2 rc=0
+kernel_r3 rc=0
+range_r1 rc=0
+range_r2 rc=0
+range_r3 rc=0
+correctness_failures per run: {'kernel_r1_meta.json': 0, 'kernel_r2_meta.json': 0, 'kernel_r3_meta.json': 0, 'range_r1_meta.json': 0, 'range_r2_meta.json': 0, 'range_r3_meta.json': 0}
+score rc=1
+results: benchmarks/results/wb_probe_b8_20261106-052616

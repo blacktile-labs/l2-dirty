@@ -1,0 +1,11 @@
+
+Fatbin elf code:
+================
+arch = sm_86
+code version = [1,7]
+host = linux
+compile_size = 64bit
+identifier = /mnt/e/data-move-kernel-lab/benchmarks/src/wb_probe.cu 
+
+	code for sm_86
+cuobjdump fatal   : Could not find executable file 'nvdisasm'; you can try adding path to environment variables PATH or NVDISASM_PATH

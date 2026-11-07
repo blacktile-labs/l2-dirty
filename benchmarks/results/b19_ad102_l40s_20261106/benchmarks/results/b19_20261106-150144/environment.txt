@@ -1,0 +1,10 @@
+Fri Nov  6 15:01:44 UTC 2026
+name, driver_version, temperature.gpu, clocks.current.sm [MHz], clocks.current.memory [MHz], pstate, power.limit [W]
+NVIDIA L40S, 580.126.20, 30, 2520 MHz, 9001 MHz, P0, 300.00 W
+CPU(s):                                  64
+Model name:                              Intel(R) Xeon(R) Gold 6438Y+
+2.7.1+cu126 12.6 3.3.1 0.6.2
+8d4e10d513769da8e9785583f63940cf1b92f66caebde780023b8ed29fee24a9  benchmarks/scripts/b19_probe.sh
+021cc7e5841cd116dd062f412f6589028f63f9452a968f717be148e8550a627f  benchmarks/scripts/b19_probe.py
+671ed8f99eb43fffa29097527b7a130039ae74338b22f3b030ce366e68eeed22  benchmarks/scripts/b19_score.py
+1790320875111ac762260afc57661f7182f478ffbccfa164cd8c35bd5ed96fa6  benchmarks/scripts/cleanbench.py

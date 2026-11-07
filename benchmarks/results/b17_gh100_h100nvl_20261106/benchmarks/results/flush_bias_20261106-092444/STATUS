@@ -1,0 +1,14 @@
+run_r1 rc=0
+run_r2 rc=0
+run_r3 rc=0
+run_r4 rc=0
+run_r5 rc=0
+score rc=0
+NVIDIA H100 NVL (L2 60 MiB, cc 9.0): E-0 PASS, E-0' PASS {'runs': 5, 'runs_ok': True, 'ptx_ok': True, 'evict_ratio': 0.767, 'evict_ok': None, 'pass': True, 'cold_as_sum_ok': True, 'pass_amended': True}
+  F-1 B_ref 0.231 -> affected
+  F-3 worst D 0.2201 -> distorted (over-estimated); per shape {'4096x4096': {'tinygemm': {'S_zero': 2.061, 'S_pr': 1.759, 'D': 0.1719, 'D_sum': 0.191}, 'bnb_nf4': {'S_zero': 1.349, 'S_pr': 1.166, 'D': 0.1569, 'D_sum': 0.1709}}, '14336x4096': {'tinygemm': {'S_zero': 1.943, 'S_pr': 1.657, 'D': 0.1724, 'D_sum': 0.1908}, 'bnb_nf4': {'S_zero': 1.26, 'S_pr': 1.043, 'D': 0.2088, 'D_sum': 0.2194}}, '4096x14336': {'tinygemm': {'S_zero': 2.076, 'S_pr': 1.701, 'D': 0.2201, 'D_sum': 0.2188}, 'bnb_nf4': {'S_zero': 1.281, 'S_pr': 1.065, 'D': 0.2027, 'D_sum': 0.1968}}}
+  F-4 {fam: (B, verdict)}: {'attn': ({'sdpa_bf16': 0.0791}, 'affected'), 'rmsnorm': ({'liger_rmsnorm': 0.1376, 'torch_rmsnorm': 0.0067}, 'affected'), 'swiglu': ({'liger_swiglu': 0.1269, 'torch_swiglu': 0.0409}, 'affected')}
+  F-6 sum vs pr flush: {'median R': -0.0044, 'max |R|': 0.0113, 'R': {'14336x4096 cublas_fp16': -0.0113, '4096x14336 cublas_fp16': 0.0024}}
+  F-7 B_l2 0.2285 vs B_ref 0.231 -> similar
+  F-5 inputs {'B_sum': 0.245, 'D_sum': 0.1908}; tick fraction 0.01; invalid []
+verdict: {"device": "NVIDIA H100 NVL", "B_ref": 0.231, "F-1": "affected", "F-3": "distorted", "F-3 worst D": 0.2201, "F-3 sign": "over-estimated", "B_l2": 0.2285, "F-7": "similar", "E-0": true}

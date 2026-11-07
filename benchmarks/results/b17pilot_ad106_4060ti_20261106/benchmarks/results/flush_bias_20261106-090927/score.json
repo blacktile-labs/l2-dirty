@@ -1,0 +1,259 @@
+{
+ "device": "NVIDIA GeForce RTX 4060 Ti",
+ "l2_bytes": 33554432,
+ "cc": "8.9",
+ "versions": {
+  "torch": "2.7.1+cu126",
+  "cuda": "12.6",
+  "triton": "3.3.1",
+  "bitsandbytes": "0.50.2",
+  "liger-kernel": null
+ },
+ "E-0": {
+  "runs": 5,
+  "runs_ok": true,
+  "ptx_ok": true,
+  "evict_ratio": 1.008,
+  "evict_ok": null,
+  "pass": true
+ },
+ "bias": {
+  "gemv 4096x4096 tinygemm_k4": 0.4286,
+  "gemv 4096x4096 tinygemm_k8": 0.4312,
+  "gemv 4096x4096 bnb_nf4": 0.5111,
+  "gemv 4096x4096 cublas_fp16": 0.2903,
+  "gemv 4096x4096 tinygemm_k2": 0.4571,
+  "gemv 14336x4096 tinygemm_k4": 0.4035,
+  "gemv 14336x4096 tinygemm_k2": 0.4138,
+  "gemv 14336x4096 bnb_nf4": 0.2402,
+  "gemv 14336x4096 tinygemm_k8": 0.4087,
+  "gemv 14336x4096 cublas_fp16": 0.0855,
+  "gemv 4096x14336 tinygemm_k8": 0.4022,
+  "gemv 4096x14336 cublas_fp16": 0.0877,
+  "gemv 4096x14336 bnb_nf4": 0.1849,
+  "gemv 4096x14336 tinygemm_k2": 0.4087,
+  "gemv 4096x14336 tinygemm_k4": 0.4,
+  "attn L4096 sdpa_bf16": 0.3587,
+  "attn L16384 sdpa_bf16": 0.3597,
+  "attn L65536 sdpa_bf16": 0.094,
+  "rmsnorm T2048 torch_rmsnorm": 0.09,
+  "rmsnorm T8192 torch_rmsnorm": 0.0183,
+  "swiglu T512 torch_swiglu": 0.4795,
+  "swiglu T2048 torch_swiglu": 0.0962
+ },
+ "B_ref": 0.0855,
+ "F-1": "affected",
+ "F-3": "distorted",
+ "F-3 worst D": -0.2266,
+ "F-3 sign": "under-estimated",
+ "F-3 per shape": {
+  "4096x4096": {
+   "tinygemm": {
+    "S_zero": 3.2,
+    "S_pr": 3.543,
+    "D": -0.0968,
+    "D_sum": -0.0915
+   },
+   "bnb_nf4": {
+    "S_zero": 2.353,
+    "S_pr": 2.756,
+    "D": -0.1461,
+    "D_sum": -0.1411
+   }
+  },
+  "14336x4096": {
+   "tinygemm": {
+    "S_zero": 2.838,
+    "S_pr": 3.67,
+    "D": -0.2266,
+    "D_sum": -0.2266
+   },
+   "bnb_nf4": {
+    "S_zero": 2.905,
+    "S_pr": 3.32,
+    "D": -0.1248,
+    "D_sum": -0.1224
+   }
+  },
+  "4096x14336": {
+   "tinygemm": {
+    "S_zero": 2.851,
+    "S_pr": 3.67,
+    "D": -0.2231,
+    "D_sum": -0.2231
+   },
+   "bnb_nf4": {
+    "S_zero": 2.653,
+    "S_pr": 2.89,
+    "D": -0.0821,
+    "D_sum": -0.0758
+   }
+  }
+ },
+ "F-4": {
+  "attn": {
+   "case": "L65536",
+   "B": {
+    "sdpa_bf16": 0.094
+   },
+   "verdict": "affected"
+  },
+  "rmsnorm": {
+   "case": "T8192",
+   "B": {
+    "torch_rmsnorm": 0.0183
+   },
+   "verdict": "not affected"
+  },
+  "swiglu": {
+   "case": "T2048",
+   "B": {
+    "torch_swiglu": 0.0962
+   },
+   "verdict": "affected"
+  }
+ },
+ "F-6": {
+  "median R": 0.0,
+  "max |R|": 0.0086,
+  "R": {
+   "4096x4096 bnb_nf4": 0.0,
+   "4096x4096 cublas_fp16": -0.0058,
+   "14336x4096 tinygemm_k4": 0.0,
+   "14336x4096 tinygemm_k2": -0.0086,
+   "14336x4096 bnb_nf4": 0.0027,
+   "14336x4096 tinygemm_k8": 0.0,
+   "14336x4096 cublas_fp16": 0.0,
+   "4096x14336 tinygemm_k8": 0.0,
+   "4096x14336 cublas_fp16": 0.0,
+   "4096x14336 bnb_nf4": 0.0068,
+   "4096x14336 tinygemm_k2": 0.0,
+   "4096x14336 tinygemm_k4": 0.0
+  }
+ },
+ "F-5 inputs": {
+  "B_sum": 0.0855,
+  "D_sum": -0.2266
+ },
+ "tick fraction": 0.791,
+ "t_us": {
+  "gemv 4096x4096 tinygemm_k4": {
+   "pr": 35.84,
+   "sum": 35.84,
+   "zero": 51.2
+  },
+  "gemv 4096x4096 tinygemm_k8": {
+   "pr": 35.84,
+   "sum": 35.84,
+   "zero": 51.3
+  },
+  "gemv 4096x4096 bnb_nf4": {
+   "pr": 46.08,
+   "sum": 46.08,
+   "zero": 69.63
+  },
+  "gemv 4096x4096 cublas_fp16": {
+   "sum": 126.24,
+   "pr": 126.98,
+   "zero": 163.84,
+   "none": 125.98
+  },
+  "gemv 4096x4096 tinygemm_k2": {
+   "zero": 52.22,
+   "sum": 35.84,
+   "pr": 35.84
+  },
+  "gemv 14336x4096 tinygemm_k4": {
+   "pr": 117.76,
+   "sum": 117.76,
+   "zero": 165.28
+  },
+  "gemv 14336x4096 tinygemm_k2": {
+   "sum": 117.76,
+   "zero": 167.94,
+   "pr": 118.78
+  },
+  "gemv 14336x4096 bnb_nf4": {
+   "zero": 161.44,
+   "pr": 130.18,
+   "sum": 130.53
+  },
+  "gemv 14336x4096 tinygemm_k8": {
+   "sum": 117.76,
+   "pr": 117.76,
+   "zero": 165.89
+  },
+  "gemv 14336x4096 cublas_fp16": {
+   "pr": 432.13,
+   "sum": 432.13,
+   "zero": 469.06
+  },
+  "gemv 4096x14336 tinygemm_k8": {
+   "pr": 117.76,
+   "zero": 165.12,
+   "sum": 117.76
+  },
+  "gemv 4096x14336 cublas_fp16": {
+   "zero": 470.02,
+   "pr": 432.13,
+   "sum": 432.13
+  },
+  "gemv 4096x14336 bnb_nf4": {
+   "zero": 177.15,
+   "pr": 149.5,
+   "sum": 150.53
+  },
+  "gemv 4096x14336 tinygemm_k2": {
+   "zero": 165.89,
+   "pr": 117.76,
+   "sum": 117.76
+  },
+  "gemv 4096x14336 tinygemm_k4": {
+   "sum": 117.76,
+   "pr": 117.76,
+   "zero": 164.86
+  },
+  "attn L4096 sdpa_bf16": {
+   "sum": 71.68,
+   "zero": 97.28,
+   "pr": 71.6
+  },
+  "attn L16384 sdpa_bf16": {
+   "zero": 352.26,
+   "pr": 259.07,
+   "sum": 259.07
+  },
+  "attn L65536 sdpa_bf16": {
+   "pr": 994.94,
+   "sum": 995.33,
+   "zero": 1088.51
+  },
+  "rmsnorm T2048 torch_rmsnorm": {
+   "sum": 1141.76,
+   "pr": 1143.81,
+   "zero": 1246.72
+  },
+  "rmsnorm T8192 torch_rmsnorm": {
+   "zero": 5305.34,
+   "sum": 5210.11,
+   "pr": 5210.11
+  },
+  "swiglu T512 torch_swiglu": {
+   "pr": 175.1,
+   "sum": 175.1,
+   "zero": 259.07
+  },
+  "swiglu T2048 torch_swiglu": {
+   "sum": 1084.58,
+   "pr": 1085.44,
+   "zero": 1189.82
+  }
+ },
+ "invalid": [],
+ "notes": {
+  "rmsnorm T2048 liger_error": "ModuleNotFoundError(\"No module named 'liger_kernel'\")",
+  "rmsnorm T8192 liger_error": "ModuleNotFoundError(\"No module named 'liger_kernel'\")",
+  "swiglu T512 liger_error": "ModuleNotFoundError(\"No module named 'liger_kernel'\")",
+  "swiglu T2048 liger_error": "ModuleNotFoundError(\"No module named 'liger_kernel'\")"
+ }
+}

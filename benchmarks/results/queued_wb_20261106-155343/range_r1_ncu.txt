@@ -1,0 +1,69 @@
+==WARNING== Please consult the documentation for current range-based replay mode limitations and requirements.
+==WARNING== Note: Running with uncontrolled GPU caches. Profiling results may be inconsistent.
+==WARNING== Note: Running with unmodified GPU clocks. If not controlled otherwise, profiling results may be inconsistent.
+==PROF== Connected to process 82913 (/usr/bin/python3.12)
+==PROF== Profiling "range" - 0: Application replay pass 1
+==PROF== Profiling "range" - 1: Application replay pass 1
+==PROF== Profiling "range" - 2: Application replay pass 1
+==PROF== Profiling "range" - 3: Application replay pass 1
+==PROF== Profiling "range" - 4: Application replay pass 1
+==PROF== Profiling "range" - 5: Application replay pass 1
+==PROF== Profiling "range" - 6: Application replay pass 1
+==PROF== Profiling "range" - 7: Application replay pass 1
+==PROF== Profiling "range" - 8: Application replay pass 1
+==PROF== Profiling "range" - 9: Application replay pass 1
+==PROF== Profiling "range" - 10: Application replay pass 1
+==PROF== Profiling "range" - 11: Application replay pass 1
+==PROF== Profiling "range" - 12: Application replay pass 1
+==PROF== Profiling "range" - 13: Application replay pass 1
+==PROF== Profiling "range" - 14: Application replay pass 1
+==PROF== Profiling "range" - 15: Application replay pass 1
+==PROF== Profiling "range" - 16: Application replay pass 1
+==PROF== Profiling "range" - 17: Application replay pass 1
+==PROF== Profiling "range" - 18: Application replay pass 1
+==PROF== Profiling "range" - 19: Application replay pass 1
+==PROF== Profiling "range" - 20: Application replay pass 1
+==PROF== Profiling "range" - 21: Application replay pass 1
+==PROF== Profiling "range" - 22: Application replay pass 1
+==PROF== Profiling "range" - 23: Application replay pass 1
+==PROF== Profiling "range" - 24: Application replay pass 1
+==PROF== Profiling "range" - 25: Application replay pass 1
+==PROF== Profiling "range" - 26: Application replay pass 1
+==PROF== Profiling "range" - 27: Application replay pass 1
+==PROF== Profiling "range" - 28: Application replay pass 1
+==PROF== Profiling "range" - 29: Application replay pass 1
+==PROF== Profiling "range" - 30: Application replay pass 1
+==PROF== Profiling "range" - 31: Application replay pass 1
+==PROF== Profiling "range" - 32: Application replay pass 1
+==PROF== Profiling "range" - 33: Application replay pass 1
+==PROF== Profiling "range" - 34: Application replay pass 1
+==PROF== Profiling "range" - 35: Application replay pass 1
+==PROF== Profiling "range" - 36: Application replay pass 1
+==PROF== Profiling "range" - 37: Application replay pass 1
+==PROF== Profiling "range" - 38: Application replay pass 1
+==PROF== Profiling "range" - 39: Application replay pass 1
+==PROF== Profiling "range" - 40: Application replay pass 1
+==PROF== Profiling "range" - 41: Application replay pass 1
+==PROF== Profiling "range" - 42: Application replay pass 1
+==PROF== Profiling "range" - 43: Application replay pass 1
+==PROF== Profiling "range" - 44: Application replay pass 1
+==PROF== Profiling "range" - 45: Application replay pass 1
+==PROF== Profiling "range" - 46: Application replay pass 1
+==PROF== Profiling "range" - 47: Application replay pass 1
+==PROF== Profiling "range" - 48: Application replay pass 1
+==PROF== Profiling "range" - 49: Application replay pass 1
+==PROF== Profiling "range" - 50: Application replay pass 1
+==PROF== Profiling "range" - 51: Application replay pass 1
+==PROF== Profiling "range" - 52: Application replay pass 1
+==PROF== Profiling "range" - 53: Application replay pass 1
+==PROF== Profiling "range" - 54: Application replay pass 1
+==PROF== Profiling "range" - 55: Application replay pass 1
+==PROF== Profiling "range" - 56: Application replay pass 1
+==PROF== Profiling "range" - 57: Application replay pass 1
+==PROF== Profiling "range" - 58: Application replay pass 1
+==PROF== Profiling "range" - 59: Application replay pass 1
+==PROF== Profiling "range" - 60: Application replay pass 1
+==PROF== Profiling "range" - 61: Application replay pass 1
+62 events, correctness_failures=0
+==PROF== Disconnected from process 82913
+==PROF== Report: /mnt/e/data-move-kernel-lab/benchmarks/results/queued_wb_20261106-155343/range_r1.ncu-rep

@@ -1,0 +1,2 @@
+name, clocks.max.sm [MHz], clocks.max.memory [MHz], driver_version, temperature.gpu, pstate
+NVIDIA GeForce RTX 3060, 2115 MHz, 7501 MHz, 535.154.05, 39, P8

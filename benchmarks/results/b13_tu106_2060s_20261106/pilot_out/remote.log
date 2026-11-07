@@ -1,0 +1,8 @@
+[06:56:57] 0 environment
+[06:56:57] 1 toolchain
+2.7.1+cu126 12.6 3.3.1 True
+[06:58:21] 2 smoke
+[06:58:27] smoke rc=0 5 rows, 0 invalid candidates
+[06:58:27] 3 B13
+[06:59:24] B13 rc=0
+[06:59:24] 4 pack

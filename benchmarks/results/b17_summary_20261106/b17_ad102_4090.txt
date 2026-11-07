@@ -1,0 +1,8 @@
+NVIDIA GeForce RTX 4090 (L2 72 MiB, cc 8.9): E-0 FAIL, E-0' PASS {'runs': 5, 'runs_ok': True, 'ptx_ok': True, 'evict_ratio': 1.026, 'evict_ok': False, 'pass': False, 'cold_as_sum_ok': True, 'pass_amended': True}
+  F-1 B_ref 0.1744 -> affected
+  F-3 worst D -0.178 -> distorted (under-estimated); per shape {'4096x4096': {'tinygemm': {'S_zero': 2.929, 'S_pr': 3.077, 'D': -0.048, 'D_sum': -0.0306}, 'bnb_nf4': {'S_zero': 1.988, 'S_pr': 2.222, 'D': -0.1055, 'D_sum': -0.0892}}, '14336x4096': {'tinygemm': {'S_zero': 2.833, 'S_pr': 3.444, 'D': -0.1776, 'D_sum': -0.1776}, 'bnb_nf4': {'S_zero': 2.387, 'S_pr': 2.818, 'D': -0.1529, 'D_sum': -0.1691}}, '4096x14336': {'tinygemm': {'S_zero': 2.808, 'S_pr': 3.416, 'D': -0.178, 'D_sum': -0.1849}, 'bnb_nf4': {'S_zero': 2.179, 'S_pr': 2.404, 'D': -0.0935, 'D_sum': -0.0862}}}
+  F-4 {fam: (B, verdict)}: {'attn': ({'sdpa_bf16': 0.1959}, 'affected'), 'rmsnorm': ({'liger_rmsnorm': 0.5709, 'torch_rmsnorm': 0.0378}, 'affected'), 'swiglu': ({'liger_swiglu': 0.3211, 'torch_swiglu': 0.1985}, 'affected')}
+  F-6 sum vs pr flush: {'median R': -0.008, 'max |R|': 0.0192, 'R': {'4096x4096 cublas_fp16': -0.018, '14336x4096 bnb_nf4': -0.0192, '14336x4096 cublas_fp16': 0.0, '4096x14336 cublas_fp16': -0.008, '4096x14336 bnb_nf4': 0.0}}
+  F-7 B_l2 0.1774 vs B_ref 0.1744 -> similar
+  F-5 inputs {'B_sum': 0.1744, 'D_sum': -0.1776}; tick fraction 0.724; invalid []
+verdict: {"device": "NVIDIA GeForce RTX 4090", "B_ref": 0.1744, "F-1": "affected", "F-3": "distorted", "F-3 worst D": -0.178, "F-3 sign": "under-estimated", "B_l2": 0.1774, "F-7": "similar", "E-0": false}

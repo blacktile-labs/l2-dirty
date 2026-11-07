@@ -1,0 +1,31 @@
+nvcc: NVIDIA (R) Cuda compiler driver
+Copyright (c) 2005-2023 NVIDIA Corporation
+Built on Tue_Aug_15_22:02:13_PDT_2023
+Cuda compilation tools, release 12.2, V12.2.140
+Build cuda_12.2.r12.2/compiler.33191640_0
+flags: -O3 -std=c++17 -lineinfo -arch=sm_86 -Xptxas -v
+ptxas info    : Compiling entry function '_Z21copy_strided_read_u32PKjPjmm' for 'sm_86'
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Used 10 registers, 384 bytes cmem[0]
+ptxas info    : Compiling entry function '_Z17copy_contig_u32x4PK5uint4PS_m' for 'sm_86'
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Used 14 registers, 376 bytes cmem[0]
+ptxas info    : Compiling entry function '_Z15copy_contig_u32PKjPjm' for 'sm_86'
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Used 10 registers, 376 bytes cmem[0]
+ptxas info    : Compiling entry function '_Z12empty_kernelv' for 'sm_86'
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Used 4 registers, 352 bytes cmem[0]
+ptxas info    : Compiling entry function '_Z13flush_l2_readPKjmPj' for 'sm_86'
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Used 8 registers, 376 bytes cmem[0]
+ptxas info    : Compiling entry function '_Z10poison_dstPjmmj' for 'sm_86'
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Used 14 registers, 380 bytes cmem[0], 8 bytes cmem[2]
+ptxas info    : Compiling entry function '_Z8fill_u32Pjmj' for 'sm_86'
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Used 10 registers, 372 bytes cmem[0]
+ptxas info    : Compiling entry function '_Z8init_srcPjmj' for 'sm_86'
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Used 12 registers, 372 bytes cmem[0], 8 bytes cmem[2]
+built: /root/dmkl/benchmarks/build/copy_stride

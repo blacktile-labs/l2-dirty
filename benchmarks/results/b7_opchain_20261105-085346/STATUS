@@ -1,0 +1,23 @@
+warm rc=0
+counters run 1 rc=0
+counters run 2 rc=0
+counters run 3 rc=0
+run 2: plan of the measured run gives identical predictions to the locked ones: True
+run 3: plan of the measured run gives identical predictions to the locked ones: True
+score rc=1
+plan of the measured run gives identical predictions to the locked ones: True
+time run 1 rc=0
+time run 2 rc=0
+time run 3 rc=0
+    l2x               graph_isolated                 graph_steady                   e2e_steady   (eager / compiled us, speedup)
+  0.125       13.4 /     7.9 (1.70x)        8.8 /     3.7 (2.38x)       43.9 /    73.9 (0.59x)
+ 0.1875       16.8 /     8.9 (1.89x)       10.5 /     4.3 (2.44x)       42.1 /    67.4 (0.62x)
+   0.25       20.5 /    10.3 (1.99x)       12.1 /     4.9 (2.47x)       39.9 /    68.9 (0.58x)
+ 0.3125       25.7 /    14.2 (1.81x)       19.7 /     5.4 (3.65x)       44.5 /    77.7 (0.57x)
+  0.375       27.4 /    14.7 (1.86x)       22.8 /    12.0 (1.91x)       41.3 /    71.0 (0.58x)
+    0.5       36.9 /    19.6 (1.88x)       30.7 /    17.3 (1.77x)       47.4 /    65.7 (0.72x)
+      1       83.1 /    35.4 (2.35x)       85.1 /    37.2 (2.29x)       91.9 /    72.1 (1.27x)
+      2      168.2 /    71.5 (2.35x)      167.6 /    70.7 (2.37x)      178.3 /    77.1 (2.31x)
+      3      249.2 /   249.3 (1.00x)      249.5 /   249.2 (1.00x)      260.8 /   268.2 (0.97x)
+T-1 graph_steady speedup at l2x (2.0, 3.0): 2.37, 1.00 (must be in [1.9, 2.8]) -> FAIL
+correctness_failures per run: {'counters_r1_meta.json': 0, 'counters_r2_meta.json': 0, 'counters_r3_meta.json': 0, 'time_r1_meta.json': 0, 'time_r2_meta.json': 0, 'time_r3_meta.json': 0, 'warm_meta.json': 0}

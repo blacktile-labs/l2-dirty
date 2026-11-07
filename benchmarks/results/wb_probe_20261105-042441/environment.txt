@@ -1,0 +1,27 @@
+Thu Nov  5 04:24:41 UTC 2026
+Linux LAPTOP-NAG5V2KI <rented-host-ip>-microsoft-standard-WSL2 #1 SMP PREEMPT_DYNAMIC Tue Oct  6 19:13:07 UTC 2026 x86_64 x86_64 x86_64 GNU/Linux
+name, driver_version, temperature.gpu, clocks.current.sm [MHz], clocks.current.memory [MHz], pstate
+NVIDIA GeForce RTX 3060 Laptop GPU, 591.74, 56, 1282 MHz, 6000 MHz, P0
+NVIDIA (R) Nsight Compute Command Line Profiler
+Copyright (c) 2018-2024 NVIDIA Corporation
+Version 2024.2.1.0 (build 34372528) (public-release)
+d4097fb52fc4cf2aa76eb9a854331ddd76a0d001
+ M HANDOFF.md
+ M benchmarks/scripts/build.sh
+ M benchmarks/scripts/counter_prereg.py
+ M research/DECISION_LOG.md
+ M research/HYPOTHESES.md
+?? benchmarks/results/counters_20261105-040556/
+?? benchmarks/results/wb_probe_20261105-042441/
+?? benchmarks/results/wb_probe_smoke_20261105-042304/
+?? benchmarks/scripts/test_wb_probe_score.py
+?? benchmarks/scripts/wb_probe.sh
+?? benchmarks/scripts/wb_probe_score.py
+?? benchmarks/src/wb_probe.cu
+da84291fcd421be8cc58ac2d5baf8f3a1a77f796f9e810ef2a3ee4bafba4c319  benchmarks/scripts/wb_probe.sh
+e0c82a533340ae7ee9e999874b91cdd700ebbc0709108e2b6c0a8151fb4a2526  benchmarks/build/wb_probe
+05102e5323163e90d67effbf76e9ad8419e88466055e48c6be4e16ecad3be2e3  benchmarks/src/wb_probe.cu
+7a5ea8b826772234d1e9a17990149dee6d5726dee203cf4fa2785e5c224a8c44  benchmarks/src/common.cuh
+5bcd6f86be78df111a5ba0ea398c8e0ba33e61ea7d4ebafc937aa8a6ed12c862  benchmarks/src/dmk_host.hpp
+b165fd69858ecfb63f7bfda29730e46d66aada09edd8d4a57a3e941cb0d33102  benchmarks/scripts/wb_probe_score.py
+e7d21047cb71d492393bca1f04047e1ff175179eace83e68b190145c00d50d57  benchmarks/scripts/counter_prereg.py

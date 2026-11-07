@@ -1,0 +1,7 @@
+# Lock written 2026-11-06 before any B18 measurement value was read (D-080); smoke used for row counts only
+f7d772ae84ff58aef5adba5c1aff85b05a0847ce843420418e817c27a29497a2  research/HYPOTHESES.md
+13ca277375152db3c3acf56e9eca3772252ce2dc14c9e7454269c7b6e37f1603  benchmarks/scripts/flush_fix_probe.py
+5c4e9171e80e56d6d1d6cf21feeccec007cf168b8b1afb644232508aa00d5394  benchmarks/scripts/flush_fix_probe.sh
+212b1d5126133e46737d38e7fbf68e812b5bc098d35e362a45c1ff16107a1420  benchmarks/scripts/flush_fix_score.py
+4b5d5901e02652ea8beee692a4143855cd99867136d75de63548d359377d5f33  benchmarks/scripts/test_flush_fix_score.py
+e7d21047cb71d492393bca1f04047e1ff175179eace83e68b190145c00d50d57  benchmarks/scripts/counter_prereg.py

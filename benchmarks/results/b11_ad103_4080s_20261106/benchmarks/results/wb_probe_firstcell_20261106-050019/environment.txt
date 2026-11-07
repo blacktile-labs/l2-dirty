@@ -1,0 +1,13 @@
+Fri Nov  6 05:00:19 UTC 2026
+name, driver_version, temperature.gpu, clocks.current.sm [MHz], clocks.current.memory [MHz], pstate
+NVIDIA GeForce RTX 4080 SUPER, 575.51.03, 52, 2580 MHz, 11501 MHz, P0
+NVIDIA (R) Nsight Compute Command Line Profiler
+Copyright (c) 2018-2024 NVIDIA Corporation
+Version 2024.2.1.0 (build 34372528) (public-release)
+CELLS=0:0.25,0:0.375,0:0.625,0:0.75,0:0.875,0:2
+907f5e1e85893c275becef632cbbc080610cfb4b4eca51f28703a2a785dfd5bf  benchmarks/scripts/wb_probe_firstcell.sh
+689c385df7786f608c7b22cee22b9c11d7f02c3b5204e565ba938ec5a23e47b9  benchmarks/build/wb_probe
+7dbbd451e459d54b247f5567073131701085e40b50942a75a4335f644ebd77ee  benchmarks/src/wb_probe.cu
+e12ab7bb4ddd83a3e19c837d8a5ff4018291d0006613d08653c8a63d16181c58  benchmarks/scripts/wb_probe_firstcell_score.py
+8f7092ba238caf1396bb66219010d71b8fc10950b4fbf0b52e1fcd65b6b88482  benchmarks/scripts/wb_probe_b6b_score.py
+e7751d8771d93045e11338fa6401ae3af505c6c7a77c04fc4f00081a4479b884  benchmarks/scripts/wb_probe_score.py

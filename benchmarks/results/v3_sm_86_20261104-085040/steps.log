@@ -1,0 +1,24 @@
+== 08:50:40 python3
+== 08:50:40 environment
+== 08:50:40 tests
+unittest rc=0
+test_host_cpp rc=0
+== 08:50:46 build sm_86
+build copy_stride rc=0
+build fusion rc=0
+build stencil rc=0
+== 08:50:53 B1 smoke, 256 MiB
+B1 rc=0
+== 08:50:54 B5 stencil rep 1
+B5 r1 rc=0
+== 08:50:56 B5 stencil rep 2
+B5 r2 rc=0
+== 08:50:58 B5 stencil rep 3
+B5 r3 rc=0
+== 08:51:00 B4 fusion rep 1
+B4 r1 rc=0
+== 08:51:01 B4 fusion rep 2
+B4 r2 rc=0
+== 08:51:02 B4 fusion rep 3
+B4 r3 rc=0
+== 08:51:03 done

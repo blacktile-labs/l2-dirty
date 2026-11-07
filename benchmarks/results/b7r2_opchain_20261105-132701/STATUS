@@ -1,0 +1,13 @@
+warm rc=0
+kernel_r1 rc=0
+range_r1 rc=0
+kernel_r2 rc=0
+range_r2 rc=0
+kernel_r3 rc=0
+range_r3 rc=0
+kernel_r4 rc=0
+range_r4 rc=0
+kernel_r5 rc=0
+range_r5 rc=0
+score rc=1
+plans reproduce the locked predictions: [True, True, True, True, True, True, True, True, True, True]; correctness ok: [True, True, True, True, True, True, True, True, True, True]

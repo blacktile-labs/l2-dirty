@@ -1,0 +1,7 @@
+W1105 15:53:57.733000 248830 torch/_dynamo/convert_frame.py:964] [0/8] torch._dynamo hit config.recompile_limit (8)
+W1105 15:53:57.733000 248830 torch/_dynamo/convert_frame.py:964] [0/8]    function: 'chain' (/mnt/e/data-move-kernel-lab/benchmarks/scripts/torch_opchain.py:71)
+W1105 15:53:57.733000 248830 torch/_dynamo/convert_frame.py:964] [0/8]    last reason: 0/7: tensor 'r' size mismatch at index 0. expected 384, actual 576
+W1105 15:53:57.733000 248830 torch/_dynamo/convert_frame.py:964] [0/8] To log all recompilation reasons, use TORCH_LOGS="recompiles".
+W1105 15:53:57.733000 248830 torch/_dynamo/convert_frame.py:964] [0/8] To diagnose recompilation issues, see https://pytorch.org/docs/main/torch.compiler_troubleshooting.html.
+counters: 180 measured launches over 9 sizes; plan -> benchmarks/results/b7_opchain_20261105-085346/warm_plan.json
+correctness_failures=0

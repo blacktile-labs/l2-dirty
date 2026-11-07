@@ -1,0 +1,30 @@
+warm rc=0
+counters run 1 rc=0
+counters run 2 rc=0
+counters run 3 rc=0
+run 2: plan of the measured run gives identical predictions to the locked ones: True
+run 3: plan of the measured run gives identical predictions to the locked ones: True
+score rc=0
+plan of the measured run gives identical predictions to the locked ones: True
+R-0 flush reads: max rel err 0.18% -> PASS
+R-1 cells within 0.1 B: v4 73.1% (v3 72.1%) of 323; need >= 80% -> FAIL
+R-2 discriminating cells 32: v4 strictly closer in 81.2% -> v4 better (mean e v4 0.240, v3 0.637)
+R-3 far cells (l2x >= 2.0) within 0.1 B: 100.0% of 72 -> PASS
+   eager    mean e: v4 0.094, v3 0.141 (233 cells)
+   compiled mean e: v4 0.090, v3 0.106 (90 cells)
+verdict: {"R-0": true, "R-1": false, "R-1 share v4": 0.731, "R-1 share v3": 0.721, "R-2": "v4 better", "R-2 share": 0.812, "R-3": true, "plan_consistent": true}
+time run 1 rc=0
+time run 2 rc=0
+time run 3 rc=0
+    l2x               graph_isolated                 graph_steady                   e2e_steady   (eager / compiled us, speedup)
+  0.125       13.5 /     6.7 (2.01x)        8.8 /     3.8 (2.33x)       44.9 /    71.9 (0.62x)
+ 0.1875       16.0 /     8.1 (1.97x)       11.1 /     4.2 (2.62x)       43.4 /    70.6 (0.61x)
+   0.25       21.5 /    11.1 (1.93x)       12.2 /     5.0 (2.43x)       41.8 /    94.4 (0.44x)
+ 0.3125       26.1 /    13.6 (1.91x)       19.9 /     5.4 (3.66x)       46.3 /    74.5 (0.62x)
+  0.375       27.9 /    15.0 (1.86x)       23.0 /    12.6 (1.82x)       43.4 /    70.6 (0.61x)
+    0.5       41.0 /    20.4 (2.01x)       32.3 /    17.3 (1.86x)       52.3 /    73.1 (0.72x)
+      1       84.7 /    37.8 (2.24x)       86.4 /    37.4 (2.31x)       98.1 /    74.5 (1.32x)
+      2      167.1 /    70.9 (2.36x)      168.1 /    71.3 (2.36x)      180.0 /    89.4 (2.01x)
+      3      250.6 /   108.5 (2.31x)      249.8 /   106.6 (2.34x)      261.9 /   113.0 (2.32x)
+T-1 graph_steady speedup at l2x (2.0, 3.0): 2.36, 2.34 (must be in [1.9, 2.8]) -> PASS
+correctness_failures per run: {'counters_r1_meta.json': 0, 'counters_r2_meta.json': 0, 'counters_r3_meta.json': 0, 'time_r1_meta.json': 0, 'time_r2_meta.json': 0, 'time_r3_meta.json': 0, 'warm_meta.json': 0}

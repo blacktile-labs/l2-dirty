@@ -1,0 +1,6 @@
+NVIDIA GeForce RTX 2060 SUPER: T-0 PASS (runs 3)
+  4096x4096: pick zero cublas / read bn16_bk128_w8; regret +1.445%; pick bias +5.9%; cuBLAS faster: zero True read False; spearman 0.930; n 37
+  4096x14336: pick zero bn16_bk256_w8 / read bn16_bk256_w8; regret +0.000%; pick bias +2.6%; cuBLAS faster: zero False read False; spearman 0.965; n 37
+  14336x4096: pick zero bn16_bk256_w8 / read bn8_bk256_w4; regret +0.011%; pick bias +2.5%; cuBLAS faster: zero False read False; spearman 0.877; n 37
+T-1 max regret +1.445% -> harmless; T-2 -> flips
+verdict: {"T-0": true, "T-1": "harmless", "T-1 max regret": 0.0145, "T-2": "flips"}

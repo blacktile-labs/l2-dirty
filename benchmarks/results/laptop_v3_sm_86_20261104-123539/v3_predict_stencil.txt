@@ -1,0 +1,35 @@
+MODEL v3 ESTIMATES (stencil). L2=3145728 B. (tau us, BW GB/s) per (kernel type, mode):
+   13pt      isolated tau=    4.96  BW=  176.8
+   13pt      steady   tau=    0.00  BW=  164.6
+   13pt_c    isolated tau=    8.67  BW=  221.4
+   13pt_c    steady   tau=    0.00  BW=  207.3
+   5pt       isolated tau=    3.63  BW=  264.4
+   5pt       steady   tau=    2.76  BW=  263.0
+ 0.1250     lru | mat4/fused2_iso 1.320  mat4/fused2c_iso 0.838  sweep_warm/sweep_cold_iso 0.710
+ 0.1250  random | mat4/fused2_iso 1.320  mat4/fused2c_iso 0.838  sweep_warm/sweep_cold_iso 0.710
+ 0.4688     lru | mat4/fused2_iso 1.102  mat4/fused2c_iso 0.838  sweep_warm/sweep_cold_iso 0.395  mat4/fused2_ste 1.243  mat4/fused2c_ste 1.565
+ 0.4688  random | mat4/fused2_iso 1.315  mat4/fused2c_iso 1.118  sweep_warm/sweep_cold_iso 0.878  mat4/fused2_ste 1.662  mat4/fused2c_ste 2.093
+ 0.5625     lru | mat4/fused2_iso 1.513  mat4/fused2c_iso 1.472  sweep_warm/sweep_cold_iso 1.537  mat4/fused2_ste 1.509  mat4/fused2c_ste 1.900
+ 0.5625  random | mat4/fused2_iso 1.335  mat4/fused2c_iso 1.229  sweep_warm/sweep_cold_iso 1.033  mat4/fused2_ste 1.495  mat4/fused2c_ste 1.882
+ 0.6875     lru | mat4/fused2_iso 1.482  mat4/fused2c_iso 1.501  sweep_warm/sweep_cold_iso 1.424  mat4/fused2_ste 1.462  mat4/fused2c_ste 1.841
+ 0.6875  random | mat4/fused2_iso 1.369  mat4/fused2c_iso 1.346  sweep_warm/sweep_cold_iso 1.093  mat4/fused2_ste 1.433  mat4/fused2c_ste 1.804
+ 0.8125     lru | mat4/fused2_iso 1.460  mat4/fused2c_iso 1.523  sweep_warm/sweep_cold_iso 1.350  mat4/fused2_ste 1.430  mat4/fused2c_ste 1.800
+ 0.8125  random | mat4/fused2_iso 1.388  mat4/fused2c_iso 1.423  sweep_warm/sweep_cold_iso 1.123  mat4/fused2_ste 1.401  mat4/fused2c_ste 1.764
+ 0.9375     lru | mat4/fused2_iso 1.444  mat4/fused2c_iso 1.540  sweep_warm/sweep_cold_iso 1.298  mat4/fused2_ste 1.406  mat4/fused2c_ste 1.771
+ 0.9375  random | mat4/fused2_iso 1.395  mat4/fused2c_iso 1.472  sweep_warm/sweep_cold_iso 1.141  mat4/fused2_ste 1.384  mat4/fused2c_ste 1.742
+ 1.1250     lru | mat4/fused2_iso 1.427  mat4/fused2c_iso 1.559  sweep_warm/sweep_cold_iso 1.243  mat4/fused2_ste 1.381  mat4/fused2c_ste 1.738
+ 1.1250  random | mat4/fused2_iso 1.401  mat4/fused2c_iso 1.523  sweep_warm/sweep_cold_iso 1.147  mat4/fused2_ste 1.365  mat4/fused2c_ste 1.719
+ 1.3750     lru | mat4/fused2_iso 1.411  mat4/fused2c_iso 1.578  sweep_warm/sweep_cold_iso 1.196  mat4/fused2_ste 1.357  mat4/fused2c_ste 1.709
+ 1.3750  random | mat4/fused2_iso 1.398  mat4/fused2c_iso 1.560  sweep_warm/sweep_cold_iso 1.143  mat4/fused2_ste 1.349  mat4/fused2c_ste 1.699
+ 1.7500     lru | mat4/fused2_iso 1.395  mat4/fused2c_iso 1.597  sweep_warm/sweep_cold_iso 1.151  mat4/fused2_ste 1.335  mat4/fused2c_ste 1.680
+ 1.7500  random | mat4/fused2_iso 1.389  mat4/fused2c_iso 1.588  sweep_warm/sweep_cold_iso 1.128  mat4/fused2_ste 1.330  mat4/fused2c_ste 1.675
+ 2.0000     lru | mat4/fused2_iso 1.388  mat4/fused2c_iso 1.606  sweep_warm/sweep_cold_iso 1.131  mat4/fused2_ste 1.324  mat4/fused2c_ste 1.667
+ 2.0000  random | mat4/fused2_iso 1.385  mat4/fused2c_iso 1.602  sweep_warm/sweep_cold_iso 1.120  mat4/fused2_ste 1.322  mat4/fused2c_ste 1.664
+ 2.5000     lru | mat4/fused2_iso 1.378  mat4/fused2c_iso 1.619  sweep_warm/sweep_cold_iso 1.104  mat4/fused2_ste 1.310  mat4/fused2c_ste 1.649
+ 2.5000  random | mat4/fused2_iso 1.377  mat4/fused2c_iso 1.617  sweep_warm/sweep_cold_iso 1.100  mat4/fused2_ste 1.310  mat4/fused2c_ste 1.649
+ 3.0000     lru | mat4/fused2_iso 1.371  mat4/fused2c_iso 1.628  sweep_warm/sweep_cold_iso 1.086  mat4/fused2_ste 1.300  mat4/fused2c_ste 1.637
+ 3.0000  random | mat4/fused2_iso 1.371  mat4/fused2c_iso 1.627  sweep_warm/sweep_cold_iso 1.085  mat4/fused2_ste 1.299  mat4/fused2c_ste 1.636
+ 4.0000     lru | mat4/fused2_iso 1.363  mat4/fused2c_iso 1.639  sweep_warm/sweep_cold_iso 1.064  mat4/fused2_ste 1.288  mat4/fused2c_ste 1.622
+ 4.0000  random | mat4/fused2_iso 1.363  mat4/fused2c_iso 1.639  sweep_warm/sweep_cold_iso 1.064  mat4/fused2_ste 1.288  mat4/fused2c_ste 1.622
+
+pre-registration written: research/preregistration/v3_stencil_rtx3060laptop_calibrated.json

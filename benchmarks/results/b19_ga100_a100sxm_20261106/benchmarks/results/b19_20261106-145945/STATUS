@@ -1,0 +1,13 @@
+run_r1 rc=0
+run_r2 rc=0
+run_r3 rc=0
+score rc=0
+NVIDIA A100-SXM4-40GB (L2 40 MiB): R-0 {'correctness': True, 'liger': True, 'pad >= 200 us': True} -> PASS
+R-1 plain I 2.031 -> the B17 anomaly replicates; R-2 padded I -0.031 -> queue drain
+R-3 none/pr256 padded 0.762 (plain 1.500) -> no flush is warm once the queue is busy
+R-4 S {'e_q': 0.3857, 'gemv': -0.0106, 'rms16': 0.288, 'rms64': 0.1599}; R-4a -> steady charges the deferred output write-back; R-4b pred 0.1628 -> the residue predicts the cold/steady gap
+T median us: {"gemv pad none": 103.424, "gemv pad pr256": 103.424, "gemv pad zero256": 119.808, "gemv pad zeroL2": 120.832, "gemv plain none": 103.424, "gemv plain pr256": 104.448, "gemv plain zero256": 119.808, "gemv plain zeroL2": 119.808, "gemv16 pad none": 16.384, "gemv16 pad pr256": 21.504, "gemv16 pad zero256": 28.672, "gemv16 pad zeroL2": 28.672, "gemv16 plain none": 33.792, "gemv16 plain pr256": 22.528, "gemv16 plain zero256": 28.672, "gemv16 plain zeroL2": 28.672, "rms16 pad none": 26.624, "rms16 pad pr256": 22.528, "rms16 pad zero256": 32.768, "rms16 pad zeroL2": 31.744, "rms16 plain none": 110.592, "rms16 plain pr256": 23.552, "rms16 plain zero256": 32.768, "rms16 plain zeroL2": 99.328}
+M mean us: {"e_q cold": 15.77, "e_q steady": 21.852, "gemv cold": 103.619, "gemv steady": 102.523, "rms16 cold": 22.508, "rms16 steady": 28.989, "rms64 cold": 90.235, "rms64 steady": 104.663}
+do_bench shipped / cleanbench cold - 1: {"e_q": 0.4286, "gemv": 0.1562, "rms16": 0.4559, "rms64": 0.1916}
+host dispatch us: {"rms16": 140.1, "rms64": 136.7, "gemv": 55.8, "gemv16": 50.9, "e_q": 36.6}
+verdict: {"R-0": true, "R-1": "the B17 anomaly replicates", "R-2": "queue drain", "R-3": "no flush is warm once the queue is busy", "R-4a": "steady charges the deferred output write-back", "R-4b": "the residue predicts the cold/steady gap"}

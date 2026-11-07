@@ -1,0 +1,46 @@
+{
+ "device": "NVIDIA GeForce RTX 2060 SUPER",
+ "runs": 3,
+ "T-0": true,
+ "T-1": "harmless",
+ "T-1 max regret": 0.0145,
+ "T-2": "flips",
+ "per shape": {
+  "4096x4096": {
+   "pick_zero": "cublas",
+   "pick_read": "bn16_bk128_w8",
+   "regret": 0.0145,
+   "t_read_pick_read_us": 81.92,
+   "t_read_pick_zero_us": 83.104,
+   "bias_of_pick_zero": 0.0589,
+   "cublas_faster_zero": true,
+   "cublas_faster_read": false,
+   "spearman": 0.9296,
+   "n": 37
+  },
+  "4096x14336": {
+   "pick_zero": "bn16_bk256_w8",
+   "pick_read": "bn16_bk256_w8",
+   "regret": 0.0,
+   "t_read_pick_read_us": 279.264,
+   "t_read_pick_zero_us": 279.264,
+   "bias_of_pick_zero": 0.0256,
+   "cublas_faster_zero": false,
+   "cublas_faster_read": false,
+   "spearman": 0.9651,
+   "n": 37
+  },
+  "14336x4096": {
+   "pick_zero": "bn16_bk256_w8",
+   "pick_read": "bn8_bk256_w4",
+   "regret": 0.0001,
+   "t_read_pick_read_us": 278.848,
+   "t_read_pick_zero_us": 278.88,
+   "bias_of_pick_zero": 0.0251,
+   "cublas_faster_zero": false,
+   "cublas_faster_read": false,
+   "spearman": 0.8772,
+   "n": 37
+  }
+ }
+}

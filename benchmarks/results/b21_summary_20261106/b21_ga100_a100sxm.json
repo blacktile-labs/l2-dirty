@@ -1,0 +1,50 @@
+{
+ "device": "NVIDIA A100-SXM4-40GB",
+ "l2_bytes": 41943040,
+ "T step us": {
+  "fp16": 1274.88,
+  "int4": 456.7,
+  "nf4": 716.8
+ },
+ "step IQR/median": {
+  "fp16": 0.0016,
+  "int4": 0.0045,
+  "nf4": 0.0029
+ },
+ "E": {
+  "fp16 write": 0.2627,
+  "fp16 cold": 0.0522,
+  "fp16 steady": 0.0602,
+  "fp16 l2w": 0.2627,
+  "int4 write": 0.4619,
+  "int4 cold": 0.1749,
+  "int4 steady": 0.1659,
+  "int4 l2w": 0.4709,
+  "nf4 write": 0.1714,
+  "nf4 cold": 0.1257,
+  "nf4 steady": 0.0971,
+  "nf4 l2w": 0.4571
+ },
+ "U-0": true,
+ "U-0 parts": {
+  "correctness": true,
+  "fp16 and int4 captured": true,
+  "stable steps": true
+ },
+ "S_e2e int4": 2.7915,
+ "S_e2e nf4": 1.7786,
+ "D": {
+  "int4 write": -0.1363,
+  "int4 cold": -0.1044,
+  "int4 steady": -0.0906,
+  "int4 l2w": -0.1416,
+  "nf4 write": 0.0779,
+  "nf4 cold": -0.0653,
+  "nf4 steady": -0.0336,
+  "nf4 l2w": -0.1335
+ },
+ "U-1": "not",
+ "U-2 gap": 0.2104,
+ "U-2": "the shipped write flush over-predicts the step",
+ "U-3": "not"
+}

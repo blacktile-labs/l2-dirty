@@ -1,0 +1,10 @@
+[16:43:46] 0 environment
+[16:43:47] 1 toolchain
+[16:44:01] apt rc=0
+[16:44:01] compute capability 8.0 -> torch index cu126
+2.7.1+cu126 12.6 3.3.1 True bnb 0.50.2 liger 0.6.2
+[16:45:37] 2 smoke
+[16:45:49] smoke rc=0 15 events, variants=['fp16', 'int4', 'nf4'], correctness_failures=0, notes={'bitsandbytes': '0.50.2'}
+[16:45:49] 3 B21
+[16:46:32] B21 rc=0
+[16:46:32] 4 pack

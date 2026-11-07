@@ -1,0 +1,2 @@
+==WARNING== Please consult the documentation for current range-based replay mode limitations and requirements.
+==ERROR== 'benchmarks/build/wb_probe' does not exist or is not an executable. Please make sure to specify the absolute path to 'benchmarks/build/wb_probe' if the executable is not in the local directory.

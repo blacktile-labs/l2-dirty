@@ -1,0 +1,8 @@
+Fri Nov  6 14:49:41 UTC 2026
+name, driver_version, temperature.gpu, clocks.current.sm [MHz], clocks.current.memory [MHz], pstate
+NVIDIA GeForce RTX 3060 Laptop GPU, 591.74, 56, 1282 MHz, 6000 MHz, P0
+2.7.1+cu126 12.6 3.3.1
+202ebfc93d2973422ba8f97d4e9956fe2c65828fabecb1011a91c22061321592  benchmarks/scripts/cleanbench_validate.sh
+9d1e66dc82f671da460619cd008e068304515e2a92fccd6c7399c1dbc26e755b  benchmarks/scripts/cleanbench_validate.py
+1790320875111ac762260afc57661f7182f478ffbccfa164cd8c35bd5ed96fa6  benchmarks/scripts/cleanbench.py
+f6834e06d1b9624ad3aaaa723358b0131e302eb6b496050460703d191738642c  benchmarks/scripts/cleanbench_score.py

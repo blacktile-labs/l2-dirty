@@ -1,0 +1,14 @@
+full_kernel_r1 rc=3
+full_kernel_r2 rc=3
+full_kernel_r3 rc=3
+full_range_r1 rc=3
+full_range_r2 rc=3
+full_range_r3 rc=3
+sector_kernel_r1 rc=3
+sector_kernel_r2 rc=3
+sector_kernel_r3 rc=3
+sector_range_r1 rc=3
+sector_range_r2 rc=3
+sector_range_r3 rc=3
+correctness_failures per run: {}
+score rc=1

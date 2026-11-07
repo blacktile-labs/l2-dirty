@@ -1,0 +1,55 @@
+{
+ "benchmark": "quant_bias_probe",
+ "device": "NVIDIA GeForce RTX 2060 SUPER",
+ "l2_bytes": 4194304,
+ "torch": "2.7.1+cu126",
+ "triton": "3.3.1",
+ "smoke": true,
+ "run_seed": 0,
+ "warmup_ms": 10,
+ "rep_ms": 50,
+ "rows": [
+  {
+   "shape": [
+    4096,
+    4096
+   ],
+   "cand": "w8_bn8_bk128_w4",
+   "format": "w8",
+   "zero_ms": 0.06697600334882736,
+   "read_ms": 0.059967998415231705
+  },
+  {
+   "shape": [
+    4096,
+    4096
+   ],
+   "cand": "cublas",
+   "format": "fp16",
+   "zero_ms": 0.08816000074148178,
+   "read_ms": 0.08427200093865395
+  },
+  {
+   "shape": [
+    4096,
+    4096
+   ],
+   "cand": "fp16_bn8_bk128_w4",
+   "format": "fp16",
+   "zero_ms": 0.08991999924182892,
+   "read_ms": 0.08267199993133545
+  },
+  {
+   "shape": [
+    4096,
+    4096
+   ],
+   "cand": "w4_bn8_bk128_w4",
+   "format": "w4",
+   "zero_ms": 0.0674239993095398,
+   "read_ms": 0.06689600273966789
+  }
+ ],
+ "invalid": [],
+ "n_candidates": 4
+}

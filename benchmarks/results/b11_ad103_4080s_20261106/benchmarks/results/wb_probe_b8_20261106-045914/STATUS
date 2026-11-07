@@ -1,0 +1,13 @@
+kernel_r1 rc=0
+kernel_r2 rc=0
+kernel_r3 rc=0
+range_r1 rc=0
+range_r2 rc=0
+range_r3 rc=0
+correctness_failures per run: {'kernel_r1_meta.json': 0, 'kernel_r2_meta.json': 0, 'kernel_r3_meta.json': 0, 'range_r1_meta.json': 0, 'range_r2_meta.json': 0, 'range_r3_meta.json': 0}
+score rc=0
+Z-0 sanity -> PASS; replication RB(1.0, 0.125) = 0.354 (B6c 0.085) -> FAIL
+Z-1 RB on 7 discriminating cells: dvsc closer in 100%; MAE over M+W dvsc 0.120 vs v4 0.260 (dvsc needs <= 0.15) -> dvsc supported
+Z-2 RDR(0.9375) = 0.000 -> effective capacity >= 0.94 L2; Z-2b RDR(1.03125) = 0.516 -> reads retained just above capacity (not LRU-sharp); curve 0.90625:0.000, 0.9375:0.000, 0.96875:0.006, 1:0.004, 1.03125:0.516, 1.0625:1.000
+Z-3 (both models predict WB = 1 in M and W) median WBR = 0.978
+verdict: {"Z-0": true, "Z-0 replication": false, "Z-1": "dvsc supported", "Z-1 share": 1.0, "Z-1 MAE dvsc": 0.12, "Z-1 MAE v4": 0.26, "Z-2": "effective capacity >= 0.94 L2", "Z-2b": "reads retained just above capacity (not LRU-sharp)", "Z-3 WBR median M+W": 0.978}

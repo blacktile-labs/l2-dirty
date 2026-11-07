@@ -1,0 +1,40 @@
+Wed Nov  4 09:01:28 UTC 2026
+Linux fb86dc1c16bd 6.8.0-138-generic #138~22.04.1-Ubuntu SMP PREEMPT_DYNAMIC Fri Aug  7 13:43:15 UTC  x86_64 x86_64 x86_64 GNU/Linux
+PRETTY_NAME="Ubuntu 24.04.4 LTS"
+NAME="Ubuntu"
+VERSION_ID="24.04"
+VERSION="24.04.4 LTS (Noble Numbat)"
+36
+               total        used        free      shared  buff/cache   available
+Mem:            62Gi        12Gi        30Gi        97Mi        21Gi        50Gi
+Swap:          8.0Gi       152Mi       7.9Gi
+model name	: Intel(R) Xeon(R) CPU E5-2686 v4 @ 2.30GHz
+Wed Nov  4 09:01:28 2026       
++-----------------------------------------------------------------------------------------+
+| NVIDIA-SMI 580.173.02             Driver Version: 580.173.02     CUDA Version: 13.0     |
++-----------------------------------------+------------------------+----------------------+
+| GPU  Name                 Persistence-M | Bus-Id          Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp   Perf          Pwr:Usage/Cap |           Memory-Usage | GPU-Util  Compute M. |
+|                                         |                        |               MIG M. |
+|=========================================+========================+======================|
+|   0  NVIDIA GeForce RTX 4060        On  |   00000000:04:00.0 Off |                  N/A |
+|  0%   54C    P8            N/A  /  115W |       2MiB /   8188MiB |      0%      Default |
+|                                         |                        |                  N/A |
++-----------------------------------------+------------------------+----------------------+
+
++-----------------------------------------------------------------------------------------+
+| Processes:                                                                              |
+|  GPU   GI   CI              PID   Type   Process name                        GPU Memory |
+|        ID   ID                                                               Usage      |
+|=========================================================================================|
+|  No running processes found                                                             |
++-----------------------------------------------------------------------------------------+
+name, compute_cap, memory.total [MiB], memory.free [MiB], driver_version, clocks.max.sm [MHz], clocks.max.memory [MHz], temperature.gpu, power.limit [W], pstate
+NVIDIA GeForce RTX 4060, 8.9, 8188 MiB, 7805 MiB, 580.173.02, 3105 MHz, 8501 MHz, 54, 115.00 W, P8
+nvcc: NVIDIA (R) Cuda compiler driver
+Copyright (c) 2005-2025 NVIDIA Corporation
+Built on Wed_Aug_20_01:58:59_PM_PDT_2025
+Cuda compilation tools, release 13.0, V13.0.88
+Build cuda_13.0.r13.0/compiler.36424714_0
+Python 3.12.3
+gcc (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0

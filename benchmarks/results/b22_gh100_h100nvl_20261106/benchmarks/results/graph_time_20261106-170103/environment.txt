@@ -1,0 +1,11 @@
+Fri Nov  6 17:01:03 UTC 2026
+name, driver_version, temperature.gpu, clocks.current.sm [MHz], clocks.current.memory [MHz], pstate, power.limit [W]
+NVIDIA H100 NVL, 615.71.09, 34, 1785 MHz, 2619 MHz, P0, 300.00 W
+CPU(s):                                  224
+Model name:                              AMD EPYC 9554 64-Core Processor
+2.7.1+cu126 12.6 3.3.1 0.50.2
+5ed9a75e76c8265aa218211ad07572226ce8c161d09358c50fe3e95c02661488  benchmarks/scripts/graph_time_probe.sh
+d7fd013851a650478903635e2f7429661ed05ece3febacc2e3337ae6cec39f22  benchmarks/scripts/graph_time_probe.py
+23025d775cf12733797b9b820d81013e32cccbccdffe863aad0811e8134eaa03  benchmarks/scripts/graph_time_score.py
+a9245301a6cf4dd929ac1d39d7025b09aadcc943a7726089d472d4fdeacdaec3  benchmarks/scripts/e2e_probe.py
+1790320875111ac762260afc57661f7182f478ffbccfa164cd8c35bd5ed96fa6  benchmarks/scripts/cleanbench.py

@@ -1,0 +1,11 @@
+run_r1 rc=0
+run_r2 rc=0
+run_r3 rc=0
+score rc=0
+NVIDIA L40S: U-0 PASS (runs 3)
+  4096x4096: t_us zero {'fp16': 69.63, 'w8': 38.91, 'w4': 25.6} read {'fp16': 49.33, 'w8': 26.62, 'w4': 16.9}; S_w8 {'zero': 1.789, 'read': 1.853, 'D': -0.0342}; S_w4 {'zero': 2.72, 'read': 2.92, 'D': -0.0683}; fastest {'zero': 'w4', 'read': 'w4'}; regret +0.00%
+  4096x14336: t_us zero {'fp16': 205.82, 'w8': 119.81, 'w4': 72.7} read {'fp16': 162.82, 'w8': 85.95, 'w4': 50.18}; S_w8 {'zero': 1.718, 'read': 1.894, 'D': -0.0931}; S_w4 {'zero': 2.831, 'read': 3.245, 'D': -0.1276}; fastest {'zero': 'w4', 'read': 'w4'}; regret +0.00%
+  14336x4096: t_us zero {'fp16': 202.75, 'w8': 117.76, 'w4': 68.61} read {'fp16': 161.79, 'w8': 84.99, 'w4': 49.15}; S_w8 {'zero': 1.722, 'read': 1.904, 'D': -0.0955}; S_w4 {'zero': 2.955, 'read': 3.292, 'D': -0.1022}; fastest {'zero': 'w4', 'read': 'w4'}; regret +0.00%
+U-1 worst D -12.76% -> distorted (speedup under-estimated); U-2 -> no flip
+verdict: {"U-0": true, "U-1": "distorted", "U-1 worst D": -0.1276, "U-1 sign": "speedup under-estimated", "U-2": "no flip"}
+results: benchmarks/results/quant_bias_20261106-074331

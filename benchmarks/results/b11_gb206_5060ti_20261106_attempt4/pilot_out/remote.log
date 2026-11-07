@@ -1,0 +1,4 @@
+[05:14:47] 0 environment
+[05:14:47] NVIDIA PCI device but no usable GPU: installing nvidia-driver-575-open
+[05:15:11] after open-module swap: No devices were found
+[05:15:11] no working NVIDIA driver

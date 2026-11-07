@@ -1,0 +1,54 @@
+# transpose summary -- run `20261104-060344-smoke-remote`
+
+- Device: NVIDIA GeForce RTX 3060 (cc 8.6), driver 12020, runtime 12020, L2 2359296 B
+- Correctness failures: 0 (10 checks passed)
+- reps 10, warmup 3, steady iters 10, flush_l2 True
+- ESTIMATED theoretical DRAM BW 360.0 GB/s; ESTIMATED FP32 peak 12845 GFLOP/s (device attributes)
+
+`useful_GBps` = algorithmic bytes of the task / median time (DERIVED). `isolated` = L2 flushed before each rep; `steady` = back-to-back calls.
+
+| variant | params | mode | reps | median_us | p95_us | cv_pct | useful_GBps |
+|---|---|---|---|---|---|---|---|
+| copy_2d | R=4096;C=4096 | isolated | 10 | 402.432 | 403.456 | 0.115 | 333.517 |
+| copy_2d | R=4096;C=4096 | steady | 10 | 404.992 | 405.188 | 0.027 | 331.408 |
+| naive | R=4096;C=4096 | isolated | 10 | 1399.808 | 1400.371 | 0.034 | 95.883 |
+| naive | R=4096;C=4096 | steady | 10 | 1398.818 | 1399.046 | 0.012 | 95.951 |
+| tiled | R=4096;C=4096 | isolated | 10 | 423.968 | 424.960 | 0.121 | 316.575 |
+| tiled | R=4096;C=4096 | steady | 10 | 424.653 | 424.868 | 0.039 | 316.064 |
+| tiled_pad | R=4096;C=4096 | isolated | 10 | 406.640 | 407.552 | 0.142 | 330.065 |
+| tiled_pad | R=4096;C=4096 | steady | 10 | 409.456 | 409.596 | 0.029 | 327.795 |
+| cublas_geam | R=4096;C=4096 | isolated | 10 | 404.480 | 404.656 | 0.119 | 331.828 |
+| cublas_geam | R=4096;C=4096 | steady | 10 | 406.428 | 406.683 | 0.030 | 330.238 |
+| copy_2d | R=1000;C=777 | isolated | 10 | 18.528 | 19.456 | 2.585 | 335.492 |
+| copy_2d | R=1000;C=777 | steady | 10 | 20.797 | 20.868 | 0.274 | 298.896 |
+| naive | R=1000;C=777 | isolated | 10 | 62.464 | 62.733 | 0.198 | 99.513 |
+| naive | R=1000;C=777 | steady | 10 | 61.777 | 61.906 | 0.164 | 100.619 |
+| tiled | R=1000;C=777 | isolated | 10 | 21.616 | 22.528 | 2.249 | 287.565 |
+| tiled | R=1000;C=777 | steady | 10 | 21.879 | 21.947 | 0.270 | 284.115 |
+| tiled_pad | R=1000;C=777 | isolated | 10 | 18.432 | 18.619 | 1.895 | 337.240 |
+| tiled_pad | R=1000;C=777 | steady | 10 | 20.488 | 20.547 | 0.243 | 303.397 |
+| cublas_geam | R=1000;C=777 | isolated | 10 | 19.456 | 20.034 | 2.723 | 319.490 |
+| cublas_geam | R=1000;C=777 | steady | 10 | 21.594 | 21.686 | 0.337 | 287.864 |
+
+### Relative to copy_2d (same shape, same timing mode)
+
+`pct_of_copy` = copy time / variant time x 100 (MEASURED ratio). `est_*` are model estimates.
+
+| shape | mode | variant | median_us | copy_us | pct_of_copy | est_l2_store_sectors_vs_copy | est_smem_conflict_ways |
+|---|---|---|---|---|---|---|---|
+| R=4096;C=4096 | isolated | naive | 1399.808 | 402.432 | 28.749 | 8.000 | 1.000 |
+| R=4096;C=4096 | steady | naive | 1398.818 | 404.992 | 28.952 | 8.000 | 1.000 |
+| R=4096;C=4096 | isolated | tiled | 423.968 | 402.432 | 94.920 | 1.000 | 32.000 |
+| R=4096;C=4096 | steady | tiled | 424.653 | 404.992 | 95.370 | 1.000 | 32.000 |
+| R=4096;C=4096 | isolated | tiled_pad | 406.640 | 402.432 | 98.965 | 1.000 | 1.000 |
+| R=4096;C=4096 | steady | tiled_pad | 409.456 | 404.992 | 98.910 | 1.000 | 1.000 |
+| R=4096;C=4096 | isolated | cublas_geam | 404.480 | 402.432 | 99.494 | nan | nan |
+| R=4096;C=4096 | steady | cublas_geam | 406.428 | 404.992 | 99.647 | nan | nan |
+| R=1000;C=777 | isolated | naive | 62.464 | 18.528 | 29.662 | 8.000 | 1.000 |
+| R=1000;C=777 | steady | naive | 61.777 | 20.797 | 33.664 | 8.000 | 1.000 |
+| R=1000;C=777 | isolated | tiled | 21.616 | 18.528 | 85.714 | 1.000 | 32.000 |
+| R=1000;C=777 | steady | tiled | 21.879 | 20.797 | 95.055 | 1.000 | 32.000 |
+| R=1000;C=777 | isolated | tiled_pad | 18.432 | 18.528 | 100.521 | 1.000 | 1.000 |
+| R=1000;C=777 | steady | tiled_pad | 20.488 | 20.797 | 101.506 | 1.000 | 1.000 |
+| R=1000;C=777 | isolated | cublas_geam | 19.456 | 18.528 | 95.230 | nan | nan |
+| R=1000;C=777 | steady | cublas_geam | 21.594 | 20.797 | 96.309 | nan | nan |

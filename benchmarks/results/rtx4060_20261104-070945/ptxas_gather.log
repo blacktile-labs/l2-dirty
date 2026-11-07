@@ -1,0 +1,31 @@
+ptxas info    : 0 bytes gmem
+ptxas info    : Compiling entry function '_ZN3dmk20flush_l2_read_kernelEPKjmPj' for 'sm_89'
+ptxas info    : Function properties for _ZN3dmk20flush_l2_read_kernelEPKjmPj
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Used 8 registers, used 0 barriers, 376 bytes cmem[0]
+ptxas info    : Compile time = 4.431 ms
+ptxas info    : Compiling entry function '_ZN3dmk15fill_gen_kernelEPjmji' for 'sm_89'
+ptxas info    : Function properties for _ZN3dmk15fill_gen_kernelEPjmji
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Used 12 registers, used 0 barriers, 376 bytes cmem[0], 8 bytes cmem[2]
+ptxas info    : Compile time = 5.875 ms
+ptxas info    : Compiling entry function '_ZN3dmk15fill_u32_kernelEPjmj' for 'sm_89'
+ptxas info    : Function properties for _ZN3dmk15fill_u32_kernelEPjmj
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Used 10 registers, used 0 barriers, 372 bytes cmem[0]
+ptxas info    : Compile time = 3.225 ms
+ptxas info    : Compiling entry function '_Z18scatter_add_kernelPKjS0_Pjm' for 'sm_89'
+ptxas info    : Function properties for _Z18scatter_add_kernelPKjS0_Pjm
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Used 12 registers, used 0 barriers, 384 bytes cmem[0]
+ptxas info    : Compile time = 4.567 ms
+ptxas info    : Compiling entry function '_Z18gather_pair_kernelPKjS0_Pjmj' for 'sm_89'
+ptxas info    : Function properties for _Z18gather_pair_kernelPKjS0_Pjmj
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Used 16 registers, used 0 barriers, 388 bytes cmem[0]
+ptxas info    : Compile time = 3.401 ms
+ptxas info    : Compiling entry function '_Z13gather_kernelPKjS0_Pjm' for 'sm_89'
+ptxas info    : Function properties for _Z13gather_kernelPKjS0_Pjm
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Used 12 registers, used 0 barriers, 384 bytes cmem[0]
+ptxas info    : Compile time = 3.096 ms

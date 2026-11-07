@@ -1,0 +1,21 @@
+ptxas info    : 0 bytes gmem
+ptxas info    : Compiling entry function '_ZN3dmk20flush_l2_read_kernelEPKjmPj' for 'sm_86'
+ptxas info    : Function properties for _ZN3dmk20flush_l2_read_kernelEPKjmPj
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Used 8 registers, 376 bytes cmem[0]
+ptxas info    : Compiling entry function '_ZN3dmk15fill_gen_kernelEPjmji' for 'sm_86'
+ptxas info    : Function properties for _ZN3dmk15fill_gen_kernelEPjmji
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Used 12 registers, 376 bytes cmem[0], 8 bytes cmem[2]
+ptxas info    : Compiling entry function '_ZN3dmk15fill_u32_kernelEPjmj' for 'sm_86'
+ptxas info    : Function properties for _ZN3dmk15fill_u32_kernelEPjmj
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Used 10 registers, 372 bytes cmem[0]
+ptxas info    : Compiling entry function '_Z14sweep13_kernelPKjPjiN3dmk6Coef13E' for 'sm_86'
+ptxas info    : Function properties for _Z14sweep13_kernelPKjPjiN3dmk6Coef13E
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Used 38 registers, 424 bytes cmem[0]
+ptxas info    : Compiling entry function '_Z13sweep5_kernelPKjPjiN3dmk5Coef5E' for 'sm_86'
+ptxas info    : Function properties for _Z13sweep5_kernelPKjPjiN3dmk5Coef5E
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Used 20 registers, 392 bytes cmem[0]

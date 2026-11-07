@@ -1,0 +1,16 @@
+Fri Nov  6 03:51:37 UTC 2026
+name, driver_version, temperature.gpu, clocks.current.sm [MHz], clocks.current.memory [MHz], pstate
+NVIDIA GeForce RTX 3090, 575.51.03, 38, 210 MHz, 405 MHz, P8
+NVIDIA (R) Nsight Compute Command Line Profiler
+Copyright (c) 2018-2024 NVIDIA Corporation
+Version 2024.2.1.0 (build 34372528) (public-release)
+fatal: not a git repository (or any of the parent directories): .git
+CELLS=0.875:0.1875,1:0.1875,1.125:0.1875,1.25:0.1875,0.75:0.3125,0.875:0.3125,1:0.3125,1.125:0.3125,0:1.0625,0:1.125,0:1.25,0.90625:0,0.9375:0,0.96875:0,1:0,1.03125:0,1.0625:0,0.5:0.25,2:0,0:2,1:0.125
+96049e73c5533c460ad97da6030ecc0cef1038b59d95c98c08b8ac9403e4d2f4  benchmarks/scripts/wb_probe_b8.sh
+sha256sum: benchmarks/build/wb_probe: No such file or directory
+8aafe4da2698add6e94ed9c2639c2560f97657312647b94d8786bd855942c9a7  research/preregistration/b8_predictions.json
+7dbbd451e459d54b247f5567073131701085e40b50942a75a4335f644ebd77ee  benchmarks/src/wb_probe.cu
+dcb32d9261cf6f598911937444e8a44c5c6bb789a760083327e0a2d1f2903e76  benchmarks/scripts/wb_probe_b8_score.py
+e7751d8771d93045e11338fa6401ae3af505c6c7a77c04fc4f00081a4479b884  benchmarks/scripts/wb_probe_score.py
+6c68abc0fea72391cc88dc453f67fecbd9229725bff056979e9d01998ed38a22  benchmarks/scripts/cache_sim_v4.py
+b7306c7861b953ffe84d776493b9ed22c3eb6392bedccc45cb8afb263d78f130  benchmarks/scripts/cache_sim_v5cand.py

@@ -1,0 +1,222 @@
+{
+ "benchmark": "flush_bias_probe",
+ "device": "NVIDIA GeForce RTX 5060 Ti",
+ "l2_bytes": 33554432,
+ "cc": "12.0",
+ "sm_count": 36,
+ "versions": {
+  "torch": "2.7.1+cu128",
+  "cuda": "12.8",
+  "triton": "3.3.1",
+  "bitsandbytes": "0.50.2",
+  "liger-kernel": "0.6.2"
+ },
+ "pr_head": "ba27327b9a4667b58e89ae5e1f0d7efe453a2021",
+ "ptx_check": {
+  "ld_volatile_global": 2,
+  "ld_global": 0,
+  "st_global": 0,
+  "buffer_unchanged": true
+ },
+ "amendment": "B17a (l2w mode)",
+ "smoke": true,
+ "run_seed": 0,
+ "rows": [
+  {
+   "family": "gemv",
+   "case": "4096x4096",
+   "bytes": 33554432,
+   "cand": "tinygemm_k4",
+   "ms": {
+    "sum": 0.02457600086927414,
+    "l2w": 0.031328000128269196,
+    "zero": 0.030112000182271004,
+    "pr": 0.02595200017094612
+   },
+   "order": [
+    "sum",
+    "l2w",
+    "zero",
+    "pr"
+   ]
+  },
+  {
+   "family": "gemv",
+   "case": "4096x4096",
+   "bytes": 33554432,
+   "cand": "tinygemm_k2",
+   "ms": {
+    "sum": 0.026623999699950218,
+    "pr": 0.02598400041460991,
+    "l2w": 0.03129599988460541,
+    "zero": 0.028672000393271446
+   },
+   "order": [
+    "sum",
+    "pr",
+    "l2w",
+    "zero"
+   ]
+  },
+  {
+   "family": "gemv",
+   "case": "4096x4096",
+   "bytes": 33554432,
+   "cand": "cublas_fp16",
+   "ms": {
+    "sum": 0.08662399649620056,
+    "zero": 0.09830400347709656,
+    "none": 0.084927998483181,
+    "pr": 0.08601599931716919,
+    "l2w": 0.09830400347709656
+   },
+   "order": [
+    "sum",
+    "zero",
+    "none",
+    "pr",
+    "l2w"
+   ]
+  },
+  {
+   "family": "gemv",
+   "case": "4096x4096",
+   "bytes": 33554432,
+   "cand": "bnb_nf4",
+   "ms": {
+    "sum": 0.0342399999499321,
+    "pr": 0.03481600061058998,
+    "l2w": 0.043007999658584595,
+    "zero": 0.043007999658584595
+   },
+   "order": [
+    "sum",
+    "pr",
+    "l2w",
+    "zero"
+   ]
+  },
+  {
+   "family": "gemv",
+   "case": "4096x4096",
+   "bytes": 33554432,
+   "cand": "tinygemm_k8",
+   "ms": {
+    "pr": 0.0272000003606081,
+    "l2w": 0.031328000128269196,
+    "sum": 0.026623999699950218,
+    "zero": 0.031328000128269196
+   },
+   "order": [
+    "pr",
+    "l2w",
+    "sum",
+    "zero"
+   ]
+  },
+  {
+   "family": "attn",
+   "case": "L4096",
+   "bytes": 16777216,
+   "cand": "sdpa_bf16",
+   "ms": {
+    "l2w": 0.058240000158548355,
+    "zero": 0.05734400078654289,
+    "pr": 0.05384000018239021,
+    "sum": 0.053247999399900436
+   },
+   "order": [
+    "l2w",
+    "zero",
+    "pr",
+    "sum"
+   ]
+  },
+  {
+   "family": "rmsnorm",
+   "case": "T2048",
+   "bytes": 16777216,
+   "cand": "liger_rmsnorm",
+   "ms": {
+    "sum": 0.04652800038456917,
+    "l2w": 0.08806400001049042,
+    "zero": 0.08974400162696838,
+    "pr": 0.04710400104522705
+   },
+   "order": [
+    "sum",
+    "l2w",
+    "zero",
+    "pr"
+   ]
+  },
+  {
+   "family": "rmsnorm",
+   "case": "T2048",
+   "bytes": 16777216,
+   "cand": "torch_rmsnorm",
+   "ms": {
+    "zero": 0.7884799838066101,
+    "l2w": 0.7884799838066101,
+    "pr": 0.7464960217475891,
+    "sum": 0.7463359832763672
+   },
+   "order": [
+    "zero",
+    "l2w",
+    "pr",
+    "sum"
+   ]
+  },
+  {
+   "family": "swiglu",
+   "case": "T512",
+   "bytes": 14680064,
+   "cand": "torch_swiglu",
+   "ms": {
+    "zero": 0.16179199516773224,
+    "l2w": 0.159743994474411,
+    "pr": 0.1228799968957901,
+    "sum": 0.12144000083208084
+   },
+   "order": [
+    "zero",
+    "l2w",
+    "pr",
+    "sum"
+   ]
+  },
+  {
+   "family": "swiglu",
+   "case": "T512",
+   "bytes": 14680064,
+   "cand": "liger_swiglu",
+   "ms": {
+    "zero": 0.11820799857378006,
+    "sum": 0.07577600330114365,
+    "l2w": 0.11734399944543839,
+    "pr": 0.0764160007238388
+   },
+   "order": [
+    "zero",
+    "sum",
+    "l2w",
+    "pr"
+   ]
+  }
+ ],
+ "invalid": [],
+ "notes": {},
+ "kernels": {
+  "gemv 4096x4096 cublas_fp16": [],
+  "gemv 4096x4096 tinygemm_k2": [],
+  "gemv 4096x4096 tinygemm_k4": [],
+  "gemv 4096x4096 tinygemm_k8": [],
+  "gemv 4096x4096 bnb_nf4": [],
+  "attn L4096 sdpa_bf16": [],
+  "rmsnorm T2048 torch_rmsnorm": [],
+  "rmsnorm T2048 liger_rmsnorm": [],
+  "swiglu T512 torch_swiglu": [],
+  "swiglu T512 liger_swiglu": []
+ }
+}

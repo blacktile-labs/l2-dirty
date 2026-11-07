@@ -1,0 +1,8 @@
+run_r1 rc=0
+run_r2 rc=0
+run_r3 rc=0
+score rc=0
+NVIDIA GeForce RTX 3060 Laptop GPU (L2 3 MiB): U-0 {'correctness': True, 'fp16 and int4 captured': True, 'stable steps': True} -> PASS
+T {'fp16': 5810.18, 'int4': 1626.11, 'nf4': 2374.14} · E {'fp16 write': 0.0518, 'fp16 cold': 0.0201, 'fp16 steady': 0.0194, 'fp16 l2w': 0.0532, 'int4 write': 0.0856, 'int4 cold': 0.0176, 'int4 steady': 0.0227, 'int4 l2w': 0.1008, 'nf4 write': -0.0641, 'nf4 cold': -0.0787, 'nf4 steady': -0.0727, 'nf4 l2w': 0.1231}
+D {'int4 write': -0.0312, 'int4 cold': 0.0024, 'int4 steady': -0.0032, 'int4 l2w': -0.0432, 'nf4 write': 0.1238, 'nf4 cold': 0.1072, 'nf4 steady': 0.0993, 'nf4 l2w': -0.0622}
+verdict: {"U-0": true, "U-1": "cold predicts the in-model step", "U-2": "n/a (small L2)", "U-3": "cold predicts the int4 speedup better than the write flush"}

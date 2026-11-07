@@ -1,0 +1,14 @@
+== 04:26:55 python3
+== 04:26:55 environment
+== 04:26:55 unit tests (CPU)
+unittest rc=0
+== 04:26:55 build sm_86
+build rc=0
+== 04:26:57 smoke run
+smoke rc=0
+== 04:26:58 compute-sanitizer memcheck (1 rep)
+memcheck rc=0
+== 04:26:59 ncu counters (may be permission-blocked)
+ncu rc=3
+== 04:26:59 post-run nvidia-smi
+== 04:26:59 done

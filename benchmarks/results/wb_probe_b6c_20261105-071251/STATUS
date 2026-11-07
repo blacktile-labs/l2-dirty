@@ -1,0 +1,14 @@
+kernel_r1 rc=0
+kernel_r2 rc=0
+kernel_r3 rc=0
+range_r1 rc=0
+range_r2 rc=0
+range_r3 rc=0
+correctness_failures per run: {'kernel_r1_meta.json': 0, 'kernel_r2_meta.json': 0, 'kernel_r3_meta.json': 0, 'range_r1_meta.json': 0, 'range_r2_meta.json': 0, 'range_r3_meta.json': 0}
+score rc=0
+X-0 sanity: 2:0 RD/RDR 1.000/1.000; 0:2 WB/WBR 0.990/1.000; 0.5:0.25 WBR/RDR 0.000/0.000; WARM [1.000, 1.001] -> PASS
+X-1 WBR closer to clean-first in 0% of 12 mixed cells -> LRU victim (v4) supported
+X-2 median WBR over mixed cells = 1.001 -> no protection
+X-3 median RB (readback misses of D) over mixed cells = 0.940 -> evicted
+X-4 mixed cells with RDR >= 0.9: 100% (both models predict RD = 1) -> as predicted
+verdict: {"X-0": true, "X-1": "LRU victim (v4) supported", "X-1 share": 0.0, "X-2": "no protection", "X-2 median WBR": 1.001, "X-3": "evicted", "X-3 median RB": 0.94, "X-4": true}

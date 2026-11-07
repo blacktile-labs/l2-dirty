@@ -1,0 +1,42 @@
+{
+ "device": "NVIDIA GeForce RTX 3060 Laptop GPU",
+ "l2_bytes": 3145728,
+ "T step us": {
+  "fp16": 11628.54,
+  "int4": 2076.16,
+  "nf4": 3493.38
+ },
+ "step IQR/median": {
+  "fp16": 0.6098,
+  "int4": 1.4601,
+  "nf4": 1.2195
+ },
+ "E": {
+  "fp16 graph": -0.3802,
+  "fp16 cold": -0.4843,
+  "fp16 write": -0.4697,
+  "int4 graph": -0.1805,
+  "int4 cold": -0.1753,
+  "int4 write": -0.1359,
+  "nf4 graph": -0.2294,
+  "nf4 cold": -0.361,
+  "nf4 write": -0.3
+ },
+ "V-0": false,
+ "V-0 parts": {
+  "correctness": true,
+  "steps": true,
+  "stable": false
+ },
+ "D": {
+  "int4 graph": -0.2436,
+  "int4 cold": -0.3747,
+  "int4 write": -0.3863,
+  "nf4 graph": -0.1957,
+  "nf4 cold": -0.193,
+  "nf4 write": -0.2424
+ },
+ "V-1": "not scored (V-0 failed)",
+ "V-2": "not scored (V-0 failed)",
+ "V-3": "not scored (V-0 failed)"
+}

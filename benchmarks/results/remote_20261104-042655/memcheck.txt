@@ -1,0 +1,13 @@
+========= COMPUTE-SANITIZER
+empty_kernel                     n_out=0          done (1 reps)
+memcpy_d2d                       n_out=16777216   done (1 reps)
+copy_contig_u32                  n_out=16777216   done (1 reps)
+copy_contig_u32x4                n_out=16777216   done (1 reps)
+copy_strided_read_u32_s1         n_out=16777216   done (1 reps)
+copy_strided_read_u32_s2         n_out=8388608    done (1 reps)
+copy_strided_read_u32_s8         n_out=2097152    done (1 reps)
+copy_strided_read_u32_s16        n_out=1048576    done (1 reps)
+copy_strided_read_u32_s32        n_out=524288     done (1 reps)
+correctness_failures=0
+========= LEAK SUMMARY: 0 bytes leaked in 0 allocations
+========= ERROR SUMMARY: 0 errors

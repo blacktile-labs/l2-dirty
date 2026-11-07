@@ -1,0 +1,12 @@
+Fri Nov  6 15:52:57 UTC 2026
+NVIDIA (R) Nsight Compute Command Line Profiler
+Copyright (c) 2018-2026 NVIDIA Corporation
+Version 2026.4.0.0 (build 39012641) (public-release)
+NVIDIA (R) Nsight Compute Command Line Profiler
+Copyright (c) 2018-2024 NVIDIA Corporation
+Version 2024.2.1.0 (build 34372528) (public-release)
+4de0f3831fee68e2eef3ab0462caf9084b099da7b3ae4852468dd37de4f7b704  benchmarks/scripts/ncu_version_probe.sh
+aaab7fe3535d71e42a64d40d67371e4e74dd7c5b7ba66036b9c377f667a01f1e  benchmarks/scripts/queued_wb_probe.sh
+b130d1c0ab551cdb6779bddccfb8906e818a079e95d8309bea25c1c5cc861af9  benchmarks/scripts/queued_wb_probe.py
+69fd4749912f4c999408dec900f649da3b217352176241d9512fc454ea2af4f1  benchmarks/scripts/queued_wb_score.py
+54b6b9cc020eaf0da06acadecd2fdf837449b2d3e64149a10fd95b1d698947f0  benchmarks/scripts/ncu_version_score.py

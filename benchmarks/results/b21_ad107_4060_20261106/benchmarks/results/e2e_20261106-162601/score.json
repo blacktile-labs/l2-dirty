@@ -1,0 +1,50 @@
+{
+ "device": "NVIDIA GeForce RTX 4060",
+ "l2_bytes": 25165824,
+ "T step us": {
+  "fp16": 6290.43,
+  "int4": 1702.91,
+  "nf4": 1963.01
+ },
+ "step IQR/median": {
+  "fp16": 0.0002,
+  "int4": 0.0012,
+  "nf4": 0.0016
+ },
+ "E": {
+  "fp16 write": 0.0822,
+  "fp16 cold": 0.006,
+  "fp16 steady": 0.006,
+  "fp16 l2w": 0.0828,
+  "int4 write": 0.436,
+  "int4 cold": 0.0198,
+  "int4 steady": 0.0222,
+  "int4 l2w": 0.4263,
+  "nf4 write": 0.2186,
+  "nf4 cold": 0.0162,
+  "nf4 steady": -0.1236,
+  "nf4 l2w": 0.2456
+ },
+ "U-0": true,
+ "U-0 parts": {
+  "correctness": true,
+  "fp16 and int4 captured": true,
+  "stable steps": true
+ },
+ "S_e2e int4": 3.6939,
+ "S_e2e nf4": 3.2045,
+ "D": {
+  "int4 write": -0.2464,
+  "int4 cold": -0.0136,
+  "int4 steady": -0.0159,
+  "int4 l2w": -0.2408,
+  "nf4 write": -0.1119,
+  "nf4 cold": -0.01,
+  "nf4 steady": 0.1479,
+  "nf4 l2w": -0.1307
+ },
+ "U-1": "cold predicts the in-model step",
+ "U-2 gap": 0.0762,
+ "U-2": "n/a (small L2)",
+ "U-3": "cold predicts the int4 speedup better than the write flush"
+}

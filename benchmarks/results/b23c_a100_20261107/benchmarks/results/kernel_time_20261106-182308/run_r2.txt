@@ -1,0 +1,1 @@
+12 rows, variants=['fp16', 'int4', 'nf4'], record checks ok 39/39, kernels per op [1, 2], correctness_failures=0, notes={'bitsandbytes': '0.50.2'}

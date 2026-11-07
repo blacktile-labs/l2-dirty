@@ -1,0 +1,19 @@
+warm rc=0
+kernel_r1 rc=0
+range_r1 rc=0
+kernel_r2 rc=0
+range_r2 rc=0
+kernel_r3 rc=0
+range_r3 rc=0
+score rc=1
+Traceback (most recent call last):
+  File "/root/dmkl/benchmarks/scripts/queued_wb_score.py", line 148, in <module>
+    sys.exit(main())
+  File "/root/dmkl/benchmarks/scripts/queued_wb_score.py", line 129, in main
+    kpairs = [p for m, c in zip(km, a.kernel_csv) for p in kernel_pairs(m, load_ncu_raw(c))]
+  File "/root/dmkl/benchmarks/scripts/queued_wb_score.py", line 129, in <listcomp>
+    kpairs = [p for m, c in zip(km, a.kernel_csv) for p in kernel_pairs(m, load_ncu_raw(c))]
+  File "/root/dmkl/benchmarks/scripts/counter_prereg.py", line 211, in load_ncu_raw
+    raise ValueError(f"{path}: column {m!r} missing")
+ValueError: benchmarks/results/queued_wb_20261106-052902/kernel_r1_raw.csv: column 'dram__bytes_read.sum' missing
+results: benchmarks/results/queued_wb_20261106-052902

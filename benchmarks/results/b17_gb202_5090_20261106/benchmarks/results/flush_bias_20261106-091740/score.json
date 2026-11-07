@@ -1,0 +1,327 @@
+{
+ "device": "NVIDIA GeForce RTX 5090",
+ "l2_bytes": 100663296,
+ "cc": "12.0",
+ "versions": {
+  "torch": "2.7.1+cu128",
+  "cuda": "12.8",
+  "triton": "3.3.1",
+  "bitsandbytes": "0.50.2",
+  "liger-kernel": "0.6.2"
+ },
+ "E-0": {
+  "runs": 5,
+  "runs_ok": true,
+  "ptx_ok": true,
+  "evict_ratio": 0.462,
+  "evict_ok": false,
+  "pass": false
+ },
+ "bias": {
+  "gemv 4096x4096 tinygemm_k4": 0.3313,
+  "gemv 4096x4096 tinygemm_k8": 0.4267,
+  "gemv 4096x4096 bnb_nf4": 0.2857,
+  "gemv 4096x4096 cublas_fp16": 0.6677,
+  "gemv 4096x4096 tinygemm_k2": 0.0641,
+  "gemv 14336x4096 tinygemm_k4": 0.1446,
+  "gemv 14336x4096 tinygemm_k2": 0.0862,
+  "gemv 14336x4096 bnb_nf4": 0.1895,
+  "gemv 14336x4096 tinygemm_k8": 0.1801,
+  "gemv 14336x4096 cublas_fp16": 0.1084,
+  "gemv 4096x14336 tinygemm_k8": 0.1101,
+  "gemv 4096x14336 cublas_fp16": 0.095,
+  "gemv 4096x14336 bnb_nf4": 0.1761,
+  "gemv 4096x14336 tinygemm_k2": 0.08,
+  "gemv 4096x14336 tinygemm_k4": 0.1725,
+  "attn L4096 sdpa_bf16": 0.0,
+  "attn L16384 sdpa_bf16": 0.0613,
+  "attn L65536 sdpa_bf16": 0.055,
+  "rmsnorm T2048 liger_rmsnorm": 0.3946,
+  "rmsnorm T2048 torch_rmsnorm": 0.1269,
+  "rmsnorm T8192 liger_rmsnorm": 0.2647,
+  "rmsnorm T8192 torch_rmsnorm": 0.0211,
+  "swiglu T512 torch_swiglu": 0.5068,
+  "swiglu T512 liger_swiglu": 0.402,
+  "swiglu T2048 liger_swiglu": 0.2391,
+  "swiglu T2048 torch_swiglu": 0.1257
+ },
+ "B_ref": 0.1084,
+ "F-1": "affected",
+ "F-3": "distorted",
+ "F-3 worst D": 0.3707,
+ "F-3 sign": "mixed",
+ "F-3 per shape": {
+  "4096x4096": {
+   "tinygemm": {
+    "S_zero": 3.801,
+    "S_pr": 2.773,
+    "D": 0.3707,
+    "D_sum": 0.4803
+   },
+   "bnb_nf4": {
+    "S_zero": 2.409,
+    "S_pr": 1.857,
+    "D": 0.2971,
+    "D_sum": 0.2971
+   }
+  },
+  "14336x4096": {
+   "tinygemm": {
+    "S_zero": 3.147,
+    "S_pr": 3.272,
+    "D": -0.0383,
+    "D_sum": 0.049
+   },
+   "bnb_nf4": {
+    "S_zero": 2.178,
+    "S_pr": 2.337,
+    "D": -0.0682,
+    "D_sum": -0.0329
+   }
+  },
+  "4096x14336": {
+   "tinygemm": {
+    "S_zero": 3.116,
+    "S_pr": 3.337,
+    "D": -0.0661,
+    "D_sum": -0.0386
+   },
+   "bnb_nf4": {
+    "S_zero": 1.818,
+    "S_pr": 1.953,
+    "D": -0.069,
+    "D_sum": -0.0675
+   }
+  }
+ },
+ "F-4": {
+  "attn": {
+   "case": "L65536",
+   "B": {
+    "sdpa_bf16": 0.055
+   },
+   "verdict": "affected"
+  },
+  "rmsnorm": {
+   "case": "T8192",
+   "B": {
+    "liger_rmsnorm": 0.2647,
+    "torch_rmsnorm": 0.0211
+   },
+   "verdict": "affected"
+  },
+  "swiglu": {
+   "case": "T2048",
+   "B": {
+    "liger_swiglu": 0.2391,
+    "torch_swiglu": 0.1257
+   },
+   "verdict": "affected"
+  }
+ },
+ "F-6": {
+  "median R": 0.0,
+  "max |R|": 0.0016,
+  "R": {
+   "14336x4096 cublas_fp16": -0.0013,
+   "4096x14336 cublas_fp16": 0.0,
+   "4096x14336 bnb_nf4": 0.0016
+  }
+ },
+ "B_l2": 0.1014,
+ "F-7": "similar",
+ "bias_l2w": {
+  "gemv 4096x4096 tinygemm_k4": 0.3,
+  "gemv 4096x4096 tinygemm_k8": 0.4933,
+  "gemv 4096x4096 bnb_nf4": 4.5,
+  "gemv 4096x4096 cublas_fp16": 0.8077,
+  "gemv 4096x4096 tinygemm_k2": 0.2128,
+  "gemv 14336x4096 tinygemm_k4": 0.0884,
+  "gemv 14336x4096 tinygemm_k2": 0.1578,
+  "gemv 14336x4096 bnb_nf4": 1.6829,
+  "gemv 14336x4096 tinygemm_k8": 0.2128,
+  "gemv 14336x4096 cublas_fp16": 0.1014,
+  "gemv 4096x14336 tinygemm_k8": 0.1342,
+  "gemv 4096x14336 cublas_fp16": 0.1014,
+  "gemv 4096x14336 bnb_nf4": 1.3537,
+  "gemv 4096x14336 tinygemm_k2": 0.1539,
+  "gemv 4096x14336 tinygemm_k4": 0.1979,
+  "attn L4096 sdpa_bf16": 1.0781,
+  "attn L16384 sdpa_bf16": 0.2593,
+  "attn L65536 sdpa_bf16": 0.0625,
+  "rmsnorm T2048 liger_rmsnorm": 5.3674,
+  "rmsnorm T2048 torch_rmsnorm": 0.15,
+  "rmsnorm T8192 liger_rmsnorm": 1.0294,
+  "rmsnorm T8192 torch_rmsnorm": 0.0225,
+  "swiglu T512 torch_swiglu": 0.5068,
+  "swiglu T512 liger_swiglu": 3.2798,
+  "swiglu T2048 liger_swiglu": 0.2391,
+  "swiglu T2048 torch_swiglu": 0.1299
+ },
+ "F-5 inputs": {
+  "B_sum": 0.1098,
+  "D_sum": 0.049
+ },
+ "tick fraction": 0.476,
+ "t_us": {
+  "gemv 4096x4096 tinygemm_k4": {
+   "sum": 10.37,
+   "pr": 10.24,
+   "l2w": 13.31,
+   "zero": 13.63
+  },
+  "gemv 4096x4096 tinygemm_k8": {
+   "sum": 10.91,
+   "pr": 9.6,
+   "zero": 13.7,
+   "l2w": 14.34
+  },
+  "gemv 4096x4096 bnb_nf4": {
+   "sum": 14.34,
+   "pr": 14.34,
+   "l2w": 78.85,
+   "zero": 18.43
+  },
+  "gemv 4096x4096 cublas_fp16": {
+   "l2w": 48.13,
+   "pr": 26.62,
+   "zero": 44.4,
+   "none": 57.68,
+   "sum": 26.62
+  },
+  "gemv 4096x4096 tinygemm_k2": {
+   "pr": 10.98,
+   "zero": 11.68,
+   "sum": 10.94,
+   "l2w": 13.31
+  },
+  "gemv 14336x4096 tinygemm_k4": {
+   "sum": 24.58,
+   "zero": 27.36,
+   "l2w": 26.02,
+   "pr": 23.9
+  },
+  "gemv 14336x4096 tinygemm_k2": {
+   "l2w": 27.71,
+   "zero": 26.0,
+   "sum": 24.64,
+   "pr": 23.94
+  },
+  "gemv 14336x4096 bnb_nf4": {
+   "zero": 37.57,
+   "pr": 31.58,
+   "sum": 32.74,
+   "l2w": 84.74
+  },
+  "gemv 14336x4096 tinygemm_k8": {
+   "l2w": 27.36,
+   "sum": 24.58,
+   "zero": 26.62,
+   "pr": 22.56
+  },
+  "gemv 14336x4096 cublas_fp16": {
+   "sum": 73.73,
+   "pr": 73.82,
+   "zero": 81.82,
+   "l2w": 81.31
+  },
+  "gemv 4096x14336 tinygemm_k8": {
+   "pr": 25.28,
+   "l2w": 28.67,
+   "zero": 28.06,
+   "sum": 25.28
+  },
+  "gemv 4096x14336 cublas_fp16": {
+   "zero": 87.46,
+   "pr": 79.87,
+   "sum": 79.87,
+   "l2w": 87.97
+  },
+  "gemv 4096x14336 bnb_nf4": {
+   "zero": 48.1,
+   "pr": 40.9,
+   "sum": 40.96,
+   "l2w": 96.26
+  },
+  "gemv 4096x14336 tinygemm_k2": {
+   "zero": 28.06,
+   "pr": 25.98,
+   "sum": 26.62,
+   "l2w": 29.98
+  },
+  "gemv 4096x14336 tinygemm_k4": {
+   "l2w": 28.67,
+   "pr": 23.94,
+   "zero": 28.06,
+   "sum": 24.64
+  },
+  "attn L4096 sdpa_bf16": {
+   "sum": 26.62,
+   "l2w": 55.33,
+   "pr": 26.62,
+   "zero": 26.62
+  },
+  "attn L16384 sdpa_bf16": {
+   "zero": 58.69,
+   "pr": 55.3,
+   "sum": 55.3,
+   "l2w": 69.63
+  },
+  "attn L65536 sdpa_bf16": {
+   "sum": 176.13,
+   "zero": 185.06,
+   "pr": 175.41,
+   "l2w": 186.37
+  },
+  "rmsnorm T2048 liger_rmsnorm": {
+   "sum": 16.38,
+   "zero": 27.94,
+   "l2w": 127.55,
+   "pr": 20.03
+  },
+  "rmsnorm T2048 torch_rmsnorm": {
+   "l2w": 117.76,
+   "sum": 102.4,
+   "pr": 102.4,
+   "zero": 115.39
+  },
+  "rmsnorm T8192 liger_rmsnorm": {
+   "sum": 68.54,
+   "l2w": 141.31,
+   "zero": 88.06,
+   "pr": 69.63
+  },
+  "rmsnorm T8192 torch_rmsnorm": {
+   "pr": 822.18,
+   "zero": 839.52,
+   "l2w": 840.7,
+   "sum": 819.2
+  },
+  "swiglu T512 torch_swiglu": {
+   "sum": 24.58,
+   "pr": 25.82,
+   "l2w": 38.91,
+   "zero": 38.91
+  },
+  "swiglu T512 liger_swiglu": {
+   "sum": 22.53,
+   "l2w": 96.42,
+   "pr": 22.53,
+   "zero": 31.58
+  },
+  "swiglu T2048 liger_swiglu": {
+   "pr": 94.21,
+   "l2w": 116.74,
+   "sum": 94.21,
+   "zero": 116.74
+  },
+  "swiglu T2048 torch_swiglu": {
+   "pr": 146.82,
+   "zero": 165.26,
+   "l2w": 165.89,
+   "sum": 145.41
+  }
+ },
+ "invalid": [],
+ "notes": {}
+}

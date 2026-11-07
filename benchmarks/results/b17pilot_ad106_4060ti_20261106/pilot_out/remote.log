@@ -1,0 +1,9 @@
+[09:05:50] 0 environment
+[09:05:51] 1 toolchain
+[09:06:13] apt rc=0
+[09:06:13] compute capability 8.9 -> torch index cu126
+[09:09:17] 2 smoke
+[09:09:27] smoke rc=0 8 rows, 0 invalid, ptx {'ld_volatile_global': 2, 'ld_global': 0, 'st_global': 0, 'buffer_unchanged': True}, notes {'rmsnorm T2048 liger_error': 'ModuleNotFoundError("No module named \'liger_kernel\'")', 'swiglu T512 liger_error': 'ModuleNotFoundError("No module named \'liger_kernel\'")'}
+[09:09:27] 3 B17
+[09:10:24] B17 rc=0
+[09:10:24] 4 pack

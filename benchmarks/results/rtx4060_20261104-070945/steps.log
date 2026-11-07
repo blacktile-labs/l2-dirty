@@ -1,0 +1,19 @@
+== 07:09:45 python3
+== 07:09:45 environment
+== 07:09:46 unit tests
+unittest rc=0
+== 07:09:46 build sm_89
+build rc=0
+== 07:10:14 B1 smoke, 256 MiB footprint
+B1 rc=0
+== 07:10:17 B4 sweep rep 1
+B4 sweep r1 rc=0
+== 07:10:27 B4 sweep rep 2
+B4 sweep r2 rc=0
+== 07:10:36 B4 sweep rep 3
+B4 sweep r3 rc=0
+== 07:10:45 B3 probe (exploratory) default
+B3 probe default rc=0
+== 07:10:56 B3 probe (exploratory) g64
+B3 probe g64 rc=0
+== 07:11:08 done

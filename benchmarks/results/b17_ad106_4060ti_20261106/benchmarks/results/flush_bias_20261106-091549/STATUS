@@ -1,0 +1,14 @@
+run_r1 rc=0
+run_r2 rc=0
+run_r3 rc=0
+run_r4 rc=0
+run_r5 rc=0
+score rc=0
+NVIDIA GeForce RTX 4060 Ti (L2 32 MiB, cc 8.9): E-0 PASS {'runs': 5, 'runs_ok': True, 'ptx_ok': True, 'evict_ratio': 1.0, 'evict_ok': None, 'pass': True}
+  F-1 B_ref 0.0861 -> affected
+  F-3 worst D -0.229 -> distorted (under-estimated); per shape {'4096x4096': {'tinygemm': {'S_zero': 3.184, 'S_pr': 3.444, 'D': -0.0756, 'D_sum': -0.0772}, 'bnb_nf4': {'S_zero': 2.314, 'S_pr': 2.638, 'D': -0.1231, 'D_sum': -0.1231}}, '14336x4096': {'tinygemm': {'S_zero': 2.83, 'S_pr': 3.671, 'D': -0.229, 'D_sum': -0.2291}, 'bnb_nf4': {'S_zero': 2.884, 'S_pr': 3.26, 'D': -0.1154, 'D_sum': -0.1136}}, '4096x14336': {'tinygemm': {'S_zero': 2.849, 'S_pr': 3.659, 'D': -0.2214, 'D_sum': -0.223}, 'bnb_nf4': {'S_zero': 2.579, 'S_pr': 2.783, 'D': -0.0734, 'D_sum': -0.0734}}}
+  F-4 {fam: (B, verdict)}: {'attn': ({'sdpa_bf16': 0.0921}, 'affected'), 'rmsnorm': ({'liger_rmsnorm': 0.2342, 'torch_rmsnorm': 0.0182}, 'affected'), 'swiglu': ({'liger_swiglu': 0.1678, 'torch_swiglu': 0.0947}, 'affected')}
+  F-6 sum vs pr flush: {'median R': 0.0, 'max |R|': 0.0036, 'R': {'4096x4096 bnb_nf4': 0.0, '4096x4096 cublas_fp16': 0.0, '14336x4096 tinygemm_k4': 0.0, '14336x4096 tinygemm_k2': 0.0, '14336x4096 bnb_nf4': 0.0022, '14336x4096 tinygemm_k8': -0.0009, '14336x4096 cublas_fp16': 0.0001, '4096x14336 tinygemm_k8': -0.0036, '4096x14336 cublas_fp16': 0.0, '4096x14336 bnb_nf4': 0.0, '4096x14336 tinygemm_k2': 0.0, '4096x14336 tinygemm_k4': -0.002}}
+  F-7 B_l2 0.0872 vs B_ref 0.0861 -> similar
+  F-5 inputs {'B_sum': 0.0859, 'D_sum': -0.2291}; tick fraction 0.638; invalid []
+verdict: {"device": "NVIDIA GeForce RTX 4060 Ti", "B_ref": 0.0861, "F-1": "affected", "F-3": "distorted", "F-3 worst D": -0.229, "F-3 sign": "under-estimated", "B_l2": 0.0872, "F-7": "similar", "E-0": true}

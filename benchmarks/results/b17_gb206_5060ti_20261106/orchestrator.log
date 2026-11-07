@@ -1,0 +1,13 @@
+[b17_gb206_5060ti 09:12:35] package sha256 eacabf3b8df158df, remote script sha256 836f64ae542bb47c
+[b17_gb206_5060ti 09:12:37] created instance 59394514 (offer 59025771, image nvidia/cuda:12.8.1-runtime-ubuntu22.04, disk 30 GB)
+[b17_gb206_5060ti 09:12:39] price dph_total = $0.11788888888888888/h
+[b17_gb206_5060ti 09:13:23] ssh ok (root@<host-redacted>:<port>)
+[b17_gb206_5060ti 09:13:27] started detached run of benchmarks/scripts/remote_b17.sh
+[b17_gb206_5060ti 09:13:29] remote: [09:13:27] 1 toolchain
+[b17_gb206_5060ti 09:13:51] remote: [09:13:50] compute capability 12.0 -> torch index cu128
+[b17_gb206_5060ti 09:16:25] remote: [09:16:24] 2 smoke
+[b17_gb206_5060ti 09:16:46] remote: [09:16:35] 3 B17
+[b17_gb206_5060ti 09:17:52] remote finished (done=1): rc=0
+[b17_gb206_5060ti 09:17:54] downloaded pilot_results.tgz -> /home/rungrod/data-move-kernel-lab/.vast_work/b17_gb206_5060ti
+[b17_gb206_5060ti 09:17:54] destroying instance 59394514
+[b17_gb206_5060ti 09:17:57] destroyed (verified)

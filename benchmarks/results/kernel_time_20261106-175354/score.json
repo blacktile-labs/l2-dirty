@@ -1,0 +1,163 @@
+{
+ "device": "NVIDIA GeForce RTX 3060 Laptop GPU",
+ "l2_bytes": 3145728,
+ "runs": 3,
+ "truth us": {
+  "fp16 down": 328.216,
+  "fp16 gate_up": 644.414,
+  "fp16 o": 122.957,
+  "fp16 qkv": 361.317,
+  "int4 down": 107.97,
+  "int4 gate_up": 199.578,
+  "int4 o": 42.308,
+  "int4 qkv": 114.537,
+  "nf4 down": 162.845,
+  "nf4 gate_up": 307.274,
+  "nf4 o": 64.634,
+  "nf4 qkv": 175.723
+ },
+ "E": {
+  "cupti_rot": {
+   "fp16 down": -0.0016,
+   "fp16 gate_up": 0.0009,
+   "fp16 o": 0.0004,
+   "fp16 qkv": 0.0006,
+   "int4 down": -0.0182,
+   "int4 gate_up": 0.0071,
+   "int4 o": -0.0656,
+   "int4 qkv": -0.0275,
+   "nf4 down": -0.0147,
+   "nf4 gate_up": 0.0115,
+   "nf4 o": -0.043,
+   "nf4 qkv": -0.0032
+  },
+  "cupti_rot_idle": {
+   "fp16 down": -0.0027,
+   "fp16 gate_up": -0.0023,
+   "fp16 o": -0.0058,
+   "fp16 qkv": -0.0057,
+   "int4 down": -0.1586,
+   "int4 gate_up": -0.1331,
+   "int4 o": -0.1746,
+   "int4 qkv": -0.1494,
+   "nf4 down": -0.288,
+   "nf4 gate_up": -0.2782,
+   "nf4 o": -0.2955,
+   "nf4 qkv": -0.2829
+  },
+  "cupti_cold": {
+   "fp16 down": -0.0024,
+   "fp16 gate_up": -0.0027,
+   "fp16 o": -0.0026,
+   "fp16 qkv": -0.0062,
+   "int4 down": -0.1555,
+   "int4 gate_up": -0.1313,
+   "int4 o": -0.1664,
+   "int4 qkv": -0.146,
+   "nf4 down": -0.2373,
+   "nf4 gate_up": -0.2817,
+   "nf4 o": -0.2194,
+   "nf4 qkv": -0.2745
+  },
+  "event_cold": {
+   "fp16 down": 0.0199,
+   "fp16 gate_up": 0.0084,
+   "fp16 o": 0.0633,
+   "fp16 qkv": 0.0183,
+   "int4 down": -0.1147,
+   "int4 gate_up": -0.1084,
+   "int4 o": -0.0682,
+   "int4 qkv": -0.1035,
+   "nf4 down": -0.189,
+   "nf4 gate_up": -0.2585,
+   "nf4 o": -0.1348,
+   "nf4 qkv": -0.2297
+  },
+  "event_graph": {
+   "fp16 down": 0.0049,
+   "fp16 gate_up": -0.0008,
+   "fp16 o": 0.0138,
+   "fp16 qkv": 0.0022,
+   "int4 down": -0.012,
+   "int4 gate_up": 0.0057,
+   "int4 o": -0.0272,
+   "int4 qkv": -0.0074,
+   "nf4 down": -0.0095,
+   "nf4 gate_up": 0.0147,
+   "nf4 o": -0.0318,
+   "nf4 qkv": 0.0039
+  }
+ },
+ "within 1 %": {
+  "cupti_rot": "6/12",
+  "cupti_rot_idle": "4/12",
+  "cupti_cold": "4/12",
+  "event_cold": "1/12",
+  "event_graph": "7/12"
+ },
+ "tracing effect": {
+  "fp16": 0.0005,
+  "int4": -0.0127,
+  "nf4": 0.0028
+ },
+ "truth IQR/median": {
+  "fp16 down": 0.0138,
+  "fp16 gate_up": 0.0177,
+  "fp16 o": 0.0135,
+  "fp16 qkv": 0.0173,
+  "int4 down": 0.1049,
+  "int4 gate_up": 0.102,
+  "int4 o": 0.103,
+  "int4 qkv": 0.1021,
+  "nf4 down": 0.1202,
+  "nf4 gate_up": 0.134,
+  "nf4 o": 0.1189,
+  "nf4 qkv": 0.1317
+ },
+ "kernel share of step": {
+  "fp16": 1.0024,
+  "int4": 1.0106,
+  "nf4": 1.0097
+ },
+ "rotation tracing effect": {
+  "fp16 qkv": 0.0007,
+  "fp16 o": 0.002,
+  "fp16 gate_up": 0.0003,
+  "fp16 down": 0.0005,
+  "int4 qkv": 0.0115,
+  "int4 o": 0.0071,
+  "int4 gate_up": 0.0032,
+  "int4 down": 0.0066,
+  "nf4 qkv": 0.0023,
+  "nf4 o": 0.0015,
+  "nf4 gate_up": 0.0039,
+  "nf4 down": 0.0038
+ },
+ "truth round spread": {
+  "fp16 qkv": 0.0214,
+  "fp16 o": 0.0267,
+  "fp16 gate_up": 0.0215,
+  "fp16 down": 0.0246,
+  "int4 qkv": 0.2837,
+  "int4 o": 0.2785,
+  "int4 gate_up": 0.2846,
+  "int4 down": 0.2837,
+  "nf4 qkv": 0.2939,
+  "nf4 o": 0.268,
+  "nf4 gate_up": 0.3002,
+  "nf4 down": 0.2819
+ },
+ "shortest warm-up s": 1.0,
+ "W-0 parts": {
+  "3 full runs": true,
+  "correctness": true,
+  "record checks": true,
+  "fp16 and int4 truth": true,
+  "tracing <= 0.5 %": false,
+  "truth stable": false
+ },
+ "W-0": false,
+ "W-1": "not scored (W-0 failed)",
+ "W-2": "not scored (W-0 failed)",
+ "W-3": "not scored (W-0 failed)"
+}

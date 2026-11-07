@@ -1,0 +1,54 @@
+{
+ "device": "NVIDIA GeForce RTX 2060 SUPER",
+ "l2_bytes": 4194304,
+ "R_gpu": 0.5063,
+ "G-0": true,
+ "G-0 parts": {
+  "correctness": true,
+  "control writes": true,
+  "read flush leaves no dirty data": true,
+  "GEMV reads its weight": true
+ },
+ "G-1": "not",
+ "G-1 closer to": "v4 (0.5)",
+ "G-1 MAE": {
+  "B9b": 0.4597,
+  "v4": 0.4534
+ },
+ "X": {
+  "2": 0.0434,
+  "4": 0.0464,
+  "8": 0.0502
+ },
+ "G-1b": "residue independent of the GEMV size",
+ "G-2": "not explained by bytes alone",
+ "G-2 detail": {
+  "2": {
+   "dt_us": 1.86,
+   "dt_pred_us": 0.53,
+   "t_read_us": 24.77
+  },
+  "4": {
+   "dt_us": 2.16,
+   "dt_pred_us": 0.52,
+   "t_read_us": 44.94
+  },
+  "8": {
+   "dt_us": 4.1,
+   "dt_pred_us": 0.53,
+   "t_read_us": 83.97
+  }
+ },
+ "bias": {
+  "2": 0.0749,
+  "4": 0.0481,
+  "8": 0.0488,
+  "fixed 4096x4096": 0.0488
+ },
+ "do_bench (exploratory)": {
+  "2": 0.0635,
+  "4": 0.07,
+  "8": 0.0569,
+  "fixed": 0.0602
+ }
+}

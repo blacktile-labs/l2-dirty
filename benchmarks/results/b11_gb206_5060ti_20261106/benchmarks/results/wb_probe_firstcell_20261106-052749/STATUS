@@ -1,0 +1,7 @@
+sector_kernel_r1 rc=0
+sector_kernel_r2 rc=0
+sector_kernel_r3 rc=0
+sector_range_r1 rc=0
+sector_range_r2 rc=0
+sector_range_r3 rc=0
+score rc=1

@@ -1,0 +1,33 @@
+MODEL v3 ESTIMATES (fusion). L2=3145728 B. (tau us, BW GB/s) per (kernel type, mode):
+   pw_fused  isolated tau=    6.66  BW=  279.3
+   pw_fused  steady   tau=    4.71  BW=  278.0
+   pw_stage  isolated tau=    4.73  BW=  276.2
+   pw_stage  steady   tau=    3.48  BW=  275.2
+ 0.1250     lru | materialized/fused_iso 1.349  stage2_warm/stage2_cold_iso 0.769  materialized/fused_ste 1.478
+ 0.1250  random | materialized/fused_iso 1.349  stage2_warm/stage2_cold_iso 0.769  materialized/fused_ste 1.478
+ 0.4688     lru | materialized/fused_iso 1.240  stage2_warm/stage2_cold_iso 0.470  materialized/fused_ste 3.753
+ 0.4688  random | materialized/fused_iso 1.597  stage2_warm/stage2_cold_iso 0.893  materialized/fused_ste 3.887
+ 0.5625     lru | materialized/fused_iso 2.146  stage2_warm/stage2_cold_iso 1.481  materialized/fused_ste 1.874
+ 0.5625  random | materialized/fused_iso 1.756  stage2_warm/stage2_cold_iso 1.030  materialized/fused_ste 3.378
+ 0.6875     lru | materialized/fused_iso 2.125  stage2_warm/stage2_cold_iso 1.388  materialized/fused_ste 1.894
+ 0.6875  random | materialized/fused_iso 1.856  stage2_warm/stage2_cold_iso 1.085  materialized/fused_ste 2.668
+ 0.8125     lru | materialized/fused_iso 2.110  stage2_warm/stage2_cold_iso 1.325  materialized/fused_ste 1.910
+ 0.8125  random | materialized/fused_iso 1.919  stage2_warm/stage2_cold_iso 1.114  materialized/fused_ste 2.386
+ 0.9375     lru | materialized/fused_iso 2.099  stage2_warm/stage2_cold_iso 1.279  materialized/fused_ste 1.922
+ 0.9375  random | materialized/fused_iso 1.964  stage2_warm/stage2_cold_iso 1.133  materialized/fused_ste 2.245
+ 1.1250     lru | materialized/fused_iso 2.087  stage2_warm/stage2_cold_iso 1.231  materialized/fused_ste 1.936
+ 1.1250  random | materialized/fused_iso 2.001  stage2_warm/stage2_cold_iso 1.139  materialized/fused_ste 2.126
+ 1.3750     lru | materialized/fused_iso 2.075  stage2_warm/stage2_cold_iso 1.188  materialized/fused_ste 1.949
+ 1.3750  random | materialized/fused_iso 2.027  stage2_warm/stage2_cold_iso 1.137  materialized/fused_ste 2.050
+ 1.7500     lru | materialized/fused_iso 2.064  stage2_warm/stage2_cold_iso 1.146  materialized/fused_ste 1.963
+ 1.7500  random | materialized/fused_iso 2.043  stage2_warm/stage2_cold_iso 1.124  materialized/fused_ste 2.009
+ 2.0000     lru | materialized/fused_iso 2.059  stage2_warm/stage2_cold_iso 1.128  materialized/fused_ste 1.969
+ 2.0000  random | materialized/fused_iso 2.048  stage2_warm/stage2_cold_iso 1.116  materialized/fused_ste 1.996
+ 2.5000     lru | materialized/fused_iso 2.052  stage2_warm/stage2_cold_iso 1.102  materialized/fused_ste 1.979
+ 2.5000  random | materialized/fused_iso 2.048  stage2_warm/stage2_cold_iso 1.097  materialized/fused_ste 1.987
+ 3.0000     lru | materialized/fused_iso 2.047  stage2_warm/stage2_cold_iso 1.085  materialized/fused_ste 1.985
+ 3.0000  random | materialized/fused_iso 2.046  stage2_warm/stage2_cold_iso 1.083  materialized/fused_ste 1.990
+ 4.0000     lru | materialized/fused_iso 2.041  stage2_warm/stage2_cold_iso 1.063  materialized/fused_ste 1.994
+ 4.0000  random | materialized/fused_iso 2.041  stage2_warm/stage2_cold_iso 1.063  materialized/fused_ste 1.994
+
+pre-registration written: research/preregistration/v3_fusion_rtx3060laptop_calibrated.json

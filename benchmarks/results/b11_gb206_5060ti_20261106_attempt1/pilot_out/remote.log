@@ -1,0 +1,26 @@
+[04:55:44] 0 environment
+[04:55:45] user root, sudo='', arch sm_120, CUDA 12.9, torch index cu128
+[04:55:45] 1 toolchain
+[04:57:01] apt rc=0
+nvcc: NVIDIA (R) Cuda compiler driver
+Copyright (c) 2005-2025 NVIDIA Corporation
+Built on Tue_May_27_02:21:03_PDT_2025
+Cuda compilation tools, release 12.9, V12.9.86
+Build cuda_12.9.r12.9/compiler.36037853_0
+NVIDIA (R) Nsight Compute Command Line Profiler
+Copyright (c) 2018-2025 NVIDIA Corporation
+Version 2025.2.1.0 (build 35987062) (public-release)
+[04:57:01] 2 build
+[04:57:05] build rc=0
+1c0f5b790f1eab64ab29aac763ce7089ba52686594c6f0bd50f7362365eb752b  benchmarks/build/wb_probe
+[04:57:05] 3 counter permission check
+counter rows: 0
+[04:57:06] 4 B6b
+[04:57:23] B6b rc=0
+[04:57:23] 4 B8
+[04:57:31] B8 rc=0
+[04:57:31] 4 B10b first-cell
+[04:57:40] B10b rc=0
+[04:57:40] 5 B9b (waiting for the torch venv)
+[04:59:17] torch venv failed: B9b skipped
+[04:59:17] 6 pack

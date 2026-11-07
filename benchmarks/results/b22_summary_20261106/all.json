@@ -1,0 +1,16 @@
+{
+ "gpus": [
+  "NVIDIA A100-SXM4-40GB",
+  "NVIDIA H100 NVL"
+ ],
+ "V-0 pass": 2,
+ "V-1": {
+  "NVIDIA A100-SXM4-40GB": "within 2 %",
+  "NVIDIA H100 NVL": "not"
+ },
+ "V-2": {
+  "NVIDIA A100-SXM4-40GB": "speedup within 1 %",
+  "NVIDIA H100 NVL": "not"
+ },
+ "V-3": "1/2"
+}

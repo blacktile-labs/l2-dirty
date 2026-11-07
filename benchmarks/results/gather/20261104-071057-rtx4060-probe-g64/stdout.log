@@ -1,0 +1,7 @@
+gather         T=67108864;M=4194304;dist=uniform        ok
+gather_pair64  T=67108864;M=4194304;dist=uniform        ok
+gather_pair128 T=67108864;M=4194304;dist=uniform        ok
+gather         T=67108864;M=4194304;dist=zipf1.0        ok
+gather_pair64  T=67108864;M=4194304;dist=zipf1.0        ok
+gather_pair128 T=67108864;M=4194304;dist=zipf1.0        ok
+correctness_failures=0

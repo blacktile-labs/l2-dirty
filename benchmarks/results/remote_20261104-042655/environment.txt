@@ -1,0 +1,116 @@
+### date
+Wed Nov  4 04:26:55 UTC 2026
+### uname
+Linux 02e02bd1b00e 5.15.0-94-generic #104~20.04.1-Ubuntu SMP Tue Jan 16 13:34:09 UTC 2024 x86_64 x86_64 x86_64 GNU/Linux
+### os-release
+PRETTY_NAME="Ubuntu 22.04.3 LTS"
+NAME="Ubuntu"
+VERSION_ID="22.04"
+VERSION="22.04.3 LTS (Jammy Jellyfish)"
+### cpu/mem
+12
+               total        used        free      shared  buff/cache   available
+Mem:            31Gi       5.3Gi       9.5Gi        16Mi        16Gi        25Gi
+Swap:          1.4Gi       113Mi       1.3Gi
+model name	: AMD Ryzen 5 5600X 6-Core Processor
+### nvidia-smi
+Wed Nov  4 04:26:55 2026       
++---------------------------------------------------------------------------------------+
+| NVIDIA-SMI 535.154.05             Driver Version: 535.154.05   CUDA Version: 12.2     |
+|-----------------------------------------+----------------------+----------------------+
+| GPU  Name                 Persistence-M | Bus-Id        Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp   Perf          Pwr:Usage/Cap |         Memory-Usage | GPU-Util  Compute M. |
+|                                         |                      |               MIG M. |
+|=========================================+======================+======================|
+|   0  NVIDIA GeForce RTX 3060        On  | 00000000:2B:00.0 Off |                  N/A |
+|  0%   39C    P8              13W / 170W |      9MiB / 12288MiB |      0%      Default |
+|                                         |                      |                  N/A |
++-----------------------------------------+----------------------+----------------------+
+                                                                                         
++---------------------------------------------------------------------------------------+
+| Processes:                                                                            |
+|  GPU   GI   CI        PID   Type   Process name                            GPU Memory |
+|        ID   ID                                                             Usage      |
+|=======================================================================================|
++---------------------------------------------------------------------------------------+
+### query
+name, compute_cap, memory.total [MiB], memory.free [MiB], driver_version, clocks.current.sm [MHz], clocks.current.memory [MHz], clocks.max.sm [MHz], clocks.max.memory [MHz], temperature.gpu, power.draw [W], power.limit [W], pstate, pcie.link.gen.current, pcie.link.gen.max, pcie.link.width.current, pcie.link.width.max
+NVIDIA GeForce RTX 3060, 8.6, 12288 MiB, 12034 MiB, 535.154.05, 210 MHz, 405 MHz, 2100 MHz, 7501 MHz, 39, 13.12 W, 170.00 W, P8, 1, 4, 16, 16
+### clocks/perf
+
+==============NVSMI LOG==============
+
+Timestamp                                 : Wed Nov  4 04:26:55 2026
+Driver Version                            : 535.154.05
+CUDA Version                              : 12.2
+
+Attached GPUs                             : 1
+GPU 00000000:2B:00.0
+    Performance State                     : P8
+    Clocks Event Reasons
+        Idle                              : Active
+        Applications Clocks Setting       : Not Active
+        SW Power Cap                      : Not Active
+        HW Slowdown                       : Not Active
+            HW Thermal Slowdown           : Not Active
+            HW Power Brake Slowdown       : Not Active
+        Sync Boost                        : Not Active
+        SW Thermal Slowdown               : Not Active
+        Display Clock Setting             : Not Active
+    Clocks
+        Graphics                          : 210 MHz
+        SM                                : 210 MHz
+        Memory                            : 405 MHz
+        Video                             : 555 MHz
+    Applications Clocks
+        Graphics                          : N/A
+        Memory                            : N/A
+    Default Applications Clocks
+        Graphics                          : N/A
+        Memory                            : N/A
+    Deferred Clocks
+        Memory                            : N/A
+    Max Clocks
+        Graphics                          : 2100 MHz
+        SM                                : 2100 MHz
+        Memory                            : 7501 MHz
+        Video                             : 1950 MHz
+    Max Customer Boost Clocks
+        Graphics                          : N/A
+    SM Clock Samples
+        Duration                          : Not Found
+        Number of Samples                 : Not Found
+        Max                               : Not Found
+        Min                               : Not Found
+        Avg                               : Not Found
+    Memory Clock Samples
+        Duration                          : Not Found
+        Number of Samples                 : Not Found
+        Max                               : Not Found
+        Min                               : Not Found
+        Avg                               : Not Found
+    Clock Policy
+        Auto Boost                        : N/A
+        Auto Boost Default                : N/A
+
+### nvcc
+nvcc: NVIDIA (R) Cuda compiler driver
+Copyright (c) 2005-2023 NVIDIA Corporation
+Built on Tue_Aug_15_22:02:13_PDT_2023
+Cuda compilation tools, release 12.2, V12.2.140
+Build cuda_12.2.r12.2/compiler.33191640_0
+### tools
+ncu: /usr/local/cuda/bin/ncu
+nsys: not found
+compute-sanitizer: /usr/local/cuda/bin/compute-sanitizer
+cuobjdump: /usr/local/cuda/bin/cuobjdump
+### ncu version
+NVIDIA (R) Nsight Compute Command Line Profiler
+Copyright (c) 2018-2023 NVIDIA Corporation
+Version 2023.2.2.0 (build 33188574) (public-release)
+### profiling param
+RmProfilingAdminOnly: 1
+### python
+Python 3.10.12
+### gcc
+gcc (Ubuntu 11.4.0-1ubuntu1~22.04) 11.4.0

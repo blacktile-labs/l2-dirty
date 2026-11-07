@@ -1,0 +1,1 @@
+flags: -O3 -std=c++17 -lineinfo -arch=sm_75 -Xptxas -v

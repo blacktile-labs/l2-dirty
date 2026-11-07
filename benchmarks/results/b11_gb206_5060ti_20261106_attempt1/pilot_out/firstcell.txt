@@ -1,0 +1,8 @@
+sector_kernel_r1 rc=3
+sector_kernel_r2 rc=3
+sector_kernel_r3 rc=3
+sector_range_r1 rc=3
+sector_range_r2 rc=3
+sector_range_r3 rc=3
+score rc=1
+results: benchmarks/results/wb_probe_firstcell_20261106-045731

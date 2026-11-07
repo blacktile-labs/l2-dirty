@@ -1,0 +1,294 @@
+{
+ "benchmark": "queued_wb_probe",
+ "mode": "kernel",
+ "device": "NVIDIA GeForce RTX 5060 Ti",
+ "l2_bytes": 33554432,
+ "torch": "2.7.1+cu128",
+ "triton": "3.3.1",
+ "smoke": false,
+ "reps": 5,
+ "flush_bytes": 134217728,
+ "events": [
+  {
+   "kind": "pair",
+   "pair": "split",
+   "w": 0.375,
+   "rep": 0,
+   "bytes": 12582912
+  },
+  {
+   "kind": "pair",
+   "pair": "joint",
+   "w": 0.375,
+   "rep": 0,
+   "bytes": 12582912
+  },
+  {
+   "kind": "pair",
+   "pair": "split",
+   "w": 0.375,
+   "rep": 1,
+   "bytes": 12582912
+  },
+  {
+   "kind": "pair",
+   "pair": "joint",
+   "w": 0.375,
+   "rep": 1,
+   "bytes": 12582912
+  },
+  {
+   "kind": "pair",
+   "pair": "split",
+   "w": 0.375,
+   "rep": 2,
+   "bytes": 12582912
+  },
+  {
+   "kind": "pair",
+   "pair": "joint",
+   "w": 0.375,
+   "rep": 2,
+   "bytes": 12582912
+  },
+  {
+   "kind": "pair",
+   "pair": "split",
+   "w": 0.375,
+   "rep": 3,
+   "bytes": 12582912
+  },
+  {
+   "kind": "pair",
+   "pair": "joint",
+   "w": 0.375,
+   "rep": 3,
+   "bytes": 12582912
+  },
+  {
+   "kind": "pair",
+   "pair": "split",
+   "w": 0.375,
+   "rep": 4,
+   "bytes": 12582912
+  },
+  {
+   "kind": "pair",
+   "pair": "joint",
+   "w": 0.375,
+   "rep": 4,
+   "bytes": 12582912
+  },
+  {
+   "kind": "pair",
+   "pair": "split",
+   "w": 0.75,
+   "rep": 0,
+   "bytes": 25165824
+  },
+  {
+   "kind": "pair",
+   "pair": "joint",
+   "w": 0.75,
+   "rep": 0,
+   "bytes": 25165824
+  },
+  {
+   "kind": "pair",
+   "pair": "split",
+   "w": 0.75,
+   "rep": 1,
+   "bytes": 25165824
+  },
+  {
+   "kind": "pair",
+   "pair": "joint",
+   "w": 0.75,
+   "rep": 1,
+   "bytes": 25165824
+  },
+  {
+   "kind": "pair",
+   "pair": "split",
+   "w": 0.75,
+   "rep": 2,
+   "bytes": 25165824
+  },
+  {
+   "kind": "pair",
+   "pair": "joint",
+   "w": 0.75,
+   "rep": 2,
+   "bytes": 25165824
+  },
+  {
+   "kind": "pair",
+   "pair": "split",
+   "w": 0.75,
+   "rep": 3,
+   "bytes": 25165824
+  },
+  {
+   "kind": "pair",
+   "pair": "joint",
+   "w": 0.75,
+   "rep": 3,
+   "bytes": 25165824
+  },
+  {
+   "kind": "pair",
+   "pair": "split",
+   "w": 0.75,
+   "rep": 4,
+   "bytes": 25165824
+  },
+  {
+   "kind": "pair",
+   "pair": "joint",
+   "w": 0.75,
+   "rep": 4,
+   "bytes": 25165824
+  },
+  {
+   "kind": "pair",
+   "pair": "split",
+   "w": 1.0,
+   "rep": 0,
+   "bytes": 33554432
+  },
+  {
+   "kind": "pair",
+   "pair": "joint",
+   "w": 1.0,
+   "rep": 0,
+   "bytes": 33554432
+  },
+  {
+   "kind": "pair",
+   "pair": "split",
+   "w": 1.0,
+   "rep": 1,
+   "bytes": 33554432
+  },
+  {
+   "kind": "pair",
+   "pair": "joint",
+   "w": 1.0,
+   "rep": 1,
+   "bytes": 33554432
+  },
+  {
+   "kind": "pair",
+   "pair": "split",
+   "w": 1.0,
+   "rep": 2,
+   "bytes": 33554432
+  },
+  {
+   "kind": "pair",
+   "pair": "joint",
+   "w": 1.0,
+   "rep": 2,
+   "bytes": 33554432
+  },
+  {
+   "kind": "pair",
+   "pair": "split",
+   "w": 1.0,
+   "rep": 3,
+   "bytes": 33554432
+  },
+  {
+   "kind": "pair",
+   "pair": "joint",
+   "w": 1.0,
+   "rep": 3,
+   "bytes": 33554432
+  },
+  {
+   "kind": "pair",
+   "pair": "split",
+   "w": 1.0,
+   "rep": 4,
+   "bytes": 33554432
+  },
+  {
+   "kind": "pair",
+   "pair": "joint",
+   "w": 1.0,
+   "rep": 4,
+   "bytes": 33554432
+  },
+  {
+   "kind": "pair",
+   "pair": "split",
+   "w": 1.5,
+   "rep": 0,
+   "bytes": 50331648
+  },
+  {
+   "kind": "pair",
+   "pair": "joint",
+   "w": 1.5,
+   "rep": 0,
+   "bytes": 50331648
+  },
+  {
+   "kind": "pair",
+   "pair": "split",
+   "w": 1.5,
+   "rep": 1,
+   "bytes": 50331648
+  },
+  {
+   "kind": "pair",
+   "pair": "joint",
+   "w": 1.5,
+   "rep": 1,
+   "bytes": 50331648
+  },
+  {
+   "kind": "pair",
+   "pair": "split",
+   "w": 1.5,
+   "rep": 2,
+   "bytes": 50331648
+  },
+  {
+   "kind": "pair",
+   "pair": "joint",
+   "w": 1.5,
+   "rep": 2,
+   "bytes": 50331648
+  },
+  {
+   "kind": "pair",
+   "pair": "split",
+   "w": 1.5,
+   "rep": 3,
+   "bytes": 50331648
+  },
+  {
+   "kind": "pair",
+   "pair": "joint",
+   "w": 1.5,
+   "rep": 3,
+   "bytes": 50331648
+  },
+  {
+   "kind": "pair",
+   "pair": "split",
+   "w": 1.5,
+   "rep": 4,
+   "bytes": 50331648
+  },
+  {
+   "kind": "pair",
+   "pair": "joint",
+   "w": 1.5,
+   "rep": 4,
+   "bytes": 50331648
+  }
+ ],
+ "correctness_failures": 0
+}

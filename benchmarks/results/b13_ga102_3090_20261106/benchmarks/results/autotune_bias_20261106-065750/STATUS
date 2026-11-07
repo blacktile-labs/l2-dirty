@@ -1,0 +1,10 @@
+run_r1 rc=0
+run_r2 rc=0
+run_r3 rc=0
+score rc=0
+NVIDIA GeForce RTX 3090: T-0 PASS (runs 3)
+  4096x4096: pick zero bn32_bk256_w8 / read bn32_bk256_w8; regret +0.000%; pick bias +9.8%; cuBLAS faster: zero False read False; spearman 0.915; n 37
+  4096x14336: pick zero bn32_bk256_w8 / read bn16_bk256_w4; regret +0.000%; pick bias +3.0%; cuBLAS faster: zero False read False; spearman 0.838; n 37
+  14336x4096: pick zero bn8_bk512_w4 / read bn32_bk128_w2; regret +0.000%; pick bias +3.0%; cuBLAS faster: zero False read False; spearman 0.875; n 37
+T-1 max regret +0.000% -> harmless; T-2 -> no flip
+verdict: {"T-0": true, "T-1": "harmless", "T-1 max regret": 0.0, "T-2": "no flip"}

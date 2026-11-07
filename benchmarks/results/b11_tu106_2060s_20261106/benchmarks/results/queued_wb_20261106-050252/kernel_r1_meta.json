@@ -1,0 +1,294 @@
+{
+ "benchmark": "queued_wb_probe",
+ "mode": "kernel",
+ "device": "NVIDIA GeForce RTX 2060 SUPER",
+ "l2_bytes": 4194304,
+ "torch": "2.7.1+cu126",
+ "triton": "3.3.1",
+ "smoke": false,
+ "reps": 5,
+ "flush_bytes": 16777216,
+ "events": [
+  {
+   "kind": "pair",
+   "pair": "split",
+   "w": 0.375,
+   "rep": 0,
+   "bytes": 1572864
+  },
+  {
+   "kind": "pair",
+   "pair": "joint",
+   "w": 0.375,
+   "rep": 0,
+   "bytes": 1572864
+  },
+  {
+   "kind": "pair",
+   "pair": "split",
+   "w": 0.375,
+   "rep": 1,
+   "bytes": 1572864
+  },
+  {
+   "kind": "pair",
+   "pair": "joint",
+   "w": 0.375,
+   "rep": 1,
+   "bytes": 1572864
+  },
+  {
+   "kind": "pair",
+   "pair": "split",
+   "w": 0.375,
+   "rep": 2,
+   "bytes": 1572864
+  },
+  {
+   "kind": "pair",
+   "pair": "joint",
+   "w": 0.375,
+   "rep": 2,
+   "bytes": 1572864
+  },
+  {
+   "kind": "pair",
+   "pair": "split",
+   "w": 0.375,
+   "rep": 3,
+   "bytes": 1572864
+  },
+  {
+   "kind": "pair",
+   "pair": "joint",
+   "w": 0.375,
+   "rep": 3,
+   "bytes": 1572864
+  },
+  {
+   "kind": "pair",
+   "pair": "split",
+   "w": 0.375,
+   "rep": 4,
+   "bytes": 1572864
+  },
+  {
+   "kind": "pair",
+   "pair": "joint",
+   "w": 0.375,
+   "rep": 4,
+   "bytes": 1572864
+  },
+  {
+   "kind": "pair",
+   "pair": "split",
+   "w": 0.75,
+   "rep": 0,
+   "bytes": 3145728
+  },
+  {
+   "kind": "pair",
+   "pair": "joint",
+   "w": 0.75,
+   "rep": 0,
+   "bytes": 3145728
+  },
+  {
+   "kind": "pair",
+   "pair": "split",
+   "w": 0.75,
+   "rep": 1,
+   "bytes": 3145728
+  },
+  {
+   "kind": "pair",
+   "pair": "joint",
+   "w": 0.75,
+   "rep": 1,
+   "bytes": 3145728
+  },
+  {
+   "kind": "pair",
+   "pair": "split",
+   "w": 0.75,
+   "rep": 2,
+   "bytes": 3145728
+  },
+  {
+   "kind": "pair",
+   "pair": "joint",
+   "w": 0.75,
+   "rep": 2,
+   "bytes": 3145728
+  },
+  {
+   "kind": "pair",
+   "pair": "split",
+   "w": 0.75,
+   "rep": 3,
+   "bytes": 3145728
+  },
+  {
+   "kind": "pair",
+   "pair": "joint",
+   "w": 0.75,
+   "rep": 3,
+   "bytes": 3145728
+  },
+  {
+   "kind": "pair",
+   "pair": "split",
+   "w": 0.75,
+   "rep": 4,
+   "bytes": 3145728
+  },
+  {
+   "kind": "pair",
+   "pair": "joint",
+   "w": 0.75,
+   "rep": 4,
+   "bytes": 3145728
+  },
+  {
+   "kind": "pair",
+   "pair": "split",
+   "w": 1.0,
+   "rep": 0,
+   "bytes": 4194304
+  },
+  {
+   "kind": "pair",
+   "pair": "joint",
+   "w": 1.0,
+   "rep": 0,
+   "bytes": 4194304
+  },
+  {
+   "kind": "pair",
+   "pair": "split",
+   "w": 1.0,
+   "rep": 1,
+   "bytes": 4194304
+  },
+  {
+   "kind": "pair",
+   "pair": "joint",
+   "w": 1.0,
+   "rep": 1,
+   "bytes": 4194304
+  },
+  {
+   "kind": "pair",
+   "pair": "split",
+   "w": 1.0,
+   "rep": 2,
+   "bytes": 4194304
+  },
+  {
+   "kind": "pair",
+   "pair": "joint",
+   "w": 1.0,
+   "rep": 2,
+   "bytes": 4194304
+  },
+  {
+   "kind": "pair",
+   "pair": "split",
+   "w": 1.0,
+   "rep": 3,
+   "bytes": 4194304
+  },
+  {
+   "kind": "pair",
+   "pair": "joint",
+   "w": 1.0,
+   "rep": 3,
+   "bytes": 4194304
+  },
+  {
+   "kind": "pair",
+   "pair": "split",
+   "w": 1.0,
+   "rep": 4,
+   "bytes": 4194304
+  },
+  {
+   "kind": "pair",
+   "pair": "joint",
+   "w": 1.0,
+   "rep": 4,
+   "bytes": 4194304
+  },
+  {
+   "kind": "pair",
+   "pair": "split",
+   "w": 1.5,
+   "rep": 0,
+   "bytes": 6291456
+  },
+  {
+   "kind": "pair",
+   "pair": "joint",
+   "w": 1.5,
+   "rep": 0,
+   "bytes": 6291456
+  },
+  {
+   "kind": "pair",
+   "pair": "split",
+   "w": 1.5,
+   "rep": 1,
+   "bytes": 6291456
+  },
+  {
+   "kind": "pair",
+   "pair": "joint",
+   "w": 1.5,
+   "rep": 1,
+   "bytes": 6291456
+  },
+  {
+   "kind": "pair",
+   "pair": "split",
+   "w": 1.5,
+   "rep": 2,
+   "bytes": 6291456
+  },
+  {
+   "kind": "pair",
+   "pair": "joint",
+   "w": 1.5,
+   "rep": 2,
+   "bytes": 6291456
+  },
+  {
+   "kind": "pair",
+   "pair": "split",
+   "w": 1.5,
+   "rep": 3,
+   "bytes": 6291456
+  },
+  {
+   "kind": "pair",
+   "pair": "joint",
+   "w": 1.5,
+   "rep": 3,
+   "bytes": 6291456
+  },
+  {
+   "kind": "pair",
+   "pair": "split",
+   "w": 1.5,
+   "rep": 4,
+   "bytes": 6291456
+  },
+  {
+   "kind": "pair",
+   "pair": "joint",
+   "w": 1.5,
+   "rep": 4,
+   "bytes": 6291456
+  }
+ ],
+ "correctness_failures": 0
+}

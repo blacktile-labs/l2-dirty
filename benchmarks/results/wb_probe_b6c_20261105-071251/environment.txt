@@ -1,0 +1,16 @@
+Thu Nov  5 07:12:51 UTC 2026
+name, driver_version, temperature.gpu, clocks.current.sm [MHz], clocks.current.memory [MHz], pstate
+NVIDIA GeForce RTX 3060 Laptop GPU, 591.74, 55, 210 MHz, 405 MHz, P8
+NVIDIA (R) Nsight Compute Command Line Profiler
+Copyright (c) 2018-2024 NVIDIA Corporation
+Version 2024.2.1.0 (build 34372528) (public-release)
+d4097fb52fc4cf2aa76eb9a854331ddd76a0d001
+CELLS=0.875:0.25,1:0.25,1.25:0.25,1.75:0.25,0.75:0.375,0.875:0.375,1.125:0.375,1.625:0.375,1:0.125,1.125:0.125,1.375:0.125,1.875:0.125,0.5:0.25,2:0,0:2,0.625:0.5,0.5:0.75
+66f55286919d8b3f4357d7a1e4b9ea4d69de48b2632e50836b2f092d98f3a0c6  benchmarks/scripts/wb_probe_b6c.sh
+0921da369c3181ce9a64ad89e41321bc0b2e3bfb4bbde7bbcde6e354cc6d90f3  benchmarks/build/wb_probe
+2e61093f93717afce8bacf0d4f2d0a7c35528f84720bdebf55e67f38b3da5c23  research/preregistration/b6c_predictions.json
+7dbbd451e459d54b247f5567073131701085e40b50942a75a4335f644ebd77ee  benchmarks/src/wb_probe.cu
+31fd60f558414af061c09573d0148903c4e57e7ab282b2e65ae67cedbc8054da  benchmarks/scripts/wb_probe_b6c_score.py
+e7751d8771d93045e11338fa6401ae3af505c6c7a77c04fc4f00081a4479b884  benchmarks/scripts/wb_probe_score.py
+6c68abc0fea72391cc88dc453f67fecbd9229725bff056979e9d01998ed38a22  benchmarks/scripts/cache_sim_v4.py
+e6503819b12601dec2143daeb7cc1fe40318249f3eb7015138217cd7fdd3f4d0  benchmarks/scripts/cache_sim_cf.py

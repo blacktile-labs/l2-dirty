@@ -1,0 +1,46 @@
+{
+ "device": "NVIDIA GeForce RTX 3090",
+ "runs": 3,
+ "T-0": true,
+ "T-1": "harmless",
+ "T-1 max regret": 0.0,
+ "T-2": "no flip",
+ "per shape": {
+  "4096x4096": {
+   "pick_zero": "bn32_bk256_w8",
+   "pick_read": "bn32_bk256_w8",
+   "regret": 0.0,
+   "t_read_pick_read_us": 41.984,
+   "t_read_pick_zero_us": 41.984,
+   "bias_of_pick_zero": 0.0976,
+   "cublas_faster_zero": false,
+   "cublas_faster_read": false,
+   "spearman": 0.9154,
+   "n": 37
+  },
+  "4096x14336": {
+   "pick_zero": "bn32_bk256_w8",
+   "pick_read": "bn16_bk256_w4",
+   "regret": 0.0,
+   "t_read_pick_read_us": 136.192,
+   "t_read_pick_zero_us": 136.192,
+   "bias_of_pick_zero": 0.0302,
+   "cublas_faster_zero": false,
+   "cublas_faster_read": false,
+   "spearman": 0.8383,
+   "n": 37
+  },
+  "14336x4096": {
+   "pick_zero": "bn8_bk512_w4",
+   "pick_read": "bn32_bk128_w2",
+   "regret": 0.0,
+   "t_read_pick_read_us": 136.192,
+   "t_read_pick_zero_us": 136.192,
+   "bias_of_pick_zero": 0.0301,
+   "cublas_faster_zero": false,
+   "cublas_faster_read": false,
+   "spearman": 0.8748,
+   "n": 37
+  }
+ }
+}

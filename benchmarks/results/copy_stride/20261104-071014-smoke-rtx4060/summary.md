@@ -1,0 +1,24 @@
+# copy_stride summary -- run `20261104-071014-smoke-rtx4060`
+
+- Device: NVIDIA GeForce RTX 4060 (cc 8.9), driver 13000, runtime 13000
+- n_src = 67108864 uint32 (256 MiB), flush_l2 = True, reps = 10, warmup = 3
+- Correctness failures: 0 (per-variant mismatches: {'empty_kernel': 0, 'memcpy_d2d': 0, 'copy_contig_u32': 0, 'copy_contig_u32x4': 0, 'copy_strided_read_u32_s1': 0, 'copy_strided_read_u32_s2': 0, 'copy_strided_read_u32_s8': 0, 'copy_strided_read_u32_s16': 0, 'copy_strided_read_u32_s32': 0})
+- L2 fetch granularity reported by driver: 64 B
+- MEASURED reference BW (cudaMemcpy D2D, logical bytes / median): 259.5 GB/s
+- ESTIMATED theoretical DRAM BW (device attributes, x2 DDR assumed): 272.0 GB/s
+- MEASURED empty-kernel event floor (median): 3.07 us
+
+Columns `est_*` and `pred_*` are MODEL ESTIMATES (bench_common.py, assumptions A1-A5);
+`pred_us` = estimated bytes / measured memcpy BW. Everything else is measured or derived.
+
+| variant | stride | n_out | reps | median_us | p95_us | min_us | max_us | cv_pct | useful_GBps | est_MiB_g32 | pred_us_g32 | meas_over_pred_g32 | est_MiB_g64 | pred_us_g64 | meas_over_pred_g64 |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| empty_kernel | 1 | 0 | 10 | 3.072 | 3.107 | 2.048 | 3.136 | 16.853 | 0.000 |  |  |  |  |  |  |
+| memcpy_d2d | 1 | 67108864 | 10 | 2068.480 | 2069.043 | 2067.456 | 2069.504 | 0.030 | 259.549 |  |  |  |  |  |  |
+| copy_contig_u32 | 1 | 67108864 | 10 | 2073.600 | 2074.538 | 2071.552 | 2074.624 | 0.044 | 258.908 |  |  |  |  |  |  |
+| copy_contig_u32x4 | 1 | 67108864 | 10 | 2067.616 | 2068.480 | 2066.432 | 2068.480 | 0.035 | 259.657 |  |  |  |  |  |  |
+| copy_strided_read_u32_s1 | 1 | 67108864 | 10 | 2073.600 | 2075.347 | 2072.576 | 2076.672 | 0.054 | 258.908 | 512.000 | 2068.480 | 1.002 | 512.000 | 2068.480 | 1.002 |
+| copy_strided_read_u32_s2 | 2 | 33554432 | 10 | 1537.024 | 1537.587 | 1536.000 | 1538.048 | 0.038 | 174.646 | 384.000 | 1551.360 | 0.991 | 384.000 | 1551.360 | 0.991 |
+| copy_strided_read_u32_s8 | 8 | 8388608 | 10 | 1180.160 | 1180.742 | 1178.624 | 1180.800 | 0.062 | 56.864 | 288.000 | 1163.520 | 1.014 | 288.000 | 1163.520 | 1.014 |
+| copy_strided_read_u32_s16 | 16 | 4194304 | 10 | 591.872 | 591.907 | 590.848 | 591.936 | 0.071 | 56.692 | 144.000 | 581.760 | 1.017 | 272.000 | 1098.880 | 0.539 |
+| copy_strided_read_u32_s32 | 32 | 2097152 | 10 | 297.984 | 297.984 | 296.960 | 297.984 | 0.168 | 56.302 | 72.000 | 290.880 | 1.024 | 136.000 | 549.440 | 0.542 |

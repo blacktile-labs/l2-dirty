@@ -1,0 +1,10 @@
+[b11_gb206_5060ti_a4 05:11:19] package sha256 ce6662cdacc3e1a1, remote script sha256 dcf0fa69bbc0f692
+[b11_gb206_5060ti_a4 05:11:21] created instance 59370514 (offer 58818115, image docker.io/vastai/kvm:ubuntu_cli_22.04-2025-05-16, disk 40 GB)
+[b11_gb206_5060ti_a4 05:11:23] price dph_total = $0.14444444444444443/h
+[b11_gb206_5060ti_a4 05:14:29] ssh ok (root@<host-redacted>:<port>)
+[b11_gb206_5060ti_a4 05:14:48] started detached run of benchmarks/scripts/remote_vm_pilot.sh
+[b11_gb206_5060ti_a4 05:14:55] remote: [05:14:47] NVIDIA PCI device but no usable GPU: installing nvidia-driver-575-open
+[b11_gb206_5060ti_a4 05:15:22] remote finished (done=1): rc=4
+[b11_gb206_5060ti_a4 05:15:37] downloaded pilot_results.tgz -> /home/rungrod/data-move-kernel-lab/.vast_work/b11_gb206_5060ti_a4
+[b11_gb206_5060ti_a4 05:15:37] destroying instance 59370514
+[b11_gb206_5060ti_a4 05:15:42] destroyed (verified)

@@ -1,0 +1,16 @@
+range_r1 rc=0
+timing_r1 rc=0
+range_r2 rc=0
+timing_r2 rc=0
+range_r3 rc=0
+timing_r3 rc=0
+score rc=0
+NVIDIA GeForce RTX 3090, L2 6291456 B; G-0 {'correctness': True, 'control writes': True, 'read flush leaves no dirty data': True, 'GEMV reads its weight': True} -> PASS
+G-1 X = w 2: 0.074, w 4: 0.458, w 8: 0.456 vs R_gpu 0.4797 (tol 0.15) and v4 0.5 -> mixed; closer to B9b residue {'B9b': 0.1503, 'v4': 0.1706}
+G-1b spread 0.384 -> size-dependent
+G-2 w 2: dt 1.02 us vs pred 0.79 us, w 4: dt 5.12 us vs pred 4.21 us, w 8: dt 5.12 us vs pred 3.73 us -> timing bias = residue write-back at the clean DRAM rate
+bias (t_zero / t_read - 1): {"2": 0.0476, "4": 0.1389, "8": 0.0781, "fixed 4096x4096": 0.1064}
+do_bench default / read-patched - 1 (exploratory, last run): {"2": 0.1, "4": 0.1111, "8": 0.0776, "fixed": 0.087}
+summary per w: {"2": {"Wz": 465280.0, "Wr": 0.0, "Rz": 12608256.0, "Rr": 12606080.0, "weight": 12582912, "n": 15, "X": 0.1}, "4": {"Wz": 2911872.0, "Wr": 30592.0, "Rz": 25205760.0, "Rr": 25193344.0, "weight": 25165824, "n": 15, "X": 0.5}, "8": {"Wz": 2925440.0, "Wr": 54656.0, "Rz": 50387328.0, "Rr": 50397568.0, "weight": 50331648, "n": 15, "X": 0.5}}
+verdict: {"G-0": true, "G-1": "mixed", "G-1b": "size-dependent", "G-2": "timing bias = residue write-back at the clean DRAM rate"}
+results: benchmarks/results/dobench_flush_20261106-062544

@@ -1,0 +1,10 @@
+[09:23:31] 0 environment
+[09:23:32] 1 toolchain
+[09:23:43] apt rc=0
+[09:23:43] compute capability 9.0 -> torch index cu126
+2.7.1+cu126 12.6 3.3.1 True bnb 0.50.2 liger 0.6.2
+[09:24:36] 2 smoke
+[09:24:44] smoke rc=0 10 rows, 0 invalid, ptx {'ld_volatile_global': 2, 'ld_global': 0, 'st_global': 0, 'buffer_unchanged': True}, notes {}
+[09:24:44] 3 B17
+[09:25:35] B17 rc=0
+[09:25:35] 4 pack

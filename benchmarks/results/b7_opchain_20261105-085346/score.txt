@@ -1,0 +1,14 @@
+plan of the measured run gives identical predictions to the locked ones: True
+Traceback (most recent call last):
+  File "/mnt/e/data-move-kernel-lab/benchmarks/scripts/counter_b7.py", line 235, in <module>
+    sys.exit(main())
+             ^^^^^^
+  File "/mnt/e/data-move-kernel-lab/benchmarks/scripts/counter_b7.py", line 231, in main
+    return {"predict": cmd_predict, "score": cmd_score, "time": cmd_time}[a.cmd](a)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/e/data-move-kernel-lab/benchmarks/scripts/counter_b7.py", line 175, in cmd_score
+    runs = [align(load_ncu_raw(p), plan["launches"]) for p in a.ncu_csv]
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/e/data-move-kernel-lab/benchmarks/scripts/counter_b7.py", line 120, in align
+    raise ValueError(f"{len(seg)} measured launches after the first flush, plan has {len(plan_launches)}")
+ValueError: 188 measured launches after the first flush, plan has 180

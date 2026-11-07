@@ -1,0 +1,8 @@
+plans reproduce the locked predictions: [True, True, True, True, True, True, True, True, True, True]; correctness ok: [True, True, True, True, True, True, True, True, True, True]
+Traceback (most recent call last):
+  File "/mnt/e/data-move-kernel-lab/benchmarks/scripts/counter_b7r.py", line 206, in <module>
+    sys.exit(main())
+             ^^^^^^
+  File "/mnt/e/data-move-kernel-lab/benchmarks/scripts/counter_b7r.py", line 176, in main
+    raise ValueError("range layout differs between range-mode runs")
+ValueError: range layout differs between range-mode runs

@@ -1,0 +1,11 @@
+Fri Nov  6 07:44:35 UTC 2026
+name, driver_version, temperature.gpu, clocks.current.sm [MHz], clocks.current.memory [MHz], pstate
+NVIDIA GeForce RTX 4090, 575.51.03, 29, 2775 MHz, 10501 MHz, P0
+NVIDIA (R) Nsight Compute Command Line Profiler
+Copyright (c) 2018-2024 NVIDIA Corporation
+Version 2024.2.1.0 (build 34372528) (public-release)
+2.7.1+cu126 12.6 3.3.1
+b2b73c9edd6801d180aee4bf8aaa0c58995eb1d9f512329a2ed42620e813c895  benchmarks/scripts/absorb_probe.sh
+e4ba0bfe9524bb1ae2e2f400db8374ba6e96b0e3ce845abb58be7e0ca5c6ba9e  benchmarks/scripts/absorb_probe.py
+641077fdf7b4d3aab0ba2825df60ee765e488d367fe72fb4362d3a142ca486a1  benchmarks/scripts/quant_bias_probe.py
+7e47103066dca97b54b20ac1b0342ab6d7d53c9c2995771cd02799a2298e1698  benchmarks/scripts/absorb_score.py

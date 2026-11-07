@@ -1,0 +1,10 @@
+run_r1 rc=0
+run_r2 rc=0
+run_r3 rc=0
+score rc=0
+NVIDIA H100 NVL (L2 60 MiB): V-0 {'correctness': True, 'steps': True, 'stable': True} -> PASS
+T {'fp16': 616.38, 'int4': 363.74, 'nf4': 507.84} IQR {'fp16': 0.005, 'int4': 0.0151, 'nf4': 0.0127}
+E {'fp16 graph': -0.1218, 'fp16 cold': -0.0452, 'fp16 write': 0.1677, 'int4 graph': -0.1951, 'int4 cold': -0.0641, 'int4 write': 0.0047, 'nf4 graph': -0.1039, 'nf4 cold': 0.0444, 'nf4 write': 0.0698}
+D {'int4 graph': 0.091, 'int4 cold': 0.0203, 'int4 write': 0.1623, 'nf4 graph': -0.02, 'nf4 cold': -0.0857, 'nf4 write': 0.0915}
+verdict: {"V-0": true, "V-1": "not", "V-2": "not", "V-3": "not"}
+results: benchmarks/results/graph_time_20261106-170103

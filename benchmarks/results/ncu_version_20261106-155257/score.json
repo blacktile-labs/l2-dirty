@@ -1,0 +1,15 @@
+{
+ "N-0": true,
+ "loss old": {
+  "0.75": 0.086,
+  "1": 0.058,
+  "1.5": 0.002
+ },
+ "loss new": {
+  "0.75": 0.081,
+  "1": 0.054,
+  "1.5": 0.002
+ },
+ "N-1": "persists in the new version",
+ "N-2": "unchanged between versions"
+}

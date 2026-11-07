@@ -1,0 +1,70 @@
+==WARNING== Please consult the documentation for current range-based replay mode limitations and requirements.
+==WARNING== Note: Running with uncontrolled GPU caches. Profiling results may be inconsistent.
+==WARNING== Note: Running with unmodified GPU clocks. If not controlled otherwise, profiling results may be inconsistent.
+==PROF== Connected to process 5244 (/root/dmkl/benchmarks/build/wb_probe)
+==PROF== Profiling "range" - 0: Application replay pass 1
+==PROF== Profiling "range" - 1: Application replay pass 1
+==PROF== Profiling "range" - 2: Application replay pass 1
+==PROF== Profiling "range" - 3: Application replay pass 1
+==PROF== Profiling "range" - 4: Application replay pass 1
+==PROF== Profiling "range" - 5: Application replay pass 1
+==PROF== Profiling "range" - 6: Application replay pass 1
+==PROF== Profiling "range" - 7: Application replay pass 1
+==PROF== Profiling "range" - 8: Application replay pass 1
+==PROF== Profiling "range" - 9: Application replay pass 1
+==PROF== Profiling "range" - 10: Application replay pass 1
+==PROF== Profiling "range" - 11: Application replay pass 1
+==PROF== Profiling "range" - 12: Application replay pass 1
+==PROF== Profiling "range" - 13: Application replay pass 1
+==PROF== Profiling "range" - 14: Application replay pass 1
+r=0       w=0.1875  nc=0        nd=196608   ok
+r=0.5     w=0.1875  nc=524288   nd=196608   ok
+r=0.625   w=0.1875  nc=655360   nd=196608   ok
+r=0.6875  w=0.1875  nc=720896   nd=196608   ok
+r=0       w=0.3125  nc=0        nd=327680   ok
+r=0.375   w=0.3125  nc=393216   nd=327680   ok
+r=0.5     w=0.3125  nc=524288   nd=327680   ok
+r=0.5625  w=0.3125  nc=589824   nd=327680   ok
+r=0       w=0.4375  nc=0        nd=458752   ok
+r=0       w=0.5     nc=0        nd=524288   ok
+r=0       w=0.5625  nc=0        nd=589824   ok
+r=0       w=0.625   nc=0        nd=655360   ok
+r=0       w=0.6875  nc=0        nd=720896   ok
+r=2       w=0       nc=2097152  nd=0        ok
+r=0       w=2       nc=0        nd=2097152  ok
+correctness_failures=0
+==PROF== Disconnected from process 5244
+==PROF== Connected to process 5272 (/root/dmkl/benchmarks/build/wb_probe)
+==PROF== Profiling "range" - 0: Application replay pass 2
+==PROF== Profiling "range" - 1: Application replay pass 2
+==PROF== Profiling "range" - 2: Application replay pass 2
+==PROF== Profiling "range" - 3: Application replay pass 2
+==PROF== Profiling "range" - 4: Application replay pass 2
+==PROF== Profiling "range" - 5: Application replay pass 2
+==PROF== Profiling "range" - 6: Application replay pass 2
+==PROF== Profiling "range" - 7: Application replay pass 2
+==PROF== Profiling "range" - 8: Application replay pass 2
+==PROF== Profiling "range" - 9: Application replay pass 2
+==PROF== Profiling "range" - 10: Application replay pass 2
+==PROF== Profiling "range" - 11: Application replay pass 2
+==PROF== Profiling "range" - 12: Application replay pass 2
+==PROF== Profiling "range" - 13: Application replay pass 2
+==PROF== Profiling "range" - 14: Application replay pass 2
+r=0       w=0.1875  nc=0        nd=196608   ok
+r=0.5     w=0.1875  nc=524288   nd=196608   ok
+r=0.625   w=0.1875  nc=655360   nd=196608   ok
+r=0.6875  w=0.1875  nc=720896   nd=196608   ok
+r=0       w=0.3125  nc=0        nd=327680   ok
+r=0.375   w=0.3125  nc=393216   nd=327680   ok
+r=0.5     w=0.3125  nc=524288   nd=327680   ok
+r=0.5625  w=0.3125  nc=589824   nd=327680   ok
+r=0       w=0.4375  nc=0        nd=458752   ok
+r=0       w=0.5     nc=0        nd=524288   ok
+r=0       w=0.5625  nc=0        nd=589824   ok
+r=0       w=0.625   nc=0        nd=655360   ok
+r=0       w=0.6875  nc=0        nd=720896   ok
+r=2       w=0       nc=2097152  nd=0        ok
+r=0       w=2       nc=0        nd=2097152  ok
+correctness_failures=0
+==PROF== Disconnected from process 5272
+==PROF== Report: /root/dmkl/benchmarks/results/wb_probe_b6b_20261106-045810/full_range_r2.ncu-rep

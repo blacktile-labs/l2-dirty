@@ -1,0 +1,51 @@
+gather         T=16777216;M=4194304;dist=uniform        ok
+gather_pair64  T=16777216;M=4194304;dist=uniform        ok
+gather_pair128 T=16777216;M=4194304;dist=uniform        ok
+gather         T=16777216;M=4194304;dist=zipf1.0        ok
+gather_pair64  T=16777216;M=4194304;dist=zipf1.0        ok
+gather_pair128 T=16777216;M=4194304;dist=zipf1.0        ok
+correctness_failures=0
+
+# gather summary -- run `20261104-062622-probe-default3`
+
+- Device: NVIDIA GeForce RTX 3060 (cc 8.6), driver 12020, runtime 12020, L2 2359296 B
+- Correctness failures: 0 (6 checks passed)
+- reps 20, warmup 3, steady iters 5, flush_l2 True
+- ESTIMATED theoretical DRAM BW 360.0 GB/s; ESTIMATED FP32 peak 12845 GFLOP/s (device attributes)
+
+`useful_GBps` = algorithmic bytes of the task / median time (DERIVED). `isolated` = L2 flushed before each rep; `steady` = back-to-back calls.
+
+| variant | params | mode | reps | median_us | p95_us | cv_pct | useful_GBps |
+|---|---|---|---|---|---|---|---|
+| gather | T=16777216;M=4194304;dist=uniform | isolated | 20 | 1239.040 | 1239.334 | 0.048 | 40.621 |
+| gather | T=16777216;M=4194304;dist=uniform | steady | 20 | 1238.605 | 1239.251 | 0.027 | 40.636 |
+| gather_pair64 | T=16777216;M=4194304;dist=uniform | isolated | 20 | 1975.808 | 1986.765 | 0.484 | 33.965 |
+| gather_pair64 | T=16777216;M=4194304;dist=uniform | steady | 20 | 1975.194 | 1979.248 | 0.171 | 33.976 |
+| gather_pair128 | T=16777216;M=4194304;dist=uniform | isolated | 20 | 1976.016 | 1989.734 | 0.487 | 33.962 |
+| gather_pair128 | T=16777216;M=4194304;dist=uniform | steady | 20 | 1974.681 | 1983.826 | 0.265 | 33.985 |
+| gather | T=16777216;M=4194304;dist=zipf1.0 | isolated | 20 | 675.840 | 676.864 | 0.099 | 74.473 |
+| gather | T=16777216;M=4194304;dist=zipf1.0 | steady | 20 | 675.015 | 675.246 | 0.034 | 74.564 |
+| gather_pair64 | T=16777216;M=4194304;dist=zipf1.0 | isolated | 20 | 758.208 | 762.944 | 0.267 | 88.510 |
+| gather_pair64 | T=16777216;M=4194304;dist=zipf1.0 | steady | 20 | 758.810 | 759.836 | 0.110 | 88.440 |
+| gather_pair128 | T=16777216;M=4194304;dist=zipf1.0 | isolated | 20 | 759.120 | 762.931 | 0.336 | 88.403 |
+| gather_pair128 | T=16777216;M=4194304;dist=zipf1.0 | steady | 20 | 758.282 | 759.601 | 0.128 | 88.501 |
+
+### Fetch-granularity probe (isolated mode)
+
+`meas_ratio` = pair-variant time / gather time (MEASURED). `pred_g*` = ratio expected if DRAM moves g-byte chunks per miss with no reuse (ESTIMATE; meaningful for random dists). l2_fetch_granularity reported by driver: 64 B (requested: -1).
+
+| variant | dist | pair_us | gather_us | meas_ratio | pred_g32 | pred_g64 | pred_g128 |
+|---|---|---|---|---|---|---|---|
+| gather_pair64 | uniform | 1975.808 | 1239.040 | 1.595 | 1.800 | 1.000 | 1.000 |
+| gather_pair128 | uniform | 1976.016 | 1239.040 | 1.595 | 1.800 | 1.889 | 1.000 |
+| gather_pair64 | zipf1.0 | 758.208 | 675.840 | 1.122 | 1.800 | 1.000 | 1.000 |
+| gather_pair128 | zipf1.0 | 759.120 | 675.840 | 1.123 | 1.800 | 1.889 | 1.000 |
+
+### Traffic bounds (isolated mode)
+
+`est_*_MiB` are model bytes; `impl_GBps_*` = estimate / measured median. If the *compulsory* (lower-bound) bytes imply more than the estimated DRAM peak (360 GB/s), the model's 32-B-sector assumption is contradicted.
+
+| variant | dist | T | median_us | hot_sector_share | max_elem_count | est_MiB_compulsory | est_MiB_hot_set | est_MiB_no_reuse | impl_GBps_compulsory | impl_GBps_no_reuse | compulsory_exceeds_peak |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| gather | uniform | 16777216 | 1239.040 | 0.099 | 6 | 87.358 | 149.560 | 160.000 | 73.929 | 135.405 | no |
+| gather | zipf1.0 | 16777216 | 675.840 | 0.706 | 244059 | 59.477 | 71.851 | 160.000 | 92.279 | 248.242 | no |

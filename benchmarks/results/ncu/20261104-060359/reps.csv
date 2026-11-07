@@ -1,0 +1,10 @@
+variant,kernel,elem_bytes,n_src,stride,n_out,logical_read_bytes,logical_write_bytes,block,grid,flush_l2,rep,time_ms
+empty_kernel,empty_kernel,4,16777216,1,0,0,0,32,1,1,0,0.111680
+memcpy_d2d,cudaMemcpyAsync(D2D),4,16777216,1,16777216,67108864,67108864,0,0,1,0,0.402432
+copy_contig_u32,copy_contig_u32,4,16777216,1,16777216,67108864,67108864,256,65536,1,0,0.537600
+copy_contig_u32x4,copy_contig_u32x4,4,16777216,1,16777216,67108864,67108864,256,16384,1,0,0.544768
+copy_strided_read_u32_s1,copy_strided_read_u32,4,16777216,1,16777216,67108864,67108864,256,65536,1,0,0.525312
+copy_strided_read_u32_s2,copy_strided_read_u32,4,16777216,2,8388608,33554432,33554432,256,32768,1,0,0.440320
+copy_strided_read_u32_s8,copy_strided_read_u32,4,16777216,8,2097152,8388608,8388608,256,8192,1,0,0.343040
+copy_strided_read_u32_s16,copy_strided_read_u32,4,16777216,16,1048576,4194304,4194304,256,4096,1,0,0.265376
+copy_strided_read_u32_s32,copy_strided_read_u32,4,16777216,32,524288,2097152,2097152,256,2048,1,0,0.198304

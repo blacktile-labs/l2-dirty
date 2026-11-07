@@ -1,0 +1,14 @@
+[b11_gb206_5060ti_a2 05:00:11] package sha256 0050530a8bf1320e, remote script sha256 0b2eb0ec50f22956
+[b11_gb206_5060ti_a2 05:00:13] created instance 59369460 (offer 58818101, image docker.io/vastai/kvm:ubuntu_cli_22.04-2025-05-16, disk 40 GB)
+[b11_gb206_5060ti_a2 05:00:15] price dph_total = $0.14444444444444443/h
+[b11_gb206_5060ti_a2 05:02:33] ssh ok (root@<host-redacted>:<port>)
+[b11_gb206_5060ti_a2 05:02:51] started detached run of benchmarks/scripts/remote_vm_pilot.sh
+[b11_gb206_5060ti_a2 05:02:58] remote: [05:02:51] 1 toolchain
+[b11_gb206_5060ti_a2 05:04:19] remote: [05:04:11] 4 B6b
+[b11_gb206_5060ti_a2 05:04:46] remote: [05:04:37] 4 B10b first-cell
+[b11_gb206_5060ti_a2 05:05:14] remote: [05:04:47] 5 B9b (waiting for the torch venv)
+[b11_gb206_5060ti_a2 05:06:08] remote: [05:06:05] 6 pack
+[b11_gb206_5060ti_a2 05:06:35] remote finished (done=1): rc=0
+[b11_gb206_5060ti_a2 05:06:44] downloaded pilot_results.tgz -> /home/rungrod/data-move-kernel-lab/.vast_work/b11_gb206_5060ti_a2
+[b11_gb206_5060ti_a2 05:06:44] destroying instance 59369460
+[b11_gb206_5060ti_a2 05:06:51] destroyed (verified)

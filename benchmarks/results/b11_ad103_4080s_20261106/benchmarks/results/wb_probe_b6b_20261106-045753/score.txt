@@ -1,0 +1,33 @@
+== full lines
+     r      w    r+w      WB     WBR      RB      RD     RDR   WARM  state
+     0 0.1875 0.1875   0.000   0.000   0.000       -       -   None  inactive
+     0 0.3125 0.3125   0.000   0.000   0.000       -       -   None  inactive
+     0 0.4375 0.4375   0.071   0.071   0.000       -       -   None  ambiguous
+     0    0.5    0.5   0.554   0.558   0.000       -       -   None  active
+     0 0.5625 0.5625   0.611   0.614   0.000       -       -   None  active
+     0  0.625  0.625   0.949   0.933   0.000       -       -   None  active
+     0 0.6875 0.6875   0.948   0.939   0.000       -       -   None  active
+     0      2      2   0.963   0.998   1.000       -       -   None  active
+ 0.375 0.3125 0.6875   0.000   0.000   0.000   0.000   0.000    1.0  inactive
+   0.5 0.1875 0.6875   0.000   0.000   0.000   0.000   0.000    1.0  inactive
+   0.5 0.3125 0.8125   0.000   0.000   0.000   0.000   0.000    1.0  inactive
+0.5625 0.3125  0.875   0.036   0.001   0.000   0.000   0.000    1.0  inactive
+ 0.625 0.1875 0.8125   0.000   0.000   0.000   0.000   0.000    1.0  inactive
+0.6875 0.1875  0.875   0.039   0.001   0.000   0.000   0.000    1.0  inactive
+     2      0      2       -       -       -   1.000   1.000    1.0  n/a
+== one sector per line (WB, WBR, RB normalized by written bytes)
+     r      w    r+w      WB     WBR      RB      RD     RDR   WARM  state
+     0  0.375  0.375   0.000   0.001   0.000       -       -   None  inactive
+     0  0.625  0.625   0.982   0.997   0.000       -       -   None  active
+     0   0.75   0.75   0.986   0.997   0.000       -       -   None  active
+     0  0.875  0.875   0.988   0.997   0.000       -       -   None  active
+     0      2      2   0.995   0.999   1.000       -       -   None  active
+V-0 sanity: full 2:0 RD/RDR 1.000/1.000, full 0:2 WB/WBR 0.963/0.998, sector 0:2 WB/WBR 0.995/0.999, WARM [1.000, 1.000] -> PASS
+V-1 WBR(0.0, 0.5) 0.558 (B6 0.190), WBR(0.0, 0.625) 0.933 (B6 0.992) -> FAIL
+V-2 row w=0.1875: WBR(0)=0.000; delta WBR at r=(0.5, 0.625, 0.6875): +0.000, +0.000, +0.001  [per-kernel WB deltas, not decisive: +0.000, +0.000, +0.039]
+V-2 row w=0.3125: WBR(0)=0.000; delta WBR at r=(0.375, 0.5, 0.5625): +0.000, +0.000, +0.001  [per-kernel WB deltas, not decisive: +0.000, +0.000, +0.036]
+V-2 -> H-D confirmed (dirty footprint only)
+V-3 WBR(0:0.4375) = 0.071, WBR(0:0.5625) = 0.614 -> partial
+V-4 one-sector-per-line: control WBR 0.001; median WBR at w=(0.625, 0.75, 0.875) = 0.997 (each: 0.997, 0.997, 0.997) -> counts lines
+V-5 median RB/WB over 7 active cells = 0.000 -> resident
+verdict: {"V-0": true, "V-1 replicates B6": false, "V-2": "H-D confirmed (dirty footprint only)", "V-3": "partial", "V-4": "counts lines", "V-5": "resident"}

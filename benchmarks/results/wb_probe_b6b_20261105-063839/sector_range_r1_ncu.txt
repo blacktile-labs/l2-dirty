@@ -1,0 +1,30 @@
+==WARNING== Please consult the documentation for current range-based replay mode limitations and requirements.
+==WARNING== Note: Running with uncontrolled GPU caches. Profiling results may be inconsistent.
+==WARNING== Note: Running with unmodified GPU clocks. If not controlled otherwise, profiling results may be inconsistent.
+==PROF== Connected to process 115506 (/mnt/e/data-move-kernel-lab/benchmarks/build/wb_probe)
+==PROF== Profiling "range" - 0: Application replay pass 1
+==PROF== Profiling "range" - 1: Application replay pass 1
+==PROF== Profiling "range" - 2: Application replay pass 1
+==PROF== Profiling "range" - 3: Application replay pass 1
+==PROF== Profiling "range" - 4: Application replay pass 1
+r=0       w=0.375   nc=0        nd=294912   ok
+r=0       w=0.625   nc=0        nd=491520   ok
+r=0       w=0.75    nc=0        nd=589824   ok
+r=0       w=0.875   nc=0        nd=688128   ok
+r=0       w=2       nc=0        nd=1572864  ok
+correctness_failures=0
+==PROF== Disconnected from process 115506
+==PROF== Connected to process 115546 (/mnt/e/data-move-kernel-lab/benchmarks/build/wb_probe)
+==PROF== Profiling "range" - 0: Application replay pass 2
+==PROF== Profiling "range" - 1: Application replay pass 2
+==PROF== Profiling "range" - 2: Application replay pass 2
+==PROF== Profiling "range" - 3: Application replay pass 2
+==PROF== Profiling "range" - 4: Application replay pass 2
+r=0       w=0.375   nc=0        nd=294912   ok
+r=0       w=0.625   nc=0        nd=491520   ok
+r=0       w=0.75    nc=0        nd=589824   ok
+r=0       w=0.875   nc=0        nd=688128   ok
+r=0       w=2       nc=0        nd=1572864  ok
+correctness_failures=0
+==PROF== Disconnected from process 115546
+==PROF== Report: /mnt/e/data-move-kernel-lab/benchmarks/results/wb_probe_b6b_20261105-063839/sector_range_r1.ncu-rep

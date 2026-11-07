@@ -1,0 +1,5 @@
+NVIDIA GeForce RTX 4090: K-0 PASS
+  4096x14336: rho(dt, U) +0.747; CV(E) 0.397; E median 0.317 L2; slack-model R^2 -0.511; most BW (cfg, U, dt us) [('fp16_bn16_bk256_w4', 1.0, 50.2), ('fp16_bn16_bk256_w8', 1.0, 50.2), ('fp16_bn32_bk256_w4', 1.0, 50.2)]; least [('w4_bn32_bk128_w8', 0.414, 30.2), ('w4_bn16_bk128_w4', 0.408, 29.7), ('w4_bn32_bk128_w4', 0.268, 18.4)]
+  14336x4096: rho(dt, U) +0.851; CV(E) 0.450; E median 0.303 L2; slack-model R^2 0.538; most BW (cfg, U, dt us) [('fp16_bn8_bk256_w4', 1.0, 50.2), ('fp16_bn32_bk256_w8', 1.0, 50.2), ('fp16_bn32_bk128_w8', 1.0, 51.2)]; least [('w4_bn16_bk128_w4', 0.575, 19.5), ('w4_bn8_bk128_w4', 0.545, 20.5), ('w4_bn16_bk128_w8', 0.535, 20.5)]
+K-1 -> penalty grows with bandwidth use; K-2 -> bytes differ
+verdict: {"K-0": true, "K-1": "penalty grows with bandwidth use", "K-2": "bytes differ"}

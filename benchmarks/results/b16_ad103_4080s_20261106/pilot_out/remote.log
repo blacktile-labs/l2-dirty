@@ -1,0 +1,9 @@
+[08:18:40] 0 environment
+[08:18:40] 1 toolchain
+2.7.1+cu126 12.6 3.3.1 True
+bitsandbytes 0.50.2
+[08:20:24] 2 smoke
+[08:20:32] smoke rc=0 5 rows, 0 invalid, notes {'4096x4096 _bnb_version': '0.50.2'}
+[08:20:32] 3 B16
+[08:21:02] B16 rc=0
+[08:21:02] 4 pack

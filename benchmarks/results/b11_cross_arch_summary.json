@@ -1,0 +1,121 @@
+{
+ "gpus": [
+  {
+   "gpu": "Turing TU106 (RTX 2060S)",
+   "P-0": true,
+   "verdicts": {
+    "V-2": "inconclusive",
+    "V-3": "sharp step",
+    "V-4": "control failed (WBR(0:0.375) = 0.181); not interpreted",
+    "V-5": "resident",
+    "Z-1": "dvsc supported",
+    "Z-2": "effective capacity >= 0.94 L2",
+    "Z-2b": "reads retained just above capacity (not LRU-sharp)",
+    "Q-1": "per-kernel mode loses write-backs above the cap",
+    "Q-3": "v4 does not"
+   },
+   "match": {
+    "V-2": false,
+    "V-3": true,
+    "V-4": false,
+    "V-5": true,
+    "Z-1": true,
+    "Z-2": true,
+    "Z-2b": true,
+    "Q-1": false,
+    "Q-3": false
+   },
+   "n_match": 5,
+   "C5n": "present (transition in 0.44-0.63 L2)",
+   "C5n values": {
+    "WBR(0:0.4375)": 0.015882219587053572,
+    "WBR(0:0.625)": 0.9764495849609375,
+    "WBR(0:0.6875)": 0.9787070534446023
+   },
+   "C6": "present",
+   "C6 loss": 0.147,
+   "first-cell": {
+    "F-0": true,
+    "F-1": "first-cell artifact supported",
+    "F-2": "no first-cell inflation",
+    "V-4'": "counts lines"
+   },
+   "FC": "first-cell artifact confirmed",
+   "FC values": {
+    "c1 (first)": 0.18135579427083334,
+    "c2 (second)": 0.0012
+   }
+  },
+  {
+   "gpu": "Ada AD103 (RTX 4080S)",
+   "P-0": true,
+   "verdicts": {
+    "V-2": "H-D confirmed (dirty footprint only)",
+    "V-3": "partial",
+    "V-4": "counts lines",
+    "V-5": "resident",
+    "Z-1": "dvsc supported",
+    "Z-2": "effective capacity >= 0.94 L2",
+    "Z-2b": "reads retained just above capacity (not LRU-sharp)",
+    "Q-1": "mixed",
+    "Q-3": "v4 does not"
+   },
+   "match": {
+    "V-2": true,
+    "V-3": false,
+    "V-4": true,
+    "V-5": true,
+    "Z-1": true,
+    "Z-2": true,
+    "Z-2b": true,
+    "Q-1": true,
+    "Q-3": false
+   },
+   "n_match": 7,
+   "C5n": "present (transition in 0.44-0.63 L2)",
+   "C5n values": {
+    "WBR(0:0.4375)": 0.07094247000558036,
+    "WBR(0:0.625)": 0.9333740234375,
+    "WBR(0:0.6875)": 0.9390744295987216
+   },
+   "C6": "present",
+   "C6 loss": 0.058,
+   "first-cell": {
+    "F-0": true,
+    "F-1": "first-cell artifact supported",
+    "F-2": "no first-cell inflation",
+    "V-4'": "counts lines"
+   },
+   "FC": "nothing to test (control passes as first cell)",
+   "FC values": {
+    "c1 (first)": 0.0013020833333333333,
+    "c2 (second)": 0.0
+   }
+  },
+  {
+   "gpu": "Blackwell GB206 (RTX 5060 Ti)",
+   "P-0": false,
+   "verdicts": {},
+   "match": {
+    "V-2": false,
+    "V-3": false,
+    "V-4": false,
+    "V-5": false,
+    "Z-1": false,
+    "Z-2": false,
+    "Z-2b": false,
+    "Q-1": false,
+    "Q-3": false
+   },
+   "n_match": 0,
+   "C5n": "not measured",
+   "C5n values": {},
+   "C6": "not measured",
+   "C6 loss": null
+  }
+ ],
+ "verdict": {
+  "C5n-X": "generalizes (present on 2/2)",
+  "C6-X": "generalizes (present on 2/2)"
+ }
+}

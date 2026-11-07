@@ -1,0 +1,90 @@
+{
+ "device": "NVIDIA GeForce RTX 4080 SUPER",
+ "K-0": true,
+ "K-1": "penalty grows with bandwidth use",
+ "K-2": "bytes differ",
+ "per shape": {
+  "4096x14336": {
+   "n": 36,
+   "rho_dt_U": 0.809,
+   "cv_E": 0.428,
+   "E_median_over_L2": 0.3509,
+   "r2_slack_model": -0.049,
+   "most_bw_used": [
+    [
+     "fp16_bn16_bk256_w8",
+     1.0,
+     65.5
+    ],
+    [
+     "fp16_bn8_bk256_w4",
+     1.0,
+     64.5
+    ],
+    [
+     "fp16_bn32_bk256_w4",
+     1.0,
+     67.6
+    ]
+   ],
+   "least_bw_used": [
+    [
+     "w4_bn32_bk128_w8",
+     0.443,
+     27.6
+    ],
+    [
+     "w4_bn8_bk128_w8",
+     0.353,
+     27.6
+    ],
+    [
+     "w4_bn32_bk128_w4",
+     0.305,
+     27.7
+    ]
+   ]
+  },
+  "14336x4096": {
+   "n": 36,
+   "rho_dt_U": 0.878,
+   "cv_E": 0.447,
+   "E_median_over_L2": 0.3248,
+   "r2_slack_model": 0.814,
+   "most_bw_used": [
+    [
+     "fp16_bn32_bk128_w4",
+     1.0,
+     64.5
+    ],
+    [
+     "fp16_bn32_bk256_w8",
+     1.0,
+     64.5
+    ],
+    [
+     "fp16_bn16_bk256_w4",
+     1.0,
+     63.5
+    ]
+   ],
+   "least_bw_used": [
+    [
+     "w4_bn32_bk128_w4",
+     0.674,
+     18.3
+    ],
+    [
+     "w4_bn32_bk256_w8",
+     0.653,
+     22.5
+    ],
+    [
+     "w4_bn8_bk128_w8",
+     0.653,
+     22.5
+    ]
+   ]
+  }
+ }
+}

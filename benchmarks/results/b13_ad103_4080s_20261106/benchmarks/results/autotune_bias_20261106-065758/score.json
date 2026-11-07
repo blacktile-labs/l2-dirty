@@ -1,0 +1,46 @@
+{
+ "device": "NVIDIA GeForce RTX 4080 SUPER",
+ "runs": 3,
+ "T-0": true,
+ "T-1": "harmless",
+ "T-1 max regret": 0.006,
+ "T-2": "flips",
+ "per shape": {
+  "4096x4096": {
+   "pick_zero": "bn32_bk256_w8",
+   "pick_read": "bn8_bk128_w4",
+   "regret": 0.0,
+   "t_read_pick_read_us": 51.2,
+   "t_read_pick_zero_us": 51.2,
+   "bias_of_pick_zero": 0.4,
+   "cublas_faster_zero": false,
+   "cublas_faster_read": false,
+   "spearman": 0.6226,
+   "n": 37
+  },
+  "4096x14336": {
+   "pick_zero": "cublas",
+   "pick_read": "bn16_bk512_w4",
+   "regret": 0.006,
+   "t_read_pick_read_us": 171.008,
+   "t_read_pick_zero_us": 172.032,
+   "bias_of_pick_zero": 0.1633,
+   "cublas_faster_zero": true,
+   "cublas_faster_read": false,
+   "spearman": 0.8853,
+   "n": 37
+  },
+  "14336x4096": {
+   "pick_zero": "cublas",
+   "pick_read": "bn16_bk128_w8",
+   "regret": 0.006,
+   "t_read_pick_read_us": 171.008,
+   "t_read_pick_zero_us": 172.032,
+   "bias_of_pick_zero": 0.1607,
+   "cublas_faster_zero": true,
+   "cublas_faster_read": false,
+   "spearman": 0.4365,
+   "n": 37
+  }
+ }
+}

@@ -1,0 +1,158 @@
+==WARNING== Please consult the documentation for current range-based replay mode limitations and requirements.
+==WARNING== Note: Running with uncontrolled GPU caches. Profiling results may be inconsistent.
+==WARNING== Note: Running with unmodified GPU clocks. If not controlled otherwise, profiling results may be inconsistent.
+==PROF== Connected to process 24410 (/mnt/e/data-move-kernel-lab/benchmarks/build/wb_probe)
+==PROF== Profiling "range" - 0: Application replay pass 1
+==PROF== Profiling "range" - 1: Application replay pass 1
+==PROF== Profiling "range" - 2: Application replay pass 1
+==PROF== Profiling "range" - 3: Application replay pass 1
+==PROF== Profiling "range" - 4: Application replay pass 1
+==PROF== Profiling "range" - 5: Application replay pass 1
+==PROF== Profiling "range" - 6: Application replay pass 1
+==PROF== Profiling "range" - 7: Application replay pass 1
+==PROF== Profiling "range" - 8: Application replay pass 1
+==PROF== Profiling "range" - 9: Application replay pass 1
+==PROF== Profiling "range" - 10: Application replay pass 1
+==PROF== Profiling "range" - 11: Application replay pass 1
+==PROF== Profiling "range" - 12: Application replay pass 1
+==PROF== Profiling "range" - 13: Application replay pass 1
+==PROF== Profiling "range" - 14: Application replay pass 1
+==PROF== Profiling "range" - 15: Application replay pass 1
+==PROF== Profiling "range" - 16: Application replay pass 1
+==PROF== Profiling "range" - 17: Application replay pass 1
+==PROF== Profiling "range" - 18: Application replay pass 1
+==PROF== Profiling "range" - 19: Application replay pass 1
+==PROF== Profiling "range" - 20: Application replay pass 1
+==PROF== Profiling "range" - 21: Application replay pass 1
+==PROF== Profiling "range" - 22: Application replay pass 1
+==PROF== Profiling "range" - 23: Application replay pass 1
+==PROF== Profiling "range" - 24: Application replay pass 1
+==PROF== Profiling "range" - 25: Application replay pass 1
+==PROF== Profiling "range" - 26: Application replay pass 1
+==PROF== Profiling "range" - 27: Application replay pass 1
+==PROF== Profiling "range" - 28: Application replay pass 1
+==PROF== Profiling "range" - 29: Application replay pass 1
+==PROF== Profiling "range" - 30: Application replay pass 1
+==PROF== Profiling "range" - 31: Application replay pass 1
+==PROF== Profiling "range" - 32: Application replay pass 1
+==PROF== Profiling "range" - 33: Application replay pass 1
+==PROF== Profiling "range" - 34: Application replay pass 1
+==PROF== Profiling "range" - 35: Application replay pass 1
+==PROF== Profiling "range" - 36: Application replay pass 1
+r=0       w=0.125   nc=0        nd=98304    ok
+r=0       w=0.25    nc=0        nd=196608   ok
+r=0       w=0.375   nc=0        nd=294912   ok
+r=0       w=0.5     nc=0        nd=393216   ok
+r=0       w=0.625   nc=0        nd=491520   ok
+r=0       w=0.75    nc=0        nd=589824   ok
+r=0       w=0.875   nc=0        nd=688128   ok
+r=0.125   w=0       nc=98304    nd=0        ok
+r=0.125   w=0.125   nc=98304    nd=98304    ok
+r=0.125   w=0.25    nc=98304    nd=196608   ok
+r=0.125   w=0.375   nc=98304    nd=294912   ok
+r=0.125   w=0.5     nc=98304    nd=393216   ok
+r=0.125   w=0.625   nc=98304    nd=491520   ok
+r=0.125   w=0.75    nc=98304    nd=589824   ok
+r=0.25    w=0       nc=196608   nd=0        ok
+r=0.25    w=0.125   nc=196608   nd=98304    ok
+r=0.25    w=0.25    nc=196608   nd=196608   ok
+r=0.25    w=0.375   nc=196608   nd=294912   ok
+r=0.25    w=0.5     nc=196608   nd=393216   ok
+r=0.25    w=0.625   nc=196608   nd=491520   ok
+r=0.375   w=0       nc=294912   nd=0        ok
+r=0.375   w=0.125   nc=294912   nd=98304    ok
+r=0.375   w=0.25    nc=294912   nd=196608   ok
+r=0.375   w=0.375   nc=294912   nd=294912   ok
+r=0.375   w=0.5     nc=294912   nd=393216   ok
+r=0.5     w=0       nc=393216   nd=0        ok
+r=0.5     w=0.125   nc=393216   nd=98304    ok
+r=0.5     w=0.25    nc=393216   nd=196608   ok
+r=0.5     w=0.375   nc=393216   nd=294912   ok
+r=0.625   w=0       nc=491520   nd=0        ok
+r=0.625   w=0.125   nc=491520   nd=98304    ok
+r=0.625   w=0.25    nc=491520   nd=196608   ok
+r=0.75    w=0       nc=589824   nd=0        ok
+r=0.75    w=0.125   nc=589824   nd=98304    ok
+r=0.875   w=0       nc=688128   nd=0        ok
+r=2       w=0       nc=1572864  nd=0        ok
+r=0       w=2       nc=0        nd=1572864  ok
+correctness_failures=0
+==PROF== Disconnected from process 24410
+==PROF== Connected to process 24491 (/mnt/e/data-move-kernel-lab/benchmarks/build/wb_probe)
+==PROF== Profiling "range" - 0: Application replay pass 2
+==PROF== Profiling "range" - 1: Application replay pass 2
+==PROF== Profiling "range" - 2: Application replay pass 2
+==PROF== Profiling "range" - 3: Application replay pass 2
+==PROF== Profiling "range" - 4: Application replay pass 2
+==PROF== Profiling "range" - 5: Application replay pass 2
+==PROF== Profiling "range" - 6: Application replay pass 2
+==PROF== Profiling "range" - 7: Application replay pass 2
+==PROF== Profiling "range" - 8: Application replay pass 2
+==PROF== Profiling "range" - 9: Application replay pass 2
+==PROF== Profiling "range" - 10: Application replay pass 2
+==PROF== Profiling "range" - 11: Application replay pass 2
+==PROF== Profiling "range" - 12: Application replay pass 2
+==PROF== Profiling "range" - 13: Application replay pass 2
+==PROF== Profiling "range" - 14: Application replay pass 2
+==PROF== Profiling "range" - 15: Application replay pass 2
+==PROF== Profiling "range" - 16: Application replay pass 2
+==PROF== Profiling "range" - 17: Application replay pass 2
+==PROF== Profiling "range" - 18: Application replay pass 2
+==PROF== Profiling "range" - 19: Application replay pass 2
+==PROF== Profiling "range" - 20: Application replay pass 2
+==PROF== Profiling "range" - 21: Application replay pass 2
+==PROF== Profiling "range" - 22: Application replay pass 2
+==PROF== Profiling "range" - 23: Application replay pass 2
+==PROF== Profiling "range" - 24: Application replay pass 2
+==PROF== Profiling "range" - 25: Application replay pass 2
+==PROF== Profiling "range" - 26: Application replay pass 2
+==PROF== Profiling "range" - 27: Application replay pass 2
+==PROF== Profiling "range" - 28: Application replay pass 2
+==PROF== Profiling "range" - 29: Application replay pass 2
+==PROF== Profiling "range" - 30: Application replay pass 2
+==PROF== Profiling "range" - 31: Application replay pass 2
+==PROF== Profiling "range" - 32: Application replay pass 2
+==PROF== Profiling "range" - 33: Application replay pass 2
+==PROF== Profiling "range" - 34: Application replay pass 2
+==PROF== Profiling "range" - 35: Application replay pass 2
+==PROF== Profiling "range" - 36: Application replay pass 2
+r=0       w=0.125   nc=0        nd=98304    ok
+r=0       w=0.25    nc=0        nd=196608   ok
+r=0       w=0.375   nc=0        nd=294912   ok
+r=0       w=0.5     nc=0        nd=393216   ok
+r=0       w=0.625   nc=0        nd=491520   ok
+r=0       w=0.75    nc=0        nd=589824   ok
+r=0       w=0.875   nc=0        nd=688128   ok
+r=0.125   w=0       nc=98304    nd=0        ok
+r=0.125   w=0.125   nc=98304    nd=98304    ok
+r=0.125   w=0.25    nc=98304    nd=196608   ok
+r=0.125   w=0.375   nc=98304    nd=294912   ok
+r=0.125   w=0.5     nc=98304    nd=393216   ok
+r=0.125   w=0.625   nc=98304    nd=491520   ok
+r=0.125   w=0.75    nc=98304    nd=589824   ok
+r=0.25    w=0       nc=196608   nd=0        ok
+r=0.25    w=0.125   nc=196608   nd=98304    ok
+r=0.25    w=0.25    nc=196608   nd=196608   ok
+r=0.25    w=0.375   nc=196608   nd=294912   ok
+r=0.25    w=0.5     nc=196608   nd=393216   ok
+r=0.25    w=0.625   nc=196608   nd=491520   ok
+r=0.375   w=0       nc=294912   nd=0        ok
+r=0.375   w=0.125   nc=294912   nd=98304    ok
+r=0.375   w=0.25    nc=294912   nd=196608   ok
+r=0.375   w=0.375   nc=294912   nd=294912   ok
+r=0.375   w=0.5     nc=294912   nd=393216   ok
+r=0.5     w=0       nc=393216   nd=0        ok
+r=0.5     w=0.125   nc=393216   nd=98304    ok
+r=0.5     w=0.25    nc=393216   nd=196608   ok
+r=0.5     w=0.375   nc=393216   nd=294912   ok
+r=0.625   w=0       nc=491520   nd=0        ok
+r=0.625   w=0.125   nc=491520   nd=98304    ok
+r=0.625   w=0.25    nc=491520   nd=196608   ok
+r=0.75    w=0       nc=589824   nd=0        ok
+r=0.75    w=0.125   nc=589824   nd=98304    ok
+r=0.875   w=0       nc=688128   nd=0        ok
+r=2       w=0       nc=1572864  nd=0        ok
+r=0       w=2       nc=0        nd=1572864  ok
+correctness_failures=0
+==PROF== Disconnected from process 24491
+==PROF== Report: /mnt/e/data-move-kernel-lab/benchmarks/results/wb_probe_20261105-042441/range_r3.ncu-rep

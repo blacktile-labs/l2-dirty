@@ -1,0 +1,19 @@
+warm rc=0
+kernel_r1 rc=0
+range_r1 rc=0
+kernel_r2 rc=0
+range_r2 rc=0
+kernel_r3 rc=0
+range_r3 rc=0
+score rc=1
+Traceback (most recent call last):
+  File "/mnt/e/data-move-kernel-lab/benchmarks/scripts/queued_wb_score.py", line 148, in <module>
+    sys.exit(main())
+             ^^^^^^
+  File "/mnt/e/data-move-kernel-lab/benchmarks/scripts/queued_wb_score.py", line 129, in main
+    kpairs = [p for m, c in zip(km, a.kernel_csv) for p in kernel_pairs(m, load_ncu_raw(c))]
+                                                                           ^^^^^^^^^^^^^^^
+  File "/mnt/e/data-move-kernel-lab/benchmarks/scripts/counter_prereg.py", line 205, in load_ncu_raw
+    hdr = rows[0]
+          ~~~~^^^
+IndexError: list index out of range

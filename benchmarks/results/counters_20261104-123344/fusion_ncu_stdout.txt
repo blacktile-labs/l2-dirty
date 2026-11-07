@@ -1,0 +1,13 @@
+==WARNING== Note: Running with uncontrolled GPU caches. Profiling results may be inconsistent.
+==WARNING== Note: Running with unmodified GPU clocks. If not controlled otherwise, profiling results may be inconsistent.
+==PROF== Connected to process 27933 (/mnt/e/data-move-kernel-lab/benchmarks/build/fusion)
+==ERROR== ERR_NVGPUCTRPERM - The user does not have permission to access NVIDIA GPU Performance Counters on the target device 0. For instructions on enabling permissions and to get more information see https://developer.nvidia.com/ERR_NVGPUCTRPERM
+n=196608;l2x=0.250000;K=1;l2_bytes=3145728       ok
+n=368640;l2x=0.468750;K=1;l2_bytes=3145728       ok
+n=442368;l2x=0.562500;K=1;l2_bytes=3145728       ok
+n=589824;l2x=0.750000;K=1;l2_bytes=3145728       ok
+n=786432;l2x=1.000000;K=1;l2_bytes=3145728       ok
+n=1572864;l2x=2.000000;K=1;l2_bytes=3145728      ok
+n=3145728;l2x=4.000000;K=1;l2_bytes=3145728      ok
+correctness_failures=0
+==PROF== Disconnected from process 27933

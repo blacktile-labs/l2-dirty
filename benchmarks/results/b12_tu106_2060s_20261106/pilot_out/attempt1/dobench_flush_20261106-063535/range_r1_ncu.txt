@@ -1,0 +1,1 @@
+benchmarks/scripts/dobench_flush_probe.sh: line 27: ncu: command not found

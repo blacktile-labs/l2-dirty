@@ -1,0 +1,8 @@
+NVIDIA GeForce RTX 2060 SUPER, L2 4194304 B; G-0 {'correctness': True, 'control writes': True, 'read flush leaves no dirty data': True, 'GEMV reads its weight': True} -> PASS
+G-1 X = w 2: 0.043, w 4: 0.046, w 8: 0.050 vs R_gpu 0.5063 (tol 0.15) and v4 0.5 -> not; closer to v4 (0.5) {'B9b': 0.4597, 'v4': 0.4534}
+G-1b spread 0.007 -> residue independent of the GEMV size
+G-2 w 2: dt 1.86 us vs pred 0.53 us, w 4: dt 2.16 us vs pred 0.52 us, w 8: dt 4.10 us vs pred 0.53 us -> not explained by bytes alone
+bias (t_zero / t_read - 1): {"2": 0.0749, "4": 0.0481, "8": 0.0488, "fixed 4096x4096": 0.0488}
+do_bench default / read-patched - 1 (exploratory, last run): {"2": 0.0635, "4": 0.07, "8": 0.0569, "fixed": 0.0602}
+summary per w: {"2": {"Wz": 181952.0, "Wr": 0.0, "Rz": 8422176.0, "Rr": 8426720.0, "weight": 8388608, "n": 15, "X": 0.0}, "4": {"Wz": 194432.0, "Wr": 0.0, "Rz": 16810176.0, "Rr": 16813216.0, "weight": 16777216, "n": 15, "X": 0.0}, "8": {"Wz": 210528.0, "Wr": 0.0, "Rz": 33587744.0, "Rr": 33589440.0, "weight": 33554432, "n": 15, "X": 0.1}}
+verdict: {"G-0": true, "G-1": "not", "G-1b": "residue independent of the GEMV size", "G-2": "not explained by bytes alone"}

@@ -1,0 +1,17 @@
+Thu Nov  5 13:03:59 UTC 2026
+name, driver_version, temperature.gpu, clocks.current.sm [MHz], clocks.current.memory [MHz], pstate
+NVIDIA GeForce RTX 3060 Laptop GPU, 591.74, 55, 1282 MHz, 6000 MHz, P0
+NVIDIA (R) Nsight Compute Command Line Profiler
+Copyright (c) 2018-2024 NVIDIA Corporation
+Version 2024.2.1.0 (build 34372528) (public-release)
+530d7b1b64d5edff7cad178eda4636b7875dc1d9
+?? benchmarks/results/b7r_opchain_20261105-130359/
+2.7.1+cu126 12.6 3.3.1
+86a4c7263365b9c0867bd4b257c7055ea3ab03a2e4672ae6f1a841bf70af6c63  benchmarks/scripts/b7r_opchain.sh
+9cca5b057796060a6bcd54ea62b8b2422b733bfa1abcc45b72ac3e91ec31ffc8  benchmarks/scripts/torch_opchain.py
+4505b589e185b00db87d4f38c7cea5c05158b51393ec97df5b7ab62d21e5aab9  research/preregistration/b7_predictions.json
+b290db3ae3be6a500bc6294f1e6523895e5710c19bb6fb472a2dc9eb7e35ddee  benchmarks/scripts/counter_b7r.py
+d3f5e6d58c6c985df425b1ab13b8243dc4640ad25919a1efc07f1adb3cd50a46  benchmarks/scripts/counter_b7.py
+ea8ad8ef2d928b1ec06009eb93d63427fe75a617aaa2d585fcae99bf0c8d4622  benchmarks/scripts/cache_sim.py
+6c68abc0fea72391cc88dc453f67fecbd9229725bff056979e9d01998ed38a22  benchmarks/scripts/cache_sim_v4.py
+9eb6c66ceeb354376d5454b472a68bb526595f1fccffd96fb752b22f2a190823  benchmarks/requirements-torch.txt

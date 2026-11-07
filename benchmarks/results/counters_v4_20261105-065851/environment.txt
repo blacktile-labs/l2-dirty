@@ -1,0 +1,19 @@
+Thu Nov  5 06:58:51 UTC 2026
+name, driver_version, temperature.gpu, clocks.current.sm [MHz], clocks.current.memory [MHz], pstate
+NVIDIA GeForce RTX 3060 Laptop GPU, 591.74, 57, 1282 MHz, 6000 MHz, P0
+NVIDIA (R) Nsight Compute Command Line Profiler
+Copyright (c) 2018-2024 NVIDIA Corporation
+Version 2024.2.1.0 (build 34372528) (public-release)
+d4097fb52fc4cf2aa76eb9a854331ddd76a0d001
+fa38be8773449a21c62e445ca78096e65c2ad6c8760ad45ed13b4e2301a7e5c6  benchmarks/scripts/local_counters_v4.sh
+0481efefb0ffe477cf6aa92780bc196076cb07549f8446f131eb1ef1b4c1ba91  research/preregistration/counters_v4_rtx3060laptop.json
+63d77de51dc2b5c8e7165d1dd16e5298f83d3baed04065f4e3a34936825966e4  benchmarks/scripts/counter_v4.py
+e7d21047cb71d492393bca1f04047e1ff175179eace83e68b190145c00d50d57  benchmarks/scripts/counter_prereg.py
+ea8ad8ef2d928b1ec06009eb93d63427fe75a617aaa2d585fcae99bf0c8d4622  benchmarks/scripts/cache_sim.py
+6c68abc0fea72391cc88dc453f67fecbd9229725bff056979e9d01998ed38a22  benchmarks/scripts/cache_sim_v4.py
+1b3e47d5ee90a948c489694022908d8ec0b69dba051993eacff4067a24cd5f13  benchmarks/scripts/cache_sim_b5.py
+f4af4694320299e465b387216c8817510b32a2aee3c0bf9ecc9bc84697bc213a  benchmarks/src/fusion.cu
+fb1bfb150329003a2b4f7c86913aba6569ec77f1450d1bbd0c3b25bc0e995858  benchmarks/src/stencil.cu
+7a5ea8b826772234d1e9a17990149dee6d5726dee203cf4fa2785e5c224a8c44  benchmarks/src/common.cuh
+84f19ebdfc8e1478fc28308a273bde3c185411e6b28b27177962594fa950df44  benchmarks/build/fusion
+3dc27d89fe6036b7f2f2eaeb44305626e55bd2f77a0043af32e40e2131d43f90  benchmarks/build/stencil

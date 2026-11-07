@@ -1,0 +1,9 @@
+# Lock written 2026-11-06 before any B21 measurement value was read (D-095); local smoke used for counts only
+b4ec409766feb13a806938129f3c71c22f644b2f0d472e2da2912c665832895b  research/HYPOTHESES.md
+a9245301a6cf4dd929ac1d39d7025b09aadcc943a7726089d472d4fdeacdaec3  benchmarks/scripts/e2e_probe.py
+f97df2b211b86ae5d07a505578c19c27772d3a4a0c882fc258976cc079d4ec79  benchmarks/scripts/e2e_probe.sh
+7e2b6fa09ffc7c52dcfa5ede74f62ff989902ee43f71444e247a3f34dab5d3a9  benchmarks/scripts/e2e_score.py
+a46ce846daa881cc808d51b770e7556cc8bd5819702504c22952a2fc297e9053  benchmarks/scripts/test_e2e_score.py
+8c71d5c2835cf1f373e9a0f2c5081630cb640a249d39b79ed11935e6086a0f2c  benchmarks/scripts/remote_b21.sh
+1790320875111ac762260afc57661f7182f478ffbccfa164cd8c35bd5ed96fa6  benchmarks/scripts/cleanbench.py
+1c4c4237b1ecdb1dd75bcaf6227d3028e10bf5e3d8a76c8534085ce66ba2ba96  benchmarks/scripts/vast/vast_run.sh
