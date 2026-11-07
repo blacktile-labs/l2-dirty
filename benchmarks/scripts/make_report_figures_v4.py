@@ -40,17 +40,17 @@ def bracket(ax, x0, x1, y, text):
 
 
 def fig_dirty(out: Path):
-    fig, axes = plt.subplots(3, 1, figsize=(6.3, 3.5))
+    from matplotlib.patches import Patch
+    fig, axes = plt.subplots(3, 1, figsize=(6.3, 3.4))
+    W = (GOLD, None)
     rows = [
-        ("(a) Write flush", [(0.2, 3.0, GOLD, "flush: write buffer", None), (3.0, 3.3, IDLE, None, None),
-                             (3.3, 5.1, BLUE, "kernel", None), (5.1, 6.9, ORANGE, "+ write-back of the\nflush's dirty lines", "///")],
-         (3.3, 6.9, "timed: kernel + someone else's write-back")),
-        ("(b) Read flush", [(0.2, 3.0, GREEN, "flush: read buffer (lines stay clean)", None), (3.0, 3.3, IDLE, None, None),
-                            (3.3, 5.1, BLUE, "kernel", None)],
+        ("(a) Write flush", [(0.2, 3.0, GOLD, None), (3.0, 3.3, IDLE, None), (3.3, 5.1, BLUE, None),
+                             (5.1, 6.9, ORANGE, "///")],
+         (3.3, 6.9, "timed: kernel + the flush's write-back")),
+        ("(b) Read flush", [(0.2, 3.0, GREEN, None), (3.0, 3.3, IDLE, None), (3.3, 5.1, BLUE, None)],
          (3.3, 5.1, "timed: kernel only")),
-        ("(c) Read flush,\nnext call", [(0.2, 1.4, BLUE, "kernel", None), (1.4, 2.9, ORANGE, "its output written\nback (flush time)", "///"),
-                                        (2.9, 4.6, GREEN, "flush (read)", None), (4.6, 4.9, IDLE, None, None),
-                                        (4.9, 6.7, BLUE, "next kernel", None)],
+        ("(c) Read flush,\nnext call", [(0.2, 1.4, BLUE, None), (1.4, 2.9, ORANGE, "///"), (2.9, 4.6, GREEN, None),
+                                        (4.6, 4.9, IDLE, None), (4.9, 6.7, BLUE, None)],
          None),
     ]
     for ax, (title, blocks, timed) in zip(axes, rows):
@@ -58,14 +58,21 @@ def fig_dirty(out: Path):
         ax.set_ylim(-0.1, 1.25)
         ax.axis("off")
         ax.text(-1.55, 0.3, title, ha="left", va="center", fontsize=8, color=INK, fontweight="bold")
-        for x0, x1, c, lab, h in blocks:
-            block(ax, x0, x1, 0.05, 0.5, c, lab, h)
+        for x0, x1, c, h in blocks:
+            block(ax, x0, x1, 0.05, 0.5, c, None, h)
         if timed:
             bracket(ax, timed[0], timed[1], 0.78, timed[2])
-    axes[2].text(1.4, 0.82, "written back during the next flush: never timed (cold mode)", fontsize=7.5, color=INK,
-                 ha="left")
-    axes[2].annotate("time →", xy=(6.95, -0.05), ha="right", fontsize=7.5, color=INK2)
-    fig.tight_layout(h_pad=0.2)
+    axes[2].text(2.15, 0.82, "own output written back during the next flush: not timed", fontsize=7.5, color=INK,
+                 ha="center")
+    axes[2].annotate("time →", xy=(7.05, -0.05), ha="right", fontsize=7.5, color=INK2)
+    handles = [Patch(facecolor=GOLD, edgecolor="white", label="write flush"),
+               Patch(facecolor=GREEN, edgecolor="white", label="read flush"),
+               Patch(facecolor=BLUE, edgecolor="white", label="kernel"),
+               Patch(facecolor=ORANGE, edgecolor="white", hatch="///", label="write-back of dirty lines"),
+               Patch(facecolor=IDLE, edgecolor="white", label="launch gap")]
+    fig.legend(handles=handles, loc="lower center", ncol=5, frameon=False, fontsize=7.5, handlelength=1.6,
+               columnspacing=1.2, bbox_to_anchor=(0.5, -0.01))
+    fig.tight_layout(h_pad=0.2, rect=(0, 0.07, 1, 1))
     fig.savefig(out)
     fig.savefig(out.with_suffix(".png"), dpi=200)
 
