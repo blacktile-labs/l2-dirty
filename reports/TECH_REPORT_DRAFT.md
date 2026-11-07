@@ -501,14 +501,14 @@ added 1-2 % on an A100.
 ## 11. Measurement pitfall: per-kernel DRAM write counters lose bytes
 
 We ran a kernel writing w × L2, followed by a flush. One range enclosing both counts ≈ 100 % of the written
-bytes. The sum of per-kernel `dram__bytes_write.sum` does not:
+bytes. The sum of per-kernel `dram__bytes_write.sum` does not; the share of the written bytes it loses:
 
-| GPU | lost at w = 0.75 / 1.0 / 1.5 L2 |
-|---|---|
-| GA106 | 8.9 % / 6.7 % / 0.1 % |
-| GA102 | 14.4 % / 9.2 % / 3.5 % |
-| TU106 | 14.7 % / 16.9 % / 5.7 % |
-| AD103 | 5.8 % / 4.9 % / 3.2 % |
+| Die (GPU, L2) | w = 0.75 L2 | w = 1.0 L2 | w = 1.5 L2 |
+|---|---:|---:|---:|
+| GA106 (RTX 3060 Laptop, 3 MiB) | 8.9 % | 6.7 % | 0.1 % |
+| GA102 (RTX 3090, 6 MiB) | 14.4 % | 9.2 % | 3.5 % |
+| TU106 (RTX 2060 SUPER, 4 MiB) | 14.7 % | 16.9 % | 5.7 % |
+| AD103 (RTX 4080 SUPER, 64 MiB) | 5.8 % | 4.9 % | 3.2 % |
 
 - **Per-kernel attribution misses them.** Two back-to-back ranges also lose bytes: 4-9 % on GA102, 5-13 % on TU106
   and 1-2 % on AD103. All with `--cache-control none`, Nsight Compute 2024.2.1.

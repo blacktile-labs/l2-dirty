@@ -1,19 +1,30 @@
-\documentclass[11pt]{article}
+\documentclass[11pt,a4paper]{article}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
-\usepackage{lmodern}
-\usepackage[margin=1in]{geometry}
-\usepackage{amsmath,amssymb}
+\usepackage{amsmath}
+\usepackage{newpxtext,newpxmath}
+\renewcommand{\ttdefault}{lmtt}
+\usepackage[a4paper,left=2.5cm,right=2.5cm,top=2.3cm,bottom=2.6cm]{geometry}
 \usepackage{booktabs,longtable,array,calc}
 \usepackage{graphicx}
 \usepackage{flafter}
 \usepackage{fancyvrb}
 \usepackage{xcolor}
-\usepackage[colorlinks=true,linkcolor={blue!45!black},citecolor={blue!45!black},urlcolor={blue!45!black}]{hyperref}
+\definecolor{btred}{HTML}{E63946}
+\colorlet{linkred}{btred!82!black}
+\usepackage[colorlinks=true,linkcolor={linkred},citecolor={linkred},urlcolor={linkred}]{hyperref}
+\usepackage{caption}
+\DeclareCaptionLabelSeparator{bar}{\ \textbar\ }
+\captionsetup{font=small,labelsep=bar,justification=justified,singlelinecheck=false}
+\usepackage{titlesec}
+\titleformat{\section}{\large\bfseries}{\thesection.}{0.5em}{}
+\titleformat{\subsection}{\normalsize\bfseries}{\thesubsection}{0.6em}{}
+\titlespacing*{\section}{0pt}{2.2ex plus .6ex minus .3ex}{1ex}
+\titlespacing*{\subsection}{0pt}{1.8ex plus .5ex minus .2ex}{0.8ex}
 \usepackage{etoolbox}
-\AtBeginEnvironment{longtable}{\small\hyphenpenalty=10000\exhyphenpenalty=10000}
+\AtBeginEnvironment{longtable}{\fontsize{9.2}{11.2}\selectfont\setlength{\tabcolsep}{4.5pt}\hyphenpenalty=10000\exhyphenpenalty=10000}
 \setlength{\emergencystretch}{3em}
-\linespread{1.06}
+\linespread{1.05}
 \usepackage{xurl}
 \usepackage[skip=0.55\baselineskip plus 2pt]{parskip}
 \usepackage{tcolorbox}
@@ -22,19 +33,25 @@
 \providecommand{\tightlist}{\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
 \setlength{\LTcapwidth}{\textwidth}
 \renewcommand{\arraystretch}{1.1}
-\title{Dirty L2, Drained Queues: Measurement Pitfalls in GPU Kernel Microbenchmarks}
-\author{
+\begin{document}
+\thispagestyle{plain}
+\noindent\includegraphics{bt_header.pdf}\par\nointerlineskip
+\vspace{4pt}\hrule height 0.4pt\relax
+\vspace{18pt}
+\begin{center}
+{\LARGE\bfseries Dirty L2, Drained Queues:\\[3pt] Measurement Pitfalls in GPU Kernel Microbenchmarks\par}
+\vspace{12pt}
 \begin{tabular}{@{}c@{\hspace{2.2em}}c@{}}
 Rungrod Thongjampa$^{*}$ & Chanchada Wathanathonnan \\[1pt]
 {\small\texttt{rungrod.th@blacktile.dev}} & {\small\texttt{chanchada.wa@blacktile.dev}}
-\end{tabular}\\[14pt]
-Blacktile Research\\[4pt]
-{\small $^{*}$Corresponding author}}
-\date{Technical report, November 2026}
-\begin{document}
-\maketitle
-\begin{abstract}
-\noindent GPU kernel microbenchmarks evict cached inputs before each timed call. In 14 of the 15 tools and benchmark paths we
+\end{tabular}\\[6pt]
+Blacktile Research \quad\textperiodcentered\quad {\small $^{*}$Corresponding author \quad\textperiodcentered\quad November 2026}
+\vspace{12pt}
+
+{\Large\bfseries Abstract}
+\end{center}
+\vspace{-4pt}
+GPU kernel microbenchmarks evict cached inputs before each timed call. In 14 of the 15 tools and benchmark paths we
 audited, including \texttt{triton.testing.do\_bench}, the eviction writes a large buffer. The writes leave dirty L2 lines
 that the timed kernel must write back, so the flush changes the measurement. With pre-registered experiments on
 nine NVIDIA GPUs, a batch-1 fp16 decode GEMV measured 6.6-25.3 \% slower with the shipped write flush than with a
@@ -48,7 +65,17 @@ kernels inside the proxy within 0.79 \% (12 kernels, ratio of medians over three
 GPU. This agreement was not reproduced on rented RTX 4060 and A100 hosts, which refused clock locking: clock
 changes, a kernel-context effect and tracing overhead limited it. We release a harness with explicit quality gates
 and list the hazards we measured.
-\end{abstract}
+
+\begin{center}
+\includegraphics[width=0.56\textwidth]{fig_bias_vs_l2.pdf}
+\end{center}
+\vspace{-10pt}
+\captionof{figure}{Timing bias of the shipped write flush relative to a read flush, for a batch-1 fp16 decode GEMV
+(112\,MiB of weights), on nine GPUs. Within Ada the bias rises with L2 size; A100 and H100 sit above the Ada
+trend, Blackwell below. Values are in the table of Section~5; the four GPUs with $\ge$64\,MiB of L2 are scored
+under the amended validity check (Section~13).}\label{fig:bias}
+\vspace{2pt}\noindent\rule{\textwidth}{0.4pt}
+\par\medskip
 \section{Summary for practitioners}\label{summary-for-practitioners}
 
 If you time memory-bound GPU kernels (decode GEMV/GEMM, attention decode, norms, activations, quantized
@@ -223,18 +250,7 @@ CUTLASS) use a buffer of exactly L2 size, which matters for \hyperref[what-remov
   four follow-ups on fast GPUs (\hyperref[pitfall-2-queue-drain]{\S{}7}-\hyperref[cleanbench]{\S{}10}).
 \end{itemize}
 
-\section{How big is the bias? Nine GPUs}
-
-\begin{figure}[tbp]
-\centering
-\includegraphics[width=0.62\textwidth]{fig_bias_vs_l2.pdf}
-\caption{Timing bias of the shipped write flush relative to a read flush, for a batch-1 fp16 decode GEMV
-(112\,MiB of weights), on nine GPUs. Within Ada the bias rises with L2 size; A100 and H100 sit above the Ada
-trend, Blackwell below. Values are in the table of Section~5; the four GPUs with $\ge$64\,MiB of L2 are scored
-under the amended validity check (Section~13).}
-\label{fig:bias}
-\end{figure}
-\label{how-big-is-the-bias-nine-gpus}
+\section{How big is the bias? Nine GPUs}\label{how-big-is-the-bias-nine-gpus}
 
 The bias of the shipped flush is
 \[B = \frac{t_{\mathrm{write}}}{t_{\mathrm{read}}} - 1,\]
@@ -246,7 +262,7 @@ decode ("SDPA") with a 256~MiB KV cache; Liger RMSNorm on 64~MiB; Liger SwiGLU o
 CUDA device query.
 
 {\small
-\begin{longtable}[]{@{}>{\raggedright\arraybackslash}p{(\linewidth - 18\tabcolsep) * \real{0.210}}>{\raggedright\arraybackslash}p{(\linewidth - 18\tabcolsep) * \real{0.113}}>{\raggedleft\arraybackslash}p{(\linewidth - 18\tabcolsep) * \real{0.077}}>{\raggedleft\arraybackslash}p{(\linewidth - 18\tabcolsep) * \real{0.077}}>{\raggedleft\arraybackslash}p{(\linewidth - 18\tabcolsep) * \real{0.144}}>{\raggedleft\arraybackslash}p{(\linewidth - 18\tabcolsep) * \real{0.106}}>{\raggedleft\arraybackslash}p{(\linewidth - 18\tabcolsep) * \real{0.077}}>{\raggedleft\arraybackslash}p{(\linewidth - 18\tabcolsep) * \real{0.103}}>{\raggedleft\arraybackslash}p{(\linewidth - 18\tabcolsep) * \real{0.092}}@{}}
+\begin{longtable}[]{@{}>{\raggedright\arraybackslash}p{(\linewidth - 18\tabcolsep) * \real{0.196}}>{\raggedright\arraybackslash}p{(\linewidth - 18\tabcolsep) * \real{0.105}}>{\raggedleft\arraybackslash}p{(\linewidth - 18\tabcolsep) * \real{0.081}}>{\raggedleft\arraybackslash}p{(\linewidth - 18\tabcolsep) * \real{0.077}}>{\raggedleft\arraybackslash}p{(\linewidth - 18\tabcolsep) * \real{0.134}}>{\raggedleft\arraybackslash}p{(\linewidth - 18\tabcolsep) * \real{0.117}}>{\raggedleft\arraybackslash}p{(\linewidth - 18\tabcolsep) * \real{0.077}}>{\raggedleft\arraybackslash}p{(\linewidth - 18\tabcolsep) * \real{0.113}}>{\raggedleft\arraybackslash}p{(\linewidth - 18\tabcolsep) * \real{0.101}}@{}}
 \toprule\noalign{}
 GPU & Arch & L2 (MiB) & GEMV (\%) & range & L2-sized write (\%) & SDPA (\%) & RMSNorm (\%) & SwiGLU (\%) \\
 \midrule\noalign{}
@@ -342,7 +358,7 @@ cuBLAS GEMV over 12~MiB of weights (4 \ensuremath{\times} L2), whose own output 
 write-back. Median of 15 calls; the read flush is the kernel from PR \#12556~\cite{tr12556}.
 
 {\small
-\begin{longtable}[]{@{}>{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.804}}>{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.196}}@{}}
+\begin{longtable}[]{@{}>{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.776}}>{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.224}}@{}}
 \toprule\noalign{}
 What runs before the timed call & Foreign write-back in the timed window (\ensuremath{\times} L2) \\
 \midrule\noalign{}
@@ -410,7 +426,7 @@ L2-sized flush takes 12-18~\ensuremath{\mu}s. To test this we inserted a GPU bus
 \textbf{Laptop GPU (host dispatch on WSL2: 72-139~\ensuremath{\mu}s).} Time relative to a 256~MiB read flush:
 
 {\small
-\begin{longtable}[]{@{}>{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.454}}>{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.162}}>{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.384}}@{}}
+\begin{longtable}[]{@{}>{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.441}}>{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.185}}>{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.373}}@{}}
 \toprule\noalign{}
 Kernel, flush & do\_\allowbreak{}bench-style loop & with the busy-wait \\
 \midrule\noalign{}
@@ -441,7 +457,7 @@ nine-GPU study), L2-sized \texttt{zero\_\allowbreak{}()} relative to 256~MiB \te
 L2 size over the DRAM rate of the 112~MiB GEMV.
 
 {\small
-\begin{longtable}[]{@{}>{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.275}}>{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.129}}>{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.144}}>{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.249}}>{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.202}}@{}}
+\begin{longtable}[]{@{}>{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.264}}>{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.146}}>{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.157}}>{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.239}}>{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.194}}@{}}
 \toprule\noalign{}
 GPU & host dispatch & L2-sized flush (est.) & RMSNorm, L2-sized \texttt{zero\_\allowbreak{}()}: loop / busy-wait & GEMV 16~MiB, no flush \ensuremath{\div} read flush: loop / busy-wait \\
 \midrule\noalign{}
@@ -485,7 +501,7 @@ write-back happens during the \emph{next} flush, outside any timed window. Count
 the kernel\textquotesingle s own output written to DRAM inside its timed window, median of 15 calls):
 
 {\small
-\begin{longtable}[]{@{}>{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.403}}>{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.196}}>{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.261}}>{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.140}}@{}}
+\begin{longtable}[]{@{}>{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.372}}>{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.213}}>{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.284}}>{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.131}}@{}}
 \toprule\noalign{}
 Kernel (elementwise add) & read flush 256~MiB ("cold") & rotated input/output copies ("steady") & no flush \\
 \midrule\noalign{}
@@ -578,7 +594,7 @@ is cold), replayed back to back, divided by the number of calls (pre-registered;
 B19 and B21, the H100 NVL host was new):
 
 {\small
-\begin{longtable}[]{@{}>{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.196}}>{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.225}}>{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.211}}>{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.225}}>{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.143}}@{}}
+\begin{longtable}[]{@{}>{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.191}}>{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.220}}>{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.206}}>{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.220}}>{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.164}}@{}}
 \toprule\noalign{}
 GPU & step error, fp16 / int4: graph-batched & cold & shipped & int4 speedup error: graph-batched \\
 \midrule\noalign{}
@@ -658,7 +674,7 @@ kernel\textquotesingle s time inside the decode step (pre-registered):
 \end{itemize}
 
 {\small
-\begin{longtable}[]{@{}>{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.563}}>{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.320}}>{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.118}}@{}}
+\begin{longtable}[]{@{}>{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.552}}>{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.313}}>{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.135}}@{}}
 \toprule\noalign{}
 RTX 3060 Laptop, SM clock locked at 1,000~MHz (observed 1,005) & Error vs the same kernel in the step (12 kernels) & Within 1~\% \\
 \midrule\noalign{}
@@ -769,7 +785,7 @@ print(cold.median_us, steady.median_us, cold.warnings)
 over the calls of each call\textquotesingle s mean; the \texttt{do\_\allowbreak{}bench} column compares \texttt{do\_\allowbreak{}bench}\textquotesingle s median with that value):
 
 {\small
-\begin{longtable}[]{@{}>{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.488}}>{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.179}}>{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.155}}>{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.178}}@{}}
+\begin{longtable}[]{@{}>{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.461}}>{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.194}}>{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.146}}>{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.199}}@{}}
 \toprule\noalign{}
 Kernel & cold, 2 \ensuremath{\times} L2 flush vs 256~MiB & steady vs cold & shipped \texttt{do\_\allowbreak{}bench} vs cold \\
 \midrule\noalign{}
@@ -805,20 +821,20 @@ added 1-2~\% on an A100.
 \section{Measurement pitfall: per-kernel DRAM write counters lose bytes}\label{measurement-pitfall-per-kernel-dram-write-counters-lose-bytes}
 
 We ran a kernel writing w \ensuremath{\times} L2, followed by a flush. One range enclosing both counts \ensuremath{\approx} 100~\% of the written
-bytes. The sum of per-kernel \texttt{dram\_\allowbreak{}\_\allowbreak{}bytes\_\allowbreak{}write.sum} does not:
+bytes. The sum of per-kernel \texttt{dram\_\allowbreak{}\_\allowbreak{}bytes\_\allowbreak{}write.sum} does not; the share of the written bytes it loses:
 
 {\small
-\begin{longtable}[]{@{}>{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.206}}>{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.794}}@{}}
+\begin{longtable}[]{@{}l@{\hspace{1.6em}}r@{\hspace{1.6em}}r@{\hspace{1.6em}}r@{}}
 \toprule\noalign{}
-GPU & lost at w = 0.75 / 1.0 / 1.5 L2 \\
+Die (GPU, L2) & w = 0.75 L2 & w = 1.0 L2 & w = 1.5 L2 \\
 \midrule\noalign{}
 \endhead
 \bottomrule\noalign{}
 \endlastfoot
-GA106 & 8.9~\% / 6.7~\% / 0.1~\% \\
-GA102 & 14.4~\% / 9.2~\% / 3.5~\% \\
-TU106 & 14.7~\% / 16.9~\% / 5.7~\% \\
-AD103 & 5.8~\% / 4.9~\% / 3.2~\% \\
+GA106 (RTX 3060 Laptop, 3~MiB) & 8.9~\% & 6.7~\% & 0.1~\% \\
+GA102 (RTX 3090, 6~MiB) & 14.4~\% & 9.2~\% & 3.5~\% \\
+TU106 (RTX 2060 SUPER, 4~MiB) & 14.7~\% & 16.9~\% & 5.7~\% \\
+AD103 (RTX 4080 SUPER, 64~MiB) & 5.8~\% & 4.9~\% & 3.2~\% \\
 \end{longtable}
 }
 

@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Build the arXiv LaTeX source (main.tex) from reports/TECH_REPORT_DRAFT.md so the two never diverge.
-Needs pandoc. Output is pure ASCII LaTeX that compiles with pdflatex (arXiv's default) and XeTeX.
+Needs pandoc. Output is pure ASCII LaTeX that compiles with pdflatex (arXiv's default) and XeTeX. Page 1 includes
+bt_header.pdf (logo and wordmark, built once from header/bt_header.tex) and fig_bias_vs_l2.pdf as Figure 1.
   python3 reports/outreach/arxiv/make_tex.py && tectonic reports/outreach/arxiv/main.tex
 """
 
@@ -12,22 +13,33 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 SRC = HERE.parents[1] / "TECH_REPORT_DRAFT.md"
 
-PREAMBLE = r"""\documentclass[11pt]{article}
+PREAMBLE = r"""\documentclass[11pt,a4paper]{article}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
-\usepackage{lmodern}
-\usepackage[margin=1in]{geometry}
-\usepackage{amsmath,amssymb}
+\usepackage{amsmath}
+\usepackage{newpxtext,newpxmath}
+\renewcommand{\ttdefault}{lmtt}
+\usepackage[a4paper,left=2.5cm,right=2.5cm,top=2.3cm,bottom=2.6cm]{geometry}
 \usepackage{booktabs,longtable,array,calc}
 \usepackage{graphicx}
 \usepackage{flafter}
 \usepackage{fancyvrb}
 \usepackage{xcolor}
-\usepackage[colorlinks=true,linkcolor={blue!45!black},citecolor={blue!45!black},urlcolor={blue!45!black}]{hyperref}
+\definecolor{btred}{HTML}{E63946}
+\colorlet{linkred}{btred!82!black}
+\usepackage[colorlinks=true,linkcolor={linkred},citecolor={linkred},urlcolor={linkred}]{hyperref}
+\usepackage{caption}
+\DeclareCaptionLabelSeparator{bar}{\ \textbar\ }
+\captionsetup{font=small,labelsep=bar,justification=justified,singlelinecheck=false}
+\usepackage{titlesec}
+\titleformat{\section}{\large\bfseries}{\thesection.}{0.5em}{}
+\titleformat{\subsection}{\normalsize\bfseries}{\thesubsection}{0.6em}{}
+\titlespacing*{\section}{0pt}{2.2ex plus .6ex minus .3ex}{1ex}
+\titlespacing*{\subsection}{0pt}{1.8ex plus .5ex minus .2ex}{0.8ex}
 \usepackage{etoolbox}
-\AtBeginEnvironment{longtable}{\small\hyphenpenalty=10000\exhyphenpenalty=10000}
+\AtBeginEnvironment{longtable}{\fontsize{9.2}{11.2}\selectfont\setlength{\tabcolsep}{4.5pt}\hyphenpenalty=10000\exhyphenpenalty=10000}
 \setlength{\emergencystretch}{3em}
-\linespread{1.06}
+\linespread{1.05}
 \usepackage{xurl}
 \usepackage[skip=0.55\baselineskip plus 2pt]{parskip}
 \usepackage{tcolorbox}
@@ -36,32 +48,36 @@ PREAMBLE = r"""\documentclass[11pt]{article}
 \providecommand{\tightlist}{\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
 \setlength{\LTcapwidth}{\textwidth}
 \renewcommand{\arraystretch}{1.1}
-\title{%(title)s}
-\author{
+\begin{document}
+\thispagestyle{plain}
+\noindent\includegraphics{bt_header.pdf}\par\nointerlineskip
+\vspace{4pt}\hrule height 0.4pt\relax
+\vspace{18pt}
+\begin{center}
+{\LARGE\bfseries %(title1)s\\[3pt] %(title2)s\par}
+\vspace{12pt}
 \begin{tabular}{@{}c@{\hspace{2.2em}}c@{}}
 Rungrod Thongjampa$^{*}$ & Chanchada Wathanathonnan \\[1pt]
 {\small\texttt{rungrod.th@blacktile.dev}} & {\small\texttt{chanchada.wa@blacktile.dev}}
-\end{tabular}\\[14pt]
-Blacktile Research\\[4pt]
-{\small $^{*}$Corresponding author}}
-\date{Technical report, November 2026}
-\begin{document}
-\maketitle
-\begin{abstract}
-\noindent %(abstract)s
-\end{abstract}
-"""
+\end{tabular}\\[6pt]
+Blacktile Research \quad\textperiodcentered\quad {\small $^{*}$Corresponding author \quad\textperiodcentered\quad November 2026}
+\vspace{12pt}
 
-FIGURE = r"""
-\begin{figure}[tbp]
-\centering
-\includegraphics[width=0.62\textwidth]{fig_bias_vs_l2.pdf}
-\caption{Timing bias of the shipped write flush relative to a read flush, for a batch-1 fp16 decode GEMV
+{\Large\bfseries Abstract}
+\end{center}
+\vspace{-4pt}
+%(abstract)s
+
+\begin{center}
+\includegraphics[width=0.56\textwidth]{fig_bias_vs_l2.pdf}
+\end{center}
+\vspace{-10pt}
+\captionof{figure}{Timing bias of the shipped write flush relative to a read flush, for a batch-1 fp16 decode GEMV
 (112\,MiB of weights), on nine GPUs. Within Ada the bias rises with L2 size; A100 and H100 sit above the Ada
 trend, Blackwell below. Values are in the table of Section~5; the four GPUs with $\ge$64\,MiB of L2 are scored
-under the amended validity check (Section~13).}
-\label{fig:bias}
-\end{figure}
+under the amended validity check (Section~13).}\label{fig:bias}
+\vspace{2pt}\noindent\rule{\textwidth}{0.4pt}
+\par\medskip
 """
 
 FIG_DIRTY = r"""
@@ -150,10 +166,15 @@ def wrap_tables(body: str) -> str:
             for k, c in enumerate(r.split(" & ")[:n]):
                 c = re.sub(r"\\(?:hyperref|cite)\[[^\]]*\]|\\cite\{[^}]*\}", "", c)      # link targets take no width
                 txt = re.sub(r"\\[a-zA-Z]+|[{}]|\\noalign|toprule|midrule|bottomrule", "", c).strip()
-                # header row: only its longest word must fit; data rows: whole cell, capped
+                # header row: longest word must fit (x1.18: Palatino is wider); data rows: whole cell, capped
                 wid = lambda t: sum(1.35 if ch.isupper() or ch.isdigit() else 1.0 for ch in t) + 1  # noqa: E731
-                w = max((wid(t) for t in txt.split()), default=0) if ri == 0 else min(wid(txt), 45)
+                w = max((wid(t) * 1.18 for t in txt.split()), default=0) if ri == 0 else min(wid(txt), 45)
                 lens[k] = max(lens[k], w)
+        # a narrow table keeps pandoc's natural-width columns (centred) instead of being stretched to the text width
+        natural = sum(max(wid(re.sub(r"\\[a-zA-Z]+|[{}]|toprule|midrule|bottomrule", "", c).strip())
+                          for c in col) for col in zip(*[r.split(" & ")[:n] for r in rows if r.count(" & ") >= n - 1]))
+        if natural <= 80:
+            return (r"\begin{longtable}[]{@{}" + r"@{\hspace{1.6em}}".join(spec) + "@{}}") + m.group(2)
         tot = sum(lens)
         cols = "".join(rf">{{\{'raggedleft' if a == 'r' else 'raggedright'}\arraybackslash}}"
                        rf"p{{(\linewidth - {2 * n}\tabcolsep) * \real{{{x / tot:.3f}}}}}" for a, x in zip(spec, lens))
@@ -263,8 +284,6 @@ def main() -> int:
         if head not in body:
             sys.exit(f"heading for figure not found: {head}")
         body = body.replace(head, head + "\n" + fig, 1)
-    body = body.replace(r"\section{How big is the bias? Nine GPUs}",
-                        r"\section{How big is the bias? Nine GPUs}" + "\n" + FIGURE, 1)
     i = body.find(r"\section{How big is the bias? Nine GPUs}")
     j = body.find(r"\end{longtable}", i)
     if i < 0 or j < 0:
@@ -277,7 +296,8 @@ def main() -> int:
     body = body.replace(r"\end{verbatim}", r"\end{Verbatim}" + "\n" + r"\end{codebox}")
     body = body.replace(r"\begin{longtable}", r"{\small" + "\n" + r"\begin{longtable}")
     body = body.replace(r"\end{longtable}", r"\end{longtable}" + "\n}")
-    out = PREAMBLE % {"title": ascii_tex(pandoc(title).strip()),
+    t1, t2 = title.split(": ", 1)                                  # two-line title, split at the colon
+    out = PREAMBLE % {"title1": ascii_tex(pandoc(t1 + ":").strip()), "title2": ascii_tex(pandoc(t2).strip()),
                       "abstract": ascii_tex(pandoc(abstract).strip())} + ascii_tex(body) + BIB
     (HERE / "main.tex").write_text(out, encoding="ascii")
     print(f"wrote {HERE / 'main.tex'} ({len(out.splitlines())} lines)")

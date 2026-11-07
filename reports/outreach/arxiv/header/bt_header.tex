@@ -1,0 +1,29 @@
+% Page-1 header of the report: Blacktile mark (from the website favicon.svg) and wordmark in Geist.
+% Builds bt_header.pdf, which main.tex includes, so arXiv needs no extra fonts. To rebuild, put static instances
+% of Geist 5.3.0 (SIL OFL 1.1; @fontsource-variable/geist), Geist-SemiBold.ttf (wght 600) and Geist-Regular.ttf
+% (wght 400) made with fontTools.varLib.instancer, next to this file and run: tectonic bt_header.tex
+\documentclass[border=0pt]{standalone}
+\usepackage{fontspec}
+\usepackage{xcolor}
+\usepackage{tikz}
+\definecolor{btgraphite}{HTML}{6B6B75}
+\definecolor{btcharcoal}{HTML}{26262C}
+\definecolor{btred}{HTML}{E63946}
+\newfontfamily\geistsb{Geist-SemiBold.ttf}[Path=./]
+\newfontfamily\geistrg{Geist-Regular.ttf}[Path=./]
+\begin{document}
+\begin{minipage}{160mm}\noindent
+\begin{tikzpicture}[x=0.0029cm,y=-0.0029cm,baseline={(current bounding box.south)}]
+\fill[btgraphite] (0,0)--(96,0)--(96,96)--(0,96)--cycle;
+\fill[btgraphite] (104,0)--(224,0)--(288,64)--(288,96)--(104,96)--cycle;
+\fill[btgraphite] (0,104)--(96,104)--(96,170)--(70,196)--(0,196)--cycle;
+\fill[btgraphite] (176,196)--(227,145)--(278,196)--cycle;
+\fill[btgraphite] (0,204)--(96,204)--(96,300)--(0,300)--cycle;
+\fill[btgraphite] (104,204)--(288,204)--(288,246)--(234,300)--(104,300)--cycle;
+\fill[btcharcoal] (104,104)--(162,104)--(104,162)--cycle;
+\fill[btred] (174,104)--(258,104)--(166,196)--(82,196)--cycle;
+\end{tikzpicture}\hspace{0.45em}%
+{\color{btcharcoal}\fontsize{18}{20}\geistsb Blacktile}%
+\hfill{\color{btgraphite}\fontsize{11.5}{13}\geistrg Technical report}%
+\end{minipage}
+\end{document}
