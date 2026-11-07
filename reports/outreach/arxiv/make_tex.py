@@ -20,6 +20,7 @@ PREAMBLE = r"""\documentclass[11pt]{article}
 \usepackage{amsmath,amssymb}
 \usepackage{booktabs,longtable,array,calc}
 \usepackage{graphicx}
+\usepackage{flafter}
 \usepackage{fancyvrb}
 \usepackage{xcolor}
 \usepackage[colorlinks=true,linkcolor={blue!45!black},citecolor={blue!45!black},urlcolor={blue!45!black}]{hyperref}
@@ -52,7 +53,7 @@ Blacktile Research\\[4pt]
 """
 
 FIGURE = r"""
-\begin{figure}[t]
+\begin{figure}[tbp]
 \centering
 \includegraphics[width=0.62\textwidth]{fig_bias_vs_l2.pdf}
 \caption{Timing bias of the shipped write flush relative to a read flush, for a batch-1 fp16 decode GEMV
@@ -64,7 +65,7 @@ under the amended validity check (Section~13).}
 """
 
 FIG_DIRTY = r"""
-\begin{figure}[t]
+\begin{figure}[tbp]
 \centering
 \includegraphics[width=0.92\textwidth]{fig_dirty_l2.pdf}
 \caption{Who pays for dirty L2 lines (schematic; in practice the write-back overlaps the kernel). (a) A write flush
@@ -75,7 +76,7 @@ flush, a kernel's own output stays dirty and is written back during the next flu
 """
 
 FIG_QUEUE = r"""
-\begin{figure}[t]
+\begin{figure}[tbp]
 \centering
 \includegraphics[width=0.92\textwidth]{fig_queue_drain.pdf}
 \caption{Queue drain (schematic). (a) When the flush ends before the host has enqueued the kernel, the GPU reaches
@@ -86,7 +87,7 @@ event keeps the queue busy; the busy-wait itself is not timed.}
 """
 
 FIG_ERRORS = r"""
-\begin{figure}[t]
+\begin{figure}[tbp]
 \centering
 \includegraphics[width=0.95\textwidth]{fig_kernel_errors.pdf}
 \caption{Per-kernel error against the same kernel inside the GEMV-only decode proxy (ratio of medians over three

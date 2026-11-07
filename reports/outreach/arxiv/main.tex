@@ -6,6 +6,7 @@
 \usepackage{amsmath,amssymb}
 \usepackage{booktabs,longtable,array,calc}
 \usepackage{graphicx}
+\usepackage{flafter}
 \usepackage{fancyvrb}
 \usepackage{xcolor}
 \usepackage[colorlinks=true,linkcolor={blue!45!black},citecolor={blue!45!black},urlcolor={blue!45!black}]{hyperref}
@@ -96,7 +97,7 @@ short for the event timer.
 
 \section{Background}
 
-\begin{figure}[t]
+\begin{figure}[tbp]
 \centering
 \includegraphics[width=0.92\textwidth]{fig_dirty_l2.pdf}
 \caption{Who pays for dirty L2 lines (schematic; in practice the write-back overlaps the kernel). (a) A write flush
@@ -224,7 +225,7 @@ CUTLASS) use a buffer of exactly L2 size, which matters for \hyperref[what-remov
 
 \section{How big is the bias? Nine GPUs}
 
-\begin{figure}[t]
+\begin{figure}[tbp]
 \centering
 \includegraphics[width=0.62\textwidth]{fig_bias_vs_l2.pdf}
 \caption{Timing bias of the shipped write flush relative to a read flush, for a batch-1 fp16 decode GEMV
@@ -383,7 +384,7 @@ read of a 2 \ensuremath{\times} L2 buffer & 0.002 \\
 
 \section{Pitfall 2: queue drain}
 
-\begin{figure}[t]
+\begin{figure}[tbp]
 \centering
 \includegraphics[width=0.92\textwidth]{fig_queue_drain.pdf}
 \caption{Queue drain (schematic). (a) When the flush ends before the host has enqueued the kernel, the GPU reaches
@@ -611,7 +612,7 @@ H100 NVL & \ensuremath{-}12.2~\% / \ensuremath{-}19.5~\% & \ensuremath{-}4.5~\% 
 
 \subsection{Kernel by kernel: does a single-kernel benchmark match the same kernel inside the decode proxy?}
 
-\begin{figure}[t]
+\begin{figure}[tbp]
 \centering
 \includegraphics[width=0.95\textwidth]{fig_kernel_errors.pdf}
 \caption{Per-kernel error against the same kernel inside the GEMV-only decode proxy (ratio of medians over three
