@@ -55,7 +55,7 @@ matmuls) or compare kernels that move different numbers of bytes:
 \item
   \textbf{Flush the L2 by reading, not writing.} A write leaves dirty lines that your kernel then writes back (\hyperref[how-big-is-the-bias-nine-gpus]{\S{}5}).
 \item
-  \textbf{Read a buffer well above the L2 size.} Our conservative default is max(256 MiB, 4 \ensuremath{\times} L2); an L2-sized read
+  \textbf{Read a buffer well above the L2 size.} Our conservative default is max(256~MiB, 4 \ensuremath{\times} L2); an L2-sized read
   left part of the previous call\textquotesingle s output dirty, and 2 \ensuremath{\times} L2 was not enough for short kernels with large outputs
   (\hyperref[what-removes-the-residue-and-what-does-not]{\S{}6}). Check it for your output sizes.
 \item
@@ -80,9 +80,9 @@ matmuls) or compare kernels that move different numbers of bytes:
   new (FlashInfer has it, \hyperref[related-work-and-credit]{\S{}14}).
 \item
   \textbf{Make the clock steady, or report how much it moved.} Lock the SM clock where you may (\texttt{nvidia-smi\ -lgc}, root
-  only; rented containers refused). For small changes, a clock change \ensuremath{\Delta}f/f changes a kernel\textquotesingle s time by about
-  \ensuremath{-}s \ensuremath{\times} \ensuremath{\Delta}f/f, where s is the share of its time that scales with the SM clock: near 0 for the memory-bound fp16 GEMVs
-  and roughly 0.6-0.9 for int4 and NF4 GEMVs on our laptop GPU (\hyperref[kernel-by-kernel-does-a-single-kernel-benchmark-match-the-same-kernel-inside-the-decode-proxy]{\S{}9.1}, post hoc and rough).
+  only; rented containers refused). For small changes, a relative clock change \(\Delta f/f\) changes a kernel\textquotesingle s time
+  by about \(-s\,\Delta f/f\), where \(s\) is the share of its time that scales with the SM clock: near 0 for the
+  memory-bound fp16 GEMVs and roughly 0.6-0.9 for int4 and NF4 GEMVs on our laptop GPU (\hyperref[kernel-by-kernel-does-a-single-kernel-benchmark-match-the-same-kernel-inside-the-decode-proxy]{\S{}9.1}, post hoc and rough).
 \item
   \textbf{Tune on the machine you deploy on.} Two hosts with the same H100 NVL ran the same decode step 9-27~\% apart (\hyperref[end-to-end-check-which-number-predicts-a-decode-step]{\S{}9}).
 \end{enumerate}
@@ -158,20 +158,20 @@ Tool & Flush by default & Operation & Buffer \\
 \endhead
 \bottomrule\noalign{}
 \endlastfoot
-Triton \texttt{triton.testing.do\_\allowbreak{}bench} (main, v3.9.0) & yes & write (\texttt{zero\_\allowbreak{}}) & 256 MiB \\
+Triton \texttt{triton.testing.do\_\allowbreak{}bench} (main, v3.9.0) & yes & write (\texttt{zero\_\allowbreak{}}) & 256~MiB \\
 PyTorch Inductor \texttt{InductorBenchmarker} (default autotuning benchmarker) & yes & write (\texttt{zero\_\allowbreak{}}) & = L2 size \\
 NVIDIA nvbench (cold measurements) & yes & write (\texttt{cudaMemsetAsync}) & = L2 size \\
 CUTLASS CuTe DSL \texttt{tune} (\texttt{use\_\allowbreak{}cold\_\allowbreak{}l2}) & yes & write (\texttt{cuMemsetD32Async}) & = L2 size \\
 FlashInfer \texttt{bench\_\allowbreak{}gpu\_\allowbreak{}time} (\texttt{cold\_\allowbreak{}l2\_\allowbreak{}cache=True}) & yes & write (\texttt{zero\_\allowbreak{}}) & 2 \ensuremath{\times} L2 \\
-DeepGEMM \texttt{bench\_\allowbreak{}kineto} & yes & write (\texttt{zero\_\allowbreak{}}) & 256 MB \\
-tritonbench, Liger-Kernel benchmarks & yes & via Triton \texttt{do\_\allowbreak{}bench} & 256 MiB \\
-Helion autotuner (modes \texttt{call} / \texttt{replay}) & yes & write & 256 MiB \\
-vLLM \texttt{benchmarks/} (no shared helper) & per script & write in 19 files & 256 MiB or 2 \ensuremath{\times} L2 \\
-SGLang \texttt{marker.do\_\allowbreak{}bench} / \texttt{bench\_\allowbreak{}kineto} & yes & write & 5 \ensuremath{\times} L2 / 8 GB \\
-KernelBench (evaluates LLM-written kernels) & yes & write (\texttt{fill\_\allowbreak{}}) & 256 MiB \\
-GPU MODE reference-kernels (leaderboard evaluation) & yes & write (\texttt{randn}) & 4 GiB / 256 MiB \\
-QuACK benchmark scripts & yes & write & 256 MiB \\
-TileLang \texttt{do\_\allowbreak{}bench} & yes & \textbf{read} (fixed 2026-11-04, \#3534~\cite{tilelang3534}) & 256 MiB \\
+DeepGEMM \texttt{bench\_\allowbreak{}kineto} & yes & write (\texttt{zero\_\allowbreak{}}) & 256~MB \\
+tritonbench, Liger-Kernel benchmarks & yes & via Triton \texttt{do\_\allowbreak{}bench} & 256~MiB \\
+Helion autotuner (modes \texttt{call} / \texttt{replay}) & yes & write & 256~MiB \\
+vLLM \texttt{benchmarks/} (no shared helper) & per script & write in 19 files & 256~MiB or 2 \ensuremath{\times} L2 \\
+SGLang \texttt{marker.do\_\allowbreak{}bench} / \texttt{bench\_\allowbreak{}kineto} & yes & write & 5 \ensuremath{\times} L2 / 8~GB \\
+KernelBench (evaluates LLM-written kernels) & yes & write (\texttt{fill\_\allowbreak{}}) & 256~MiB \\
+GPU MODE reference-kernels (leaderboard evaluation) & yes & write (\texttt{randn}) & 4~GiB / 256~MiB \\
+QuACK benchmark scripts & yes & write & 256~MiB \\
+TileLang \texttt{do\_\allowbreak{}bench} & yes & \textbf{read} (fixed 2026-11-04, \#3534~\cite{tilelang3534}) & 256~MiB \\
 QuACK autotuner, FlashInfer CUDA-graph path, Triton \texttt{do\_\allowbreak{}bench\_\allowbreak{}cudagraph} & --- & no flush / input rotation & --- \\
 \end{longtable}
 }
@@ -199,10 +199,10 @@ CUTLASS) use a buffer of exactly L2 size, which matters for \hyperref[what-remov
     Timing: rented docker containers on vast.ai (nine GPUs; then an A100-SXM4-40GB, an RTX 5090, an L40S, an RTX 4060
     and an H100 NVL on new hosts for \hyperref[pitfall-2-queue-drain]{\S{}7}-\hyperref[cleanbench]{\S{}10}), with unlocked clocks.
   \item
-    Per-kernel check (\hyperref[kernel-by-kernel-does-a-single-kernel-benchmark-match-the-same-kernel-inside-the-decode-proxy]{\S{}9.1}): the laptop GPU, with and without an SM clock lock at 1,000 MHz (\texttt{nvidia-smi\ -lgc}), and
+    Per-kernel check (\hyperref[kernel-by-kernel-does-a-single-kernel-benchmark-match-the-same-kernel-inside-the-decode-proxy]{\S{}9.1}): the laptop GPU, with and without an SM clock lock at 1,000~MHz (\texttt{nvidia-smi\ -lgc}), and
     rented RTX 4060 and A100-SXM4 hosts, which refused clock locking.
   \item
-    Counters: an RTX 3060 Laptop GPU (GA106, L2 3 MiB) with Nsight Compute 2024.2.1, \texttt{-\/-cache-control\ none},
+    Counters: an RTX 3060 Laptop GPU (GA106, L2 3~MiB) with Nsight Compute 2024.2.1, \texttt{-\/-cache-control\ none},
     \texttt{-\/-replay-mode\ app-range}, one range per timed call with a synchronization before and after; plus rented
     VMs for the dirty-cap table. Container hosts did not allow counter access.
   \end{itemize}
@@ -231,10 +231,13 @@ under the amended validity check (Section~13).}
 \end{figure}
 \label{how-big-is-the-bias-nine-gpus}
 
-B = t(shipped write flush) / t(read flush) \ensuremath{-} 1, in percent, from the median times over 5 runs. The reference kernel
-is a batch-1 fp16 GEMV (\texttt{F.linear}, W 14336 \ensuremath{\times} 4096, 112 MiB, larger than every L2 here); its range is the minimum and
-maximum of the per-run B. The other columns: the same GEMV under an L2-sized write flush instead of 256 MiB ("L2-sized write"); SDPA
-decode ("SDPA") with a 256 MiB KV cache; Liger RMSNorm on 64 MiB; Liger SwiGLU on 2 \ensuremath{\times} 56 MiB. L2 sizes are as reported by the
+The bias of the shipped flush is
+\[B = \frac{t_{\mathrm{write}}}{t_{\mathrm{read}}} - 1,\]
+in percent, where \(t_{\mathrm{write}}\) and \(t_{\mathrm{read}}\) are the median times over 5 runs with the shipped write
+flush and with a read flush. The reference kernel is a batch-1 fp16 GEMV (\texttt{F.linear}, W 14336 \ensuremath{\times} 4096, 112~MiB, larger than every L2 here); its range is the minimum and
+maximum of the per-run \(B\). Rows are grouped by architecture, in order of release, and sorted by L2 size within each
+group. The other columns: the same GEMV under an L2-sized write flush instead of 256~MiB ("L2-sized write"); SDPA
+decode ("SDPA") with a 256~MiB KV cache; Liger RMSNorm on 64~MiB; Liger SwiGLU on 2 \ensuremath{\times} 56~MiB. L2 sizes are as reported by the
 CUDA device query.
 
 {\small
@@ -245,14 +248,17 @@ GPU & Arch & L2 (MiB) & GEMV (\%) & range & L2-sized write (\%) & SDPA (\%) & RM
 \endhead
 \bottomrule\noalign{}
 \endlastfoot
+A100 PCIe 40GB & Ampere & 40 & \textbf{+16.0} & 15.0--16.0 & +16.0 & +7.6 & +15.6 & +12.8 \\
+\addlinespace[4pt]
 RTX 4060 & Ada & 24 & +6.7 & 6.3--6.7 & +6.4 & +7.1 & +15.6 & +11.4 \\
 RTX 4060 Ti & Ada & 32 & +8.6 & 8.5--8.8 & +8.7 & +9.2 & +23.4 & +16.8 \\
-RTX 5060 Ti & Blackwell & 32 & +6.6 & 6.5--6.9 & +7.3 & +3.6 & +11.0 & +9.1 \\
-A100 PCIe 40GB & Ampere & 40 & \textbf{+16.0} & 15.0--16.0 & +16.0 & +7.6 & +15.6 & +12.8 \\
-H100 NVL & Hopper & 60 & \textbf{+23.1} & 22.7--24.4 & +22.9 & +7.9 & +13.8 & +12.7 \\
 RTX~4080~SUPER & Ada & 64 & +16.0 & 15.5--16.7 & +16.1 & +18.4 & +54.6 & +30.9 \\
 RTX 4090 & Ada & 72 & +17.4 & 16.9--17.7 & +17.7 & +19.6 & +57.1 & +32.1 \\
 L40S & Ada & 96 & \textbf{+25.3} & 24.7--25.3 & +25.6 & +28.3 & \textbf{+88.0} & +47.8 \\
+\addlinespace[4pt]
+H100 NVL & Hopper & 60 & \textbf{+23.1} & 22.7--24.4 & +22.9 & +7.9 & +13.8 & +12.7 \\
+\addlinespace[4pt]
+RTX 5060 Ti & Blackwell & 32 & +6.6 & 6.5--6.9 & +7.3 & +3.6 & +11.0 & +9.1 \\
 RTX 5090 & Blackwell & 96 & +10.8 & 9.2--11.0 & +10.1 & +5.5 & +26.5 & +23.9 \\
 \end{longtable}
 }
@@ -264,16 +270,16 @@ RTX 5090 & Blackwell & 96 & +10.8 & 9.2--11.0 & +10.1 & +5.5 & +26.5 & +23.9 \\
   GEMV number is at most 1.8 points on every GPU.
 \item
   \textbf{Validity check amended.} The pre-registered check that the read flush evicts failed on the four GPUs with
-  \ensuremath{\ge} 64 MiB of L2. We replaced it after seeing one GPU (\hyperref[negative-results-deviations-and-limitations]{\S{}13}); the results of those four GPUs, and the trend below,
+  \ensuremath{\ge} 64~MiB of L2. We replaced it after seeing one GPU (\hyperref[negative-results-deviations-and-limitations]{\S{}13}); the results of those four GPUs, and the trend below,
   are scored under the amended check, not as originally registered.
 \item
-  \textbf{Within Ada the bias rises with L2 size} (Spearman \ensuremath{\rho} = 1.0 over five GPUs, 24 to 96 MiB by device query). Five
+  \textbf{Within Ada the bias rises with L2 size} (Spearman \ensuremath{\rho} = 1.0 over five GPUs, 24 to 96~MiB by device query). Five
   points, and bandwidth also differs between them.
 \item
-  \textbf{A smaller RMSNorm is hit harder.} A 16 MiB Liger RMSNorm is timed 16-110~\% slow, against 11-88~\% at 64 MiB,
+  \textbf{A smaller RMSNorm is hit harder.} A 16~MiB Liger RMSNorm is timed 16-110~\% slow, against 11-88~\% at 64~MiB,
   on every one of the nine GPUs. Attention decode shows no consistent trend with size.
 \item
-  \textbf{A one-shot number is not a residue measurement.} The implied leftover dirty data, B \ensuremath{\times} 112 MiB / L2, is
+  \textbf{A one-shot number is not a residue measurement.} The implied leftover dirty data, B \ensuremath{\times} 112~MiB / L2, is
   0.27-0.31 of the L2 on Ada, 0.43-0.45 on A100/H100 and 0.13-0.23 on Blackwell. This is computed from B itself, not measured
   independently; on the laptop GPU, where counters were available, the residue after the shipped flush was
   0.50 of the L2 (\hyperref[what-removes-the-residue-and-what-does-not]{\S{}6}).
@@ -297,7 +303,7 @@ RTX 4080 SUPER / 4090 & \ensuremath{-}17~\% / \ensuremath{-}18~\% & under-report
 L40S & \ensuremath{-}17~\% & depends on shape \\
 A100 & +31~\% (4096\ensuremath{^2}, bitsandbytes) & depends on shape \\
 H100 NVL & +22~\% & \textbf{over-reported} on every shape \\
-RTX 5090 & +37~\% (4096\ensuremath{^2}, tinygemm; a \ensuremath{\approx} 10 \ensuremath{\mu}s kernel, \ensuremath{\approx} 10~\% timer resolution) & depends on shape \\
+RTX 5090 & +37~\% (4096\ensuremath{^2}, tinygemm; a \ensuremath{\approx} 10~\ensuremath{\mu}s kernel, \ensuremath{\approx} 10~\% timer resolution) & depends on shape \\
 RTX 5060 Ti & \ensuremath{-}7~\% & depends on shape \\
 \end{longtable}
 }
@@ -326,8 +332,8 @@ RTX 5060 Ti & \ensuremath{-}7~\% & depends on shape \\
 
 \section{What removes the residue, and what does not}\label{what-removes-the-residue-and-what-does-not}
 
-Measured with DRAM counters on the RTX 3060 Laptop (L2 3 MiB): DRAM bytes written during the timed call of a
-cuBLAS GEMV over 12 MiB of weights (4 \ensuremath{\times} L2), whose own output is only 3 KB. Anything above zero is foreign
+Measured with DRAM counters on the RTX 3060 Laptop (L2 3~MiB): DRAM bytes written during the timed call of a
+cuBLAS GEMV over 12~MiB of weights (4 \ensuremath{\times} L2), whose own output is only 3~KB. Anything above zero is foreign
 write-back. Median of 15 calls; the read flush is the kernel from PR \#12556~\cite{tr12556}.
 
 {\small
@@ -339,12 +345,12 @@ What runs before the timed call & Foreign write-back in the timed window (\ensur
 \bottomrule\noalign{}
 \endlastfoot
 nothing (no flush) & 0.006 \\
-\texttt{zero\_\allowbreak{}()} 256 MiB, as shipped & \textbf{0.50} \\
+\texttt{zero\_\allowbreak{}()} 256~MiB, as shipped & \textbf{0.50} \\
 \texttt{zero\_\allowbreak{}()} of an L2-sized buffer (Inductor, nvbench, CUTLASS) & \textbf{0.59} \\
-\texttt{zero\_\allowbreak{}()} 256 MiB, then synchronize and sleep 10 ms & \textbf{0.47} \\
-\texttt{zero\_\allowbreak{}()} 256 MiB, then read 256 MiB & 0.008 \\
-read 256 MiB & 0.003 \\
-\texttt{torch.sum} 256 MiB & 0.003 \\
+\texttt{zero\_\allowbreak{}()} 256~MiB, then synchronize and sleep 10~ms & \textbf{0.47} \\
+\texttt{zero\_\allowbreak{}()} 256~MiB, then read 256~MiB & 0.008 \\
+read 256~MiB & 0.003 \\
+\texttt{torch.sum} 256~MiB & 0.003 \\
 read of an L2-sized buffer & 0.005 \\
 read of a 2 \ensuremath{\times} L2 buffer & 0.002 \\
 \end{longtable}
@@ -353,21 +359,21 @@ read of a 2 \ensuremath{\times} L2 buffer & 0.002 \\
 \begin{itemize}
 \tightlist
 \item
-  \textbf{Waiting does not help.} 95~\% of the residue is still there after 10 ms. In a separate counter experiment on
-  the same GPU, dirty lines below the threshold were not written back during up to 10 ms of idle time. Waiting
+  \textbf{Waiting does not help.} 95~\% of the residue is still there after 10~ms. In a separate counter experiment on
+  the same GPU, dirty lines below the threshold were not written back during up to 10~ms of idle time. Waiting
   also makes the timing far worse (\hyperref[pitfall-2-queue-drain]{\S{}7}).
 \item
   \textbf{Writing then reading works.} It is a minimal patch for tools whose flush is a memset, but a read alone does
   the same job in one pass instead of two.
 \item
-  \textbf{Buffer size.} An L2-sized read evicted the timed kernel\textquotesingle s inputs completely, even for a 24 KiB kernel (we had
+  \textbf{Buffer size.} An L2-sized read evicted the timed kernel\textquotesingle s inputs completely, even for a 24~KiB kernel (we had
   predicted it would not). But it leaves the tail of the \emph{previous call\textquotesingle s output} dirty: 0.06 L2 of foreign
-  write-back for a kernel with a 0.125 L2 output, and 0.26 L2 more than a 256 MiB read for a kernel with a 2 L2
+  write-back for a kernel with a 0.125 L2 output, and 0.26 L2 more than a 256~MiB read for a kernel with a 2 L2
   output, which costs it 6.7~\% in time (\hyperref[pitfall-2-queue-drain]{\S{}7}). With a 2 \ensuremath{\times} L2 read, short kernels whose outputs are 0.4-0.5 L2 were
-  still 6-9~\% slower than with 256 MiB (\hyperref[cleanbench]{\S{}10}). Hence our default of max(256 MiB, 4 \ensuremath{\times} L2). The 4 \ensuremath{\times} L2 term is a
-  conservative choice: it only exceeds 256 MiB on GPUs with more than 64 MiB of L2, where (on the RTX 5090 and L40S)
-  the 384 MiB default reproduced the nine-GPU numbers (\hyperref[cleanbench]{\S{}10}), but we did not compare it with smaller buffers there.
-  Triton\textquotesingle s 256 MiB buffer has no stated derivation either (triton-lang/triton issue \#1252~\cite{tr1252}, 2023: "just to make sure
+  still 6-9~\% slower than with 256~MiB (\hyperref[cleanbench]{\S{}10}). Hence our default of max(256~MiB, 4 \ensuremath{\times} L2). The 4 \ensuremath{\times} L2 term is a
+  conservative choice: it only exceeds 256~MiB on GPUs with more than 64~MiB of L2, where (on the RTX 5090 and L40S)
+  the 384~MiB default reproduced the nine-GPU numbers (\hyperref[cleanbench]{\S{}10}), but we did not compare it with smaller buffers there.
+  Triton\textquotesingle s 256~MiB buffer has no stated derivation either (triton-lang/triton issue \#1252~\cite{tr1252}, 2023: "just to make sure
   flush data size \textgreater{} L2 cache size").
 \end{itemize}
 
@@ -392,11 +398,11 @@ the flush is shortened.
 In the loop \texttt{flush();\ start.record();\ fn();\ end.record()}, the start event is timestamped when the GPU reaches it.
 If the GPU has already finished the flush when the host enqueues the start event, the timestamp is taken at once,
 and the interval includes the time the host still needs to dispatch \texttt{fn} (Python, the Triton launcher or
-PyTorch\textquotesingle s dispatcher). A 256 MiB flush keeps the GPU busy for about 1 ms on the laptop GPU, which hides this; an
-L2-sized flush takes 12-18 \ensuremath{\mu}s. To test this we inserted a GPU busy-wait of about 300 \ensuremath{\mu}s
+PyTorch\textquotesingle s dispatcher). A 256~MiB flush keeps the GPU busy for about 1~ms on the laptop GPU, which hides this; an
+L2-sized flush takes 12-18~\ensuremath{\mu}s. To test this we inserted a GPU busy-wait of about 300~\ensuremath{\mu}s
 (\texttt{torch.cuda.\_\allowbreak{}sleep}) right before the start event. It runs before the start event and is not timed.
 
-\textbf{Laptop GPU (host dispatch on WSL2: 72-139 \ensuremath{\mu}s).} Time relative to a 256 MiB read flush:
+\textbf{Laptop GPU (host dispatch on WSL2: 72-139~\ensuremath{\mu}s).} Time relative to a 256~MiB read flush:
 
 {\small
 \begin{longtable}[]{@{}>{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.454}}>{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.162}}>{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.384}}@{}}
@@ -406,40 +412,40 @@ Kernel, flush & do\_\allowbreak{}bench-style loop & with the busy-wait \\
 \endhead
 \bottomrule\noalign{}
 \endlastfoot
-cuBLAS GEMV 12 MiB, L2-sized read & +66~\% & \textbf{0~\%} \\
-Triton y = 2x (3 MiB), 2 \ensuremath{\times} L2 read & +167~\% & \textbf{0~\%} \\
-Triton y = 2x, L2-sized \texttt{zero\_\allowbreak{}()} vs 256 MiB \texttt{zero\_\allowbreak{}()} (the Inductor setting) & +187~\% & \textbf{0~\%} \\
-cuBLAS GEMV, \texttt{zero\_\allowbreak{}()} + 10 ms wait vs \texttt{zero\_\allowbreak{}()} & +348~\% & \textbf{+2.4~\%} \\
-elementwise add 12 MiB, L2-sized read & +43~\% & +6.7~\% (the extra write-back of \hyperref[what-removes-the-residue-and-what-does-not]{\S{}6}) \\
+cuBLAS GEMV 12~MiB, L2-sized read & +66~\% & \textbf{0~\%} \\
+Triton y = 2x (3~MiB), 2 \ensuremath{\times} L2 read & +167~\% & \textbf{0~\%} \\
+Triton y = 2x, L2-sized \texttt{zero\_\allowbreak{}()} vs 256~MiB \texttt{zero\_\allowbreak{}()} (the Inductor setting) & +187~\% & \textbf{0~\%} \\
+cuBLAS GEMV, \texttt{zero\_\allowbreak{}()} + 10~ms wait vs \texttt{zero\_\allowbreak{}()} & +348~\% & \textbf{+2.4~\%} \\
+elementwise add 12~MiB, L2-sized read & +43~\% & +6.7~\% (the extra write-back of \hyperref[what-removes-the-residue-and-what-does-not]{\S{}6}) \\
 \end{longtable}
 }
 
 \begin{itemize}
 \tightlist
 \item
-  \textbf{The 256 MiB write and read flushes were unaffected by the busy-wait} (within 2.2~\%; also on the A100, RTX 5090
+  \textbf{The 256~MiB write and read flushes were unaffected by the busy-wait} (within 2.2~\%; also on the A100, RTX 5090
   and L40S hosts below): they already keep the queue busy.
 \item
-  \textbf{The real \texttt{do\_\allowbreak{}bench}, with \texttt{clear\_\allowbreak{}cache} patched:} the Triton kernel took 41-47 \ensuremath{\mu}s with an L2-sized read
-  flush and 13.3 \ensuremath{\mu}s with the same flush followed by the busy-wait.
+  \textbf{The real \texttt{do\_\allowbreak{}bench}, with \texttt{clear\_\allowbreak{}cache} patched:} the Triton kernel took 41-47~\ensuremath{\mu}s with an L2-sized read
+  flush and 13.3~\ensuremath{\mu}s with the same flush followed by the busy-wait.
 \end{itemize}
 
-\textbf{Fast GPUs, new hosts.} Liger-Kernel RMSNorm on 16 MiB (the kernel behind the +164 to +537~\% numbers of the
-nine-GPU study), L2-sized \texttt{zero\_\allowbreak{}()} relative to 256 MiB \texttt{zero\_\allowbreak{}()}; and a 16 MiB GEMV with no flush relative to a
-256 MiB read flush. Host dispatch is the median host time to enqueue the RMSNorm; flush time is estimated as
-L2 size over the DRAM rate of the 112 MiB GEMV.
+\textbf{Fast GPUs, new hosts.} Liger-Kernel RMSNorm on 16~MiB (the kernel behind the +164 to +537~\% numbers of the
+nine-GPU study), L2-sized \texttt{zero\_\allowbreak{}()} relative to 256~MiB \texttt{zero\_\allowbreak{}()}; and a 16~MiB GEMV with no flush relative to a
+256~MiB read flush. Host dispatch is the median host time to enqueue the RMSNorm; flush time is estimated as
+L2 size over the DRAM rate of the 112~MiB GEMV.
 
 {\small
 \begin{longtable}[]{@{}>{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.275}}>{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.129}}>{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.144}}>{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.249}}>{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.202}}@{}}
 \toprule\noalign{}
-GPU & host dispatch & L2-sized flush (est.) & RMSNorm, L2-sized \texttt{zero\_\allowbreak{}()}: loop / busy-wait & GEMV 16 MiB, no flush \ensuremath{\div} read flush: loop / busy-wait \\
+GPU & host dispatch & L2-sized flush (est.) & RMSNorm, L2-sized \texttt{zero\_\allowbreak{}()}: loop / busy-wait & GEMV 16~MiB, no flush \ensuremath{\div} read flush: loop / busy-wait \\
 \midrule\noalign{}
 \endhead
 \bottomrule\noalign{}
 \endlastfoot
-A100-SXM4-40GB & 140 \ensuremath{\mu}s & \ensuremath{\approx} 37 \ensuremath{\mu}s & \textbf{+203~\% / \ensuremath{-}3~\%} & \textbf{1.50 / 0.76} \\
-RTX 5090 & 43 \ensuremath{\mu}s & \ensuremath{\approx} 63 \ensuremath{\mu}s & 0~\% / \ensuremath{-}9~\% & 0.92 / 0.88 \\
-L40S & 102 \ensuremath{\mu}s & \ensuremath{\approx} 138 \ensuremath{\mu}s & 0~\% / \ensuremath{-}1.5~\% & 0.93 / 0.93 \\
+A100-SXM4-40GB & 140~\ensuremath{\mu}s & \ensuremath{\approx} 37~\ensuremath{\mu}s & \textbf{+203~\% / \ensuremath{-}3~\%} & \textbf{1.50 / 0.76} \\
+RTX 5090 & 43~\ensuremath{\mu}s & \ensuremath{\approx} 63~\ensuremath{\mu}s & 0~\% / \ensuremath{-}9~\% & 0.92 / 0.88 \\
+L40S & 102~\ensuremath{\mu}s & \ensuremath{\approx} 138~\ensuremath{\mu}s & 0~\% / \ensuremath{-}1.5~\% & 0.93 / 0.93 \\
 \end{longtable}
 }
 
@@ -474,9 +480,9 @@ write-back happens during the \emph{next} flush, outside any timed window. Count
 the kernel\textquotesingle s own output written to DRAM inside its timed window, median of 15 calls):
 
 {\small
-\begin{longtable}[]{@{}>{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.409}}>{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.183}}>{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.265}}>{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.143}}@{}}
+\begin{longtable}[]{@{}>{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.403}}>{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.196}}>{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.261}}>{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.140}}@{}}
 \toprule\noalign{}
-Kernel (elementwise add) & read flush 256 MiB ("cold") & rotated input/output copies ("steady") & no flush \\
+Kernel (elementwise add) & read flush 256~MiB ("cold") & rotated input/output copies ("steady") & no flush \\
 \midrule\noalign{}
 \endhead
 \bottomrule\noalign{}
@@ -497,12 +503,12 @@ output 2 \ensuremath{\times} L2 & 0.75 & 1.00 & 0.99 \\
   what a steady stream of independent calls costs.
 \item
   \textbf{In time} (laptop GPU, \texttt{cleanbench}): steady vs cold was +0.2~\% for the GEMV (tiny output), +14~\% for the
-  2 \ensuremath{\times} L2 elementwise kernel (+6.4 \ensuremath{\mu}s, against an implied 5.7 \ensuremath{\mu}s to write 0.5 L2 at its DRAM rate) and +38~\% for a
-  0.4 \ensuremath{\times} L2 elementwise kernel (+3.7 \ensuremath{\mu}s, against an implied 4.6 \ensuremath{\mu}s).
+  2 \ensuremath{\times} L2 elementwise kernel (+6.4~\ensuremath{\mu}s, against an implied 5.7~\ensuremath{\mu}s to write 0.5 L2 at its DRAM rate) and +38~\% for a
+  0.4 \ensuremath{\times} L2 elementwise kernel (+3.7~\ensuremath{\mu}s, against an implied 4.6~\ensuremath{\mu}s).
 \item
   \textbf{On large-L2 GPUs (new hosts)} steady vs cold was, for an elementwise kernel with a 0.25 \ensuremath{\times} L2 output, +39~\%
-  (A100), +67~\% (RTX 5090) and +109~\% (L40S); for the 112 MiB GEMV within \ensuremath{\pm}1.1~\%; for a Liger RMSNorm with a
-  64 MiB output +16~\%, +10~\% and +72~\%. The long-stream residue implied by \hyperref[how-big-is-the-bias-nine-gpus]{\S{}5} predicted the first two RMSNorm
+  (A100), +67~\% (RTX 5090) and +109~\% (L40S); for the 112~MiB GEMV within \ensuremath{\pm}1.1~\%; for a Liger RMSNorm with a
+  64~MiB output +16~\%, +10~\% and +72~\%. The long-stream residue implied by \hyperref[how-big-is-the-bias-nine-gpus]{\S{}5} predicted the first two RMSNorm
   values within 0.006 but under-predicted L40S 2.5-fold: there, even a 0.67 \ensuremath{\times} L2 output was almost entirely
   untimed in cold mode.
 \item
@@ -533,18 +539,18 @@ GPU & L2 & fp16 step: shipped / cold & int4 step: shipped / cold & int4 speedup 
 \endhead
 \bottomrule\noalign{}
 \endlastfoot
-RTX 3060 Laptop & 3 MiB & +5.2~\% / +2.0~\% & +8.6~\% / +1.8~\% & \ensuremath{-}3.1~\% / +0.2~\% \\
-RTX 4060 & 24 MiB & +8.2~\% / +0.6~\% & \textbf{+43.6~\%} / +2.0~\% & \textbf{\ensuremath{-}24.6~\%} / \ensuremath{-}1.4~\% \\
-A100-SXM4-40GB & 40 MiB & \textbf{+26.3~\%} / +5.2~\% & \textbf{+46.2~\%} / +17.5~\% & \ensuremath{-}13.6~\% / \ensuremath{-}10.4~\% \\
-H100 NVL & 60 MiB & \textbf{+32.4~\%} / +8.4~\% & +22.6~\% / +17.2~\% & +8.0~\% / \ensuremath{-}7.5~\% \\
-L40S & 96 MiB & \textbf{+28.1~\%} / +2.0~\% & \textbf{+52.5~\%} / +7.1~\% & \ensuremath{-}16.1~\% / \ensuremath{-}4.8~\% \\
+RTX 3060 Laptop & 3~MiB & +5.2~\% / +2.0~\% & +8.6~\% / +1.8~\% & \ensuremath{-}3.1~\% / +0.2~\% \\
+RTX 4060 & 24~MiB & +8.2~\% / +0.6~\% & \textbf{+43.6~\%} / +2.0~\% & \textbf{\ensuremath{-}24.6~\%} / \ensuremath{-}1.4~\% \\
+A100-SXM4-40GB & 40~MiB & \textbf{+26.3~\%} / +5.2~\% & \textbf{+46.2~\%} / +17.5~\% & \ensuremath{-}13.6~\% / \ensuremath{-}10.4~\% \\
+H100 NVL & 60~MiB & \textbf{+32.4~\%} / +8.4~\% & +22.6~\% / +17.2~\% & +8.0~\% / \ensuremath{-}7.5~\% \\
+L40S & 96~MiB & \textbf{+28.1~\%} / +2.0~\% & \textbf{+52.5~\%} / +7.1~\% & \ensuremath{-}16.1~\% / \ensuremath{-}4.8~\% \\
 \end{longtable}
 }
 
 \begin{itemize}
 \tightlist
 \item
-  \textbf{The shipped write flush over-predicts the step} on every GPU with \ensuremath{\ge} 40 MiB of L2, by 26-32~\% for fp16 and
+  \textbf{The shipped write flush over-predicts the step} on every GPU with \ensuremath{\ge} 40~MiB of L2, by 26-32~\% for fp16 and
   23-53~\% for int4.
 \item
   \textbf{It also ranks kernels wrongly.} On the RTX 4060, summed shipped times put NF4 ahead of tinygemm; in the step,
@@ -553,14 +559,14 @@ L40S & 96 MiB & \textbf{+28.1~\%} / +2.0~\% & \textbf{+52.5~\%} / +7.1~\% & \ens
 \item
   \textbf{The read flush with a busy-wait ("cold") is close on the consumer GPUs and the L40S} (within 2~\% for fp16 and
   2-7~\% for int4), \textbf{but not on the A100 and H100}: 5-8~\% for fp16 and 17~\% for int4, against our pre-registered
-  10~\%. There an int4 GEMV takes 18-28 \ensuremath{\mu}s, and event timing adds a fixed per-call cost that graph replay does not
-  (2.2-3.4 \ensuremath{\mu}s per call on the rented RTX 4060 and A100 hosts of \hyperref[kernel-by-kernel-does-a-single-kernel-benchmark-match-the-same-kernel-inside-the-decode-proxy]{\S{}9.1}; the H100 was not re-measured).
+  10~\%. There an int4 GEMV takes 18-28~\ensuremath{\mu}s, and event timing adds a fixed per-call cost that graph replay does not
+  (2.2-3.4~\ensuremath{\mu}s per call on the rented RTX 4060 and A100 hosts of \hyperref[kernel-by-kernel-does-a-single-kernel-benchmark-match-the-same-kernel-inside-the-decode-proxy]{\S{}9.1}; the H100 was not re-measured).
 \item
   \textbf{Limitations.} The proxy has only GEMVs (no attention, norms or activations). NF4 was mispredicted by every
   harness on the L40S (cold +36~\%; cause unknown).
 \end{itemize}
 
-\textbf{Can a per-kernel time get within 1~\%?} The cold time\textquotesingle s excess over the step was 2-5 \ensuremath{\mu}s per kernel on every GPU,
+\textbf{Can a per-kernel time get within 1~\%?} The cold time\textquotesingle s excess over the step was 2-5~\ensuremath{\mu}s per kernel on every GPU,
 which suggests a fixed per-kernel cost of event timing rather than a cache effect. We therefore timed each kernel the
 way the step runs it: one CUDA graph calling the kernel once per weight copy (copies covering \ensuremath{\ge} 4 \ensuremath{\times} L2, so every call
 is cold), replayed back to back, divided by the number of calls (pre-registered; the A100 host was the one used in
@@ -588,12 +594,12 @@ H100 NVL & \ensuremath{-}12.2~\% / \ensuremath{-}19.5~\% & \ensuremath{-}4.5~\% 
   Where 1~\% matters on such GPUs, time the model\textquotesingle s own graph.
 \item
   \textbf{The decode proxy changed across hosts, while isolated-kernel times were stable.} The same H100 NVL step took
-  532 \ensuremath{\mu}s on one rented host and
-  616 \ensuremath{\mu}s on another (fp16 +16~\%, int4 +27~\%, NF4 +9~\%). The isolated kernels did not move: their cold times on the
+  532~\ensuremath{\mu}s on one rented host and
+  616~\ensuremath{\mu}s on another (fp16 +16~\%, int4 +27~\%, NF4 +9~\%). The isolated kernels did not move: their cold times on the
   two hosts agreed within \ensuremath{-}0.8 to +4.3~\% (all 12 kernel rows), and the sum of the second host\textquotesingle s graph-batched times
   matched the \emph{first} host\textquotesingle s step within 2.4~\% (fp16 +1.7~\%, int4 +2.4~\%, NF4 \ensuremath{-}2.2~\%). So the H100 miss is a
   property of how the second host ran the 16-kernel step, not of per-kernel timing or of the chip (post hoc,
-  two hosts, one run set each). The hosts differed in power limit (400 W vs 300 W), driver (580.178 vs 615.71) and
+  two hosts, one run set each). The hosts differed in power limit (400~W vs 300~W), driver (580.178 vs 615.71) and
   virtualization (VM pass-through vs unreported); we did not log clocks or throttle reasons during the step, so we
   cannot attribute the difference. The A100 runs of \hyperref[end-to-end-check-which-number-predicts-a-decode-step]{\S{}9} (B21 and B22) used one host, so the A100 1~\% result is also
   from one host.
@@ -649,7 +655,7 @@ kernel\textquotesingle s time inside the decode step (pre-registered):
 {\small
 \begin{longtable}[]{@{}>{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.563}}>{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.320}}>{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.118}}@{}}
 \toprule\noalign{}
-RTX 3060 Laptop, SM clock locked at 1,000 MHz (observed 1,005) & Error vs the same kernel in the step (12 kernels) & Within 1~\% \\
+RTX 3060 Laptop, SM clock locked at 1,000~MHz (observed 1,005) & Error vs the same kernel in the step (12 kernels) & Within 1~\% \\
 \midrule\noalign{}
 \endhead
 \bottomrule\noalign{}
@@ -662,8 +668,11 @@ CUDA events, \texttt{cleanbench} cold loop & +1.3 to +13.3~\% & 0/12 \\
 \end{longtable}
 }
 
-Error is the ratio of the harness\textquotesingle s median to the reference median, each taken over three runs. All gates passed
-and every pre-registered prediction for this run held. The kernels took 49-645 \ensuremath{\mu}s. Unaggregated, the per-run errors
+The error of a harness is
+\[E = \frac{\tilde{t}_{\mathrm{harness}}}{\tilde{t}_{\mathrm{proxy}}} - 1,\]
+where \(\tilde{t}\) is the median over three runs of each run\textquotesingle s median kernel time, in the harness and inside the proxy.
+All gates passed
+and every pre-registered prediction for this run held. The kernels took 49-645~\ensuremath{\mu}s. Unaggregated, the per-run errors
 were within 0.86~\% (36 of 36 kernel-runs), and the errors of the paired rounds (reference and harness measured back
 to back, 108 pairs) had a median of 0.30~\%, a 95th percentile of 0.95~\% and a maximum of 1.10~\% (104 of 108 within
 1~\%). On the RTX 4060 below, the paired-round 95th percentile was 13.8~\%.
@@ -677,7 +686,7 @@ to back, 108 pairs) had a median of 0.30~\%, a 95th percentile of 0.95~\% and a 
   \tightlist
   \item
     \emph{The GPU\textquotesingle s timestamps instead of events.} On the two rented hosts, event-bracketed intervals exceeded the CUPTI
-    kernel durations in the same cold loop by 2.2-3.4 \ensuremath{\mu}s per call (3-22 \ensuremath{\mu}s on the laptop under WSL2). The excess
+    kernel durations in the same cold loop by 2.2-3.4~\ensuremath{\mu}s per call (3-22~\ensuremath{\mu}s on the laptop under WSL2). The excess
     includes launch latency and idle gaps inside the event interval, not only the cost of the events themselves.
   \item
     \emph{Rotation inside a graph instead of a flush.} The cold loop was 1-3~\% off even when timed by CUPTI: it differs
@@ -686,7 +695,7 @@ to back, 108 pairs) had a median of 0.30~\%, a 95th percentile of 0.95~\% and a 
     \emph{Interleaving.} Even with the clock locked, the reference moved 1.2-2.2~\% between rounds.
   \item
     \emph{A steady clock.} The unlocked laptop run failed its gates: the GPU reached 87 \ensuremath{^\circ}C, the SM clock ranged
-    1,005-1,747 MHz, and the driver\textquotesingle s thermal-slowdown counter rose by 53 s. Between rounds, the in-step time of the
+    1,005-1,747~MHz, and the driver\textquotesingle s thermal-slowdown counter rose by 53 s. Between rounds, the in-step time of the
     fp16 kernels moved 2-3~\%, that of the int4 and NF4 kernels 27-30~\%.
   \end{itemize}
 \item
@@ -697,21 +706,22 @@ to back, 108 pairs) had a median of 0.30~\%, a 95th percentile of 0.95~\% and a 
   \tightlist
   \item
     \textbf{RTX 4060:} the pre-registered gates and the thermal check passed, but the clock gate did not: the clock was not steady
-    (2,355-2,805 MHz; power-capped in 130 of 202 busy samples). CUPTI rotation was within 0.02~\% for fp16 and 1.6~\% for int4, but 6.8-14.2~\% \emph{below} the step for
-    NF4 (bitsandbytes), with similar clocks in both phases (medians 2,535 and 2,573 MHz): this kernel ran faster
+    (2,355-2,805~MHz; power-capped in 130 of 202 busy samples). CUPTI rotation was within 0.02~\% for fp16 and 1.6~\% for int4, but 6.8-14.2~\% \emph{below} the step for
+    NF4 (bitsandbytes), with similar clocks in both phases (medians 2,535 and 2,573~MHz): this kernel ran faster
     when repeated than among other kernels (cause unknown). Events in the cold loop: +0.4 to +13.5~\%.
   \item
-    \textbf{A100-SXM4:} the tracing gate failed (CUPTI added 1.0-2.2~\% to the step, whose kernels took 14-138 \ensuremath{\mu}s), so
+    \textbf{A100-SXM4:} the tracing gate failed (CUPTI added 1.0-2.2~\% to the step, whose kernels took 14-138~\ensuremath{\mu}s), so
     this run is descriptive only: CUPTI rotation \ensuremath{-}4.1 to +3.7~\%, events in the cold loop +3.0 to +22.2~\%. The clock
-    was power-capped (1,260-1,410 MHz).
+    was power-capped (1,260-1,410~MHz).
   \item
     The RTX 4090 and H100 NVL hosts never became reachable and were destroyed unused.
   \end{itemize}
 \item
-  \textbf{Clock sensitivity (post hoc).} A two-term frequency-scaling model, t(f) = a/f + b, splits a kernel\textquotesingle s time into a
-  part that scales with the SM clock f and a part that does not (DRAM at a fixed memory clock). With s = (a/f\ensuremath{_0})/t at
-  clock f\ensuremath{_0}, a change to f\ensuremath{_1} changes the time by s \ensuremath{\times} (f\ensuremath{_0}/f\ensuremath{_1} \ensuremath{-} 1), which for small changes is about \ensuremath{-}s \ensuremath{\times} \ensuremath{\Delta}f/f; since
-  0 \ensuremath{\le} s \ensuremath{\le} 1, it is at most f\ensuremath{_0}/f\ensuremath{_1} \ensuremath{-} 1 (a 20~\% clock drop can add up to 25~\%). From the laptop\textquotesingle s unlocked
+  \textbf{Clock sensitivity (post hoc).} A two-term frequency-scaling model, \(t(f) = a/f + b\), splits a kernel\textquotesingle s time into
+  a part that scales with the SM clock \(f\) and a part that does not (DRAM at a fixed memory clock). With
+  \(s = (a/f_0)/t(f_0)\), a change of the clock from \(f_0\) to \(f_1\) changes the time by
+  \[\frac{t(f_1)}{t(f_0)} - 1 = s\left(\frac{f_0}{f_1} - 1\right) \approx -s\,\frac{\Delta f}{f}, \qquad 0 \le s \le 1,\]
+  so it is at most \(f_0/f_1 - 1\) (a 20~\% clock drop can add up to 25~\%). From the laptop\textquotesingle s unlocked
   and locked runs (\texttt{clock\_\allowbreak{}sensitivity.py}; the unlocked clock summarized from 13-22 one-second \texttt{nvidia-smi} samples
   per variant, as a median or a mean): s = 0.00-0.04 for the fp16 GEMVs, 0.79-0.91 for int4 and 0.61-0.66 for NF4.
   Two clock states determine the two parameters exactly, so this is a rough estimate, not a validated model. It is
@@ -727,15 +737,15 @@ to back, 108 pairs) had a median of 0.30~\%, a 95th percentile of 0.95~\% and a 
 \begin{itemize}
 \tightlist
 \item
-  a \textbf{read flush} (the PR \#12556~\cite{tr12556} kernel) over a buffer of max(256 MiB, 4 \ensuremath{\times} L2), cached per device;
+  a \textbf{read flush} (the PR \#12556~\cite{tr12556} kernel) over a buffer of max(256~MiB, 4 \ensuremath{\times} L2), cached per device;
 \item
-  a \textbf{GPU busy-wait} before every start event, sized min(5 ms, max(100 \ensuremath{\mu}s, 3 \ensuremath{\times} the measured host dispatch time)), a
+  a \textbf{GPU busy-wait} before every start event, sized min(5~ms, max(100~\ensuremath{\mu}s, 3 \ensuremath{\times} the measured host dispatch time)), a
   simpler, fixed-length stand-in for nvbench\textquotesingle s blocking kernel;
 \item
   \texttt{mode="cold"} (flush before every call) or \texttt{mode="steady"} (no flush; the caller passes callables over copies,
   whose total footprint should be \ensuremath{\ge} 4 \ensuremath{\times} L2, and the harness rotates over them);
 \item
-  median, mean, IQR, p95, and warnings when the median is within 30 timer ticks (\ensuremath{\approx} 1.02 \ensuremath{\mu}s each) and most samples
+  median, mean, IQR, p95, and warnings when the median is within 30 timer ticks (\ensuremath{\approx} 1.02~\ensuremath{\mu}s each) and most samples
   fall on the tick grid, when the IQR exceeds 10~\% of the median, and, in cold mode, that the kernel\textquotesingle s own
   write-back is partly untimed.
 \end{itemize}
@@ -754,12 +764,12 @@ over the calls of each call\textquotesingle s mean; the \texttt{do\_\allowbreak{
 {\small
 \begin{longtable}[]{@{}>{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.488}}>{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.179}}>{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.155}}>{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.178}}@{}}
 \toprule\noalign{}
-Kernel & cold, 2 \ensuremath{\times} L2 flush vs 256 MiB & steady vs cold & shipped \texttt{do\_\allowbreak{}bench} vs cold \\
+Kernel & cold, 2 \ensuremath{\times} L2 flush vs 256~MiB & steady vs cold & shipped \texttt{do\_\allowbreak{}bench} vs cold \\
 \midrule\noalign{}
 \endhead
 \bottomrule\noalign{}
 \endlastfoot
-cuBLAS GEMV 12 MiB & \ensuremath{-}0.05~\% & +0.2~\% & +12~\% \\
+cuBLAS GEMV 12~MiB & \ensuremath{-}0.05~\% & +0.2~\% & +12~\% \\
 elementwise add, 2 \ensuremath{\times} L2 & +1.6~\% & +14~\% & +15~\% \\
 elementwise add, 0.4 \ensuremath{\times} L2 & +5.6~\% & +38~\% & +36~\% \\
 Triton y = 2x, 0.5 \ensuremath{\times} L2 & +9.4~\% & +46~\% & +41~\% \\
@@ -767,7 +777,7 @@ Triton y = 2x, 0.5 \ensuremath{\times} L2 & +9.4~\% & +46~\% & +41~\% \\
 }
 
 The first column is why the default buffer is not 2 \ensuremath{\times} L2. On the A100, RTX 5090 and L40S hosts, the shipped
-\texttt{do\_\allowbreak{}bench} read +16~\%, +11~\% and +25~\% above \texttt{cleanbench}\textquotesingle s cold time for the 112 MiB GEMV, matching the nine-GPU
+\texttt{do\_\allowbreak{}bench} read +16~\%, +11~\% and +25~\% above \texttt{cleanbench}\textquotesingle s cold time for the 112~MiB GEMV, matching the nine-GPU
 study\textquotesingle s +16.0~\%, +10.8~\% and +25.3~\%, measured on different hosts against a different baseline.
 
 \textbf{Kernel time from the GPU\textquotesingle s timestamps (\texttt{bench\_\allowbreak{}graph}, \texttt{compare}).} \texttt{bench\_\allowbreak{}graph(rotate)} captures callables over
@@ -781,8 +791,8 @@ counters catch throttling, not every small boost step, so a locked clock remains
 reached. Each callable must run on the current stream without overlapping kernels.
 
 \textbf{Limitations.} \texttt{torch.cuda.\_\allowbreak{}sleep} is a private PyTorch API. Steady mode and \texttt{bench\_\allowbreak{}graph} need the caller to build
-input/output copies. With CUDA events (\texttt{bench}), kernels shorter than about 30 \ensuremath{\mu}s remain limited by the timer\textquotesingle s
-\ensuremath{\approx} 1 \ensuremath{\mu}s resolution. \texttt{bench\_\allowbreak{}graph} reached 1~\% only with a locked clock, on one GPU (\hyperref[kernel-by-kernel-does-a-single-kernel-benchmark-match-the-same-kernel-inside-the-decode-proxy]{\S{}9.1}), and CUPTI tracing itself
+input/output copies. With CUDA events (\texttt{bench}), kernels shorter than about 30~\ensuremath{\mu}s remain limited by the timer\textquotesingle s
+\ensuremath{\approx} 1~\ensuremath{\mu}s resolution. \texttt{bench\_\allowbreak{}graph} reached 1~\% only with a locked clock, on one GPU (\hyperref[kernel-by-kernel-does-a-single-kernel-benchmark-match-the-same-kernel-inside-the-decode-proxy]{\S{}9.1}), and CUPTI tracing itself
 added 1-2~\% on an A100.
 
 \section{Measurement pitfall: per-kernel DRAM write counters lose bytes}\label{measurement-pitfall-per-kernel-dram-write-counters-lose-bytes}
@@ -818,8 +828,8 @@ AD103 & 5.8~\% / 4.9~\% / 3.2~\% \\
   \textbf{Not yet measured on A100/H100.} The other three dies were measured with 2024.2.1 only. One attempt with Nsight Compute
   2025.2.1 on an RTX 5060 Ti returned n/a for the DRAM metrics.
 \item
-  \textbf{The dirty threshold behind \hyperref[background]{\S{}2}}, write-back fraction at a dirty footprint of 0.4375 / 0.625 L2: GA106 (3 MiB)
-  0.014 / 0.991; GA102 (6 MiB) 0.009 / 0.974; TU106 (4 MiB) 0.016 / 0.976; AD103 (64 MiB) 0.071 / 0.933.
+  \textbf{The dirty threshold behind \hyperref[background]{\S{}2}}, write-back fraction at a dirty footprint of 0.4375 / 0.625 L2: GA106 (3~MiB)
+  0.014 / 0.991; GA102 (6~MiB) 0.009 / 0.974; TU106 (4~MiB) 0.016 / 0.976; AD103 (64~MiB) 0.071 / 0.933.
 \end{itemize}
 
 \section{Recommendations for tool authors}\label{recommendations-for-tool-authors}
@@ -827,13 +837,13 @@ AD103 & 5.8~\% / 4.9~\% / 3.2~\% \\
 \begin{itemize}
 \tightlist
 \item
-  \textbf{Triton \texttt{do\_\allowbreak{}bench}:} PR \#12556~\cite{tr12556} would remove pitfall 1. Its 256 MiB buffer already avoided pitfall 2 on the four
+  \textbf{Triton \texttt{do\_\allowbreak{}bench}:} PR \#12556~\cite{tr12556} would remove pitfall 1. Its 256~MiB buffer already avoided pitfall 2 on the four
   machines where we tested it with a busy-wait; a busy-wait after the flush would make that independent of GPU and
   host speed.
 \item
   \textbf{PyTorch Inductor:} switching \texttt{zero\_\allowbreak{}()} to a read on the existing L2-sized buffer is not enough: it leaves the
   previous call\textquotesingle s output partly dirty (\hyperref[what-removes-the-residue-and-what-does-not]{\S{}6}) and lets the queue drain on fast GPUs (\hyperref[pitfall-2-queue-drain]{\S{}7}). Read at least
-  max(256 MiB, 4 \ensuremath{\times} L2), or add a busy-wait.
+  max(256~MiB, 4 \ensuremath{\times} L2), or add a busy-wait.
 \item
   \textbf{nvbench, CUTLASS:} a read kernel instead of the memset (or a read pass after it).
 \item
@@ -860,7 +870,7 @@ Hazard & What is distorted & Observed here (setting) & Remedy (status) \\
 Write flush (dirty L2) & isolated cold time & +6.6 to +25.3~\% (decode GEMV, nine GPUs) & read flush (validated with counters on one GPU, timing on nine) \\
 Queue drain & isolated cold time & up to +203~\% (short kernel, A100 host) & busy-wait before the start event (rescued on two hosts) \\
 Own write-back untimed & cold vs stream of calls & up to about L2/2 of the output (laptop counters) & also report steady state (\hyperref[pitfall-3-who-pays-for-a-kernels-own-writes]{\S{}8}) \\
-Event interval vs kernel duration & per-call time & 2.2-3.4 \ensuremath{\mu}s per call (two rented hosts) & CUPTI durations (\hyperref[kernel-by-kernel-does-a-single-kernel-benchmark-match-the-same-kernel-inside-the-decode-proxy]{\S{}9.1}) \\
+Event interval vs kernel duration & per-call time & 2.2-3.4~\ensuremath{\mu}s per call (two rented hosts) & CUPTI durations (\hyperref[kernel-by-kernel-does-a-single-kernel-benchmark-match-the-same-kernel-inside-the-decode-proxy]{\S{}9.1}) \\
 Cold loop vs the proxy\textquotesingle s context & per-kernel time in the proxy & 1-3~\% (laptop, locked clock) & rotation inside a CUDA graph (one GPU) \\
 SM clock changes & any time & 27-30~\% between rounds for int4 / NF4 (unlocked laptop) & lock the clock, or report the change (\hyperref[kernel-by-kernel-does-a-single-kernel-benchmark-match-the-same-kernel-inside-the-decode-proxy]{\S{}9.1}) \\
 CUPTI tracing & traced vs untraced graph & 0.03-2.2~\% of the proxy step, up to 3.7~\% of a rotation graph (A100) & check tracing on vs off (\hyperref[kernel-by-kernel-does-a-single-kernel-benchmark-match-the-same-kernel-inside-the-decode-proxy]{\S{}9.1}) \\
@@ -876,7 +886,7 @@ Host (same GPU model) & absolute step time & 9-27~\% (two H100 NVL hosts) & tune
 \begin{itemize}
 \tightlist
 \item
-  An L2-sized read flush evicted even a 24 KiB kernel\textquotesingle s inputs; we predicted it would leave them warm.
+  An L2-sized read flush evicted even a 24~KiB kernel\textquotesingle s inputs; we predicted it would leave them warm.
 \item
   The busy-wait removed the inflation for two of three kernels; for the third, 6.7~\% remained, which matches, after
   the fact, the +6.6~\% implied by the extra write-back the counters measured; the locked rule scored "partial".
@@ -884,22 +894,22 @@ Host (same GPU model) & absolute step time & 9-27~\% (two H100 NVL hosts) & tune
   We predicted that waiting after a write flush slows timing through lower clocks; the busy-wait showed it is
   queue drain.
 \item
-  We predicted \texttt{cleanbench}\textquotesingle s cold time would not depend on the flush buffer between 2 \ensuremath{\times} L2 and 256 MiB; it does
+  We predicted \texttt{cleanbench}\textquotesingle s cold time would not depend on the flush buffer between 2 \ensuremath{\times} L2 and 256~MiB; it does
   for short kernels with outputs of 0.4-0.5 L2.
 \item
   In the nine-GPU study, we predicted only mild distortions of int4 speedups and marginal effects on GPUs with
-  \ensuremath{\le} 32 MiB of L2; the RTX 4060 / 4060 Ti speedups moved by \ensuremath{-}23 to \ensuremath{-}24~\% and every kernel family was affected there.
+  \ensuremath{\le} 32~MiB of L2; the RTX 4060 / 4060 Ti speedups moved by \ensuremath{-}23 to \ensuremath{-}24~\% and every kernel family was affected there.
 \item
   Earlier: cache models (LRU plus dirty cap) did not predict single-kernel write-back on TU106/AD103 or the residue
   after long write streams; a "bandwidth slack absorbs the write-back" hypothesis passed only through a
-  weight-format confound; an L2-sized write flush was not more biased than the 256 MiB one for the large GEMV.
+  weight-format confound; an L2-sized write flush was not more biased than the 256~MiB one for the large GEMV.
 \item
   For graph-batched timing (\hyperref[end-to-end-check-which-number-predicts-a-decode-step]{\S{}9}) we predicted the step within 2~\% on the A100 and H100; the A100 was within 1.6~\%, the
   H100 NVL 12-20~\% off. Two attempts on the laptop GPU failed the stability gate because another program was using
   the GPU.
 \item
   In the end-to-end check (\hyperref[end-to-end-check-which-number-predicts-a-decode-step]{\S{}9}) we predicted the read flush with a busy-wait would come within 10~\% of the decode
-  step on all five GPUs and predict the int4 speedup within 5~\% on the three with \ensuremath{\ge} 40 MiB of L2; on the A100 and
+  step on all five GPUs and predict the int4 speedup within 5~\% on the three with \ensuremath{\ge} 40~MiB of L2; on the A100 and
   H100 it missed the int4 step by 17~\% and the speedup by 8-10~\%.
 \item
   In the per-kernel check (\hyperref[kernel-by-kernel-does-a-single-kernel-benchmark-match-the-same-kernel-inside-the-decode-proxy]{\S{}9.1}) we predicted that the gates would pass on rented hosts (the A100 failed the tracing
@@ -908,13 +918,13 @@ Host (same GPU model) & absolute step time & 9-27~\% (two H100 NVL hosts) & tune
   accuracy prediction; it failed on thermal slowdown.
 \item
   On fast GPUs we predicted that the L2-sized-flush anomaly would reproduce on the RTX 5090 (not on this host);
-  that a 16 MiB GEMV would run \ensuremath{\ge} 15~\% faster with no flush than with a read flush once the queue is busy (A100
-  yes; RTX 5090 12~\%, L40S 7~\%); and that the long-stream residue would predict the cold/steady gap of the 64 MiB
+  that a 16~MiB GEMV would run \ensuremath{\ge} 15~\% faster with no flush than with a read flush once the queue is busy (A100
+  yes; RTX 5090 12~\%, L40S 7~\%); and that the long-stream residue would predict the cold/steady gap of the 64~MiB
   RMSNorm on at least 3 of 4 GPUs (2 of the 3 measured; L40S off 2.5-fold; H100 not measured).
 \end{itemize}
 
 \textbf{Deviation.} In the nine-GPU study, our pre-registered check that the read flush evicts (no flush \ensuremath{\ge} 1.2\ensuremath{\times} faster
-on 32 MiB of weights) failed on all four GPUs with L2 \ensuremath{\ge} 64 MiB; we replaced it after seeing one GPU with "the read
+on 32~MiB of weights) failed on all four GPUs with L2 \ensuremath{\ge} 64~MiB; we replaced it after seeing one GPU with "the read
 flush leaves the kernel at least as cold as \texttt{torch.sum}", validated earlier with counters. On an A100 host we
 later reproduced the failed check (no flush 1.5\ensuremath{\times} slower than a read flush) and reversed it with a GPU busy-wait
 (0.76\ensuremath{\times}): queue drain, not eviction, had made "no flush" look slow (\hyperref[pitfall-2-queue-drain]{\S{}7}).
@@ -932,7 +942,7 @@ optional.
   No full-model measurement: the reference in \hyperref[end-to-end-check-which-number-predicts-a-decode-step]{\S{}9} is a four-layer, GEMV-only decode proxy, and the report is about
   what harnesses time, not about model throughput.
 \item
-  The 1~\% per-kernel result (\hyperref[kernel-by-kernel-does-a-single-kernel-benchmark-match-the-same-kernel-inside-the-decode-proxy]{\S{}9.1}) comes from one laptop GPU with a locked clock and kernels of 49-645 \ensuremath{\mu}s, against a
+  The 1~\% per-kernel result (\hyperref[kernel-by-kernel-does-a-single-kernel-benchmark-match-the-same-kernel-inside-the-decode-proxy]{\S{}9.1}) comes from one laptop GPU with a locked clock and kernels of 49-645~\ensuremath{\mu}s, against a
   GEMV-only proxy; on rented data-center GPUs we could not lock the clock and did not reach 1~\%.
 \item
   The tool survey (\hyperref[who-is-affected-a-survey-of-15-benchmarking-tools]{\S{}3}) is a selection of commonly used tools, read once for eight of them.
@@ -984,7 +994,7 @@ optional.
   up to 22~\% across nodes of HPC centers; we saw 9-27~\% between two H100 NVL hosts in one decode step. H. He (2024)~\cite{he} shows that power
   limits make matmul time depend on the input values.
 \item
-  \textbf{Flush-buffer size:} triton-lang/triton issue \#1252~\cite{tr1252} (2023) asked why \texttt{do\_\allowbreak{}bench} flushes 256 MB; the answer was
+  \textbf{Flush-buffer size:} triton-lang/triton issue \#1252~\cite{tr1252} (2023) asked why \texttt{do\_\allowbreak{}bench} flushes 256~MB; the answer was
   only to exceed the L2 size.
 \item
   \textbf{Frequency-scaling performance models:} CRISP (Nath and Tullsen, MICRO 2015)~\cite{crisp} models GPU performance under DVFS;

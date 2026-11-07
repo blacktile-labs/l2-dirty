@@ -167,6 +167,22 @@ CITE_TEXT = [  # (LaTeX text in the related-work section, bib key): cited once, 
     ("CRISP (Nath and Tullsen, MICRO 2015)", "crisp"), ("Ernst et al. 2021", "ernst")]
 
 
+def space_arch_groups(body: str) -> str:
+    """In tables with an "Arch" column, add a little space where the architecture changes, so groups read as groups."""
+    def fix(m):
+        lines, out, prev = m.group(0).split("\n"), [], None
+        for ln in lines:
+            cells = ln.split(" & ")
+            if len(cells) > 2 and ln.rstrip().endswith("\\\\") and "Arch" not in ln:
+                arch = cells[1].strip()
+                if prev is not None and arch != prev:
+                    out.append(r"\addlinespace[4pt]")
+                prev = arch
+            out.append(ln)
+        return "\n".join(out)
+    return re.sub(r"\\begin\{longtable\}(?:(?!\\end\{longtable\}).)*?\bArch\b.*?\\end\{longtable\}", fix, body, flags=re.S)
+
+
 def add_citations(body: str) -> str:
     """Every '#<number>' of a PR or issue we credit gets a \\cite to its bibliography entry (clickable); named works
     are cited once, in the related-work section."""
@@ -210,7 +226,7 @@ def add_section_links(body: str) -> str:
 
 
 def pandoc(md: str) -> str:
-    r = subprocess.run(["pandoc", "-f", "gfm", "-t", "latex", "--no-highlight", "--columns=72",
+    r = subprocess.run(["pandoc", "-f", "gfm+tex_math_dollars", "-t", "latex", "--no-highlight", "--columns=72",
                         "--shift-heading-level-by=-1", "--wrap=preserve"],
                        input=md, capture_output=True, text=True, check=True)
     return r.stdout
@@ -225,6 +241,7 @@ def main() -> int:
     abs_m = re.search(r"^## Abstract\n(.*?)(?=^## )", md, flags=re.S | re.M)
     abstract, md = abs_m.group(1).strip(), md.replace(abs_m.group(0), "")
     md = re.sub(r"(\d) %", "\\1\u00a0%", md)                       # keep "25.3 %" on one line
+    md = re.sub(r"(\d) (MiB|GiB|KiB|MB|GB|KB|µs|ms|MHz|W)\b", "\\1\u00a0\\2", md)  # ... and "112 MiB"
     md = re.sub(r"^## (\d+)\. ", "## ", md, flags=re.M)          # LaTeX numbers sections itself
     md = re.sub(r"^### (\d+)\.(\d+) ", "### ", md, flags=re.M)  # ... and subsections
     # public version: no unread citations, no internal decision-log references
@@ -248,6 +265,7 @@ def main() -> int:
     if i < 0 or j < 0:
         sys.exit("section 5 table not found")
     body = wrap_tables(body)
+    body = space_arch_groups(body)
     body = body.replace(r"\_", r"\_\allowbreak{}")              # let long identifiers break after "_"
     body = add_citations(body)
     body = body.replace(r"\begin{longtable}", r"{\small" + "\n" + r"\begin{longtable}")

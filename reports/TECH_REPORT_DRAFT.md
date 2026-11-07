@@ -54,9 +54,9 @@ matmuls) or compare kernels that move different numbers of bytes:
    was off by up to 14 % (§9.1). If the conditions cannot be met, time the model's own graph. CUPTI timing is not
    new (FlashInfer has it, §14).
 8. **Make the clock steady, or report how much it moved.** Lock the SM clock where you may (`nvidia-smi -lgc`, root
-   only; rented containers refused). For small changes, a clock change Δf/f changes a kernel's time by about
-   −s × Δf/f, where s is the share of its time that scales with the SM clock: near 0 for the memory-bound fp16 GEMVs
-   and roughly 0.6-0.9 for int4 and NF4 GEMVs on our laptop GPU (§9.1, post hoc and rough).
+   only; rented containers refused). For small changes, a relative clock change $\Delta f/f$ changes a kernel's time
+   by about $-s\,\Delta f/f$, where $s$ is the share of its time that scales with the SM clock: near 0 for the
+   memory-bound fp16 GEMVs and roughly 0.6-0.9 for int4 and NF4 GEMVs on our laptop GPU (§9.1, post hoc and rough).
 9. **Tune on the machine you deploy on.** Two hosts with the same H100 NVL ran the same decode step 9-27 % apart (§9).
 
 `cleanbench` (§10) does 1-3, 5 and 7, reports whether the conditions of item 7 held, and warns when a kernel is too
@@ -137,22 +137,25 @@ CUTLASS) use a buffer of exactly L2 size, which matters for §6 and §7.
 
 ## 5. How big is the bias? Nine GPUs
 
-B = t(shipped write flush) / t(read flush) − 1, in percent, from the median times over 5 runs. The reference kernel
-is a batch-1 fp16 GEMV (`F.linear`, W 14336 × 4096, 112 MiB, larger than every L2 here); its range is the minimum and
-maximum of the per-run B. The other columns: the same GEMV under an L2-sized write flush instead of 256 MiB ("L2-sized write"); SDPA
+The bias of the shipped flush is
+$$B = \frac{t_{\mathrm{write}}}{t_{\mathrm{read}}} - 1,$$
+in percent, where $t_{\mathrm{write}}$ and $t_{\mathrm{read}}$ are the median times over 5 runs with the shipped write
+flush and with a read flush. The reference kernel is a batch-1 fp16 GEMV (`F.linear`, W 14336 × 4096, 112 MiB, larger than every L2 here); its range is the minimum and
+maximum of the per-run $B$. Rows are grouped by architecture, in order of release, and sorted by L2 size within each
+group. The other columns: the same GEMV under an L2-sized write flush instead of 256 MiB ("L2-sized write"); SDPA
 decode ("SDPA") with a 256 MiB KV cache; Liger RMSNorm on 64 MiB; Liger SwiGLU on 2 × 56 MiB. L2 sizes are as reported by the
 CUDA device query.
 
 | GPU | Arch | L2 (MiB) | GEMV (%) | range | L2-sized write (%) | SDPA (%) | RMSNorm (%) | SwiGLU (%) |
 |------------------|----------|-------:|--------:|------------:|--------:|--------:|--------:|--------:|
+| A100 PCIe 40GB | Ampere | 40 | **+16.0** | 15.0–16.0 | +16.0 | +7.6 | +15.6 | +12.8 |
 | RTX 4060 | Ada | 24 | +6.7 | 6.3–6.7 | +6.4 | +7.1 | +15.6 | +11.4 |
 | RTX 4060 Ti | Ada | 32 | +8.6 | 8.5–8.8 | +8.7 | +9.2 | +23.4 | +16.8 |
-| RTX 5060 Ti | Blackwell | 32 | +6.6 | 6.5–6.9 | +7.3 | +3.6 | +11.0 | +9.1 |
-| A100 PCIe 40GB | Ampere | 40 | **+16.0** | 15.0–16.0 | +16.0 | +7.6 | +15.6 | +12.8 |
-| H100 NVL | Hopper | 60 | **+23.1** | 22.7–24.4 | +22.9 | +7.9 | +13.8 | +12.7 |
 | RTX 4080 SUPER | Ada | 64 | +16.0 | 15.5–16.7 | +16.1 | +18.4 | +54.6 | +30.9 |
 | RTX 4090 | Ada | 72 | +17.4 | 16.9–17.7 | +17.7 | +19.6 | +57.1 | +32.1 |
 | L40S | Ada | 96 | **+25.3** | 24.7–25.3 | +25.6 | +28.3 | **+88.0** | +47.8 |
+| H100 NVL | Hopper | 60 | **+23.1** | 22.7–24.4 | +22.9 | +7.9 | +13.8 | +12.7 |
+| RTX 5060 Ti | Blackwell | 32 | +6.6 | 6.5–6.9 | +7.3 | +3.6 | +11.0 | +9.1 |
 | RTX 5090 | Blackwell | 96 | +10.8 | 9.2–11.0 | +10.1 | +5.5 | +26.5 | +23.9 |
 
 - **Every GPU is affected.** The pre-registered "affected" threshold was ≥ 5 %. The run-to-run range of the
@@ -404,7 +407,10 @@ kernel's time inside the decode step (pre-registered):
 | CUPTI, `cleanbench` cold loop | −2.0 to +3.4 % | 1/12 |
 | CUDA events, `cleanbench` cold loop | +1.3 to +13.3 % | 0/12 |
 
-Error is the ratio of the harness's median to the reference median, each taken over three runs. All gates passed
+The error of a harness is
+$$E = \frac{\tilde{t}_{\mathrm{harness}}}{\tilde{t}_{\mathrm{proxy}}} - 1,$$
+where $\tilde{t}$ is the median over three runs of each run's median kernel time, in the harness and inside the proxy.
+All gates passed
 and every pre-registered prediction for this run held. The kernels took 49-645 µs. Unaggregated, the per-run errors
 were within 0.86 % (36 of 36 kernel-runs), and the errors of the paired rounds (reference and harness measured back
 to back, 108 pairs) had a median of 0.30 %, a 95th percentile of 0.95 % and a maximum of 1.10 % (104 of 108 within
@@ -430,10 +436,11 @@ to back, 108 pairs) had a median of 0.30 %, a 95th percentile of 0.95 % and a ma
     this run is descriptive only: CUPTI rotation −4.1 to +3.7 %, events in the cold loop +3.0 to +22.2 %. The clock
     was power-capped (1,260-1,410 MHz).
   - The RTX 4090 and H100 NVL hosts never became reachable and were destroyed unused.
-- **Clock sensitivity (post hoc).** A two-term frequency-scaling model, t(f) = a/f + b, splits a kernel's time into a
-  part that scales with the SM clock f and a part that does not (DRAM at a fixed memory clock). With s = (a/f₀)/t at
-  clock f₀, a change to f₁ changes the time by s × (f₀/f₁ − 1), which for small changes is about −s × Δf/f; since
-  0 ≤ s ≤ 1, it is at most f₀/f₁ − 1 (a 20 % clock drop can add up to 25 %). From the laptop's unlocked
+- **Clock sensitivity (post hoc).** A two-term frequency-scaling model, $t(f) = a/f + b$, splits a kernel's time into
+  a part that scales with the SM clock $f$ and a part that does not (DRAM at a fixed memory clock). With
+  $s = (a/f_0)/t(f_0)$, a change of the clock from $f_0$ to $f_1$ changes the time by
+  $$\frac{t(f_1)}{t(f_0)} - 1 = s\left(\frac{f_0}{f_1} - 1\right) \approx -s\,\frac{\Delta f}{f}, \qquad 0 \le s \le 1,$$
+  so it is at most $f_0/f_1 - 1$ (a 20 % clock drop can add up to 25 %). From the laptop's unlocked
   and locked runs (`clock_sensitivity.py`; the unlocked clock summarized from 13-22 one-second `nvidia-smi` samples
   per variant, as a median or a mean): s = 0.00-0.04 for the fp16 GEMVs, 0.79-0.91 for int4 and 0.61-0.66 for NF4.
   Two clock states determine the two parameters exactly, so this is a rough estimate, not a validated model. It is
