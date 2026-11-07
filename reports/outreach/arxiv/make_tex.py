@@ -21,9 +21,10 @@ PREAMBLE = r"""\documentclass[11pt]{article}
 \usepackage{booktabs,longtable,array,calc}
 \usepackage{graphicx}
 \usepackage{fancyvrb}
-\usepackage[hidelinks]{hyperref}
+\usepackage{xcolor}
+\usepackage[colorlinks=true,linkcolor={blue!45!black},citecolor={blue!45!black},urlcolor={blue!45!black}]{hyperref}
 \usepackage{etoolbox}
-\AtBeginEnvironment{longtable}{\small}
+\AtBeginEnvironment{longtable}{\small\hyphenpenalty=10000\exhyphenpenalty=10000}
 \setlength{\emergencystretch}{3em}
 \linespread{1.06}
 \usepackage{xurl}
@@ -95,6 +96,12 @@ BIB = r"""
 \bibitem{tilelang3534} tile-ai/tilelang \#3534, \url{https://github.com/tile-ai/tilelang/pull/3534}.
 \bibitem{patent} NVIDIA Corporation, \emph{Control mechanism for fine-tuned cache to backing-store synchronization}, US Patent 9,639,466 B2, filed 2012, granted 2017.
 \bibitem{finn} Finn, \emph{What happens when a GPU writes memory}, Doubleword blog, 2026.
+\bibitem{tr1252} triton-lang/triton issue \#1252, cache flush for benchmarking (2023), \url{https://github.com/triton-lang/triton/issues/1252}.
+\bibitem{helion4126} pytorch/helion PR \#4126, L2 flush regimes for the autotuner's benchmarks, \url{https://github.com/pytorch/helion/pull/4126}.
+\bibitem{fi8076} flashinfer-ai/flashinfer PR \#8076, evict L2 by reading in cold-L2 profiling, \url{https://github.com/flashinfer-ai/flashinfer/pull/8076}.
+\bibitem{hipep1238} ROCm/hip-ep PR \#1238, time kernel unit tests on cold caches, \url{https://github.com/ROCm/hip-ep/pull/1238}.
+\bibitem{deepep17} deepseek-ai/DeepEP-Ascend issue \#17, flush\_l2 does not take effect as expected, \url{https://github.com/deepseek-ai/DeepEP-Ascend/issues/17}.
+\bibitem{nvbench} NVIDIA nvbench, \url{https://github.com/NVIDIA/nvbench}.
 \bibitem{speechmatics} L.~Atkins, D.~MacLeod, \emph{How to Accurately Time CUDA Kernels in Pytorch}, Speechmatics, 2023, \url{https://www.speechmatics.com/company/articles-and-news/timing-operations-in-pytorch}.
 \bibitem{sinha} P.~Sinha, A.~Guliani, R.~Jain, B.~Tran, M.~D.~Sinclair, S.~Venkataraman, \emph{Not All GPUs Are Created Equal: Characterizing Variability in Large-Scale, Accelerator-Rich Systems}, SC22, arXiv:2208.11035.
 \bibitem{he} H.~He, \emph{Strangely, Matrix Multiplications on GPUs Run Faster When Given ``Predictable'' Data!}, 2024, \url{https://www.thonking.ai/p/strangely-matrix-multiplications}.
@@ -124,20 +131,47 @@ def wrap_tables(body: str) -> str:
     """pandoc emits {@{}ll..l@{}} for gfm tables (no wrapping): give each column a ragged-right p{} width
     proportional to its longest cell (crudely de-TeXed), so wide tables fit the text width."""
     def fix(m):
-        n = len(m.group(1))
+        spec = m.group(1)
+        n = len(spec)
         rows = [r for r in m.group(2).split("\\\\") if " & " in r]
         lens = [7] * n
         for ri, r in enumerate(rows):
             for k, c in enumerate(r.split(" & ")[:n]):
                 txt = re.sub(r"\\[a-zA-Z]+|[{}]|\\noalign|toprule|midrule|bottomrule", "", c).strip()
                 # header row: only its longest word must fit; data rows: whole cell, capped
-                w = max((len(t) for t in txt.split()), default=0) if ri == 0 else min(len(txt), 45)
+                wid = lambda t: sum(1.35 if ch.isupper() or ch.isdigit() else 1.0 for ch in t) + 1  # noqa: E731
+                w = max((wid(t) for t in txt.split()), default=0) if ri == 0 else min(wid(txt), 45)
                 lens[k] = max(lens[k], w)
         tot = sum(lens)
-        cols = "".join(rf">{{\raggedright\arraybackslash}}p{{(\linewidth - {2 * n}\tabcolsep) * \real{{{x / tot:.3f}}}}}"
-                       for x in lens)
+        cols = "".join(rf">{{\{'raggedleft' if a == 'r' else 'raggedright'}\arraybackslash}}"
+                       rf"p{{(\linewidth - {2 * n}\tabcolsep) * \real{{{x / tot:.3f}}}}}" for a, x in zip(spec, lens))
         return rf"\begin{{longtable}}[]{{@{{}}{cols}@{{}}}}" + m.group(2)
-    return re.sub(r"\\begin\{longtable\}\[\]\{@\{\}(l+)@\{\}\}(.*?)(?=\\end\{longtable\})", fix, body, flags=re.S)
+    return re.sub(r"\\begin\{longtable\}\[\]\{@\{\}([lr]+)@\{\}\}(.*?)(?=\\end\{longtable\})", fix, body, flags=re.S)
+
+
+CITE_NUM = {"12556": "tr12556", "12554": "tr12554", "1252": "tr1252", "203681": "pt203681", "2822": "tileops2822",
+            "1990": "tileops1990", "3534": "tilelang3534", "4126": "helion4126", "8076": "fi8076", "1238": "hipep1238",
+            "17": "deepep17"}
+CITE_TEXT = [  # (LaTeX text in the related-work section, bib key): cited once, where the work is credited
+    ("NVIDIA US 9,639,466 B2", "patent"), ("\\emph{What happens when a GPU writes memory} (2026)", "finn"),
+    ("NVIDIA nvbench\\textquotesingle s", "nvbench"), ("(Atkins and MacLeod, 2023)", "speechmatics"),
+    ("\\texttt{bench\\_\\allowbreak{}gpu\\_\\allowbreak{}time\\_\\allowbreak{}with\\_\\allowbreak{}cupti}", "flashinfer"),
+    ("Sinha et al. (SC22; arXiv 2208.11035)", "sinha"), ("H. He (2024)", "he"),
+    ("CRISP (Nath and Tullsen, MICRO 2015)", "crisp"), ("Ernst et al. 2021", "ernst")]
+
+
+def add_citations(body: str) -> str:
+    """Every '#<number>' of a PR or issue we credit gets a \\cite to its bibliography entry (clickable); named works
+    are cited once, in the related-work section."""
+    body = re.sub(r"\\#(\d+)(?!\d)", lambda m: m.group(0) + (f"~\\cite{{{CITE_NUM[m.group(1)]}}}"
+                                                          if m.group(1) in CITE_NUM else ""), body)
+    i = body.find(r"\section{Related work and credit}")
+    head, tail = body[:i], body[i:]
+    for text, key in CITE_TEXT:
+        if text not in tail:
+            sys.exit(f"related-work citation anchor not found: {text}")
+        tail = tail.replace(text, text + f"~\\cite{{{key}}}", 1)
+    return head + tail
 
 
 def pandoc(md: str) -> str:
@@ -179,6 +213,7 @@ def main() -> int:
         sys.exit("section 5 table not found")
     body = wrap_tables(body)
     body = body.replace(r"\_", r"\_\allowbreak{}")              # let long identifiers break after "_"
+    body = add_citations(body)
     body = body.replace(r"\begin{longtable}", r"{\small" + "\n" + r"\begin{longtable}")
     body = body.replace(r"\end{longtable}", r"\end{longtable}" + "\n}")
     out = PREAMBLE % {"title": ascii_tex(pandoc(title).strip()),

@@ -7,9 +7,10 @@
 \usepackage{booktabs,longtable,array,calc}
 \usepackage{graphicx}
 \usepackage{fancyvrb}
-\usepackage[hidelinks]{hyperref}
+\usepackage{xcolor}
+\usepackage[colorlinks=true,linkcolor={blue!45!black},citecolor={blue!45!black},urlcolor={blue!45!black}]{hyperref}
 \usepackage{etoolbox}
-\AtBeginEnvironment{longtable}{\small}
+\AtBeginEnvironment{longtable}{\small\hyphenpenalty=10000\exhyphenpenalty=10000}
 \setlength{\emergencystretch}{3em}
 \linespread{1.06}
 \usepackage{xurl}
@@ -144,7 +145,7 @@ once. Permalinks for all entries are in the artifact. Our measurements used Trit
 the same as on \texttt{main}.
 
 {\small
-\begin{longtable}[]{@{}>{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.437}}>{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.097}}>{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.301}}>{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.165}}@{}}
+\begin{longtable}[]{@{}>{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.398}}>{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.097}}>{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.320}}>{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.184}}@{}}
 \toprule\noalign{}
 Tool & Flush by default & Operation & Buffer \\
 \midrule\noalign{}
@@ -164,7 +165,7 @@ SGLang \texttt{marker.do\_\allowbreak{}bench} / \texttt{bench\_\allowbreak{}kine
 KernelBench (evaluates LLM-written kernels) & yes & write (\texttt{fill\_\allowbreak{}}) & 256 MiB \\
 GPU MODE reference-kernels (leaderboard evaluation) & yes & write (\texttt{randn}) & 4 GiB / 256 MiB \\
 QuACK benchmark scripts & yes & write & 256 MiB \\
-TileLang \texttt{do\_\allowbreak{}bench} & yes & \textbf{read} (fixed 2026-11-04, \#3534) & 256 MiB \\
+TileLang \texttt{do\_\allowbreak{}bench} & yes & \textbf{read} (fixed 2026-11-04, \#3534~\cite{tilelang3534}) & 256 MiB \\
 QuACK autotuner, FlashInfer CUDA-graph path, Triton \texttt{do\_\allowbreak{}bench\_\allowbreak{}cudagraph} & --- & no flush / input rotation & --- \\
 \end{longtable}
 }
@@ -224,27 +225,29 @@ under the amended validity check (Section~13).}
 \end{figure}
 \label{how-big-is-the-bias-nine-gpus}
 
-B = t(shipped write flush) / t(read flush) \ensuremath{-} 1, from the median times over 5 runs; brackets: minimum and maximum of
-the per-run B. The reference kernel is a batch-1 fp16 GEMV (\texttt{F.linear}, W 14336 \ensuremath{\times} 4096, 112 MiB, larger than every
-L2 here). L2 sizes are as reported by the CUDA device query.
+B = t(shipped write flush) / t(read flush) \ensuremath{-} 1, in percent, from the median times over 5 runs. The reference kernel
+is a batch-1 fp16 GEMV (\texttt{F.linear}, W 14336 \ensuremath{\times} 4096, 112 MiB, larger than every L2 here); its range is the minimum and
+maximum of the per-run B. The other columns: the same GEMV under an L2-sized write flush instead of 256 MiB ("L2-sized write"); SDPA
+decode ("SDPA") with a 256 MiB KV cache; Liger RMSNorm on 64 MiB; Liger SwiGLU on 2 \ensuremath{\times} 56 MiB. L2 sizes are as reported by the
+CUDA device query.
 
 {\small
-\begin{longtable}[]{@{}>{\raggedright\arraybackslash}p{(\linewidth - 16\tabcolsep) * \real{0.169}}>{\raggedright\arraybackslash}p{(\linewidth - 16\tabcolsep) * \real{0.108}}>{\raggedright\arraybackslash}p{(\linewidth - 16\tabcolsep) * \real{0.084}}>{\raggedright\arraybackslash}p{(\linewidth - 16\tabcolsep) * \real{0.253}}>{\raggedright\arraybackslash}p{(\linewidth - 16\tabcolsep) * \real{0.096}}>{\raggedright\arraybackslash}p{(\linewidth - 16\tabcolsep) * \real{0.096}}>{\raggedright\arraybackslash}p{(\linewidth - 16\tabcolsep) * \real{0.096}}>{\raggedright\arraybackslash}p{(\linewidth - 16\tabcolsep) * \real{0.096}}@{}}
+\begin{longtable}[]{@{}>{\raggedright\arraybackslash}p{(\linewidth - 18\tabcolsep) * \real{0.210}}>{\raggedright\arraybackslash}p{(\linewidth - 18\tabcolsep) * \real{0.113}}>{\raggedleft\arraybackslash}p{(\linewidth - 18\tabcolsep) * \real{0.077}}>{\raggedleft\arraybackslash}p{(\linewidth - 18\tabcolsep) * \real{0.077}}>{\raggedleft\arraybackslash}p{(\linewidth - 18\tabcolsep) * \real{0.144}}>{\raggedleft\arraybackslash}p{(\linewidth - 18\tabcolsep) * \real{0.106}}>{\raggedleft\arraybackslash}p{(\linewidth - 18\tabcolsep) * \real{0.077}}>{\raggedleft\arraybackslash}p{(\linewidth - 18\tabcolsep) * \real{0.103}}>{\raggedleft\arraybackslash}p{(\linewidth - 18\tabcolsep) * \real{0.092}}@{}}
 \toprule\noalign{}
-GPU & Arch & L2 & GEMV (ref) & L2-sized write, GEMV & SDPA decode, 256 MiB KV & Liger RMSNorm, 64 MiB & Liger SwiGLU, 2 \ensuremath{\times} 56 MiB \\
+GPU & Arch & L2 (MiB) & GEMV (\%) & range & L2-sized write (\%) & SDPA (\%) & RMSNorm (\%) & SwiGLU (\%) \\
 \midrule\noalign{}
 \endhead
 \bottomrule\noalign{}
 \endlastfoot
-RTX 4060 & Ada & 24 MiB & +6.7~\% {[}6.3, 6.7{]} & +6.4~\% & +7.1~\% & +15.6~\% & +11.4~\% \\
-RTX 4060 Ti & Ada & 32 MiB & +8.6~\% {[}8.5, 8.8{]} & +8.7~\% & +9.2~\% & +23.4~\% & +16.8~\% \\
-RTX 5060 Ti & Blackwell & 32 MiB & +6.6~\% {[}6.5, 6.9{]} & +7.3~\% & +3.6~\% & +11.0~\% & +9.1~\% \\
-A100 PCIe 40GB & Ampere & 40 MiB & \textbf{+16.0~\%} {[}15.0, 16.0{]} & +16.0~\% & +7.6~\% & +15.6~\% & +12.8~\% \\
-H100 NVL & Hopper & 60 MiB & \textbf{+23.1~\%} {[}22.7, 24.4{]} & +22.9~\% & +7.9~\% & +13.8~\% & +12.7~\% \\
-RTX 4080 SUPER & Ada & 64 MiB & +16.0~\% {[}15.5, 16.7{]} & +16.1~\% & +18.4~\% & +54.6~\% & +30.9~\% \\
-RTX 4090 & Ada & 72 MiB & +17.4~\% {[}16.9, 17.7{]} & +17.7~\% & +19.6~\% & +57.1~\% & +32.1~\% \\
-L40S & Ada & 96 MiB & \textbf{+25.3~\%} {[}24.7, 25.3{]} & +25.6~\% & +28.3~\% & \textbf{+88.0~\%} & +47.8~\% \\
-RTX 5090 & Blackwell & 96 MiB & +10.8~\% {[}9.2, 11.0{]} & +10.1~\% & +5.5~\% & +26.5~\% & +23.9~\% \\
+RTX 4060 & Ada & 24 & +6.7 & 6.3--6.7 & +6.4 & +7.1 & +15.6 & +11.4 \\
+RTX 4060 Ti & Ada & 32 & +8.6 & 8.5--8.8 & +8.7 & +9.2 & +23.4 & +16.8 \\
+RTX 5060 Ti & Blackwell & 32 & +6.6 & 6.5--6.9 & +7.3 & +3.6 & +11.0 & +9.1 \\
+A100 PCIe 40GB & Ampere & 40 & \textbf{+16.0} & 15.0--16.0 & +16.0 & +7.6 & +15.6 & +12.8 \\
+H100 NVL & Hopper & 60 & \textbf{+23.1} & 22.7--24.4 & +22.9 & +7.9 & +13.8 & +12.7 \\
+RTX~4080~SUPER & Ada & 64 & +16.0 & 15.5--16.7 & +16.1 & +18.4 & +54.6 & +30.9 \\
+RTX 4090 & Ada & 72 & +17.4 & 16.9--17.7 & +17.7 & +19.6 & +57.1 & +32.1 \\
+L40S & Ada & 96 & \textbf{+25.3} & 24.7--25.3 & +25.6 & +28.3 & \textbf{+88.0} & +47.8 \\
+RTX 5090 & Blackwell & 96 & +10.8 & 9.2--11.0 & +10.1 & +5.5 & +26.5 & +23.9 \\
 \end{longtable}
 }
 
@@ -276,7 +279,7 @@ D is the relative change of the int4-over-fp16 speedup under the shipped flush, 
 decode shapes 4096\ensuremath{^2}, 14336 \ensuremath{\times} 4096 and 4096 \ensuremath{\times} 14336; PyTorch tinygemm and bitsandbytes NF4).
 
 {\small
-\begin{longtable}[]{@{}>{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.223}}>{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.479}}>{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.298}}@{}}
+\begin{longtable}[]{@{}>{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.272}}>{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.443}}>{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.285}}@{}}
 \toprule\noalign{}
 GPU & Worst D & Direction \\
 \midrule\noalign{}
@@ -305,13 +308,13 @@ RTX 5060 Ti & \ensuremath{-}7~\% & depends on shape \\
   vs 2.79\ensuremath{\times} on the 4060); with a read flush tinygemm is faster (3.67\ensuremath{\times} vs 3.29\ensuremath{\times}).
 \item
   \textbf{Why the direction varies.} The penalty is the write-back of the dirty lines a kernel happens to evict (issue
-  \#12554 already observed on an A100 that a kernel reading fewer bytes evicts fewer dirty lines); it is not
+  \#12554~\cite{tr12554} already observed on an A100 that a kernel reading fewer bytes evicts fewer dirty lines); it is not
   proportional to the kernel\textquotesingle s time, so a ratio of two kernels can move either way.
 \item
   \textbf{Autotuning is hurt less.} In an earlier experiment on an RTX 2060 SUPER, RTX 3090 and RTX 4080 SUPER (36 Triton
   GEMV configurations plus cuBLAS), the winner changed on 2 of 3 GPUs but the wrong pick cost \ensuremath{\le} 1.4~\%. In a
   separate int8/int4 study, a W4A16 configuration chosen under the write flush on the RTX 4080 SUPER was 22.6~\%
-  slower than the best. FlashInfer PR \#8076 (open) reports that the write flush reverses the order of CUTLASS FP4
+  slower than the best. FlashInfer PR \#8076~\cite{fi8076} (open) reports that the write flush reverses the order of CUTLASS FP4
   GEMM tactics at decode shapes on an RTX 5090.
 \end{itemize}
 
@@ -319,10 +322,10 @@ RTX 5060 Ti & \ensuremath{-}7~\% & depends on shape \\
 
 Measured with DRAM counters on the RTX 3060 Laptop (L2 3 MiB): DRAM bytes written during the timed call of a
 cuBLAS GEMV over 12 MiB of weights (4 \ensuremath{\times} L2), whose own output is only 3 KB. Anything above zero is foreign
-write-back. Median of 15 calls; the read flush is the kernel from PR \#12556.
+write-back. Median of 15 calls; the read flush is the kernel from PR \#12556~\cite{tr12556}.
 
 {\small
-\begin{longtable}[]{@{}>{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.818}}>{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.182}}@{}}
+\begin{longtable}[]{@{}>{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.804}}>{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.196}}@{}}
 \toprule\noalign{}
 What runs before the timed call & Foreign write-back in the timed window (\ensuremath{\times} L2) \\
 \midrule\noalign{}
@@ -358,7 +361,7 @@ read of a 2 \ensuremath{\times} L2 buffer & 0.002 \\
   still 6-9~\% slower than with 256 MiB (\S{}10). Hence our default of max(256 MiB, 4 \ensuremath{\times} L2). The 4 \ensuremath{\times} L2 term is a
   conservative choice: it only exceeds 256 MiB on GPUs with more than 64 MiB of L2, where (on the RTX 5090 and L40S)
   the 384 MiB default reproduced the nine-GPU numbers (\S{}10), but we did not compare it with smaller buffers there.
-  Triton\textquotesingle s 256 MiB buffer has no stated derivation either (triton-lang/triton issue \#1252, 2023: "just to make sure
+  Triton\textquotesingle s 256 MiB buffer has no stated derivation either (triton-lang/triton issue \#1252~\cite{tr1252}, 2023: "just to make sure
   flush data size \textgreater{} L2 cache size").
 \end{itemize}
 
@@ -390,7 +393,7 @@ L2-sized flush takes 12-18 \ensuremath{\mu}s. To test this we inserted a GPU bus
 \textbf{Laptop GPU (host dispatch on WSL2: 72-139 \ensuremath{\mu}s).} Time relative to a 256 MiB read flush:
 
 {\small
-\begin{longtable}[]{@{}>{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.469}}>{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.156}}>{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.375}}@{}}
+\begin{longtable}[]{@{}>{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.454}}>{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.162}}>{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.384}}@{}}
 \toprule\noalign{}
 Kernel, flush & do\_\allowbreak{}bench-style loop & with the busy-wait \\
 \midrule\noalign{}
@@ -421,7 +424,7 @@ nine-GPU study), L2-sized \texttt{zero\_\allowbreak{}()} relative to 256 MiB \te
 L2 size over the DRAM rate of the 112 MiB GEMV.
 
 {\small
-\begin{longtable}[]{@{}>{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.250}}>{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.143}}>{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.143}}>{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.268}}>{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.196}}@{}}
+\begin{longtable}[]{@{}>{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.275}}>{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.129}}>{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.144}}>{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.249}}>{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.202}}@{}}
 \toprule\noalign{}
 GPU & host dispatch & L2-sized flush (est.) & RMSNorm, L2-sized \texttt{zero\_\allowbreak{}()}: loop / busy-wait & GEMV 16 MiB, no flush \ensuremath{\div} read flush: loop / busy-wait \\
 \midrule\noalign{}
@@ -452,7 +455,7 @@ L40S & 102 \ensuremath{\mu}s & \ensuremath{\approx} 138 \ensuremath{\mu}s & 0~\%
   our repro shows is less affected than the median. C++ harnesses (nvbench, CUTLASS) likely dispatch faster; we
   did not measure them.
 \item
-  \textbf{Related.} Helion\textquotesingle s autotuner (PR \#4126, merged 2026-10-23) found that for microsecond kernels its benchmarks
+  \textbf{Related.} Helion\textquotesingle s autotuner (PR \#4126~\cite{helion4126}, merged 2026-10-23) found that for microsecond kernels its benchmarks
   "mostly timed the flush" and added flush regimes; that is a different mechanism with the same lesson, that the
   flush step can dominate short-kernel timings.
 \end{itemize}
@@ -465,7 +468,7 @@ write-back happens during the \emph{next} flush, outside any timed window. Count
 the kernel\textquotesingle s own output written to DRAM inside its timed window, median of 15 calls):
 
 {\small
-\begin{longtable}[]{@{}>{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.386}}>{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.182}}>{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.273}}>{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.159}}@{}}
+\begin{longtable}[]{@{}>{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.409}}>{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.183}}>{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.265}}>{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.143}}@{}}
 \toprule\noalign{}
 Kernel (elementwise add) & read flush 256 MiB ("cold") & rotated input/output copies ("steady") & no flush \\
 \midrule\noalign{}
@@ -517,7 +520,7 @@ captured in one CUDA graph and replayed back to back, as decode loops do; its me
 harness\textquotesingle s per-kernel times were summed over the step and compared with it (pre-registered; five GPUs).
 
 {\small
-\begin{longtable}[]{@{}>{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.192}}>{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.090}}>{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.231}}>{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.244}}>{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.244}}@{}}
+\begin{longtable}[]{@{}>{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.207}}>{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.091}}>{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.224}}>{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.239}}>{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.239}}@{}}
 \toprule\noalign{}
 GPU & L2 & fp16 step: shipped / cold & int4 step: shipped / cold & int4 speedup error: shipped / cold \\
 \midrule\noalign{}
@@ -558,7 +561,7 @@ is cold), replayed back to back, divided by the number of calls (pre-registered;
 B19 and B21, the H100 NVL host was new):
 
 {\small
-\begin{longtable}[]{@{}>{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.169}}>{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.229}}>{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.217}}>{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.229}}>{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.157}}@{}}
+\begin{longtable}[]{@{}>{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.196}}>{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.225}}>{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.211}}>{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.225}}>{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.143}}@{}}
 \toprule\noalign{}
 GPU & step error, fp16 / int4: graph-batched & cold & shipped & int4 speedup error: graph-batched \\
 \midrule\noalign{}
@@ -638,7 +641,7 @@ kernel\textquotesingle s time inside the decode step (pre-registered):
 \end{itemize}
 
 {\small
-\begin{longtable}[]{@{}>{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.579}}>{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.298}}>{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.123}}@{}}
+\begin{longtable}[]{@{}>{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.563}}>{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.320}}>{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.118}}@{}}
 \toprule\noalign{}
 RTX 3060 Laptop, SM clock locked at 1,000 MHz (observed 1,005) & Error vs the same kernel in the step (12 kernels) & Within 1~\% \\
 \midrule\noalign{}
@@ -718,7 +721,7 @@ to back, 108 pairs) had a median of 0.30~\%, a 95th percentile of 0.95~\% and a 
 \begin{itemize}
 \tightlist
 \item
-  a \textbf{read flush} (the PR \#12556 kernel) over a buffer of max(256 MiB, 4 \ensuremath{\times} L2), cached per device;
+  a \textbf{read flush} (the PR \#12556~\cite{tr12556} kernel) over a buffer of max(256 MiB, 4 \ensuremath{\times} L2), cached per device;
 \item
   a \textbf{GPU busy-wait} before every start event, sized min(5 ms, max(100 \ensuremath{\mu}s, 3 \ensuremath{\times} the measured host dispatch time)), a
   simpler, fixed-length stand-in for nvbench\textquotesingle s blocking kernel;
@@ -743,7 +746,7 @@ print(cold.median_us, steady.median_us, cold.warnings)
 over the calls of each call\textquotesingle s mean; the \texttt{do\_\allowbreak{}bench} column compares \texttt{do\_\allowbreak{}bench}\textquotesingle s median with that value):
 
 {\small
-\begin{longtable}[]{@{}>{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.510}}>{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.163}}>{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.143}}>{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.184}}@{}}
+\begin{longtable}[]{@{}>{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.488}}>{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.179}}>{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.155}}>{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.178}}@{}}
 \toprule\noalign{}
 Kernel & cold, 2 \ensuremath{\times} L2 flush vs 256 MiB & steady vs cold & shipped \texttt{do\_\allowbreak{}bench} vs cold \\
 \midrule\noalign{}
@@ -782,7 +785,7 @@ We ran a kernel writing w \ensuremath{\times} L2, followed by a flush. One range
 bytes. The sum of per-kernel \texttt{dram\_\allowbreak{}\_\allowbreak{}bytes\_\allowbreak{}write.sum} does not:
 
 {\small
-\begin{longtable}[]{@{}>{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.212}}>{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.788}}@{}}
+\begin{longtable}[]{@{}>{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.206}}>{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.794}}@{}}
 \toprule\noalign{}
 GPU & lost at w = 0.75 / 1.0 / 1.5 L2 \\
 \midrule\noalign{}
@@ -818,7 +821,7 @@ AD103 & 5.8~\% / 4.9~\% / 3.2~\% \\
 \begin{itemize}
 \tightlist
 \item
-  \textbf{Triton \texttt{do\_\allowbreak{}bench}:} PR \#12556 would remove pitfall 1. Its 256 MiB buffer already avoided pitfall 2 on the four
+  \textbf{Triton \texttt{do\_\allowbreak{}bench}:} PR \#12556~\cite{tr12556} would remove pitfall 1. Its 256 MiB buffer already avoided pitfall 2 on the four
   machines where we tested it with a busy-wait; a busy-wait after the flush would make that independent of GPU and
   host speed.
 \item
@@ -841,7 +844,7 @@ AD103 & 5.8~\% / 4.9~\% / 3.2~\% \\
 overlap, and are not additive):
 
 {\small
-\begin{longtable}[]{@{}>{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.219}}>{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.185}}>{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.298}}>{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.298}}@{}}
+\begin{longtable}[]{@{}>{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.227}}>{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.188}}>{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.292}}>{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.292}}@{}}
 \toprule\noalign{}
 Hazard & What is distorted & Observed here (setting) & Remedy (status) \\
 \midrule\noalign{}
@@ -942,48 +945,48 @@ optional.
 \begin{itemize}
 \tightlist
 \item
-  \textbf{Write-flush bias and the read flush:} reported in triton-lang/triton issue \#12554 (2026-10-30), with Nsight
+  \textbf{Write-flush bias and the read flush:} reported in triton-lang/triton issue \#12554~\cite{tr12554} (2026-10-30), with Nsight
   Compute measurements on an A100 showing the write-back saturating at about half the L2 and kernels that read
   fewer bytes evicting fewer dirty lines; the read flush we use throughout is the kernel proposed in
-  triton-lang/triton PR \#12556 (measured there on an RTX 5090; open and awaiting maintainer review on 2026-11-06).
-  PyTorch PR \#203681 (open) addresses it for ROCm; TileOPs PR \#2822 and TileLang \#3534 have switched to read
-  flushes. Helion PR \#4126 reworked its autotuner\textquotesingle s flush regimes for microsecond kernels. FlashInfer PR \#8076 (open)
+  triton-lang/triton PR \#12556~\cite{tr12556} (measured there on an RTX 5090; open and awaiting maintainer review on 2026-11-06).
+  PyTorch PR \#203681~\cite{pt203681} (open) addresses it for ROCm; TileOPs PR \#2822~\cite{tileops2822} and TileLang \#3534~\cite{tilelang3534} have switched to read
+  flushes. Helion PR \#4126~\cite{helion4126} reworked its autotuner\textquotesingle s flush regimes for microsecond kernels. FlashInfer PR \#8076~\cite{fi8076} (open)
   proposes a read flush for its cold-L2 autotuning.
 \item
-  \textbf{Dirty L2 state:} deepseek-ai/DeepEP-Ascend issue \#17 reports the same write-flush problem on an NPU; an NVIDIA
+  \textbf{Dirty L2 state:} deepseek-ai/DeepEP-Ascend issue \#17~\cite{deepep17} reports the same write-flush problem on an NPU; an NVIDIA
   developer-forum thread (2026-10-03) asks Nsight Compute for a dirty-L2 cache-control mode.
 \item
-  \textbf{Cold timing and input rotation:} ROCm hip-ep PR \#1238 times kernel tests cold and notes that its tuners rotate
+  \textbf{Cold timing and input rotation:} ROCm hip-ep PR \#1238~\cite{hipep1238} times kernel tests cold and notes that its tuners rotate
   over KV-cache copies; we use rotation to charge a kernel\textquotesingle s own write-back (\S{}8). We do not claim the discovery of the bias or of the read flush; our contribution is
   the cross-GPU and cross-tool measurement, the evaluation of alternative fixes with counters, showing that
   shortened flushes expose a known launch-latency pitfall in Python harnesses, the write-accounting pitfall, and
   \texttt{cleanbench}.
 \item
-  \textbf{Dirty threshold:} NVIDIA US 9,639,466 B2; Finn, \emph{What happens when a GPU writes memory} (2026).
+  \textbf{Dirty threshold:} NVIDIA US 9,639,466 B2~\cite{patent}; Finn, \emph{What happens when a GPU writes memory} (2026)~\cite{finn}.
 \item
-  \textbf{Event timing and launch latency:} NVIDIA nvbench\textquotesingle s \texttt{blocking\_\allowbreak{}kernel} holds the stream until all timed work is
+  \textbf{Event timing and launch latency:} NVIDIA nvbench\textquotesingle s~\cite{nvbench} \texttt{blocking\_\allowbreak{}kernel} holds the stream until all timed work is
   queued, for the same reason as our busy-wait (\S{}7).
 \item
-  \textbf{Kernel-timing practice:} a Speechmatics engineering post (Atkins and MacLeod, 2023) already recommends a
+  \textbf{Kernel-timing practice:} a Speechmatics engineering post (Atkins and MacLeod, 2023)~\cite{speechmatics} already recommends a
   \texttt{torch.cuda.\_\allowbreak{}sleep} before the start event so that short kernels and their events are enqueued together, locking
   clocks with \texttt{nvidia-smi\ -lgc}, and CUDA graphs; it flushes by writing an L2-sized buffer. FlashInfer\textquotesingle s
-  \texttt{bench\_\allowbreak{}gpu\_\allowbreak{}time\_\allowbreak{}with\_\allowbreak{}cupti} reads kernel durations from CUPTI; Triton\textquotesingle s \texttt{testing.set\_\allowbreak{}gpu\_\allowbreak{}clock} locks clocks; nvbench
+  \texttt{bench\_\allowbreak{}gpu\_\allowbreak{}time\_\allowbreak{}with\_\allowbreak{}cupti}~\cite{flashinfer} reads kernel durations from CUPTI; Triton\textquotesingle s \texttt{testing.set\_\allowbreak{}gpu\_\allowbreak{}clock} locks clocks; nvbench
   detects throttling. We do not claim these techniques; \S{}9.1 measures which of them are needed, and how far each one
   gets, against the kernel\textquotesingle s time inside a model.
 \item
-  \textbf{GPU performance variability:} Sinha et al. (SC22; arXiv 2208.11035) report that GPUs of the same model vary by
-  up to 22~\% across nodes of HPC centers; we saw 9-27~\% between two H100 NVL hosts in one decode step. H. He (2024) shows that power
+  \textbf{GPU performance variability:} Sinha et al. (SC22; arXiv 2208.11035)~\cite{sinha} report that GPUs of the same model vary by
+  up to 22~\% across nodes of HPC centers; we saw 9-27~\% between two H100 NVL hosts in one decode step. H. He (2024)~\cite{he} shows that power
   limits make matmul time depend on the input values.
 \item
-  \textbf{Flush-buffer size:} triton-lang/triton issue \#1252 (2023) asked why \texttt{do\_\allowbreak{}bench} flushes 256 MB; the answer was
+  \textbf{Flush-buffer size:} triton-lang/triton issue \#1252~\cite{tr1252} (2023) asked why \texttt{do\_\allowbreak{}bench} flushes 256 MB; the answer was
   only to exceed the L2 size.
 \item
-  \textbf{Frequency-scaling performance models:} CRISP (Nath and Tullsen, MICRO 2015) models GPU performance under DVFS;
+  \textbf{Frequency-scaling performance models:} CRISP (Nath and Tullsen, MICRO 2015)~\cite{crisp} models GPU performance under DVFS;
   \S{}9.1 uses only the simplest two-term form.
 \item
-  \textbf{Counter attribution:} TileOPs issue \#1990.
+  \textbf{Counter attribution:} TileOPs issue \#1990~\cite{tileops1990}.
 \item
-  \textbf{GPU microbenchmarking:} Ernst et al. 2021.
+  \textbf{GPU microbenchmarking:} Ernst et al. 2021~\cite{ernst}.
 \end{itemize}
 
 \section*{Artifact}\label{artifact}
@@ -1005,6 +1008,12 @@ reproduced exactly. Code is under the Apache License 2.0; the report, figures an
 \bibitem{tilelang3534} tile-ai/tilelang \#3534, \url{https://github.com/tile-ai/tilelang/pull/3534}.
 \bibitem{patent} NVIDIA Corporation, \emph{Control mechanism for fine-tuned cache to backing-store synchronization}, US Patent 9,639,466 B2, filed 2012, granted 2017.
 \bibitem{finn} Finn, \emph{What happens when a GPU writes memory}, Doubleword blog, 2026.
+\bibitem{tr1252} triton-lang/triton issue \#1252, cache flush for benchmarking (2023), \url{https://github.com/triton-lang/triton/issues/1252}.
+\bibitem{helion4126} pytorch/helion PR \#4126, L2 flush regimes for the autotuner's benchmarks, \url{https://github.com/pytorch/helion/pull/4126}.
+\bibitem{fi8076} flashinfer-ai/flashinfer PR \#8076, evict L2 by reading in cold-L2 profiling, \url{https://github.com/flashinfer-ai/flashinfer/pull/8076}.
+\bibitem{hipep1238} ROCm/hip-ep PR \#1238, time kernel unit tests on cold caches, \url{https://github.com/ROCm/hip-ep/pull/1238}.
+\bibitem{deepep17} deepseek-ai/DeepEP-Ascend issue \#17, flush\_l2 does not take effect as expected, \url{https://github.com/deepseek-ai/DeepEP-Ascend/issues/17}.
+\bibitem{nvbench} NVIDIA nvbench, \url{https://github.com/NVIDIA/nvbench}.
 \bibitem{speechmatics} L.~Atkins, D.~MacLeod, \emph{How to Accurately Time CUDA Kernels in Pytorch}, Speechmatics, 2023, \url{https://www.speechmatics.com/company/articles-and-news/timing-operations-in-pytorch}.
 \bibitem{sinha} P.~Sinha, A.~Guliani, R.~Jain, B.~Tran, M.~D.~Sinclair, S.~Venkataraman, \emph{Not All GPUs Are Created Equal: Characterizing Variability in Large-Scale, Accelerator-Rich Systems}, SC22, arXiv:2208.11035.
 \bibitem{he} H.~He, \emph{Strangely, Matrix Multiplications on GPUs Run Faster When Given ``Predictable'' Data!}, 2024, \url{https://www.thonking.ai/p/strangely-matrix-multiplications}.

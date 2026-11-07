@@ -137,21 +137,23 @@ CUTLASS) use a buffer of exactly L2 size, which matters for §6 and §7.
 
 ## 5. How big is the bias? Nine GPUs
 
-B = t(shipped write flush) / t(read flush) − 1, from the median times over 5 runs; brackets: minimum and maximum of
-the per-run B. The reference kernel is a batch-1 fp16 GEMV (`F.linear`, W 14336 × 4096, 112 MiB, larger than every
-L2 here). L2 sizes are as reported by the CUDA device query.
+B = t(shipped write flush) / t(read flush) − 1, in percent, from the median times over 5 runs. The reference kernel
+is a batch-1 fp16 GEMV (`F.linear`, W 14336 × 4096, 112 MiB, larger than every L2 here); its range is the minimum and
+maximum of the per-run B. The other columns: the same GEMV under an L2-sized write flush instead of 256 MiB ("L2-sized write"); SDPA
+decode ("SDPA") with a 256 MiB KV cache; Liger RMSNorm on 64 MiB; Liger SwiGLU on 2 × 56 MiB. L2 sizes are as reported by the
+CUDA device query.
 
-| GPU | Arch | L2 | GEMV (ref) | L2-sized write, GEMV | SDPA decode, 256 MiB KV | Liger RMSNorm, 64 MiB | Liger SwiGLU, 2 × 56 MiB |
-|---|---|---|---|---|---|---|---|
-| RTX 4060 | Ada | 24 MiB | +6.7 % [6.3, 6.7] | +6.4 % | +7.1 % | +15.6 % | +11.4 % |
-| RTX 4060 Ti | Ada | 32 MiB | +8.6 % [8.5, 8.8] | +8.7 % | +9.2 % | +23.4 % | +16.8 % |
-| RTX 5060 Ti | Blackwell | 32 MiB | +6.6 % [6.5, 6.9] | +7.3 % | +3.6 % | +11.0 % | +9.1 % |
-| A100 PCIe 40GB | Ampere | 40 MiB | **+16.0 %** [15.0, 16.0] | +16.0 % | +7.6 % | +15.6 % | +12.8 % |
-| H100 NVL | Hopper | 60 MiB | **+23.1 %** [22.7, 24.4] | +22.9 % | +7.9 % | +13.8 % | +12.7 % |
-| RTX 4080 SUPER | Ada | 64 MiB | +16.0 % [15.5, 16.7] | +16.1 % | +18.4 % | +54.6 % | +30.9 % |
-| RTX 4090 | Ada | 72 MiB | +17.4 % [16.9, 17.7] | +17.7 % | +19.6 % | +57.1 % | +32.1 % |
-| L40S | Ada | 96 MiB | **+25.3 %** [24.7, 25.3] | +25.6 % | +28.3 % | **+88.0 %** | +47.8 % |
-| RTX 5090 | Blackwell | 96 MiB | +10.8 % [9.2, 11.0] | +10.1 % | +5.5 % | +26.5 % | +23.9 % |
+| GPU | Arch | L2 (MiB) | GEMV (%) | range | L2-sized write (%) | SDPA (%) | RMSNorm (%) | SwiGLU (%) |
+|------------------|----------|-------:|--------:|------------:|--------:|--------:|--------:|--------:|
+| RTX 4060 | Ada | 24 | +6.7 | 6.3–6.7 | +6.4 | +7.1 | +15.6 | +11.4 |
+| RTX 4060 Ti | Ada | 32 | +8.6 | 8.5–8.8 | +8.7 | +9.2 | +23.4 | +16.8 |
+| RTX 5060 Ti | Blackwell | 32 | +6.6 | 6.5–6.9 | +7.3 | +3.6 | +11.0 | +9.1 |
+| A100 PCIe 40GB | Ampere | 40 | **+16.0** | 15.0–16.0 | +16.0 | +7.6 | +15.6 | +12.8 |
+| H100 NVL | Hopper | 60 | **+23.1** | 22.7–24.4 | +22.9 | +7.9 | +13.8 | +12.7 |
+| RTX 4080 SUPER | Ada | 64 | +16.0 | 15.5–16.7 | +16.1 | +18.4 | +54.6 | +30.9 |
+| RTX 4090 | Ada | 72 | +17.4 | 16.9–17.7 | +17.7 | +19.6 | +57.1 | +32.1 |
+| L40S | Ada | 96 | **+25.3** | 24.7–25.3 | +25.6 | +28.3 | **+88.0** | +47.8 |
+| RTX 5090 | Blackwell | 96 | +10.8 | 9.2–11.0 | +10.1 | +5.5 | +26.5 | +23.9 |
 
 - **Every GPU is affected.** The pre-registered "affected" threshold was ≥ 5 %. The run-to-run range of the
   GEMV number is at most 1.8 points on every GPU.
