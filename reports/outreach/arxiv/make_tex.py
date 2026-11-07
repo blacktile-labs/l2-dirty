@@ -137,6 +137,7 @@ def wrap_tables(body: str) -> str:
         lens = [7] * n
         for ri, r in enumerate(rows):
             for k, c in enumerate(r.split(" & ")[:n]):
+                c = re.sub(r"\\(?:hyperref|cite)\[[^\]]*\]|\\cite\{[^}]*\}", "", c)      # link targets take no width
                 txt = re.sub(r"\\[a-zA-Z]+|[{}]|\\noalign|toprule|midrule|bottomrule", "", c).strip()
                 # header row: only its longest word must fit; data rows: whole cell, capped
                 wid = lambda t: sum(1.35 if ch.isupper() or ch.isdigit() else 1.0 for ch in t) + 1  # noqa: E731
@@ -174,6 +175,34 @@ def add_citations(body: str) -> str:
     return head + tail
 
 
+def add_section_links(body: str) -> str:
+    """Make every "§N" / "§N.M" a link to that section (numbered as LaTeX numbers them). Run on pandoc's output,
+    before anything is inserted between a heading and its \\label."""
+    labels, sec, sub = {}, 0, 0
+    head = r"\\(section|subsection)(\*?)\{(?:[^{}]|\{[^{}]*\})*\}\s*\\label\{([^}]+)\}"
+    for m in re.finditer(head, body):
+        if m.group(2) or m.group(3) == "artifact":
+            continue
+        if m.group(1) == "section":
+            sec, sub = sec + 1, 0
+            labels[str(sec)] = m.group(3)
+        else:
+            sub += 1
+            labels[f"{sec}.{sub}"] = m.group(3)
+    missing = set()
+
+    def link(m):
+        k = m.group(1)
+        if k not in labels:
+            missing.add(k)
+            return m.group(0)
+        return rf"\hyperref[{labels[k]}]{{§{k}}}"
+    body = re.sub(r"§(\d+(?:\.\d+)?)(?![\d.]*\d)", link, body)
+    if missing:
+        sys.exit(f"section references without a section: {sorted(missing)}")
+    return body
+
+
 def pandoc(md: str) -> str:
     r = subprocess.run(["pandoc", "-f", "gfm", "-t", "latex", "--no-highlight", "--columns=72",
                         "--shift-heading-level-by=-1", "--wrap=preserve"],
@@ -197,6 +226,7 @@ def main() -> int:
     if "Jia" in md or "D-0" in md:
         sys.exit("internal or unread reference left in the public text")
     body = pandoc(md)
+    body = add_section_links(body)
     body = body.replace(r"\section{Artifact}", r"\section*{Artifact}")
     # Figure 1 goes before section 5's table; label that table for the caption reference
     for head, fig in ((r"\section{Background}", FIG_DIRTY), (r"\section{Pitfall 2: queue drain}", FIG_QUEUE),
