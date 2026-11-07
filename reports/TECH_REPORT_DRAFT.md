@@ -632,7 +632,7 @@ optional.
 
 ## Artifact
 
-The public repository ([URL to be added]) contains every probe, protocol and scorer with unit tests; the
+The public repository (https://github.com/blacktile-labs/l2-dirty) contains every probe, protocol and scorer with unit tests; the
 pre-registration texts (in Thai) and every sha256 lock, with a snapshot of each locked file as committed
 (`research/preregistration/verify_locks.py` checks them: 190 of 191 match; one early lock's protocol file was edited
 before it was committed); raw JSON/CSV for every run, with the IP addresses of rented hosts removed; the tool-survey

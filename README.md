@@ -3,8 +3,13 @@
 Rungrod Thongjampa, Chanchada Wathanathonnan — Blacktile Research
 Contact: rungrod.th@blacktile.dev
 
-Technical report, code and data. Report: [`reports/outreach/arxiv/main.pdf`](reports/outreach/arxiv/main.pdf)
+Technical report, code and data: https://github.com/blacktile-labs/l2-dirty
+Report: [`reports/outreach/arxiv/main.pdf`](reports/outreach/arxiv/main.pdf)
 (source: [`reports/TECH_REPORT_DRAFT.md`](reports/TECH_REPORT_DRAFT.md)); arXiv link to be added.
+
+```bash
+git clone https://github.com/blacktile-labs/l2-dirty.git
+```
 
 ## Summary
 

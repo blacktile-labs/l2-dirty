@@ -13,4 +13,6 @@ authors:
     affiliation: Blacktile Research
 date-released: 2026-11-07
 license: Apache-2.0
+repository-code: "https://github.com/blacktile-labs/l2-dirty"
+url: "https://github.com/blacktile-labs/l2-dirty"
 keywords: [GPU, benchmarking, L2 cache, CUDA, CUPTI, Triton, microbenchmark]
