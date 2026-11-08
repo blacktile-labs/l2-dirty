@@ -42,10 +42,10 @@
 {\LARGE\bfseries Dirty L2, Drained Queues:\\[3pt] Measurement Pitfalls in GPU Kernel Microbenchmarks\par}
 \vspace{12pt}
 \begin{tabular}{@{}c@{\hspace{2.2em}}c@{}}
-Rungrod Thongjampa$^{*}$ & Chanchada Wathanathonnan \\[1pt]
+Rungrod Thongjampa & Chanchada Wathanathonnan \\[1pt]
 {\small\texttt{rungrod.th@blacktile.dev}} & {\small\texttt{chanchada.wa@blacktile.dev}}
 \end{tabular}\\[6pt]
-Blacktile Research \quad\textperiodcentered\quad {\small $^{*}$Corresponding author \quad\textperiodcentered\quad November 2026}
+Blacktile Research \quad\textperiodcentered\quad {\small November 2026}
 \vspace{12pt}
 
 {\Large\bfseries Abstract}
@@ -807,11 +807,12 @@ study\textquotesingle s +16.0~\%, +10.8~\% and +25.3~\%, measured on different h
 input copies (\ensuremath{\ge} 4 \ensuremath{\times} L2 in total) in one CUDA graph, keeps the GPU busy for at least 1 s, and reads each call\textquotesingle s
 kernel durations from CUPTI; \texttt{compare} times several candidates in interleaved rounds, in a seeded random order per
 round. \texttt{locked\_\allowbreak{}sm\_\allowbreak{}clock(mhz)} locks the SM clock where permitted (root or Administrator) and always resets it.
-\texttt{Result.quality} reports the conditions of \hyperref[kernel-by-kernel-does-a-single-kernel-benchmark-match-the-same-kernel-inside-the-decode-proxy]{\S{}9.1} and marks a result as validated only if all hold: exact CUPTI
-records, a tracing effect \ensuremath{\le} 0.5~\% (traced and untraced replays are both timed), readable clock-event counters that
-did not grow, and inputs covering \ensuremath{\ge} 4 \ensuremath{\times} L2 (\texttt{footprint\_\allowbreak{}bytes}); otherwise the result is labelled exploratory. The
-counters catch throttling, not every small boost step, so a locked clock remains the condition under which 1~\% was
-reached. Each callable must run on the current stream without overlapping kernels.
+\texttt{Result.quality} reports checks for exact CUPTI records, a tracing effect \ensuremath{\le} 0.5~\% (traced and untraced replays are
+both timed), readable clock-event counters that did not grow, and inputs covering \ensuremath{\ge} 4 \ensuremath{\times} L2 (\texttt{footprint\_\allowbreak{}bytes}).
+The \texttt{validated} flag indicates that these checks passed; otherwise the result is labelled exploratory. It does
+not establish the clock-stability condition used in \hyperref[kernel-by-kernel-does-a-single-kernel-benchmark-match-the-same-kernel-inside-the-decode-proxy]{\S{}9.1} or guarantee 1~\% agreement with the workload. The counters
+catch throttling, not every small boost step; 1~\% agreement was demonstrated separately on one GPU with a locked
+clock (\hyperref[kernel-by-kernel-does-a-single-kernel-benchmark-match-the-same-kernel-inside-the-decode-proxy]{\S{}9.1}). Each callable must run on the current stream without overlapping kernels.
 
 \textbf{Limitations.} \texttt{torch.cuda.\_\allowbreak{}sleep} is a private PyTorch API. Steady mode and \texttt{bench\_\allowbreak{}graph} need the caller to build
 input/output copies. With CUDA events (\texttt{bench}), kernels shorter than about 30~\ensuremath{\mu}s remain limited by the timer\textquotesingle s
@@ -865,8 +866,9 @@ AD103 (RTX 4080 SUPER, 64~MiB) & 5.8~\% & 4.9~\% & 3.2~\% \\
   host speed.
 \item
   \textbf{PyTorch Inductor:} switching \texttt{zero\_\allowbreak{}()} to a read on the existing L2-sized buffer is not enough: it leaves the
-  previous call\textquotesingle s output partly dirty (\hyperref[what-removes-the-residue-and-what-does-not]{\S{}6}) and lets the queue drain on fast GPUs (\hyperref[pitfall-2-queue-drain]{\S{}7}). Read at least
-  max(256~MiB, 4 \ensuremath{\times} L2), or add a busy-wait.
+  previous call\textquotesingle s output partly dirty (\hyperref[what-removes-the-residue-and-what-does-not]{\S{}6}) and lets the queue drain on fast GPUs (\hyperref[pitfall-2-queue-drain]{\S{}7}). Use a sufficiently large
+  read buffer to reduce the previous call\textquotesingle s dirty output residue, and keep the GPU busy before the start event to
+  prevent queue drain. Our conservative default uses max(256~MiB, 4 \ensuremath{\times} L2) plus a GPU busy-wait.
 \item
   \textbf{nvbench, CUTLASS:} a read kernel instead of the memset (or a read pass after it).
 \item

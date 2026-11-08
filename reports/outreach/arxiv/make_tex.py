@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Build the arXiv LaTeX source (main.tex) from reports/TECH_REPORT_DRAFT.md so the two never diverge.
 Needs pandoc. Output is pure ASCII LaTeX that compiles with pdflatex (arXiv's default) and XeTeX. Page 1 includes
-bt_header.pdf (logo and wordmark, built once from header/bt_header.tex) and fig_bias_vs_l2.pdf as Figure 1.
+bt_header.pdf (logo, built from header/bt_header.tex) and fig_bias_vs_l2.pdf as Figure 1.
   python3 reports/outreach/arxiv/make_tex.py && tectonic reports/outreach/arxiv/main.tex
 """
 
@@ -57,10 +57,10 @@ PREAMBLE = r"""\documentclass[11pt,a4paper]{article}
 {\LARGE\bfseries %(title1)s\\[3pt] %(title2)s\par}
 \vspace{12pt}
 \begin{tabular}{@{}c@{\hspace{2.2em}}c@{}}
-Rungrod Thongjampa$^{*}$ & Chanchada Wathanathonnan \\[1pt]
+Rungrod Thongjampa & Chanchada Wathanathonnan \\[1pt]
 {\small\texttt{rungrod.th@blacktile.dev}} & {\small\texttt{chanchada.wa@blacktile.dev}}
 \end{tabular}\\[6pt]
-Blacktile Research \quad\textperiodcentered\quad {\small $^{*}$Corresponding author \quad\textperiodcentered\quad November 2026}
+Blacktile Research \quad\textperiodcentered\quad {\small November 2026}
 \vspace{12pt}
 
 {\Large\bfseries Abstract}

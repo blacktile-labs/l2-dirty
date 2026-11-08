@@ -1,0 +1,17 @@
+TITLE
+Dirty L2, Drained Queues: Measurement Pitfalls in GPU Kernel Microbenchmarks
+
+AUTHORS
+Rungrod Thongjampa, Chanchada Wathanathonnan
+
+ABSTRACT
+GPU kernel microbenchmarks evict cached inputs before each timed call. In 14 of the 15 tools and benchmark paths we audited, including triton.testing.do_bench, the eviction writes a large buffer. The writes leave dirty L2 lines that the timed kernel must write back, so the flush changes the measurement. With pre-registered experiments on nine NVIDIA GPUs, a batch-1 fp16 decode GEMV measured 6.6-25.3 % slower with the shipped write flush than with a read flush, and the bias changed which quantized GEMV appeared faster on some GPUs. Hardware counters on a laptop GPU confirm the mechanism. Two related pitfalls follow: a flush shorter than the host's dispatch time lets the command queue drain, so a CUDA-event interval includes host time; and a read flush leaves the measured kernel's own write-back untimed. Against a four-layer, GEMV-only decode proxy captured in a CUDA graph, summed shipped do_bench times over-predicted the step by 26-32 % (fp16) on GPUs with large L2 and mis-ranked int4 kernels on an RTX 4060. Timing kernels from CUPTI activity timestamps over a CUDA graph that rotates through weight copies matched the same kernels inside the proxy within 0.79 % (12 kernels, ratio of medians over three runs) on one clock-locked laptop GPU. This agreement was not reproduced on rented RTX 4060 and A100 hosts, which refused clock locking: clock changes, a kernel-context effect and tracing overhead limited it. We release a harness with explicit quality gates and list the hazards we measured.
+
+COMMENTS
+18 pages, 4 figures. Code and data: https://github.com/blacktile-labs/l2-dirty
+
+CATEGORIES
+Primary: cs.PF (Performance)   Cross-list: cs.DC (Distributed, Parallel, and Cluster Computing)
+
+LICENSE
+CC BY 4.0

@@ -1,7 +1,8 @@
 <!-- ร่าง technical report ฉบับที่ 4 (D-108: แก้ตาม review ภายนอก; ฉบับ 3 คือ D-107, ฉบับ 2 คือ D-088)
-     ผู้แต่ง (D-109): Rungrod Thongjampa, Chanchada Wathanathonnan · ชื่อใหม่ (PI เลือก 2026-11-07): "Dirty L2, Drained Queues: Measurement Pitfalls in GPU Kernel Microbenchmarks"
+     ผู้แต่ง: Rungrod Thongjampa, Chanchada Wathanathonnan (PI ปรับ 2026-11-08)
+     ชื่อใหม่ (PI เลือก 2026-11-07): "Dirty L2, Drained Queues: Measurement Pitfalls in GPU Kernel Microbenchmarks"
      ฉบับ 3 เพิ่ม: §9.1 ตรวจราย kernel (B23 / B23b / B23c), error budget (§12), cleanbench bench_graph, related work ใหม่
-     (Speechmatics, Sinha et al., Horace He, CRISP) · ผู้แต่ง: รอ PI ส่งชื่อ (อาจเป็น 3 คน)
+     (Speechmatics, Sinha et al., Horace He, CRISP)
      สถานะ: DRAFT ภายใน ห้ามเผยแพร่ PI เป็นผู้เขียนและส่งออกเอง (D-072)
      ฉบับที่ 1 อยู่ใน git history (commit 7e7fb2a) · ตัวเลขอ้างอิง research/HYPOTHESES.md §B6b–§B21,
      benchmarks/results/b17_spread_20261106.json และผลสำรวจ source code (research/TOOL_SURVEY.md)
@@ -10,7 +11,8 @@
 
 # Dirty L2, Drained Queues: Measurement Pitfalls in GPU Kernel Microbenchmarks
 
-*Draft technical report v4 — Rungrod Thongjampa (corresponding author, rungrod.th@blacktile.dev), Chanchada Wathanathonnan (chanchada.wa@blacktile.dev) — Blacktile Research — 2026-11-07*
+*Draft technical report v4 — Rungrod Thongjampa (rungrod.th@blacktile.dev),
+Chanchada Wathanathonnan (chanchada.wa@blacktile.dev) — Blacktile Research — 2026-11-08*
 
 ## Abstract
 
@@ -487,11 +489,12 @@ study's +16.0 %, +10.8 % and +25.3 %, measured on different hosts against a diff
 input copies (≥ 4 × L2 in total) in one CUDA graph, keeps the GPU busy for at least 1 s, and reads each call's
 kernel durations from CUPTI; `compare` times several candidates in interleaved rounds, in a seeded random order per
 round. `locked_sm_clock(mhz)` locks the SM clock where permitted (root or Administrator) and always resets it.
-`Result.quality` reports the conditions of §9.1 and marks a result as validated only if all hold: exact CUPTI
-records, a tracing effect ≤ 0.5 % (traced and untraced replays are both timed), readable clock-event counters that
-did not grow, and inputs covering ≥ 4 × L2 (`footprint_bytes`); otherwise the result is labelled exploratory. The
-counters catch throttling, not every small boost step, so a locked clock remains the condition under which 1 % was
-reached. Each callable must run on the current stream without overlapping kernels.
+`Result.quality` reports checks for exact CUPTI records, a tracing effect ≤ 0.5 % (traced and untraced replays are
+both timed), readable clock-event counters that did not grow, and inputs covering ≥ 4 × L2 (`footprint_bytes`).
+The `validated` flag indicates that these checks passed; otherwise the result is labelled exploratory. It does
+not establish the clock-stability condition used in §9.1 or guarantee 1 % agreement with the workload. The counters
+catch throttling, not every small boost step; 1 % agreement was demonstrated separately on one GPU with a locked
+clock (§9.1). Each callable must run on the current stream without overlapping kernels.
 
 **Limitations.** `torch.cuda._sleep` is a private PyTorch API. Steady mode and `bench_graph` need the caller to build
 input/output copies. With CUDA events (`bench`), kernels shorter than about 30 µs remain limited by the timer's
@@ -526,8 +529,9 @@ bytes. The sum of per-kernel `dram__bytes_write.sum` does not; the share of the 
   machines where we tested it with a busy-wait; a busy-wait after the flush would make that independent of GPU and
   host speed.
 - **PyTorch Inductor:** switching `zero_()` to a read on the existing L2-sized buffer is not enough: it leaves the
-  previous call's output partly dirty (§6) and lets the queue drain on fast GPUs (§7). Read at least
-  max(256 MiB, 4 × L2), or add a busy-wait.
+  previous call's output partly dirty (§6) and lets the queue drain on fast GPUs (§7). Use a sufficiently large
+  read buffer to reduce the previous call's dirty output residue, and keep the GPU busy before the start event to
+  prevent queue drain. Our conservative default uses max(256 MiB, 4 × L2) plus a GPU busy-wait.
 - **nvbench, CUTLASS:** a read kernel instead of the memset (or a read pass after it).
 - **Leaderboards and LLM-kernel evaluations (KernelBench, GPU MODE):** state the flush method; consider reporting a
   steady-state time, since generated kernels differ in how much they write.
